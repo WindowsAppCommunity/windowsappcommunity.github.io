@@ -33,6 +33,10 @@ Kanban for Windows 10, with an Ink Whiteboard
 ![Image](https://miro.medium.com/max/3000/1*9hzoDDEcK6gbxefy23fURQ.png)  
 [Store](https://www.microsoft.com/store/apps/9P5RSNPRQRMD)  
 
+### Stack 10
+Stackoverflow client    
+[Store](https://www.microsoft.com/en-us/p/stack-10/9nblggh5361b)  
+
 ### Title
 Description client  
 ![Image](src)  
