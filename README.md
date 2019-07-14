@@ -28,7 +28,7 @@ A modern, powerful and full-featured Reddit client
 
 ### Littledot
 A simplified DNS-over-TLS ( DoT ) UWP tool for Windows 10
-![image](https://github.com/Nexxkinn/Littledot/raw/master/Littledot.png)
+![image](https://github.com/Nexxkinn/Littledot/raw/master/Littledot.png)  
 [Store](https://www.microsoft.com/store/apps/9PM3VVLB6NDQ)  
 [GitHub](https://github.com/Nexxkinn/Littledot)  
 
