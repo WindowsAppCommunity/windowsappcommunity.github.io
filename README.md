@@ -4,6 +4,13 @@
 
 ### Bandsaround Concerts
 ### Bread Player
+
+### Cafeine
+Media library integrated with multiple online services ( Anilist, MAL, Kitsu ) in one UWP app.
+![image](https://github.com/Nexxkinn/Cafeine/raw/master/.github/images/01_dark_v13.png)
+[Store](https://www.microsoft.com/store/apps/9NG9S7Q4Q65R)  
+[GitHub](https://github.com/Nexxkinn/Cafeine)  
+
 ### Clamour
 ### Cryptotracker
 ### Diarium
@@ -18,6 +25,12 @@ A modern, powerful and full-featured Reddit client
 [Store](https://www.microsoft.com/en-us/p/legere-for-reddit/9phjrvcskvjz)  
 
 ### LightSocial
+
+### Littledot
+A simplified DNS-over-TLS ( DoT ) UWP tool for Windows 10
+![image](https://github.com/Nexxkinn/Littledot/raw/master/Littledot.png)
+[Store](https://www.microsoft.com/store/apps/9PM3VVLB6NDQ)  
+[GitHub](https://github.com/Nexxkinn/Littledot)  
 
 ### Kanban Ink
 Kanban for Windows 10, with an Ink Whiteboard  
@@ -34,7 +47,7 @@ The highly praised YouTube client
 
 ### Nightingale
 A fast and resource-efficient REST API client.  
-https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn  
+[Store](https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn)  
 
 ### OneLocker
 ### Pillbox
@@ -48,8 +61,8 @@ A frequently updated Discord client for all Windows devices
 
 ### Quick Pad
 Quick Pad - UWP Notepad  
-https://www.microsoft.com/en-us/p/quick-pad-uwp-notepad/9pdlwqhtlsv3  
-https://github.com/yaichenbaum/Quick-Pad  
+[Store](https://www.microsoft.com/en-us/p/quick-pad-uwp-notepad/9pdlwqhtlsv3)  
+[GitHub](https://github.com/yaichenbaum/Quick-Pad)  
 
 ### Roamit
 ### Savidraw
@@ -68,7 +81,7 @@ Stackoverflow client
 
 ### Uno Platform
 Uno Platform - The UWP Bridge for iOS, Android and WebAssembly  
-https://github.com/nventive/Uno  
+[GitHub](https://github.com/nventive/Uno)  
 
 ### Uwp Companion
 Redirect various websites to a preferred third party UWP app  
@@ -78,11 +91,11 @@ Redirect various websites to a preferred third party UWP app
 
 ### Winsta
 An Instagram Universal Experience  
-https://www.microsoft.com/en-us/p/winsta-an-instagram-universal-experience/9pnzdjkxnqvk  
+[Store](https://www.microsoft.com/en-us/p/winsta-an-instagram-universal-experience/9pnzdjkxnqvk)  
 
 ### Xpotify
 A third-party modern Spotify experience built for Windows 10  
-https://www.microsoft.com/en-us/p/xpotify-a-modern-spotify-experience-for-windows-10/9n1n68mc7fxr  
+[Store](https://www.microsoft.com/en-us/p/xpotify-a-modern-spotify-experience-for-windows-10/9n1n68mc7fxr)  
 
 ### XYZ Anime Player
 ### Youtube App Launcher
