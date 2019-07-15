@@ -13,12 +13,27 @@ Media library integrated with multiple online services ( Anilist, MAL, Kitsu ) i
 [GitHub](https://github.com/Nexxkinn/Cafeine)  
 
 ### Clamour
+[Store](https://www.microsoft.com/en-us/p/clamour/9nblggh4wr0f)    
+
 ### Cryptotracker
+[Store](https://www.microsoft.com/en-us/p/cryptotracker/9n3b47hbvblc)  
+
 ### Diarium
+[Store](https://www.microsoft.com/en-us/store/p/diarium-private-diary-daily-journal/9nblggh4vzz1)  
+
 ### Easy Writer
+[Store](https://www.microsoft.com/en-us/store/p/easy-writer/9nx9t1mt590v)  
+
 ### Files UWP
+"More than just a rewrite of Windows Explorer" 
+![image](https://github.com/duke7553/files-uwp/raw/master/Files%20UWP/Assets/FilesHome.png) 
+[GitHub](https://github.com/duke7553/files-uwp)  
+
 ### Ghostly
+Github client  
+
 ### Huetro for Hue
+[Store](https://www.microsoft.com/en-us/store/p/huetro-for-hue/9wzdncrfjj3t)  
 
 ### Legere
 A modern, powerful and full-featured Reddit client  
@@ -48,7 +63,7 @@ The highly praised YouTube client
 
 ### Nightingale
 A fast and resource-efficient REST API client.  
-![Image](https://bn1305files.storage.live.com/y4mc94a8nRLMn0hiZ1sDFGcBQaMDNAjyXUIf0hUgHZBTIdoEwr1xQNxEIhyoNxQ6D441HCYJuOU5pwW3cbZN_iJCeljt3MJcrZUg2jNQf9uKkYHWsSuUOMPjWDnKx2UoDCiJKQNMkk8dp1MmgyphQerO7RCjf1z1zz0tCfr7_0QA_NGvPqOBk7vbZdcVTaKpkQJ4JalNbrHS1EU9d_s7QZZXg/hero3.png?psid=1&width=480&height=270)
+![Image](https://bn1305files.storage.live.com/y4mc94a8nRLMn0hiZ1sDFGcBQaMDNAjyXUIf0hUgHZBTIdoEwr1xQNxEIhyoNxQ6D441HCYJuOU5pwW3cbZN_iJCeljt3MJcrZUg2jNQf9uKkYHWsSuUOMPjWDnKx2UoDCiJKQNMkk8dp1MmgyphQerO7RCjf1z1zz0tCfr7_0QA_NGvPqOBk7vbZdcVTaKpkQJ4JalNbrHS1EU9d_s7QZZXg/hero3.png?psid=1&width=480&height=270)  
 [Store](https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn)  
 
 ### OneLocker
@@ -80,6 +95,9 @@ Stackoverflow client
 
 ### SundByte
 ### TiUnstreamtle
+
+### UniversalSoundBoard
+[Store](https://www.microsoft.com/store/apps/9NBLGGH51005)
 
 ### Uno Platform
 Uno Platform - The UWP Bridge for iOS, Android and WebAssembly  
