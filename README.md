@@ -6,6 +6,11 @@ A list of the UWP Community Projects
 ### Bandsaround Concerts
 ### Bread Player
 
+### Bullet Journal Touch
+A Windows 10 Bullet Journal 
+![Image](http://valleysoftware.com.au/wp-content/uploads/2018/11/2018-11-06-4.png)  
+[Store](https://www.microsoft.com/store/apps/9NK7BHNKDXD0?cid=uwpcommunitydiscord) 
+
 ### Cafeine
 Media library integrated with multiple online services ( Anilist, MAL, Kitsu ) in one UWP app.
 ![image](https://github.com/Nexxkinn/Cafeine/raw/master/.github/images/01_dark_v13.png)
@@ -15,7 +20,12 @@ Media library integrated with multiple online services ( Anilist, MAL, Kitsu ) i
 ### Clamour
 ### Cryptotracker
 ### Diarium
+
 ### Easy Writer
+Cloud hosted Writing tool for Windows 10.  
+![Image](http://valleysoftware.com.au/wp-content/uploads/2018/07/4.png)  
+[Store](https://www.microsoft.com/store/apps/9NX9T1MT590V?cid=uwpcommunitydiscord) 
+
 ### Files UWP
 ### Ghostly
 ### Huetro for Hue
@@ -35,8 +45,8 @@ A simplified DNS-over-TLS ( DoT ) UWP tool for Windows 10
 
 ### Kanban Ink
 Kanban for Windows 10, with an Ink Whiteboard  
-![Image](https://miro.medium.com/max/3000/1*9hzoDDEcK6gbxefy23fURQ.png)  
-[Store](https://www.microsoft.com/store/apps/9P5RSNPRQRMD)  
+![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png)  
+[Store](https://www.microsoft.com/store/apps/9P5RSNPRQRMD?cid=Launch2019)  
 
 ### MALClient
 ### Mixplay for Mixer
@@ -54,6 +64,11 @@ A fast and resource-efficient REST API client.
 ### Pillbox
 ### Podcasted
 ### Prayer Assistant
+
+### Private Files
+File locker for Windows 10 with Windows Hello security 
+![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1.png)  
+[Store](https://www.microsoft.com/store/apps/9N3V10GH7XTC?cid=uwpcommunitydiscord) 
 
 ### Quarrel
 A frequently updated Discord client for all Windows devices  
@@ -89,6 +104,11 @@ Redirect various websites to a preferred third party UWP app
 ![image](https://miro.medium.com/max/1179/1*Vo4SpVbTIkOv9ToN0F1qTA.png)  
 [Store](https://chrome.google.com/webstore/detail/uwp-companion-beta/egfgdliklfgpmdjfofbmhmoejdhehani)  
 [GitHub](https://github.com/Arlodotexe/UWP-Companion)  
+
+### Voyer
+UWP 4chan client for Windows 10 and Windows 10 Mobile.
+![Image](http://valleysoftware.com.au/wp-content/uploads/2017/02/2400x1200-e1514782255962.png)  
+[Store](https://www.microsoft.com/store/apps/9MW7JNFM85FL?cid=uwpcommunitydiscord)  
 
 ### Winsta
 An Instagram Universal Experience  
