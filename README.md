@@ -18,6 +18,9 @@ Media library integrated with multiple online services ( Anilist, MAL, Kitsu ) i
 ### Cryptotracker
 [Store](https://www.microsoft.com/en-us/p/cryptotracker/9n3b47hbvblc)  
 
+### Devrant Uwp
+[Store](https://www.microsoft.com/en-us/store/p/devrant-uwp/9nblggh43lxr)  
+
 ### Diarium
 [Store](https://www.microsoft.com/en-us/store/p/diarium-private-diary-daily-journal/9nblggh4vzz1)  
 
@@ -41,6 +44,7 @@ A modern, powerful and full-featured Reddit client
 [Store](https://www.microsoft.com/en-us/p/legere-for-reddit/9phjrvcskvjz)  
 
 ### LightSocial
+[Store](https://www.microsoft.com/en-us/store/p/lightsocial/9nblggh6hf34)  
 
 ### Littledot
 A simplified DNS-over-TLS ( DoT ) UWP tool for Windows 10
@@ -54,7 +58,10 @@ Kanban for Windows 10, with an Ink Whiteboard
 [Store](https://www.microsoft.com/store/apps/9P5RSNPRQRMD)  
 
 ### MALClient
+[Store](https://www.microsoft.com/en-us/store/p/malclient/9nblggh5f3bl)  
+
 ### Mixplay for Mixer
+[Store](https://www.microsoft.com/en-us/store/p/mixplay-for-mixer/9pn94d9bdfzm)  
 
 ### MyTube
 The highly praised YouTube client  
@@ -67,9 +74,16 @@ A fast and resource-efficient REST API client.
 [Store](https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn)  
 
 ### OneLocker
+[Store](https://www.microsoft.com/en-us/store/p/onelocker-password-manager/9nblggh3t7g3)  
+
 ### Pillbox
+[Store](https://www.microsoft.com/en-us/store/p/pillbox/9nblggh4x7vb)  
+
 ### Podcasted
+[Store](https://www.microsoft.com/en-us/store/p/podcasted/9nxwgr2b1p26)  
+
 ### Prayer Assistant
+[Store](https://www.microsoft.com/en-us/store/p/prayer-assistant-a-catholic-prayer-companion/9mvb8tqccdj4)  
 
 ### Quarrel
 A frequently updated Discord client for all Windows devices  
@@ -82,7 +96,10 @@ Quick Pad - UWP Notepad
 [GitHub](https://github.com/yaichenbaum/Quick-Pad)  
 
 ### Roamit
+[Store](https://www.microsoft.com/en-us/store/p/roamit/9nrdffns92g1)  
+
 ### Savidraw
+[Store](https://www.microsoft.com/en-us/store/p/savidraw/9wzdncrdnkvb)  
 
 ### Spotimo
 A groove-inspired, fully featured Spotify client  
@@ -93,8 +110,8 @@ A groove-inspired, fully featured Spotify client
 Stackoverflow client    
 [Store](https://www.microsoft.com/en-us/p/stack-10/9nblggh5361b)  
 
-### SundByte
-### TiUnstreamtle
+### SoundByte
+[Store](https://www.microsoft.com/en-us/store/p/soundbyte-music-player/9nblggh4xbjg)  
 
 ### UniversalSoundBoard
 [Store](https://www.microsoft.com/store/apps/9NBLGGH51005)
@@ -102,6 +119,9 @@ Stackoverflow client
 ### Uno Platform
 Uno Platform - The UWP Bridge for iOS, Android and WebAssembly  
 [GitHub](https://github.com/nventive/Uno)  
+
+### Unstream
+[Store](https://www.microsoft.com/en-us/store/p/unstream/9wzdncrcwb0g)  
 
 ### Uwp Companion
 Redirect various websites to a preferred third party UWP app  
@@ -117,8 +137,11 @@ An Instagram Universal Experience
 A third-party modern Spotify experience built for Windows 10  
 [Store](https://www.microsoft.com/en-us/p/xpotify-a-modern-spotify-experience-for-windows-10/9n1n68mc7fxr)  
 
-### XYZ Anime Player
+### XYZ Anime Player EX
+[Store](https://www.microsoft.com/en-us/store/p/xyz-anime-player-ex/9nblggh6d375)  
+
 ### Youtube App Launcher
+[Github](https://github.com/colinkiama/Youtube-App-Launcher-UWP)  
 
 ### Title
 Description client  
