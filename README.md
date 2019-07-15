@@ -48,6 +48,7 @@ The highly praised YouTube client
 
 ### Nightingale
 A fast and resource-efficient REST API client.  
+![Image](https://bn1305files.storage.live.com/y4mc94a8nRLMn0hiZ1sDFGcBQaMDNAjyXUIf0hUgHZBTIdoEwr1xQNxEIhyoNxQ6D441HCYJuOU5pwW3cbZN_iJCeljt3MJcrZUg2jNQf9uKkYHWsSuUOMPjWDnKx2UoDCiJKQNMkk8dp1MmgyphQerO7RCjf1z1zz0tCfr7_0QA_NGvPqOBk7vbZdcVTaKpkQJ4JalNbrHS1EU9d_s7QZZXg/hero3.png?psid=1&width=480&height=270)
 [Store](https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn)  
 
 ### OneLocker
