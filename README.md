@@ -11,7 +11,7 @@ A list of the UWP Community Projects
 
 ### Bullet Journal Touch
 A Windows 10 Bullet Journal 
-![Image](http://valleysoftware.com.au/wp-content/uploads/2018/11/2018-11-06-4.png)  
+![Image](http://www.valleysoftware.com.au/wp-content/uploads/2019/07/1-2.png)  
 [Store](https://www.microsoft.com/store/apps/9NK7BHNKDXD0?cid=uwpcommunitydiscord) 
 
 ### Cafeine
@@ -33,7 +33,7 @@ Media library integrated with multiple online services ( Anilist, MAL, Kitsu ) i
 [Store](https://www.microsoft.com/en-us/store/p/diarium-private-diary-daily-journal/9nblggh4vzz1)  
 
 ### Easy Writer  
-Cloud hosted Writing tool for Windows 10.  
+Cloud hosted markdown writing tool for Windows 10.  
 ![Image](http://valleysoftware.com.au/wp-content/uploads/2018/07/4.png)  
 [Store](https://www.microsoft.com/store/apps/9NX9T1MT590V?cid=uwpcommunitydiscord)  
 
@@ -47,6 +47,11 @@ Github client
 
 ### Huetro for Hue
 [Store](https://www.microsoft.com/en-us/store/p/huetro-for-hue/9wzdncrfjj3t)  
+
+### Image Preview
+A lightweight Image Previewer app in the spirit of the Windows 7 one but with Ink, Share and more. (free with ads).  
+![Image](http://www.valleysoftware.com.au/wp-content/uploads/2019/07/d.png)  
+[Store](https://www.microsoft.com/store/apps/9PMWBM6MWHGT?cid=uwpcommunitydiscord) 
 
 ### Legere
 A modern, powerful and full-featured Reddit client  
@@ -159,6 +164,11 @@ A third-party modern Spotify experience built for Windows 10
 
 ### XYZ Anime Player EX
 [Store](https://www.microsoft.com/en-us/store/p/xyz-anime-player-ex/9nblggh6d375)  
+
+### Year in Pixels
+A Year based Pixel diary app 
+![Image](http://valleysoftware.com.au/wp-content/uploads/2018/11/2018-11-06-4.png)  
+[Store](https://www.microsoft.com/store/apps/9PN9BC89FCM0?cid=uwpcommunitydiscord) 
 
 ### Youtube App Launcher
 [Github](https://github.com/colinkiama/Youtube-App-Launcher-UWP)  
