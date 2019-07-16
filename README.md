@@ -24,7 +24,10 @@ Media library integrated with multiple online services ( Anilist, MAL, Kitsu ) i
 [Store](https://www.microsoft.com/en-us/p/clamour/9nblggh4wr0f)    
 
 ### Cryptotracker
+Minimal fluent crypto-currency tracker for Windows 10
+![image](https://raw.githubusercontent.com/ismaelestalayo/CryptoTracker/master/Screenshots/promo/Hero-art.png)
 [Store](https://www.microsoft.com/en-us/p/cryptotracker/9n3b47hbvblc)  
+[GitHub](https://github.com/ismaelestalayo/cryptotracker)
 
 ### Devrant Uwp
 [Store](https://www.microsoft.com/en-us/store/p/devrant-uwp/9nblggh43lxr)  
