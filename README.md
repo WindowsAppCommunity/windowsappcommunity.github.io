@@ -3,8 +3,11 @@ A list of the UWP Community Projects
 [Launch 2019](https://medium.com/@Arlodottxt/launch-2019-7efd37cc0877)  
 [Join the UWP Community Discord Server](https://discord.gg/eBHZSKG)  
 
-### Bandsaround Concerts
-### Bread Player
+### Bandsaround Concerts  
+[Store](https://www.microsoft.com/en-us/store/p/bandsaround-concerts/9wzdncrcwn7c)  
+
+### Bread Player  
+[Store](https://www.microsoft.com/en-us/store/p/bread-player/9nblggh42srx)  
 
 ### Bullet Journal Touch
 A Windows 10 Bullet Journal 
@@ -27,6 +30,7 @@ Media library integrated with multiple online services ( Anilist, MAL, Kitsu ) i
 [Store](https://www.microsoft.com/en-us/store/p/devrant-uwp/9nblggh43lxr)  
 
 ### Diarium  
+[Store](https://www.microsoft.com/en-us/store/p/diarium-private-diary-daily-journal/9nblggh4vzz1)  
 
 ### Easy Writer  
 Cloud hosted Writing tool for Windows 10.  
