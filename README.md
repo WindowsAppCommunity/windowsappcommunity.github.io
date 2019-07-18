@@ -16,6 +16,8 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 	* [Video players](#video-players)
 	* [Image viewers](#image-viewers)
 	* [Notes](#notes)
+	* [Streaming](#Streaming)
+	* [Music](#Music)
 
 - Communication
 	* [Discord](#discord)
@@ -25,6 +27,8 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 - Social
 	* [Entertainment](#entertainment)
+	* [4chan](#4chan)
+	* [Instagram](#Instagram)
 
 - Financial
 	* [Cryptocurrencies](#cryptocurrencies)
@@ -37,6 +41,13 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 - Misc
 	* [Journal](#journal)
+	* [Kanban](#Kanban)
+	* [Anime](#Anime)
+	* [Security](#Security)
+	* [Misc](#Misc)
+
+- DevTools
+	* [Misc](#Misc)
 	
 ### Multimedia
 
