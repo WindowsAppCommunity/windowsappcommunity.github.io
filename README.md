@@ -104,6 +104,49 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9nx9t1mt590v)
 
+#### Streaming
+
+* Mixplay for Mixer  
+Mixer Go becomes Mixplay for Mixer  
+Mixplay is a rich client for Mixer | Interactive Streaming service owned by Microsoft featuring Fluent UI design.  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/mixplay-for-mixer/9pn94d9bdfzm)  
+
+* MyTube  
+The highly praised YouTube client  
+![Image](https://miro.medium.com/max/3000/1*msNzZUSTSG58GhwaClduIg.png)  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/mytube-beta/9wzdncrdt29j)  
+
+* Podcasted  
+Podcasted is set to be the most immersive podcast app on Windows Universal Platforms.  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/podcasted/9nxwgr2b1p26)
+
+* Spotimo  
+A groove-inspired, fully featured Spotify client  
+![image](https://miro.medium.com/max/3000/1*mfLtAGfkGASRyagKKKWK-g.png)
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/spotimo-beta/9p75w183m6qr)
+
+* Unstream
+Unstream is an unofficial Twitch.tv application for the Universal Windows Platform.  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/unstream/9wzdncrcwb0g)
+
+* Xpotify  
+A third-party modern Spotify experience built for Windows 10  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/xpotify-a-modern-spotify-experience-for-windows-10/9n1n68mc7fxr)
+
+* Youtube App Launcher  
+Opens youtube links, parses the VideoID out of them, then uses the ID to launch videos in other Windows 10 YouTube apps using their URI schemes  
+[![GitHub](icons/github.png)](https://github.com/colinkiama/Youtube-App-Launcher-UWP)
+
+#### Music
+
+* SoundByte  
+SoundByte is a music client for Windows 10 & Xbox One supporting online streaming services such as SoundCloud and YouTube alongside local playback.  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/soundbyte-music-player/9nblggh4xbjg)
+
+* UniversalSoundBoard  
+Create your own soundboard with UniversalSoundboard!  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9NBLGGH51005)
+
 ### Communication
 
 #### Discord
@@ -119,6 +162,11 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9nblggh4wr0f)
 [![Discord](icons/discord.png)](https://discordapp.com/invite/b5Kkdkd)
+
+* Quarrel  
+A frequently updated Discord client for all Windows devices  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/quarrel/9nbrwj777c8r)
+[![GitHub](icons/github.png)](https://github.com/Avid29/Quarrel)
 
 #### devRant
 
@@ -174,6 +222,17 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 ![Bandsaround Concerts](screenshots/9wzdncrcwn7c.bandsaround-concerts.png)
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9wzdncrcwn7c)
+
+#### 4chan
+* Voyer  
+UWP 4chan client for Windows 10 and Windows 10 Mobile.  
+![Image](http://valleysoftware.com.au/wp-content/uploads/2017/02/2400x1200-e1514782255962.png)
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9MW7JNFM85FL?cid=uwpcommunitydiscord)
+
+#### Instagram
+* Winsta  
+An Instagram Universal Experience  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/winsta-an-instagram-universal-experience/9pnzdjkxnqvk)
 
 ### Financial
 
@@ -238,21 +297,11 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9nblggh4vzz1)
 
-### TODO
-
-* Finish sorting (progress : 15/42)
-* Add per-domain comparison tables & make contribution guide
-* Add Screenshot
-* Add Github if present
-* Make contribution guidelines
-* Add new apps
-
-#### ToDO
-
+#### Kanban
 * Kanban Ink  
 Kanban for Windows 10, with an Ink Whiteboard  
 ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png)  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9P5RSNPRQRMD?cid=Launch2019)  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9P5RSNPRQRMD?cid=Launch2019) 
 
 #### Anime
 
@@ -263,54 +312,6 @@ The most complete unofficial UWP client for MyAnimeList, built for Windows 10!
 * XYZ Anime Player EX  
 XYZ Anime Player EX is an updated and enhanced version of the original XYZ Anime Player.  
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/xyz-anime-player-ex/9nblggh6d375)
-
-#### Streaming
-
-* Mixplay for Mixer  
-Mixer Go becomes Mixplay for Mixer  
-Mixplay is a rich client for Mixer | Interactive Streaming service owned by Microsoft featuring Fluent UI design.  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/mixplay-for-mixer/9pn94d9bdfzm)  
-
-* MyTube  
-The highly praised YouTube client  
-![Image](https://miro.medium.com/max/3000/1*msNzZUSTSG58GhwaClduIg.png)  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/mytube-beta/9wzdncrdt29j)  
-
-* Podcasted  
-Podcasted is set to be the most immersive podcast app on Windows Universal Platforms.  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/podcasted/9nxwgr2b1p26)
-
-* Spotimo  
-A groove-inspired, fully featured Spotify client  
-![image](https://miro.medium.com/max/3000/1*mfLtAGfkGASRyagKKKWK-g.png)
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/spotimo-beta/9p75w183m6qr)
-
-* Unstream
-Unstream is an unofficial Twitch.tv application for the Universal Windows Platform.  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/unstream/9wzdncrcwb0g)
-
-* Xpotify  
-A third-party modern Spotify experience built for Windows 10  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/xpotify-a-modern-spotify-experience-for-windows-10/9n1n68mc7fxr)
-
-* Youtube App Launcher  
-Opens youtube links, parses the VideoID out of them, then uses the ID to launch videos in other Windows 10 YouTube apps using their URI schemes  
-[![GitHub](icons/github.png)](https://github.com/colinkiama/Youtube-App-Launcher-UWP)
-
-#### DevTools
-
-* Nightingale  
-A fast and resource-efficient REST API client.  
-![Image](https://bn1305files.storage.live.com/y4mc94a8nRLMn0hiZ1sDFGcBQaMDNAjyXUIf0hUgHZBTIdoEwr1xQNxEIhyoNxQ6D441HCYJuOU5pwW3cbZN_iJCeljt3MJcrZUg2jNQf9uKkYHWsSuUOMPjWDnKx2UoDCiJKQNMkk8dp1MmgyphQerO7RCjf1z1zz0tCfr7_0QA_NGvPqOBk7vbZdcVTaKpkQJ4JalNbrHS1EU9d_s7QZZXg/hero3.png?psid=1&width=480&height=270)  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn)  
-
-* Stack 10  
-Stack 10 is a UWP Stack Exchange client for Stack Exchange Network.  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/stack-10/9nblggh5361b)
-
-* Uno Platform  
-Uno Platform - The UWP Bridge for iOS, Android and WebAssembly  
-[![GitHub](icons/github.png)](https://github.com/nventive/Uno)
 
 #### Security
 
@@ -357,30 +358,28 @@ A Year based Pixel diary app
 ![Image](http://valleysoftware.com.au/wp-content/uploads/2018/11/2018-11-06-4.png)
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9PN9BC89FCM0?cid=uwpcommunitydiscord) 
 
-#### Discord
 
-* Quarrel  
-A frequently updated Discord client for all Windows devices  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/quarrel/9nbrwj777c8r)
-[![GitHub](icons/github.png)](https://github.com/Avid29/Quarrel)
+### DevTools
 
-#### Music
+#### Misc
 
-* SoundByte  
-SoundByte is a music client for Windows 10 & Xbox One supporting online streaming services such as SoundCloud and YouTube alongside local playback.  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/soundbyte-music-player/9nblggh4xbjg)
+* Nightingale  
+A fast and resource-efficient REST API client.  
+![Image](https://bn1305files.storage.live.com/y4mc94a8nRLMn0hiZ1sDFGcBQaMDNAjyXUIf0hUgHZBTIdoEwr1xQNxEIhyoNxQ6D441HCYJuOU5pwW3cbZN_iJCeljt3MJcrZUg2jNQf9uKkYHWsSuUOMPjWDnKx2UoDCiJKQNMkk8dp1MmgyphQerO7RCjf1z1zz0tCfr7_0QA_NGvPqOBk7vbZdcVTaKpkQJ4JalNbrHS1EU9d_s7QZZXg/hero3.png?psid=1&width=480&height=270)  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn)  
 
-* UniversalSoundBoard  
-Create your own soundboard with UniversalSoundboard!  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9NBLGGH51005)
+* Stack 10  
+Stack 10 is a UWP Stack Exchange client for Stack Exchange Network.  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/stack-10/9nblggh5361b)
 
-#### Social
+* Uno Platform  
+Uno Platform - The UWP Bridge for iOS, Android and WebAssembly  
+[![GitHub](icons/github.png)](https://github.com/nventive/Uno)
 
-* Voyer  
-UWP 4chan client for Windows 10 and Windows 10 Mobile.  
-![Image](http://valleysoftware.com.au/wp-content/uploads/2017/02/2400x1200-e1514782255962.png)
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9MW7JNFM85FL?cid=uwpcommunitydiscord)
 
-* Winsta  
-An Instagram Universal Experience  
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/winsta-an-instagram-universal-experience/9pnzdjkxnqvk)
+##### TODO
+* Add per-domain comparison tables & make contribution guide
+* Add Screenshot
+* Add Github if present
+* Make contribution guidelines
+* Add new apps
