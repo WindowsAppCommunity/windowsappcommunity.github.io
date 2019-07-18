@@ -53,9 +53,9 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 #### File explorers
 
-| &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |
+<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |
 |:------ |:---:|:------:|:----:|:---------------:|:-------:|:----:|:-----------:|:-----------:|
-| Files UWP | ✔ | ? | ? | * | ? | ? | ? | ✔
+| Files UWP | ✔ | ? | ? | * | ? | ? | ? | ✔ -->
 
 * Files UWP — More than just a rewrite of Windows Explorer
 
