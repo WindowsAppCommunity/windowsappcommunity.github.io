@@ -122,55 +122,69 @@ distraction free writing with Markdown
 
 ### Streaming
 
-#### Mixplay for Mixer  
-Mixer Go becomes Mixplay for Mixer  
-Mixplay is a rich client for Mixer | Interactive Streaming service owned by Microsoft featuring Fluent UI design.  
+#### Mixplay for Mixer
+Mixer Go becomes Mixplay for Mixer
+Mixplay is a rich client for Mixer | Interactive Streaming service owned by Microsoft featuring Fluent UI design.
 
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/mixplay-for-mixer/9pn94d9bdfzm)  
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
-#### MyTube  
-The highly praised YouTube client  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/mixplay-for-mixer/9pn94d9bdfzm)
 
-![Image](https://miro.medium.com/max/3000/1*msNzZUSTSG58GhwaClduIg.png)  
+#### MyTube
+The highly praised YouTube client
 
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/mytube-beta/9wzdncrdt29j)  
+![Image](https://miro.medium.com/max/3000/1*msNzZUSTSG58GhwaClduIg.png)
 
-#### Podcasted  
-Podcasted is set to be the most immersive podcast app on Windows Universal Platforms.  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/mytube-beta/9wzdncrdt29j)
+
+#### Podcasted
+Podcasted is set to be the most immersive podcast app on Windows Universal Platforms.
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/podcasted/9nxwgr2b1p26)
 
-#### Spotimo  
-A groove-inspired, fully featured Spotify client  
+#### Spotimo
+A groove-inspired, fully featured Spotify client
 
 ![image](https://miro.medium.com/max/3000/1*mfLtAGfkGASRyagKKKWK-g.png)
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/spotimo-beta/9p75w183m6qr)
 
-####* Unstream
-Unstream is an unofficial Twitch.tv application for the Universal Windows Platform.  
+#### Unstream
+Unstream is an unofficial Twitch.tv application for the Universal Windows Platform.
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/unstream/9wzdncrcwb0g)
 
-#### Xpotify  
-A third-party modern Spotify experience built for Windows 10  
+#### Xpotify
+A third-party modern Spotify experience built for Windows 10
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/xpotify-a-modern-spotify-experience-for-windows-10/9n1n68mc7fxr)
 
-#### Youtube App Launcher  
-Opens youtube links, parses the VideoID out of them, then uses the ID to launch videos in other Windows 10 YouTube apps using their URI schemes  
+#### Youtube App Launcher
+Opens youtube links, parses the VideoID out of them, then uses the ID to launch videos in other Windows 10 YouTube apps using their URI schemes
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![GitHub](icons/github.png)](https://github.com/colinkiama/Youtube-App-Launcher-UWP)
 
 ### Music
 
-#### SoundByte  
-SoundByte is a music client for Windows 10 & Xbox One supporting online streaming services such as SoundCloud and YouTube alongside local playback.  
+#### SoundByte
+SoundByte is a music client for Windows 10 & Xbox One supporting online streaming services such as SoundCloud and YouTube alongside local playback.
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/soundbyte-music-player/9nblggh4xbjg)
 
-#### UniversalSoundBoard  
-Create your own soundboard with UniversalSoundboard!  
+#### UniversalSoundBoard
+Create your own soundboard with UniversalSoundboard!
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9NBLGGH51005)
 
@@ -191,8 +205,10 @@ Please note this is a third party app and is not endorsed by, or associated with
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9nblggh4wr0f)
 [![Discord](icons/discord.png)](https://discordapp.com/invite/b5Kkdkd)
 
-#### Quarrel  
-A frequently updated Discord client for all Windows devices  
+#### Quarrel
+A frequently updated Discord client for all Windows devices
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/quarrel/9nbrwj777c8r)
 [![GitHub](icons/github.png)](https://github.com/Avid29/Quarrel)
@@ -231,6 +247,8 @@ Legere is a modern, powerful and full-featured Reddit client, built from the gro
 | LightSocial | ✔ | ✔ | ? | ✔ | ? | * | ✘ | ✘ -->
 
 #### LightSocial
+LightSocial has been downloaded 500,000 times! Thanks for your support!
+Features
 
 *[Contribute by providing a PC screenshot]*
 
@@ -244,7 +262,7 @@ Legere is a modern, powerful and full-featured Reddit client, built from the gro
 
 ### Entertainment
 
-<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |  
+<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |
 |:------ |:---:|:------:|:----:|:---------------:|:-------:|:----:|:-----------:|:-----------:|
 | Bandsaround Concerts | ? | ? | ? | ✔ | ? | ✘ | ? | ? -->
 
@@ -257,8 +275,8 @@ An unofficial Bandsintown application
 
 ### 4chan
 
-#### Voyer  
-UWP 4chan client for Windows 10 and Windows 10 Mobile.  
+#### Voyer
+UWP 4chan client for Windows 10 and Windows 10 Mobile.
 
 ![Image](http://valleysoftware.com.au/wp-content/uploads/2017/02/2400x1200-e1514782255962.png)
 
@@ -266,8 +284,8 @@ UWP 4chan client for Windows 10 and Windows 10 Mobile.
 
 ### Instagram
 
-#### Winsta  
-An Instagram Universal Experience  
+#### Winsta
+An Instagram Universal Experience
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/winsta-an-instagram-universal-experience/9pnzdjkxnqvk)
 
@@ -275,7 +293,7 @@ An Instagram Universal Experience
 
 ### Cryptocurrencies
 
-<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |  
+<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |
 |:------ |:---:|:------:|:----:|:---------------:|:-------:|:----:|:-----------:|:-----------:|
 | CryptoTracker | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ? | ✔ -->
 
@@ -291,7 +309,7 @@ Simple yet powerful cryptocurrency tracker for Windows 10
 
 ### Philips Hue
 Huetro is the best Hue app on the Windows Store
-<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |  
+<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |
 |:------ |:---:|:------:|:----:|:---------------:|:-------:|:----:|:-----------:|:-----------:|
 | Huetro for Hue | ✔ | ✔ | ✔ | ✔ | ? | ✔ | ? | ✔ -->
 
@@ -303,7 +321,7 @@ Huetro is the best Hue app on the Windows Store
 
 ### Network
 
-<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |  
+<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |
 |:------ |:---:|:------:|:----:|:---------------:|:-------:|:----:|:-----------:|:-----------:|
 | Littledot | ✔ | ? | ? | ✔ | ? | ✔ | ? | ? -->
 
@@ -319,7 +337,7 @@ Simplified DNS over TLS for Windows 10
 
 ### Journal
 
-<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |  
+<!-- | &nbsp; | PC  | Mobile | Xbox | 1-click install | Ad-free | Free | In-app free | Open source |
 |:------ |:---:|:------:|:----:|:---------------:|:-------:|:----:|:-----------:|:-----------:|
 | Bullet Journal Touch | ? | ? | ? | ✔ | ? | ✔ | ✘ | ?
 | Diarium | ✔ | ✔ | ? | ✔ | ? | ✘ | ? | ? -->
@@ -340,31 +358,37 @@ Keep all your precious memories in one place and remind you to write down your e
 
 ### Kanban
 
-#### Kanban Ink  
-Kanban for Windows 10, with an Ink Whiteboard  
+#### Kanban Ink
+Kanban for Windows 10, with an Ink Whiteboard
 
-![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png)  
+![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png)
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9P5RSNPRQRMD?cid=Launch2019) 
 
 ### Anime
 
-#### MALClient  
-The most complete unofficial UWP client for MyAnimeList, built for Windows 10!  
+#### MALClient
+The most complete unofficial UWP client for MyAnimeList, built for Windows 10!
 
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/malclient/9nblggh5f3bl)  
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
-#### XYZ Anime Player EX  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/malclient/9nblggh5f3bl)
+
+#### XYZ Anime Player EX
 XYZ Anime Player EX is an updated and enhanced version of the original XYZ Anime Player. 
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/xyz-anime-player-ex/9nblggh6d375)
 
 ### Security
 
-#### OneLocker  
-OneLocker is a complete, powerful and feature-packed Universal password manager for Windows 10.  
+#### OneLocker
+OneLocker is a complete, powerful and feature-packed Universal password manager for Windows 10.
 
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/onelocker-password-manager/9nblggh3t7g3)  
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
+
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/onelocker-password-manager/9nblggh3t7g3)
 
 #### Private Files
 File locker for Windows 10 with Windows Hello security 
@@ -375,42 +399,52 @@ File locker for Windows 10 with Windows Hello security
 
 ### Misc
 
-#### Pillbox  
-Pillbox is the most popular medication tracker app in the store thanks to its simplicity and ease-of-use  
+#### Pillbox
+Pillbox is the most popular medication tracker app in the store thanks to its simplicity and ease-of-use
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/pillbox/9nblggh4x7vb)
 
-#### Prayer Assistant  
-Prayer Assistant is the #1 Catholic prayer app, crafted with ❤ for Windows 10.  
+#### Prayer Assistant
+Prayer Assistant is the #1 Catholic prayer app, crafted with ❤ for Windows 10.
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/prayer-assistant-a-catholic-prayer-companion/9mvb8tqccdj4)
 
 #### Quick Pad
 Quick Pad - UWP Notepad
 
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
+
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/quick-pad-uwp-notepad/9pdlwqhtlsv3)
 [![GitHub](icons/github.png)](https://github.com/yaichenbaum/Quick-Pad)
 
-#### Roamit  
-Roamit brings your Windows 10 and Android devices a lot closer.  
+#### Roamit
+Roamit brings your Windows 10 and Android devices a lot closer.
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/roamit/9nrdffns92g1)
 
-#### Savidraw  
-SaviDraw – easy, fast, powerful. And you can talk to it. 15-day free trial.  
+#### Savidraw
+SaviDraw – easy, fast, powerful. And you can talk to it. 15-day free trial.
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/store/p/savidraw/9wzdncrdnkvb)
 
-#### Uwp Companion  
-Redirect various websites to a preferred third party UWP app  
+#### Uwp Companion
+Redirect various websites to a preferred third party UWP app
 
 ![image](https://miro.medium.com/max/1179/1*Vo4SpVbTIkOv9ToN0F1qTA.png)
 
 [![Microsoft Store](icons/msstore.png)](https://chrome.google.com/webstore/detail/uwp-companion-beta/egfgdliklfgpmdjfofbmhmoejdhehani)
 [![GitHub](icons/github.png)](https://github.com/Arlodotexe/UWP-Companion)
 
-#### Year in Pixels  
-A Year based Pixel diary app  
+#### Year in Pixels
+A Year based Pixel diary app
 
 ![Image](http://valleysoftware.com.au/wp-content/uploads/2018/11/2018-11-06-4.png)
 
@@ -420,20 +454,24 @@ A Year based Pixel diary app
 
 ### Misc
 
-#### Nightingale  
-A fast and resource-efficient REST API client.  
+#### Nightingale
+A fast and resource-efficient REST API client.
 
-![Image](https://bn1305files.storage.live.com/y4mc94a8nRLMn0hiZ1sDFGcBQaMDNAjyXUIf0hUgHZBTIdoEwr1xQNxEIhyoNxQ6D441HCYJuOU5pwW3cbZN_iJCeljt3MJcrZUg2jNQf9uKkYHWsSuUOMPjWDnKx2UoDCiJKQNMkk8dp1MmgyphQerO7RCjf1z1zz0tCfr7_0QA_NGvPqOBk7vbZdcVTaKpkQJ4JalNbrHS1EU9d_s7QZZXg/hero3.png?psid=1&width=480&height=270)  
+![Image](https://bn1305files.storage.live.com/y4mc94a8nRLMn0hiZ1sDFGcBQaMDNAjyXUIf0hUgHZBTIdoEwr1xQNxEIhyoNxQ6D441HCYJuOU5pwW3cbZN_iJCeljt3MJcrZUg2jNQf9uKkYHWsSuUOMPjWDnKx2UoDCiJKQNMkk8dp1MmgyphQerO7RCjf1z1zz0tCfr7_0QA_NGvPqOBk7vbZdcVTaKpkQJ4JalNbrHS1EU9d_s7QZZXg/hero3.png?psid=1&width=480&height=270)
 
-[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn)  
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/nightingale-rest-api-client/9n2t6f9f5zdn)
 
-#### Stack 10  
-Stack 10 is a UWP Stack Exchange client for Stack Exchange Network.  
+#### Stack 10
+Stack 10 is a UWP Stack Exchange client for Stack Exchange Network.
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/stack-10/9nblggh5361b)
 
-#### Uno Platform  
-Uno Platform - The UWP Bridge for iOS, Android and WebAssembly  
+#### Uno Platform
+Uno Platform - The UWP Bridge for iOS, Android and WebAssembly
+
+<!-- ![Image](http://valleysoftware.com.au/wp-content/uploads/2019/07/1-1.png) -->
 
 [![GitHub](icons/github.png)](https://github.com/nventive/Uno)
 
