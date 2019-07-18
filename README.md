@@ -50,7 +50,7 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 ![Files UWP](screenshots/duke7553.files-uwp.png)
 
-[![![GitHub](icons/github.png)](icons/github.png)](https://github.com/duke7553/files-uwp)
+[![GitHub](icons/github.png)](icons/github.png)](https://github.com/duke7553/files-uwp)
 
 \* *Join the private beta on UWP Community Discord, contact `Yair#3380`*
 
@@ -64,7 +64,7 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 ![Bread Player](screenshots/theweavrs.BreadPlayer.png)
 
-[![![GitHub](icons/github.png)](icons/github.png)](https://github.com/theweavrs/BreadPlayer)
+[![GitHub](icons/github.png)](icons/github.png)](https://github.com/theweavrs/BreadPlayer)
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9nblggh42srx)
 
 #### Video players
@@ -77,7 +77,7 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 ![Cafeine](screenshots/Nexxkinn.Cafeine.png)
 
-[![![GitHub](icons/github.png)](icons/github.png)](https://github.com/Nexxkinn/Cafeine)
+[![GitHub](icons/github.png)](icons/github.png)](https://github.com/Nexxkinn/Cafeine)
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9ng9s7q4q65r)
 
 #### Image viewers
@@ -130,7 +130,7 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 ![devRant UWP](screenshots/JakubSteplowski.devRantUWP.png)
 
-[![![GitHub](icons/github.png)](icons/github.png)](https://github.com/JakubSteplowski/devRantUWP)
+[![GitHub](icons/github.png)](icons/github.png)](https://github.com/JakubSteplowski/devRantUWP)
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9nblggh43lxr)
 
 #### Reddit
@@ -187,7 +187,7 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 ![CryptoTracker](screenshots/ismaelestalayo.CryptoTracker.png)
 
-[![![GitHub](icons/github.png)](icons/github.png)](https://github.com/ismaelestalayo/CryptoTracker)
+[![GitHub](icons/github.png)](icons/github.png)](https://github.com/ismaelestalayo/CryptoTracker)
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9n3b47hbvblc)
 
 ### IoT
@@ -214,7 +214,7 @@ Announcement : [UWP Community — Launch 2019](https://medium.com/@Arlodottxt/la
 
 ![Littledot](screenshots/Nexxkinn.Littledot.png)
 
-[![![GitHub](icons/github.png)](icons/github.png)](https://github.com/Nexxkinn/Littledot)
+[![GitHub](icons/github.png)](icons/github.png)](https://github.com/Nexxkinn/Littledot)
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9pm3vvlb6ndq)
 
 ### Misc
@@ -295,7 +295,7 @@ A third-party modern Spotify experience built for Windows 10
 
 * Youtube App Launcher  
 Opens youtube links, parses the VideoID out of them, then uses the ID to launch videos in other Windows 10 YouTube apps using their URI schemes  
-[Github](https://github.com/colinkiama/Youtube-App-Launcher-UWP)
+[![GitHub](icons/github.png)](https://github.com/colinkiama/Youtube-App-Launcher-UWP)
 
 #### DevTools
 
@@ -359,8 +359,8 @@ A Year based Pixel diary app
 
 #### Discord
 
-* Quarrel
-A frequently updated Discord client for all Windows devices
+* Quarrel  
+A frequently updated Discord client for all Windows devices  
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/en-us/p/quarrel/9nbrwj777c8r)
 [![GitHub](icons/github.png)](https://github.com/Avid29/Quarrel)
 
