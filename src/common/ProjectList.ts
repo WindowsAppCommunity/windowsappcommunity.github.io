@@ -2,8 +2,12 @@ const baseProductionCdnUrl =
   "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/";
 
 export interface Project {
-  label: string;
-  img: string;
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  github: string;
+  store: string;
 }
 
 export interface ProjectList {
@@ -13,16 +17,28 @@ export interface ProjectList {
 export const ProjectListConst: ProjectList = {
   projects: [
     {
-      label: "hello",
-      img: baseProductionCdnUrl + "document-preview.png"
+      id: "filesUwp",
+      title: "Files UWP",
+      description: "More than just a rewrite of Windows Explorer",
+      category: "",
+      github: "duke7553/files-uwp",
+      store: ""
     },
     {
-      label: "world",
-      img: baseProductionCdnUrl + "document-preview2.png"
+      id: "breadPlayer",
+      title: "Bread Player",
+      description: "Sleek & polish designed alternative to Groove and WMP",
+      category: "",
+      github: "theweavrs/BreadPlayer",
+      store: "9nblggh42srx"
     },
     {
-      label: "world2",
-      img: baseProductionCdnUrl + "document-preview3.png"
+      id: "id",
+      title: "title",
+      description: "description",
+      category: "category",
+      github: "github",
+      store: "store"
     }
   ]
 };

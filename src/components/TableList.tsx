@@ -6,7 +6,8 @@ import {
   DocumentCardTitle,
   DocumentCardDetails,
   DocumentCardImage,
-  IDocumentCardStyles
+  IDocumentCardStyles,
+  DocumentCardStatus
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { ImageFit } from "office-ui-fabric-react/lib/Image";
 
@@ -31,14 +32,18 @@ export const TableList = (props: TableListProps) => {
   // ));
 
   const items = props.projects.projects.map((item, key) => (
+
     <DocumentCard styles={cardStyles} onClickHref="http://bing.com">
       <DocumentCardImage
         height={150}
         imageFit={ImageFit.cover}
-        imageSrc={item.img}
+        imageSrc={"/screenshots/"+item.id+".png"}
       />
       <DocumentCardDetails>
-        <DocumentCardTitle title={item.label} shouldTruncate />
+        <DocumentCardTitle title={item.title} shouldTruncate />
+        <DocumentCardTitle title={item.description} showAsSecondaryTitle />
+        <DocumentCardStatus statusIcon="attach" status={item.github} />
+        <DocumentCardStatus statusIcon="attach" status={item.store} />        
       </DocumentCardDetails>
     </DocumentCard>
   ));

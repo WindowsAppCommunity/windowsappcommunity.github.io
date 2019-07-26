@@ -25,14 +25,14 @@ const cardStyles: IDocumentCardStyles = {
 export class TableListItem extends React.Component<TableListItemProps> {
   render() {
     return (
-      <DocumentCard styles={cardStyles} onClickHref="http://bing.com">
+      <DocumentCard styles={cardStyles}>
         <DocumentCardImage
           height={150}
           imageFit={ImageFit.cover}
-          imageSrc={this.props.project.img}
+          imageSrc={"/screenshots/"+this.props.project.id+".png"}
         />
         <DocumentCardDetails>
-          <DocumentCardTitle title={this.props.project.label} shouldTruncate />
+          <DocumentCardTitle title={this.props.project.title} shouldTruncate />
         </DocumentCardDetails>
       </DocumentCard>
     );
