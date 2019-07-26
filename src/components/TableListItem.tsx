@@ -25,7 +25,7 @@ const cardStyles: IDocumentCardStyles = {
 export class TableListItem extends React.Component<TableListItemProps> {
   render() {
     return (
-      <DocumentCard styles={cardStyles}>
+      <DocumentCard styles={cardStyles} onClickHref="http://bing.com">
         <DocumentCardImage
           height={150}
           imageFit={ImageFit.cover}

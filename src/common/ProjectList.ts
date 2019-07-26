@@ -1,5 +1,14 @@
-const baseProductionCdnUrl =
-  "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/";
+export const getSreenshotUrl = (id: string) => {
+  return "assets/screenshots/"+id+".png";
+}
+
+export const getStoreUrl = (id: string) => {
+  return "https://www.microsoft.com/store/apps/"+id;
+}
+
+export const getGitHubUrl = (id: string) => {
+  return "https://github.com/"+id;
+}
 
 export interface Project {
   id: string;

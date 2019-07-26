@@ -1,6 +1,6 @@
 import React from "react";
-import { ProjectList } from "../common/ProjectList";
-import { TableListItem } from "./TableListItem";
+import { ProjectList, getGitHubUrl, getSreenshotUrl, getStoreUrl } from "../common/ProjectList";
+// import { TableListItem } from "./TableListItem";
 import {
   DocumentCard,
   DocumentCardTitle,
@@ -33,17 +33,21 @@ export const TableList = (props: TableListProps) => {
 
   const items = props.projects.projects.map((item, key) => (
 
-    <DocumentCard styles={cardStyles} onClickHref="http://bing.com">
+    <DocumentCard styles={cardStyles}>
       <DocumentCardImage
         height={150}
         imageFit={ImageFit.cover}
-        imageSrc={"/screenshots/"+item.id+".png"}
+        imageSrc={getSreenshotUrl(item.id)}
       />
       <DocumentCardDetails>
-        <DocumentCardTitle title={item.title} shouldTruncate />
+        <DocumentCardTitle title={item.title} shouldTruncate/>
         <DocumentCardTitle title={item.description} showAsSecondaryTitle />
-        <DocumentCardStatus statusIcon="attach" status={item.github} />
-        <DocumentCardStatus statusIcon="attach" status={item.store} />        
+        <a href={getGitHubUrl(item.github)} target="_blank">
+          <DocumentCardStatus statusIcon="attach" status={item.github} />
+        </a>
+        <a href={getStoreUrl(item.store)} target="_blank">
+          <DocumentCardStatus statusIcon="attach" status={item.store} />
+        </a>     
       </DocumentCardDetails>
     </DocumentCard>
   ));
