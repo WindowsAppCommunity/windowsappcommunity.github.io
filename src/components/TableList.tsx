@@ -1,5 +1,6 @@
 import React from "react";
-import { ProjectList, getGitHubUrl, getSreenshotUrl, getStoreUrl } from "../common/ProjectList";
+import { getGitHubUrl, getSreenshotUrl, getStoreUrl, githubIcon, msstoreIcon } from "../common/const";
+import { ProjectList } from "../common/interfaces";
 // import { TableListItem } from "./TableListItem";
 import {
   DocumentCard,
@@ -10,6 +11,7 @@ import {
   DocumentCardStatus
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { ImageFit } from "office-ui-fabric-react/lib/Image";
+import { render } from "react-dom";
 
 interface TableListProps {
   projects: ProjectList;
@@ -23,6 +25,30 @@ const cardStyles: IDocumentCardStyles = {
     width: 320
   }
 };
+
+function Github(github:string) {
+  if (github) {
+    return (
+      <a href={getGitHubUrl(github)} target="_blank">
+      <img src={githubIcon}/>
+    </a>
+    );
+  }else{
+    return ("");
+  }
+}
+
+function Store(store:string) {
+  if (store) {
+    return (
+      <a href={getStoreUrl(store)} target="_blank">
+      <img src={msstoreIcon}/>
+    </a>
+    );
+  }else{
+    return ("");
+  }
+}
 
 export const TableList = (props: TableListProps) => {
   // return props.projects.projects.map((item, key) => (
@@ -42,12 +68,10 @@ export const TableList = (props: TableListProps) => {
       <DocumentCardDetails>
         <DocumentCardTitle title={item.title} shouldTruncate/>
         <DocumentCardTitle title={item.description} showAsSecondaryTitle />
-        <a href={getGitHubUrl(item.github)} target="_blank">
-          <DocumentCardStatus statusIcon="attach" status={item.github} />
-        </a>
-        <a href={getStoreUrl(item.store)} target="_blank">
-          <DocumentCardStatus statusIcon="attach" status={item.store} />
-        </a>     
+
+        {Github(item.github)}
+        
+        {Store(item.store)}
       </DocumentCardDetails>
     </DocumentCard>
   ));

@@ -1,5 +1,5 @@
 import React from "react";
-import { Project } from "../common/ProjectList";
+import { Project } from "../common/interfaces";
 import {
   DocumentCard,
   DocumentCardTitle,

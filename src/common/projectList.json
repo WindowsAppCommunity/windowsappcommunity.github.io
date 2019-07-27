@@ -1,0 +1,84 @@
+{
+    "projects": [
+      {
+        "id": "filesUwp",
+        "title": "Files UWP",
+        "description": "More than just a rewrite of Windows Explorer",
+        "category": "",
+        "github": "duke7553/files-uwp",
+        "store": ""
+      },
+      {
+        "id": "breadPlayer",
+        "title": "Bread Player",
+        "description": "Sleek & polish designed alternative to Groove and WMP",
+        "category": "",
+        "github": "theweavrs/BreadPlayer",
+        "store": "9nblggh42srx"
+      },
+      {
+        "id": "cafeine",
+        "title": "Cafeine",
+        "description": "Media library integrated with multiple online services in one UWP app",
+        "category": "",
+        "github": "Nexxkinn/Cafeine",
+        "store": "9ng9s7q4q65r"
+      },
+      {
+        "id": "imagePreview",
+        "title": "Image Preview",
+        "description": "Looking for a fast, low memory use image previewer supporting animated GIF, Video playback, next/previous, Zoom and more?",
+        "category": "",
+        "github": "",
+        "store": "9pmwbm6mwhgt"
+      },
+      {
+        "id": "easyWriter",
+        "title": "Easy Writer",
+        "description": "distraction free writing with Markdown",
+        "category": "",
+        "github": "",
+        "store": "9nx9t1mt590v"
+      },
+      {
+        "id": "mixplayForMixer",
+        "title": "Mixplay for Mixertle",
+        "description": "Mixer Go becomes Mixplay for Mixer. Mixplay is a rich client for Mixer | Interactive Streaming service owned by Microsoft featuring Fluent UI design.",
+        "category": "",
+        "github": "",
+        "store": "9pn94d9bdfzm"
+      },
+      {
+        "id": "myTube",
+        "title": "MyTube",
+        "description": "The highly praised YouTube client",
+        "category": "",
+        "github": "",
+        "store": "9wzdncrdt29j"
+      },
+      {
+        "id": "podcasted",
+        "title": "Podcasted",
+        "description": "Podcasted is set to be the most immersive podcast app on Windows Universal Platforms.",
+        "category": "",
+        "github": "",
+        "store": "9nxwgr2b1p26"
+      },
+      {
+        "id": "spotimo",
+        "title": "Spotimo",
+        "description": "A groove-inspired, fully featured Spotify client",
+        "category": "",
+        "github": "",
+        "store": "9p75w183m6qr"
+      },
+      {
+        "id": "id",
+        "title": "title",
+        "description": "description",
+        "category": "category",
+        "github": "github",
+        "store": "store"
+      }
+    ]
+  }  
