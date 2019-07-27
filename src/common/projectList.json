@@ -226,6 +226,14 @@
         "store": "9nrdffns92g1"
       },
       {
+        "id": "recipeCollection",
+        "title": "Recipe Collection",
+        "description": "A beautiful and simple recipe organizer. Import your favorite recipes straight from websites.",
+        "category": "",
+        "github": "",
+        "store": "9NTDRJCQ2P53"
+      },
+      {
         "id": "saviDraw",
         "title": "SaviDraw",
         "description": "SaviDraw – easy, fast, powerful. And you can talk to it. 15-day free trial.",
@@ -323,7 +331,7 @@
         "store": "9n1n68mc7fxr"
       },
       {
-        "id": "xyzAnimePlayerEX",
+        "id": "xyzAnimePlayerEx",
         "title": "XYZ Anime Player EX",
         "description": "XYZ Anime Player EX is an updated and enhanced version of the original XYZ Anime Player. ",
         "category": "",
