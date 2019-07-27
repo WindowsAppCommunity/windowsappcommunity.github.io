@@ -471,6 +471,16 @@ A Year based Pixel diary app
 
 [![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9PN9BC89FCM0) 
 
+
+#### Recipe Collection
+
+A beautiful and simple recipe organizer. Import your favorite recipes straight from websites.
+
+
+![Image](screenshots/RecipeCollection.png)
+
+[![Microsoft Store](icons/msstore.png)](https://www.microsoft.com/store/apps/9NTDRJCQ2P53) 
+
 ## DevTools
 
 ### Misc
