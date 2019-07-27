@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f60f3a5e986c471a47d2a8d677333648",
+    "revision": "b1be89a262af64714f768988740c2ace",
     "url": "/UwpCommunityProjects/index.html"
   },
   {
