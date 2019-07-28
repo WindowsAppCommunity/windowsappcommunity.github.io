@@ -10,6 +10,7 @@ import {
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
 import { getSreenshotUrl, getStoreUrl, getGitHubUrl, githubIcon, msstoreIcon, getDiscordUrl, discordIcon } from "../../common/const";
 import { Stack, Link, IStackItemStyles, IStackTokens } from "office-ui-fabric-react";
+import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
 
 interface ListItemProps {
   project: Project;
@@ -27,7 +28,8 @@ const cardStyles: IDocumentCardStyles = {
     display: "inline-block",
     marginRight: 10,
     marginBottom: 10,
-    width: 320
+    width: 320,
+    boxShadow: Depths.depth8
   }
 };
 
