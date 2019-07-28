@@ -9,7 +9,7 @@ interface TableHeaderProps {
 export class TableHeader extends React.Component<TableHeaderProps> {
   render() {
     return (
-      <Text variant="xxLarge">
+      <Text variant="xxLarge" style={{padding: 10}}>
         UWP Community Projects {this.props.a} {this.props.b}
       </Text>
     );

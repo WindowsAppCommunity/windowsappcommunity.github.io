@@ -11,7 +11,7 @@ export const Table: React.StatelessComponent = () => {
   return (
     <Stack horizontalAlign="center">
       <TableHeader a="" b="" />
-      <TableList projects={ProjectList} />
+      <TableList projects={ProjectList}/>
       <TableFooter a="" b="" />
     </Stack>
   );
