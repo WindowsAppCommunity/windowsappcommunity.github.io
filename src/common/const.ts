@@ -14,10 +14,10 @@ export const getDiscordUrl = (id: string) => {
   return `https://www.discord.gg/${id}`;
 }
 
-export const discordIcon = "/assets/img/discord.png";
+export const discordIcon = "assets/img/discord.png";
 
-export const githubIcon = "/assets/img/github.png";
+export const githubIcon = "assets/img/github.png";
 
-export const msstoreIcon = "/assets/img/msstore.png";
+export const msstoreIcon = "assets/img/msstore.png";
 
-export const logoIcon = "/assets/img/logo.png";
+export const logoIcon = "assets/img/logo.png";
