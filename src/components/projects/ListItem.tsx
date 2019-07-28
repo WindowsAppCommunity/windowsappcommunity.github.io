@@ -1,5 +1,5 @@
 import React from "react";
-import { Project } from "../common/interfaces";
+import { Project } from "../../common/interfaces";
 import {
   DocumentCard,
   DocumentCardTitle,
@@ -8,10 +8,10 @@ import {
   IDocumentCardStyles
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
-import { getSreenshotUrl, getStoreUrl, getGitHubUrl, githubIcon, msstoreIcon } from "../common/const";
+import { getSreenshotUrl, getStoreUrl, getGitHubUrl, githubIcon, msstoreIcon, getDiscordUrl, discordIcon } from "../../common/const";
 import { Stack, Link, IStackItemStyles, IStackTokens } from "office-ui-fabric-react";
 
-interface TableListItemProps {
+interface ListItemProps {
   project: Project;
 }
 
@@ -65,8 +65,22 @@ function Store(store: string) {
   }
 }
 
+function Discord(discord: string) {
+  if (discord) {
+    return (
+      <Stack.Item align="auto" styles={stackItemStyles}>
+        <Link href={getDiscordUrl(discord)} target="_blank">
+          <Image src={discordIcon} />
+        </Link>
+      </Stack.Item>
+    );
+  } else {
+    return ("");
+  }
+}
 
-export class TableListItem extends React.Component<TableListItemProps> {
+
+export class ListItem extends React.Component<ListItemProps> {
   render() {
     return (
       <DocumentCard styles={cardStyles}>
@@ -83,6 +97,8 @@ export class TableListItem extends React.Component<TableListItemProps> {
             {Github(this.props.project.github)}
 
             {Store(this.props.project.store)}
+
+            {/* {Discord(this.props.project.discord)} */}
           </Stack>
         </DocumentCardDetails>
       </DocumentCard>

@@ -1,9 +1,9 @@
 import React from "react";
-import { ProjectList } from "../common/interfaces";
-import { TableListItem } from "./TableListItem";
+import { ProjectList } from "../../common/interfaces";
+import { ListItem } from "./ListItem";
 import { Stack, IStackTokens, IStackStyles } from "office-ui-fabric-react";
 
-interface TableListProps {
+interface ListProps {
   projects: ProjectList;
 }
 
@@ -18,9 +18,9 @@ const stackStyles: IStackStyles = {
 const wrapStackTokens: IStackTokens = { childrenGap: 30 };
 
 
-export const TableList = (props: TableListProps) => {
+export const List = (props: ListProps) => {
   const items = props.projects.projects.map((item) => (
-    <TableListItem project={item} />
+    <ListItem project={item} />
   ));
 
   return (
