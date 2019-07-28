@@ -18,9 +18,9 @@ export const App: React.StatelessComponent = () => {
       <Header />
       {/* <Menu/> */}
       <Switch>
-        <Route exact path="/" component={Projects} />
+        {/* <Route exact path="/" component={Projects} /> */}
         <Route path="/about" component={About} />
-        <Route component={NotFound} />
+        <Route component={Projects} />
       </Switch>
       <Footer />
     </Router>
