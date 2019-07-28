@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/UwpCommunityProjects/static/js/main.c0e7f2f7.chunk.js",
-    "main.js.map": "/UwpCommunityProjects/static/js/main.c0e7f2f7.chunk.js.map",
+    "main.js": "/UwpCommunityProjects/static/js/main.59df8a20.chunk.js",
+    "main.js.map": "/UwpCommunityProjects/static/js/main.59df8a20.chunk.js.map",
     "runtime~main.js": "/UwpCommunityProjects/static/js/runtime~main.38fdb5e0.js",
     "runtime~main.js.map": "/UwpCommunityProjects/static/js/runtime~main.38fdb5e0.js.map",
-    "static/js/2.eccc1b83.chunk.js": "/UwpCommunityProjects/static/js/2.eccc1b83.chunk.js",
-    "static/js/2.eccc1b83.chunk.js.map": "/UwpCommunityProjects/static/js/2.eccc1b83.chunk.js.map",
+    "static/js/2.68ca2046.chunk.js": "/UwpCommunityProjects/static/js/2.68ca2046.chunk.js",
+    "static/js/2.68ca2046.chunk.js.map": "/UwpCommunityProjects/static/js/2.68ca2046.chunk.js.map",
     "index.html": "/UwpCommunityProjects/index.html",
-    "precache-manifest.0d1e703a92748ac9d6b68b487c3b34b1.js": "/UwpCommunityProjects/precache-manifest.0d1e703a92748ac9d6b68b487c3b34b1.js",
+    "precache-manifest.bbc096f7777d871dd1f0edd14913a5e7.js": "/UwpCommunityProjects/precache-manifest.bbc096f7777d871dd1f0edd14913a5e7.js",
     "service-worker.js": "/UwpCommunityProjects/service-worker.js"
   }
 }

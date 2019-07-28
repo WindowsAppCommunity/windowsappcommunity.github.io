@@ -5,7 +5,7 @@ export interface Project {
   category: string;
   github: string;
   store: string;
-  // discord: string | null | undefined;
+  discord?: string;
 }
 
 export interface ProjectList {

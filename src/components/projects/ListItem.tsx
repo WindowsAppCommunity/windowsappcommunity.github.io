@@ -67,7 +67,7 @@ function Store(store: string) {
   }
 }
 
-function Discord(discord: string) {
+function Discord(discord?: string) {
   if (discord) {
     return (
       <Stack.Item align="auto" styles={stackItemStyles}>
@@ -100,7 +100,7 @@ export class ListItem extends React.Component<ListItemProps> {
 
             {Store(this.props.project.store)}
 
-            {/* {Discord(this.props.project.discord)} */}
+            {Discord(this.props.project.discord)}
           </Stack>
         </DocumentCardDetails>
       </DocumentCard>
