@@ -143,6 +143,11 @@ A third-party modern Spotify experience built for Windows 10
 ### Youtube App Launcher
 [Github](https://github.com/colinkiama/Youtube-App-Launcher-UWP)  
 
+### Youtubeast
+Probably a nice Youtube client app which is optimized for Windows 10 PC with mouse. 
+![Image](https://res.cloudinary.com/dfbht6vj9/image/upload/v1564411847/Youtubeast_player_T1-min_zosacu.png)  
+[Store](https://www.microsoft.com/store/productId/9NBLGGH50VP8)
+
 ### Title
 Description client  
 ![Image](src)  
