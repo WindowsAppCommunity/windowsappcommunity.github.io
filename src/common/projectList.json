@@ -353,6 +353,14 @@
         "category": "",
         "github": "colinkiama/Youtube-App-Launcher-UWP",
         "store": ""
+      },
+      {
+        "id": "youtubeast",
+        "title": "Youtubeast",
+        "description": "Probably a nice Youtube client app which is optimized for Windows 10 PC with mouse.",
+        "category": "",
+        "github": "",
+        "store": "9NBLGGH50VP8"
       }
     ]
   }
