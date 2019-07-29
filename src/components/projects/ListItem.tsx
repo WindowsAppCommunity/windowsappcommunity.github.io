@@ -8,7 +8,7 @@ import {
   IDocumentCardStyles
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
-import { getSreenshotUrl, getStoreUrl, getGitHubUrl, githubIcon, msstoreIcon, getDiscordUrl, discordIcon } from "../../common/const";
+import { getSreenshotUrl, getStoreUrl, getGitHubUrl, githubBadge, msstoreBadge, getDiscordUrl, discordBadge } from "../../common/const";
 import { Stack, Link, IStackItemStyles, IStackTokens } from "office-ui-fabric-react";
 import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
 
@@ -44,7 +44,7 @@ function Github(github: string) {
     return (
       <Stack.Item align="auto" styles={stackItemStyles}>
         <Link href={getGitHubUrl(github)} target="_blank">
-          <Image src={githubIcon} />
+          <Image src={githubBadge} />
         </Link>
       </Stack.Item>
     );
@@ -58,7 +58,7 @@ function Store(store: string) {
     return (
       <Stack.Item align="auto" styles={stackItemStyles}>
         <Link href={getStoreUrl(store)} target="_blank">
-          <Image src={msstoreIcon} />
+          <Image src={msstoreBadge} />
         </Link>
       </Stack.Item>
     );
@@ -72,7 +72,7 @@ function Discord(discord?: string) {
     return (
       <Stack.Item align="auto" styles={stackItemStyles}>
         <Link href={getDiscordUrl(discord)} target="_blank">
-          <Image src={discordIcon} />
+          <Image src={discordBadge} />
         </Link>
       </Stack.Item>
     );

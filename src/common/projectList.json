@@ -79,7 +79,7 @@
         "description": "More than just a rewrite of Windows Explorer",
         "category": "",
         "github": "duke7553/files-uwp",
-        "store": ""
+        "store": "9NGHP3DX8HDX"
       },
       {
         "id": "huetroForHue",
@@ -139,7 +139,7 @@
       },
       {
         "id": "mixplayForMixer",
-        "title": "Mixplay for Mixertle",
+        "title": "Mixplay for Mixer",
         "description": "Mixer Go becomes Mixplay for Mixer. Mixplay is a rich client for Mixer | Interactive Streaming service owned by Microsoft featuring Fluent UI design.",
         "category": "",
         "github": "",
@@ -353,14 +353,6 @@
         "category": "",
         "github": "colinkiama/Youtube-App-Launcher-UWP",
         "store": ""
-      },
-      {
-        "id": "id",
-        "title": "title",
-        "description": "description",
-        "category": "category",
-        "github": "github",
-        "store": "store"
       }
     ]
   }
