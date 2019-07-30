@@ -40,3 +40,4 @@ spec/out/
 
 # Safe files
 _key*
+/.vs
