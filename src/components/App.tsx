@@ -2,14 +2,12 @@ import * as React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Link
-} from 'react-router-dom';
+  Switch} from 'react-router-dom';
 import { About } from './About';
 import { Projects } from './Projects';
-import { NotFound } from './NotFound';
+// import { NotFound } from './NotFound';
 import { Header } from "./app/Header";
-import { Menu } from "./app/Menu";
+// import { Menu } from "./app/Menu";
 import { Footer } from "./app/Footer";
 
 export const App: React.StatelessComponent = () => {
