@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/UwpCommunityProjects/static/js/main.711627ae.chunk.js",
-    "main.js.map": "/UwpCommunityProjects/static/js/main.711627ae.chunk.js.map",
+    "main.js": "/UwpCommunityProjects/static/js/main.426d56e7.chunk.js",
+    "main.js.map": "/UwpCommunityProjects/static/js/main.426d56e7.chunk.js.map",
     "runtime~main.js": "/UwpCommunityProjects/static/js/runtime~main.38fdb5e0.js",
     "runtime~main.js.map": "/UwpCommunityProjects/static/js/runtime~main.38fdb5e0.js.map",
     "static/js/2.06936c56.chunk.js": "/UwpCommunityProjects/static/js/2.06936c56.chunk.js",
     "static/js/2.06936c56.chunk.js.map": "/UwpCommunityProjects/static/js/2.06936c56.chunk.js.map",
     "index.html": "/UwpCommunityProjects/index.html",
-    "precache-manifest.e213ce6e4bfccc8781ef8df2d37ab3e5.js": "/UwpCommunityProjects/precache-manifest.e213ce6e4bfccc8781ef8df2d37ab3e5.js",
+    "precache-manifest.8a9d0a9e195904cdab9ab16d237aaf15.js": "/UwpCommunityProjects/precache-manifest.8a9d0a9e195904cdab9ab16d237aaf15.js",
     "service-worker.js": "/UwpCommunityProjects/service-worker.js"
   }
 }
