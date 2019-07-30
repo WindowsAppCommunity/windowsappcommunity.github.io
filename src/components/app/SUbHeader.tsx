@@ -6,7 +6,7 @@ interface HeaderProps {
   subTitle: string;
 }
 
-export class SUbHeader extends React.Component<HeaderProps> {
+export class SubHeader extends React.Component<HeaderProps> {
   render() {
     return (
       <Stack horizontal horizontalAlign="center">
