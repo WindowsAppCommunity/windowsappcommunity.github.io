@@ -114,11 +114,19 @@
       "store": "9P5RSNPRQRMD"
     },
     {
+      "id": "kanbanTasker",
+      "title": "Kanban Tasker",
+      "description": "A simple Kanban Board for Windows 10, tasking made easier",
+      "category": "",
+      "github": "hjohnson12/KanbanBoardUWP",
+      "store": ""
+    },
+    {
       "id": "legere",
       "title": "Legere",
       "description": "Legere is a modern, powerful and full-featured Reddit client, built from the ground up as a UWP app and available exclusively on Windows 10.",
       "category": "",
-      "github": "",
+      "github": "https://github.com/hjohnson12/KanbanBoardUWP",
       "store": "9phjrvcskvjz"
     },
     {
