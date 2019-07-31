@@ -20,7 +20,7 @@ const wrapStackTokens: IStackTokens = { childrenGap: 30 };
 
 export const List = (props: ListProps) => {
   const items = props.projects.projects.map((item) => (
-    <ListItem project={item} />
+    <ListItem key={item.id} project={item} />
   ));
 
   return (

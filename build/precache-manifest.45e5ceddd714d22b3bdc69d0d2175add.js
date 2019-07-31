@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d34796d4387d7735d352557d46d6b233",
+    "revision": "8280e04ab24a7ec904d59bef2d06fa13",
     "url": "/UwpCommunityProjects/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/UwpCommunityProjects/static/js/2.31feb17d.chunk.js"
   },
   {
-    "revision": "76ede2b00cc523c8ee1f",
-    "url": "/UwpCommunityProjects/static/js/main.ef3e65ab.chunk.js"
+    "revision": "38db35b5626893efb4fd",
+    "url": "/UwpCommunityProjects/static/js/main.0abe6210.chunk.js"
   },
   {
     "revision": "47c7879e44e2e3219ad8",
