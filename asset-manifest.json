@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/UwpCommunityProjects/static/js/main.0abe6210.chunk.js",
-    "main.js.map": "/UwpCommunityProjects/static/js/main.0abe6210.chunk.js.map",
-    "runtime~main.js": "/UwpCommunityProjects/static/js/runtime~main.38fdb5e0.js",
-    "runtime~main.js.map": "/UwpCommunityProjects/static/js/runtime~main.38fdb5e0.js.map",
-    "static/js/2.31feb17d.chunk.js": "/UwpCommunityProjects/static/js/2.31feb17d.chunk.js",
-    "static/js/2.31feb17d.chunk.js.map": "/UwpCommunityProjects/static/js/2.31feb17d.chunk.js.map",
-    "index.html": "/UwpCommunityProjects/index.html",
-    "precache-manifest.45e5ceddd714d22b3bdc69d0d2175add.js": "/UwpCommunityProjects/precache-manifest.45e5ceddd714d22b3bdc69d0d2175add.js",
-    "service-worker.js": "/UwpCommunityProjects/service-worker.js"
+    "main.js": "/static/js/main.540af2b4.chunk.js",
+    "main.js.map": "/static/js/main.540af2b4.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/js/2.31feb17d.chunk.js": "/static/js/2.31feb17d.chunk.js",
+    "static/js/2.31feb17d.chunk.js.map": "/static/js/2.31feb17d.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.23b8020b8e0e139a793a14ea66793254.js": "/precache-manifest.23b8020b8e0e139a793a14ea66793254.js",
+    "service-worker.js": "/service-worker.js"
   }
 }
