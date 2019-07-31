@@ -16,11 +16,14 @@ export const getDiscordUrl = (id: string) => {
 
 export const discordBadge = "assets/img/discordBadge.png";
 export const discordLogo = "assets/img/discordLogo.png";
+export const discordLink = "https://discord.gg/eBHZSKG";
 
 export const githubBadge = "assets/img/githubBadge.png";
 export const githubLogo = "assets/img/githubLogo.png";
+export const githubLink = "https://github.com/UWPCommunity/uwpcommunity.github.io/";
 
 export const mediumLogo = "assets/img/mediumLogo.png";
+export const mediumLink = "https://medium.com/@Arlodottxt/launch-2019-7efd37cc0877";
 
 export const msstoreBadge = "assets/img/msstoreBadge.png";
 

@@ -4,7 +4,7 @@
 [Join the UWP Community Discord Server](https://discord.gg/eBHZSKG)  
 
 ## Projects
-[A list of the UWP Community Projects](https://emiliano84.github.io/UwpCommunityProjects/)
+[A list of the UWP Community Projects](https://github.com/UWPCommunity/uwpcommunity.github.io//)
 
 ### How to add a project:
 * [Fork my repo](https://guides.github.com/activities/forking/)
