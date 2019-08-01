@@ -1,5 +1,9 @@
 export const getSreenshotUrl = (id: string) => {
-    return `assets/screenshots/${id}.png`;  
+  return `assets/screenshots/${id}.png`;  
+}
+
+export const getThumbUrl = (id: string) => {
+  return `assets/thumbs/${id}.png`;  
 }
 
 export const getStoreUrl = (id: string) => {

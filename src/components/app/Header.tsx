@@ -6,11 +6,13 @@ import { discordLogo, githubLogo, mediumLogo, uwpCommunityLogo, discordLink, git
 export const Header: React.StatelessComponent = () => {
   return (
     <Stack horizontal horizontalAlign="center">
-      <Link href="/"><Image src={uwpCommunityLogo} height={50} /></Link>
+      <Link href="/"><Image src={uwpCommunityLogo} height={40}/></Link>
       <Text variant="xxLarge" style={{ padding: 10 }}>UWP Community //</Text>
-      <Link href={discordLink} target="_blank"><Image src={discordLogo} height={50} /></Link>
-      <Link href={githubLink} target="_blank"><Image src={githubLogo} height={50} /></Link>
-      <Link href={mediumLink} target="_blank"><Image src={mediumLogo} height={50} /></Link>
+      <Link href={discordLink} target="_blank"><Image src={discordLogo} height={40}/></Link>
+      <Text style={{ padding: 10 }}>&nbsp;</Text>
+      <Link href={githubLink} target="_blank"><Image src={githubLogo} height={40}/></Link>
+      <Text style={{ padding: 10 }}>&nbsp;</Text>
+      <Link href={mediumLink} target="_blank"><Image src={mediumLogo} height={40}/></Link>
     </Stack>
   );
 };

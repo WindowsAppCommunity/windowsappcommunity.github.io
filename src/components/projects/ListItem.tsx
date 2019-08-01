@@ -8,7 +8,7 @@ import {
   IDocumentCardStyles
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
-import { getSreenshotUrl, getStoreUrl, getGitHubUrl, githubBadge, msstoreBadge, getDiscordUrl, discordBadge } from "../../common/const";
+import { getStoreUrl, getGitHubUrl, githubBadge, msstoreBadge, getDiscordUrl, discordBadge, getThumbUrl } from "../../common/const";
 import { Stack, Link, IStackItemStyles, IStackTokens } from "office-ui-fabric-react";
 import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
 
@@ -89,7 +89,7 @@ export class ListItem extends React.Component<ListItemProps> {
         <DocumentCardImage
           height={150}
           imageFit={ImageFit.cover}
-          imageSrc={getSreenshotUrl(this.props.project.id)}
+          imageSrc={getThumbUrl(this.props.project.id)}
         />
         <DocumentCardDetails>
           <DocumentCardTitle title={this.props.project.title} shouldTruncate />
