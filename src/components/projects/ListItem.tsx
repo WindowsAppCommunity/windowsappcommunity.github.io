@@ -9,19 +9,13 @@ import {
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
 import { getStoreUrl, getGitHubUrl, githubBadge, msstoreBadge, getDiscordUrl, discordBadge, getThumbUrl } from "../../common/const";
-import { Stack, Link, IStackItemStyles, IStackTokens } from "office-ui-fabric-react";
+import { Stack, Link, IStackTokens } from "office-ui-fabric-react";
 import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
 
 interface ListItemProps {
   project: Project;
 }
 
-
-const stackItemStyles: IStackItemStyles = {
-  root: {
-    padding: 5
-  }
-};
 
 const cardStyles: IDocumentCardStyles = {
   root: {
@@ -34,15 +28,14 @@ const cardStyles: IDocumentCardStyles = {
 };
 
 const itemAlignmentsStackTokens: IStackTokens = {
-  childrenGap: 5,
-  padding: 10
+  childrenGap: 5
 };
 
 
 function Github(github: string) {
   if (github) {
     return (
-      <Stack.Item align="auto" styles={stackItemStyles}>
+      <Stack.Item>
         <Link href={getGitHubUrl(github)} target="_blank">
           <Image src={githubBadge} />
         </Link>
@@ -56,7 +49,7 @@ function Github(github: string) {
 function Store(store: string) {
   if (store) {
     return (
-      <Stack.Item align="auto" styles={stackItemStyles}>
+      <Stack.Item>
         <Link href={getStoreUrl(store)} target="_blank">
           <Image src={msstoreBadge} />
         </Link>
@@ -70,7 +63,7 @@ function Store(store: string) {
 function Discord(discord?: string) {
   if (discord) {
     return (
-      <Stack.Item align="auto" styles={stackItemStyles}>
+      <Stack.Item>
         <Link href={getDiscordUrl(discord)} target="_blank">
           <Image src={discordBadge} />
         </Link>
@@ -95,7 +88,7 @@ export class ListItem extends React.Component<ListItemProps> {
           <DocumentCardTitle title={this.props.project.title} shouldTruncate />
           <DocumentCardTitle title={this.props.project.description} showAsSecondaryTitle />
 
-          <Stack horizontal disableShrink tokens={itemAlignmentsStackTokens}>
+          <Stack horizontal disableShrink tokens={itemAlignmentsStackTokens} style={{marginLeft: 10, marginBottom:10}}>
             {Github(this.props.project.github)}
 
             {Store(this.props.project.store)}

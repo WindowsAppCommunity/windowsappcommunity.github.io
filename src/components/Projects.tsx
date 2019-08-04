@@ -5,10 +5,11 @@ import { List } from "./projects/List";
 import ProjectList from '../common/projectList.json';
 
 export const Projects: React.StatelessComponent = () => {
-  let subTitle = `A list of the UWP Community Projects, Total: ${ProjectList.projects.length}`
+  // let subTitle = `Total: ${ProjectList.projects.length}`;
+  
   return (
     <Stack horizontalAlign="center">
-      <SubHeader title="Projects //" subTitle={subTitle} />
+      <SubHeader title="Projects //" subTitle={ProjectList.projects.length.toString()} />
       <List projects={ProjectList}/>
     </Stack>
   );
