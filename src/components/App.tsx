@@ -1,8 +1,8 @@
 import * as React from "react";
 import {
-  BrowserRouter as Router,
   Route,
-  Switch} from 'react-router-dom';
+  Switch,
+  HashRouter} from 'react-router-dom';
 import { About } from './About';
 import { Projects } from './Projects';
 // import { NotFound } from './NotFound';
@@ -12,7 +12,7 @@ import { Footer } from "./app/Footer";
 
 export const App: React.StatelessComponent = () => {
   return (
-    <Router>
+    <HashRouter basename="/">
       <Header />
       {/* <Menu/> */}
       <Switch>
@@ -21,6 +21,6 @@ export const App: React.StatelessComponent = () => {
         <Route component={Projects} />
       </Switch>
       <Footer />
-    </Router>
+    </HashRouter>
   );
 };

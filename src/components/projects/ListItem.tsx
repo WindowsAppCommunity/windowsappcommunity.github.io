@@ -88,7 +88,7 @@ export class ListItem extends React.Component<ListItemProps> {
           <DocumentCardTitle title={this.props.project.title} shouldTruncate />
           <DocumentCardTitle title={this.props.project.description} showAsSecondaryTitle />
 
-          <Stack horizontal disableShrink tokens={itemAlignmentsStackTokens} style={{marginLeft: 10, marginBottom:10}}>
+          <Stack horizontal horizontalAlign="end" disableShrink tokens={itemAlignmentsStackTokens} style={{marginRight: 10, marginBottom:10}}>
             {Github(this.props.project.github)}
 
             {Store(this.props.project.store)}
