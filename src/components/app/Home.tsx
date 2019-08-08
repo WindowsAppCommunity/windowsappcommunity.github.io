@@ -23,7 +23,6 @@ export const Home: React.StatelessComponent = () => {
   return (
     <Stack horizontalAlign="center" style={{ marginTop: 30 }}>
       <Stack padding="10px">
-
         <Stack style={LinkCardStyle} horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
           <Stack gap="10px" style={{ margin: "10px" }}>
             <div>Our server is home to a variety of apps, developers and enthusiasts</div>
@@ -58,6 +57,3 @@ export const Home: React.StatelessComponent = () => {
     </Stack >
   );
 };
-
-
-// <header style={{fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px"}}>The unofficial UWP Community Discord Server </header>
