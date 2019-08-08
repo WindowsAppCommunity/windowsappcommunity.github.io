@@ -258,6 +258,14 @@
       "store": "9NTDRJCQ2P53"
     },
     {
+      "id": "rpnRadio",
+      "title": "RPN News & Radio",
+      "description": "Listen to and read news from RPN AM stations from the Philippines.",
+      "category": "",
+      "github": "",
+      "store": "9PHL469C0Z20"
+    },
+    {
       "id": "saviDraw",
       "title": "SaviDraw",
       "description": "SaviDraw – easy, fast, powerful. And you can talk to it. 15-day free trial.",
@@ -387,4 +395,4 @@
       "store": "9NBLGGH50VP8"
     }
   ]
-  }
+}
