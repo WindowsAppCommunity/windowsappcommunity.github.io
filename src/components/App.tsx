@@ -12,6 +12,12 @@ import { Header } from "./app/Header";
 import { Menu } from "./app/Menu";
 import { Stack } from "office-ui-fabric-react";
 
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab, faDiscord, faMedium, faGithub } from '@fortawesome/free-brands-svg-icons'
+
+library.add(fab, faDiscord, faMedium, faGithub);
+
 export const App: React.StatelessComponent = () => {
   return (
     <HashRouter basename="/">
