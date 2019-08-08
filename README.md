@@ -12,3 +12,6 @@
 * Add a thumb (300px width) in public/assets/thumbs/{id}.png
 * Add a screenshot (900px width) in public/assets/screenshots/{id}.png
 * [Submit a pull request to gh-pages-dev branch](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) 
+
+#### Development Notes
+Do not update gh-pages npm to 2.1.0
