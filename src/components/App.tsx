@@ -20,7 +20,7 @@ library.add(fab, faDiscord, faMedium, faGithub);
 export const App: React.StatelessComponent = () => {
   return (
     <HashRouter basename="/">
-      <Stack horizontalAlign="center" style={{ height: "98vh" }} >
+      <Stack horizontalAlign="center">
         <Header />
         <Menu />
         <Switch>
