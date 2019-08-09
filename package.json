@@ -6,9 +6,14 @@
   "keywords": [],
   "main": "src/index.tsx",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.21",
+    "@fortawesome/free-brands-svg-icons": "^5.10.1",
+    "@fortawesome/free-solid-svg-icons": "^5.10.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@types/react": "^16.8.25",
     "@types/react-dom": "16.8.5",
     "@types/react-router-dom": "^4.3.4",
+    "@types/styled-components": "^4.1.18",
     "@uifabric/fluent-theme": "^7.1.0",
     "@uifabric/icons": "7.1.1",
     "gh-pages": "^2.0.1",
@@ -17,6 +22,7 @@
     "react-dom": "16.8.6",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "styled-components": "^4.3.2",
     "typescript": "^3.5.3"
   },
   "scripts": {

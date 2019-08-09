@@ -8,7 +8,7 @@ import {
   IDocumentCardStyles
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
-import { getStoreUrl, getGitHubUrl, githubBadge, msstoreBadge, getDiscordUrl, discordBadge, getThumbUrl } from "../../common/const";
+import { getStoreUrl, getGitHubUrl, Images, getDiscordUrl, getThumbUrl } from "../../common/const";
 import { Stack, Link, IStackTokens } from "office-ui-fabric-react";
 import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
 
@@ -37,7 +37,7 @@ function Github(github: string) {
     return (
       <Stack.Item>
         <Link href={getGitHubUrl(github)} target="_blank">
-          <Image src={githubBadge} />
+          <Image src={Images.Badges.github} />
         </Link>
       </Stack.Item>
     );
@@ -51,7 +51,7 @@ function Store(store: string) {
     return (
       <Stack.Item>
         <Link href={getStoreUrl(store)} target="_blank">
-          <Image src={msstoreBadge} />
+          <Image src={Images.Badges.msstore} />
         </Link>
       </Stack.Item>
     );
@@ -65,7 +65,7 @@ function Discord(discord?: string) {
     return (
       <Stack.Item>
         <Link href={getDiscordUrl(discord)} target="_blank">
-          <Image src={discordBadge} />
+          <Image src={Images.Badges.discord} />
         </Link>
       </Stack.Item>
     );
