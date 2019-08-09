@@ -10,7 +10,7 @@ export const Projects: React.StatelessComponent = () => {
   return (
     <Stack horizontalAlign="center">
       <SubHeader title="Projects //" subTitle={ProjectList.projects.length.toString()} />
-      <List projects={ProjectList}/>
+      <List projects={ProjectList} />
     </Stack>
   );
 };
