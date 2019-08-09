@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Stack, Image, ImageFit, Text, ImageCoverStyle } from "office-ui-fabric-react";
+import { Stack, Text } from "office-ui-fabric-react";
 import { Links, Images } from "../../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import styled from 'styled-components';
@@ -49,7 +49,7 @@ export const Home: React.StatelessComponent = () => {
       <HoverBox>
         <HomeHeroCard>
           <Stack wrap horizontal verticalAlign="center" horizontalAlign="space-between">
-            <Stack>
+            <Stack style={{margin: "15px"}}>
               <Text variant="xLargePlus">Launch 2020 signup coming soon</Text>
               <Text variant="mediumPlus">Check back later</Text>
             </Stack>
