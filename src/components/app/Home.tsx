@@ -81,11 +81,11 @@ export const Home: React.StatelessComponent = () => {
             <Stack>
               <Img src={Images.githubOrgScreenshot} />
               <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
-                <FontAwesomeIcon style={FaIconStyle} icon={["fab", "github"]} />
                 <Stack gap="10px" style={{ margin: "10px" }}>
                   <Text>Many of our projects are open source, so others can learn or build with them</Text>
                   <Link href={Links.githubOrganization} target="_blank">See our open source projects</Link>
                 </Stack>
+                <FontAwesomeIcon style={FaIconStyle} icon={["fab", "github"]} />
               </Stack>
             </Stack>
           </LinkCard>
