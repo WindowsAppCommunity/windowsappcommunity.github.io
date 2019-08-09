@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Stack, Text } from "office-ui-fabric-react";
+import { Stack, Text, Button } from "office-ui-fabric-react";
 import { Links, Images } from "../../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import styled from 'styled-components';
@@ -52,6 +52,7 @@ export const Home: React.StatelessComponent = () => {
             <Stack style={{margin: "15px"}}>
               <Text variant="xLargePlus">Launch 2020 signup coming soon</Text>
               <Text variant="mediumPlus">Check back later</Text>
+              <Button style={{marginTop : "15px"}} text="Submit your app" disabled />
             </Stack>
             <Img src={Images.launchHeroImage} />
           </Stack>
