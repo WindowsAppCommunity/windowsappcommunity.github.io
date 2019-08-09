@@ -11,10 +11,6 @@ const FaIconStyle: CSSProperties = {
   width: "65px"
 };
 
-const HomeHeroCard = styled.section`
-  
-`;
-
 const LinkCard = styled.section`
     font-family: Segoe UI, sans-serif;
     padding: 7px;
@@ -47,7 +43,6 @@ export const Home: React.StatelessComponent = () => {
   return (
     <Stack wrap horizontal horizontalAlign="space-around" gap="25px">
       <HoverBox>
-        <HomeHeroCard>
           <Stack wrap horizontal verticalAlign="center" horizontalAlign="space-between">
             <Stack style={{margin: "15px"}}>
               <Text variant="xLargePlus">Launch 2020 signup coming soon</Text>
@@ -56,7 +51,6 @@ export const Home: React.StatelessComponent = () => {
             </Stack>
             <Img src={Images.launchHeroImage} />
           </Stack>
-        </HomeHeroCard>
       </HoverBox>
 
       <Stack gap="15px" wrap horizontal horizontalAlign="space-around">
