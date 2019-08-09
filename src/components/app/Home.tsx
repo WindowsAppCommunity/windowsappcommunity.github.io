@@ -1,6 +1,6 @@
 import React, { CSSProperties } from "react";
 import { Stack } from "office-ui-fabric-react";
-import { discordLink, githubLink, mediumLink, discordChatExample } from "../../common/const";
+import { Links, Images } from "../../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,12 +43,12 @@ export const Home: React.StatelessComponent = () => {
       <Stack wrap horizontal horizontalAlign="space-around">
         <LinkCard>
           <Stack>
-            <Img src={discordChatExample} />
+            <Img src={Images.discordChatExample} />
 
             <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
               <Stack gap="10px" style={{ margin: "10px" }}>
                 <div>Our server is home to a variety of apps, developers and enthusiasts</div>
-                <Link href={discordLink} target="_blank"> Join our discord server </Link>
+                <Link href={Links.discordServerInvite} target="_blank"> Join our discord server </Link>
               </Stack>
               <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
             </Stack>
@@ -61,7 +61,7 @@ export const Home: React.StatelessComponent = () => {
             <FontAwesomeIcon style={FaIconStyle} icon={["fab", "github"]} />
             <Stack gap="10px" style={{ margin: "10px" }}>
               <div>Many of our projects are open source, so others can learn or build with them</div>
-              <Link href={githubLink} target="_blank">See our open source projects</Link>
+              <Link href={Links.githubOrganization} target="_blank">See our open source projects</Link>
             </Stack>
           </Stack>
         </LinkCard>
@@ -70,7 +70,7 @@ export const Home: React.StatelessComponent = () => {
           <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
             <Stack gap="10px" style={{ margin: "10px" }}>
               <div>As a community of talented developers, each year we Launch our projects together in an annnual event known as <code>Launch</code></div>
-              <Link href={mediumLink} target="_blank">Read about Launch 2019</Link>
+              <Link href={Links.launch2019Medium} target="_blank">Read about Launch 2019</Link>
             </Stack>
             <FontAwesomeIcon style={FaIconStyle} icon={["fab", "medium"]} />
           </Stack>
