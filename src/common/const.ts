@@ -38,3 +38,5 @@ export const msstoreBadge = "assets/img/msstoreBadge.png";
 
 export const uwpCommunityLogo = "assets/img/uwpCommunityLogo.png";
 export const uwpCommunityLogoBottom = "assets/img/uwpCommunityLogoBottom.png";
+
+export const discordChatExample = "assets/img/discordchatexample.png";
