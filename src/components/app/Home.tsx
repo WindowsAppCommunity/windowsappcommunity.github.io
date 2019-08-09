@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Stack } from "office-ui-fabric-react";
+import { Stack, Image, ImageFit, Text, ImageCoverStyle } from "office-ui-fabric-react";
 import { Links, Images } from "../../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import styled from 'styled-components';
@@ -11,16 +11,22 @@ const FaIconStyle: CSSProperties = {
   width: "65px"
 };
 
+const HomeHeroCard = styled.section`
+  
+`;
+
 const LinkCard = styled.section`
     font-family: Segoe UI, sans-serif;
-    margin: 5px;
     padding: 7px;
     max-width: 400px;
+    transition: 150ms all;
+`;
+
+const HoverBox = styled.div`
     box-shadow: ${Depths.depth4};
     :hover {
       box-shadow: ${Depths.depth16};
     };
-    transition: 150ms all;
 `;
 
 let Link = styled.a`
@@ -29,58 +35,78 @@ let Link = styled.a`
     text-decoration: none;
     :hover {
       text-decoration: underline;
-    }
+    };
 `;
 
 let Img = styled.img`
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
 `;
 
 export const Home: React.StatelessComponent = () => {
   return (
-    <Stack wrap horizontal horizontalAlign="space-around">
-      <LinkCard>
-        <Stack>
-          <Img src={Images.discordChatExample} />
-
-          <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
-            <Stack gap="10px" style={{ margin: "10px" }}>
-              <div>Discuss the platform with other enthusiasts, get help as a developer, and interact with the devs of your favorite apps</div>
-              <Link href={Links.discordServerInvite} target="_blank"> Join our discord server </Link>
+    <Stack wrap horizontal horizontalAlign="space-around" gap="25px">
+      <HoverBox>
+        <HomeHeroCard>
+          <Stack wrap horizontal verticalAlign="center" horizontalAlign="space-between">
+            <Stack>
+              <Text variant="xLargePlus">Launch 2020 signup coming soon</Text>
+              <Text variant="mediumPlus">Check back later</Text>
             </Stack>
-            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+            <Img src={Images.launchHeroImage} />
           </Stack>
+        </HomeHeroCard>
+      </HoverBox>
 
-        </Stack>
-      </LinkCard>
+      <Stack gap="15px" wrap horizontal horizontalAlign="space-around">
+        <HoverBox>
+          <LinkCard>
+            <Stack>
+              <Img src={Images.discordChatExample} />
 
-      <LinkCard>
-        <Stack>
-          <Img src={Images.githubOrgScreenshot} />
-          <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
-            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "github"]} />
-            <Stack gap="10px" style={{ margin: "10px" }}>
-              <div>Many of our projects are open source, so others can learn or build with them</div>
-              <Link href={Links.githubOrganization} target="_blank">See our open source projects</Link>
+              <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
+                <Stack gap="10px" style={{ margin: "10px" }}>
+                  <Text>Discuss the platform with other enthusiasts, get help as a developer, and interact with the devs of your favorite apps</Text>
+                  <Link href={Links.discordServerInvite} target="_blank"> Join our discord server </Link>
+                </Stack>
+                <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+              </Stack>
+
             </Stack>
-          </Stack>
-        </Stack>
-      </LinkCard>
+          </LinkCard>
+        </HoverBox>
 
-      <LinkCard>
-        <Stack>
-          <Img src={Images.launchHeroImage} />
-          <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
-            <Stack gap="10px" style={{ margin: "10px" }}>
-              <div>As a community of talented developers, each year we Launch our projects together in an annnual event known as <code>Launch</code></div>
-              <Link href={Links.launch2019Medium} target="_blank">Read about Launch 2019</Link>
+        <HoverBox>
+          <LinkCard>
+            <Stack>
+              <Img src={Images.githubOrgScreenshot} />
+              <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
+                <FontAwesomeIcon style={FaIconStyle} icon={["fab", "github"]} />
+                <Stack gap="10px" style={{ margin: "10px" }}>
+                  <Text>Many of our projects are open source, so others can learn or build with them</Text>
+                  <Link href={Links.githubOrganization} target="_blank">See our open source projects</Link>
+                </Stack>
+              </Stack>
             </Stack>
-            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "medium"]} />
-          </Stack>
-        </Stack>
-      </LinkCard>
+          </LinkCard>
+        </HoverBox>
 
+        <HoverBox>
+          <LinkCard>
+            <Stack>
+              <Img src={Images.launchHeroImage} />
+              <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
+                <Stack gap="10px" style={{ margin: "10px" }}>
+                  <Text>As a community of talented developers, each year we Launch our projects together in an annnual event known as <code>Launch</code></Text>
+                  <Link href={Links.launch2019Medium} target="_blank">Read about Launch 2019</Link>
+                </Stack>
+                <FontAwesomeIcon style={FaIconStyle} icon={["fab", "medium"]} />
+              </Stack>
+            </Stack>
+          </LinkCard>
+        </HoverBox>
+
+      </Stack>
     </Stack>
   );
 };
