@@ -34,7 +34,7 @@ let Link = styled.a`
 
 export const Home: React.StatelessComponent = () => {
   return (
-    <Stack wrap horizontal horizontalAlign="space-around" padding="10px">
+    <Stack wrap horizontal horizontalAlign="space-evenly" padding="10px">
 
       <LinkCard>
         <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
