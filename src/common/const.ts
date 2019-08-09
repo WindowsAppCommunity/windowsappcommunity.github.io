@@ -27,6 +27,9 @@ export const Links = {
 
 export const Images = {
   discordChatExample: "assets/img/discordchatexample.png",
+  githubOrgScreenshot: "assets/img/githuborgscreenshot.png",
+  launchHeroImage: "assets/img/LaunchHero.png",
+
   uwpCommunityLogo: "assets/img/uwpCommunityLogo.png",
   Badges: {
     msstore: "assets/img/msstoreBadge.png",
