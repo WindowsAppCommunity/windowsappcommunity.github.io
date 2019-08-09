@@ -7,7 +7,6 @@ export class Menu extends React.Component<any, any> {
       <Pivot linkSize={PivotLinkSize.large} onLinkClick={this.onLinkClick} style={{ margin: "10px" }}>
         <PivotItem headerText="Home" itemKey="#" />
         <PivotItem headerText="Projects" itemKey="#/projects" />
-        <PivotItem headerText="About" itemKey="#/about" />
       </Pivot>
     );
   }

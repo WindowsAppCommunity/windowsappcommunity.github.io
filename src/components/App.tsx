@@ -4,7 +4,6 @@ import {
   Switch,
   HashRouter
 } from 'react-router-dom';
-import { About } from './About';
 import { Projects } from './Projects';
 import { Home } from './app/Home';
 //  import { NotFound } from './NotFound';
@@ -25,7 +24,6 @@ export const App: React.StatelessComponent = () => {
         <Menu />
         <Switch>
           <Route exact path="/projects" component={Projects} />
-          <Route path="/about" component={About} />
           <Route component={Home} />
         </Switch>
       </Stack>
