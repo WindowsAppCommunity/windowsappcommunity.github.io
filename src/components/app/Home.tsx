@@ -15,7 +15,6 @@ const LinkCard = styled.section`
     font-family: Segoe UI, sans-serif;
     padding: 7px;
     max-width: 400px;
-    transition: 150ms all;
 `;
 
 const HoverBox = styled.div`
@@ -23,6 +22,7 @@ const HoverBox = styled.div`
     :hover {
       box-shadow: ${Depths.depth16};
     };
+    transition: 150ms all;
 `;
 
 let Link = styled.a`
