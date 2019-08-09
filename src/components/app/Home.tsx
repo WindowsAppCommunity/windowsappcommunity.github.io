@@ -47,7 +47,7 @@ export const Home: React.StatelessComponent = () => {
 
             <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
               <Stack gap="10px" style={{ margin: "10px" }}>
-                <div>Our server is home to a variety of apps, developers and enthusiasts</div>
+                <div>Discuss the platform with other enthusiasts, get help as a developer, and interact with the devs of your favorite apps</div>
                 <Link href={Links.discordServerInvite} target="_blank"> Join our discord server </Link>
               </Stack>
               <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
