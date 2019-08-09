@@ -20,8 +20,7 @@ const LinkCardStyle: CSSProperties = {
 
 export const Home: React.StatelessComponent = () => {
   return (
-    <Stack padding="10px">
-
+    <Stack wrap horizontal horizontalAlign="center" padding="10px">
 
       <Stack style={LinkCardStyle} horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
         <Stack gap="10px" style={{ margin: "10px" }}>
