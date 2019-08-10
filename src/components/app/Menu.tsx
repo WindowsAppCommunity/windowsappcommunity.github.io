@@ -1,7 +1,6 @@
 import React, { CSSProperties } from "react";
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import { Text } from "office-ui-fabric-react";
 
 const navLinkActiveStyle: CSSProperties = {
