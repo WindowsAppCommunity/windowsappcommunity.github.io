@@ -1,5 +1,5 @@
 import React from "react";
-import { IProjectList } from "../../common/interfaces";
+import { IProjectList } from "../common/interfaces";
 import { ProjectCard } from "./ProjectCard";
 import { Stack, IStackTokens, IStackStyles } from "office-ui-fabric-react";
 

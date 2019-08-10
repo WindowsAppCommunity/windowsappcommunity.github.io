@@ -3,7 +3,7 @@ import { Route, Switch, HashRouter } from 'react-router-dom';
 
 import { Projects } from './views/Projects';
 import { Home } from './views/Home';
-import { Header } from "./components/app/Header";
+import { AppHeader } from "./components/AppHeader";
 
 import { Stack } from "office-ui-fabric-react";
 
@@ -16,7 +16,7 @@ export const App: React.StatelessComponent = () => {
   return (
     <HashRouter basename="/">
       <Stack horizontalAlign="center">
-        <Header />
+        <AppHeader />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/projects" component={Projects} />

@@ -26,7 +26,7 @@ const NavText = styled(Text)`
   font-size: 18px;
 `;
 
-export class Menu extends React.Component<any, any> {
+export class NavMenu extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <nav>

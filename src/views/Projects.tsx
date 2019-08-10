@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Stack } from "office-ui-fabric-react";
-import { ProjectList as ProjectListElement } from "../components/projects/ProjectList";
+import { ProjectList as ProjectListElement } from "../components/ProjectList";
 import ProjectList from '../common/projectList.json';
 
 export const Projects: React.StatelessComponent = () => {
