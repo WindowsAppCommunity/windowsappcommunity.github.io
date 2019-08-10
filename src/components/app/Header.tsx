@@ -1,21 +1,19 @@
 import * as React from "react";
 import { Stack, Link } from "office-ui-fabric-react";
 import { Image } from "office-ui-fabric-react/lib/Image";
-import { Images, Links } from "../../common/const";
-
-const itemStyles: React.CSSProperties = {
-  display: 'flex'
-};
+import { Images } from "../../common/const";
+import { Menu } from "./Menu";
 
 export const Header: React.StatelessComponent = () => {
   return (
-    <Stack>
-      <Stack horizontal horizontalAlign="center">
+    <header>
+      <Stack horizontal wrap verticalAlign='end' horizontalAlign="center" gap="10px">
         <Link href="/">
           <Image src={Images.uwpCommunityLogo} />
         </Link>
+        <Menu />
       </Stack>
-      <header style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px" }}>The unofficial UWP Community Discord Server </header>
-    </Stack>
+      <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: "10px" }}>The homepage for the unofficial Discord server </p>
+    </header>
   );
 };
