@@ -1,12 +1,11 @@
 import React from "react";
-import { ProjectList } from "../../common/interfaces";
-import { ListItem } from "./ListItem";
+import { IProjectList } from "../common/interfaces";
+import { ProjectCard } from "./ProjectCard";
 import { Stack, IStackTokens, IStackStyles } from "office-ui-fabric-react";
 
 interface ListProps {
-  projects: ProjectList;
+  projects: IProjectList;
 }
-
 
 const stackStyles: IStackStyles = {
   root: {
@@ -17,10 +16,9 @@ const stackStyles: IStackStyles = {
 
 const wrapStackTokens: IStackTokens = { childrenGap: 30 };
 
-
-export const List = (props: ListProps) => {
+export const ProjectList = (props: ListProps) => {
   const items = props.projects.projects.map((item) => (
-    <ListItem key={item.id} project={item} />
+    <ProjectCard key={item.id} project={item} />
   ));
 
   return (

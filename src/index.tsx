@@ -1,7 +1,7 @@
 import React from "react";
 import { hydrate, render } from "react-dom";
 import { initializeIcons } from "@uifabric/icons";
-import {App} from './components/App';
+import {App} from './App';
 
 // Initializes the UI Fabric icons that we can use
 // Choose one from this list: https://developer.microsoft.com/en-us/fabric#/styles/icons

@@ -1,7 +1,6 @@
 import React, { CSSProperties } from "react";
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import { Text } from "office-ui-fabric-react";
 
 const navLinkActiveStyle: CSSProperties = {
@@ -27,7 +26,7 @@ const NavText = styled(Text)`
   font-size: 18px;
 `;
 
-export class Menu extends React.Component<any, any> {
+export class NavMenu extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <nav>

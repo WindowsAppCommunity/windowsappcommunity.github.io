@@ -1,4 +1,4 @@
-export interface Project {
+export interface IProject {
   id: string;
   title: string;
   description: string;
@@ -8,6 +8,6 @@ export interface Project {
   discord?: string;
 }
 
-export interface ProjectList {
-  projects: Project[];
+export interface IProjectList {
+  projects: IProject[];
 }

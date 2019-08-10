@@ -1,23 +1,3 @@
-export const getSreenshotUrl = (id: string) => {
-  return `/assets/screenshots/${id}.png`;
-}
-
-export const getThumbUrl = (id: string) => {
-  return `/assets/thumbs/${id}.png`;
-}
-
-export const getStoreUrl = (id: string) => {
-  return `https://www.microsoft.com/store/apps/${id}`;
-}
-
-export const getGitHubUrl = (id: string) => {
-  return `https://www.github.com/${id}`;
-}
-
-export const getDiscordUrl = (id: string) => {
-  return `https://www.discord.gg/${id}`;
-}
-
 export const Links = {
   thisSiteRepo: "https://github.com/UWPCommunity/uwpcommunity.github.io/",
   launch2019Medium: "https://medium.com/@Arlodottxt/launch-2019-7efd37cc0877",
