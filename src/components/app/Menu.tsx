@@ -4,10 +4,12 @@ import { Pivot, PivotItem, PivotLinkFormat, PivotLinkSize } from 'office-ui-fabr
 export class Menu extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
-      <Pivot linkSize={PivotLinkSize.large} onLinkClick={this.onLinkClick}>
-        <PivotItem headerText="Home" itemKey="#" />
-        <PivotItem headerText="Projects" itemKey="#/projects" />
-      </Pivot>
+      <nav>
+        <Pivot linkSize={PivotLinkSize.large} onLinkClick={this.onLinkClick}>
+          <PivotItem headerText="Home" itemKey="#" />
+          <PivotItem headerText="Projects" itemKey="#/projects" />
+        </Pivot>
+      </nav>
     );
   }
 
