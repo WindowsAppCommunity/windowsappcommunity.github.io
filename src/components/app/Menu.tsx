@@ -2,34 +2,40 @@ import React, { CSSProperties } from "react";
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
+import { Text } from "office-ui-fabric-react";
 
 const navLinkActiveStyle: CSSProperties = {
-  textDecoration: "underline",
-  boxShadow: Depths.depth16
+  borderBottom: "3px solid #5e5eff",
 };
 
 const MyNavLink = styled(NavLink)`     
    color: black;
-   padding: 14px 25px;
+   padding: 25px 12px 5px 12px;
    text-align: center;
-   text-decoration: none;
    display: inline-block;
-   box-shadow: ${Depths.depth4};
+   text-decoration: none;
+   margin: 7px;
+   border-bottom: 3px solid #c9c9c9;
 
-   :hover, :active  {
-    text-decoration: underline;
-    box-shadow: ${Depths.depth16};
-  };`;
+  :hover  {
+    text-decoration: none;    
+    border-bottom: 3px solid #9e9e9e;
+  };
+`;
+
+const NavText = styled(Text)`
+  font-size: 18px;
+`;
 
 export class Menu extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <nav>
         <MyNavLink to="/" exact activeStyle={navLinkActiveStyle}>
-          Home
+          <NavText>Home</NavText>
         </MyNavLink>
         <MyNavLink to="/projects" activeStyle={navLinkActiveStyle}>
-          Projects
+          <NavText>Projects</NavText>
         </MyNavLink>
       </nav>
     );
