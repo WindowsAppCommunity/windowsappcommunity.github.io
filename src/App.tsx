@@ -2,7 +2,7 @@ import * as React from "react";
 import { Route, Switch, HashRouter } from 'react-router-dom';
 
 import { Projects } from './views/Projects';
-import { Home } from './components/app/Home';
+import { Home } from './views/Home';
 import { Header } from "./components/app/Header";
 
 import { Stack } from "office-ui-fabric-react";
