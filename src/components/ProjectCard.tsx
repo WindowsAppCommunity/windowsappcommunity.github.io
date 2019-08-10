@@ -1,5 +1,5 @@
 import React from "react";
-import { IProject } from "../../common/interfaces";
+import { IProject } from "../common/interfaces";
 import {
   DocumentCard,
   DocumentCardTitle,
@@ -8,7 +8,8 @@ import {
   IDocumentCardStyles
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
-import { getStoreUrl, getGitHubUrl, Images, getDiscordUrl, getThumbUrl } from "../../common/const";
+import { getStoreUrl, getGitHubUrl, Images, getDiscordUrl, getThumbUrl } from "../common/const";
+
 import { Stack, Link, IStackTokens } from "office-ui-fabric-react";
 import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
 
@@ -32,36 +33,17 @@ const itemAlignmentsStackTokens: IStackTokens = {
 };
 
 
-function Github(github: string) {
-  if (github) {
-    return (
-      <Stack.Item>
-        <Link href={getGitHubUrl(github)} target="_blank">
-          <Image src={Images.Badges.github} />
-        </Link>
-      </Stack.Item>
-    );
-  } else {
-    return ("");
+export class ProjectCard extends React.Component<ListItemProps> {
+  constructor(props: ListItemProps) {
+    super(props);
+    this.GetDiscordBadge.bind(this);
+    this.GetStoreBadge.bind(this);
+    this.GetGithubBadge.bind(this);
   }
-}
 
-function Store(store: string) {
-  if (store) {
-    return (
-      <Stack.Item>
-        <Link href={getStoreUrl(store)} target="_blank">
-          <Image src={Images.Badges.msstore} />
-        </Link>
-      </Stack.Item>
-    );
-  } else {
-    return ("");
-  }
-}
+  private GetDiscordBadge(discord?: string) {
+    if (!discord) return "";
 
-function Discord(discord?: string) {
-  if (discord) {
     return (
       <Stack.Item>
         <Link href={getDiscordUrl(discord)} target="_blank">
@@ -69,13 +51,31 @@ function Discord(discord?: string) {
         </Link>
       </Stack.Item>
     );
-  } else {
-    return ("");
-  }
-}
+  };
 
+  private GetStoreBadge(store: string) {
+    if (!store) return "";
 
-export class ProjectCard extends React.Component<ListItemProps> {
+    return (
+      <Stack.Item>
+        <Link href={getStoreUrl(store)} target="_blank">
+          <Image src={Images.Badges.msstore} />
+        </Link>
+      </Stack.Item>
+    );
+  };
+
+  private GetGithubBadge(github: string) {
+    if (!github) return "";
+    return (
+      <Stack.Item>
+        <Link href={getGitHubUrl(github)} target="_blank">
+          <Image src={Images.Badges.github} />
+        </Link>
+      </Stack.Item>
+    );
+  };
+
   render() {
     return (
       <DocumentCard styles={cardStyles}>
@@ -88,12 +88,12 @@ export class ProjectCard extends React.Component<ListItemProps> {
           <DocumentCardTitle title={this.props.project.title} shouldTruncate />
           <DocumentCardTitle title={this.props.project.description} showAsSecondaryTitle />
 
-          <Stack horizontal horizontalAlign="end" disableShrink tokens={itemAlignmentsStackTokens} style={{marginRight: 10, marginBottom:10}}>
-            {Github(this.props.project.github)}
+          <Stack horizontal horizontalAlign="end" disableShrink tokens={itemAlignmentsStackTokens} style={{ marginRight: 10, marginBottom: 10 }}>
+            {this.GetGithubBadge(this.props.project.github)}
 
-            {Store(this.props.project.store)}
+            {this.GetStoreBadge(this.props.project.store)}
 
-            {Discord(this.props.project.discord)}
+            {this.GetDiscordBadge(this.props.project.discord)}
           </Stack>
         </DocumentCardDetails>
       </DocumentCard>

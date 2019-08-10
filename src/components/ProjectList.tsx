@@ -7,7 +7,6 @@ interface ListProps {
   projects: IProjectList;
 }
 
-
 const stackStyles: IStackStyles = {
   root: {
     width: "90%",
@@ -16,7 +15,6 @@ const stackStyles: IStackStyles = {
 };
 
 const wrapStackTokens: IStackTokens = { childrenGap: 30 };
-
 
 export const ProjectList = (props: ListProps) => {
   const items = props.projects.projects.map((item) => (
