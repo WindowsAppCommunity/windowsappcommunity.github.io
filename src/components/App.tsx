@@ -18,8 +18,9 @@ export const App: React.StatelessComponent = () => {
       <Stack horizontalAlign="center">
         <Header />
         <Switch>
-          <Route exact path="/projects" component={Projects} />
-          <Route component={Home} />
+          <Route path="/" exact component={Home} />
+          <Route path="/projects" component={Projects} />
+          <Route component={Home} />}
         </Switch>
       </Stack>
     </HashRouter>

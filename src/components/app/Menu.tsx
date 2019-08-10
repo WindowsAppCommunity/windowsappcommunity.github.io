@@ -1,22 +1,18 @@
 import * as React from 'react';
-import { Pivot, PivotItem, PivotLinkFormat, PivotLinkSize } from 'office-ui-fabric-react/lib/Pivot';
+import { NavLink } from 'react-router-dom';
+import { PrimaryButton } from 'office-ui-fabric-react';
 
 export class Menu extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <nav>
-        <Pivot linkSize={PivotLinkSize.large} onLinkClick={this.onLinkClick}>
-          <PivotItem headerText="Home" itemKey="#" />
-          <PivotItem headerText="Projects" itemKey="#/projects" />
-        </Pivot>
+        <NavLink to="/" exact activeClassName="selected" style={{marginRight:10}}>
+          <PrimaryButton text="Home" />
+        </NavLink>
+        <NavLink to="/projects" activeClassName="selected" /* activeStyle= */>
+          <PrimaryButton text="Projects" />
+        </NavLink>
       </nav>
     );
-  }
-
-  public onLinkClick(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>): void {
-    if (item) {
-      console.log(item.props.itemKey);
-      window.open(item.props.itemKey, '_self');
-    }
   }
 }
