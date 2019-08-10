@@ -8,7 +8,8 @@ import {
   IDocumentCardStyles
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
-import { getStoreUrl, getGitHubUrl, Images, getDiscordUrl, getThumbUrl } from "../common/const";
+import { Images } from "../common/const";
+import Helpers from "../common/helpers";
 
 import { Stack, Link, IStackTokens } from "office-ui-fabric-react";
 import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
@@ -17,6 +18,9 @@ interface ListItemProps {
   project: IProject;
 }
 
+export const getThumbUrl = (id: string) => {
+  return `assets/thumbs/${id}.png`;
+}
 
 const cardStyles: IDocumentCardStyles = {
   root: {
@@ -46,7 +50,7 @@ export class ProjectCard extends React.Component<ListItemProps> {
 
     return (
       <Stack.Item>
-        <Link href={getDiscordUrl(discord)} target="_blank">
+        <Link href={Helpers.getDiscordUrl(discord)} target="_blank">
           <Image src={Images.Badges.discord} />
         </Link>
       </Stack.Item>
@@ -58,7 +62,7 @@ export class ProjectCard extends React.Component<ListItemProps> {
 
     return (
       <Stack.Item>
-        <Link href={getStoreUrl(store)} target="_blank">
+        <Link href={Helpers.getStoreUrl(store)} target="_blank">
           <Image src={Images.Badges.msstore} />
         </Link>
       </Stack.Item>
@@ -69,7 +73,7 @@ export class ProjectCard extends React.Component<ListItemProps> {
     if (!github) return "";
     return (
       <Stack.Item>
-        <Link href={getGitHubUrl(github)} target="_blank">
+        <Link href={Helpers.getGithubUrl(github)} target="_blank">
           <Image src={Images.Badges.github} />
         </Link>
       </Stack.Item>
