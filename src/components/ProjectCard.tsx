@@ -19,7 +19,7 @@ interface ListItemProps {
 }
 
 export const getThumbUrl = (id: string) => {
-  return `assets/thumbs/${id}.png`;
+  return `/assets/thumbs/${id}.png`;
 }
 
 const cardStyles: IDocumentCardStyles = {
