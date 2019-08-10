@@ -11,7 +11,7 @@ const itemStyles: React.CSSProperties = {
 export const Header: React.StatelessComponent = () => {
   return (
     <Stack>
-      <Stack horizontal wrap verticalAlign="center" horizontalAlign="center" gap="10px">
+      <Stack horizontal wrap verticalAlign='end' horizontalAlign="center" gap="10px">
         <Link href="/">
           <Image src={Images.uwpCommunityLogo} />
         </Link>
@@ -19,6 +19,5 @@ export const Header: React.StatelessComponent = () => {
       </Stack>
       <header style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: "10px" }}>The homepage for the unofficial Discord Server </header>
     </Stack>
-
   );
 };
