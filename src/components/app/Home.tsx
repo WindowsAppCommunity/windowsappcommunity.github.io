@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Stack, Text, Button } from "office-ui-fabric-react";
+import { Stack, Text, PrimaryButton } from "office-ui-fabric-react";
 import { Links, Images } from "../../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import styled from 'styled-components';
@@ -41,26 +41,26 @@ let Img = styled.img`
 
 export const Home: React.StatelessComponent = () => {
   return (
-    <Stack wrap horizontal horizontalAlign="space-around" gap="25px">
+    <Stack wrap horizontal horizontalAlign="space-around" tokens={{childrenGap:25}}>
       <HoverBox>
           <Stack wrap horizontal verticalAlign="center" horizontalAlign="space-between">
             <Stack style={{margin: "15px"}}>
               <Text variant="xLargePlus">Launch 2020 signup coming soon</Text>
               <Text variant="mediumPlus">Check back later</Text>
-              <Button style={{marginTop : "15px"}} text="Submit your app" disabled />
+              <PrimaryButton style={{marginTop : "15px"}} text="Submit your app" disabled />
             </Stack>
             <Img src={Images.launchHeroImage} />
           </Stack>
       </HoverBox>
 
-      <Stack gap="15px" wrap horizontal horizontalAlign="space-around">
+      <Stack wrap horizontal horizontalAlign="space-around" tokens={{childrenGap:15}}>
         <HoverBox>
           <LinkCard>
             <Stack>
               <Img src={Images.discordChatExample} />
 
-              <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
-                <Stack gap="10px" style={{ margin: "10px" }}>
+              <Stack horizontal verticalAlign="center" horizontalAlign="center" tokens={{childrenGap:7}}>
+                <Stack style={{ margin: "10px" }} tokens={{childrenGap:10}}>
                   <Text>Discuss the platform with other enthusiasts, get help as a developer, and interact with the devs of your favorite apps</Text>
                   <Link href={Links.discordServerInvite} target="_blank"> Join our discord server </Link>
                 </Stack>
@@ -75,8 +75,8 @@ export const Home: React.StatelessComponent = () => {
           <LinkCard>
             <Stack>
               <Img src={Images.githubOrgScreenshot} />
-              <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
-                <Stack gap="10px" style={{ margin: "10px" }}>
+              <Stack horizontal verticalAlign="center" horizontalAlign="center" tokens={{childrenGap:7}}>
+                <Stack style={{ margin: "10px" }} tokens={{childrenGap:10}}>
                   <Text>Many of our projects are open source, so others can learn or build with them</Text>
                   <Link href={Links.githubOrganization} target="_blank">See our open source projects</Link>
                 </Stack>
@@ -90,8 +90,8 @@ export const Home: React.StatelessComponent = () => {
           <LinkCard>
             <Stack>
               <Img src={Images.launchHeroImage} />
-              <Stack horizontal verticalAlign="center" horizontalAlign="center" gap="7px">
-                <Stack gap="10px" style={{ margin: "10px" }}>
+              <Stack horizontal verticalAlign="center" horizontalAlign="center"  tokens={{childrenGap:7}}>
+                <Stack style={{ margin: "10px" }} tokens={{childrenGap:10}}>
                   <Text>As a community of talented developers, each year we Launch our projects together in an annnual event known as <code>Launch</code></Text>
                   <Link href={Links.launch2019Medium} target="_blank">Read about Launch 2019</Link>
                 </Stack>

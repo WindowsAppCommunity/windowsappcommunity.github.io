@@ -1,22 +1,43 @@
-import * as React from 'react';
-import { Pivot, PivotItem, PivotLinkFormat, PivotLinkSize } from 'office-ui-fabric-react/lib/Pivot';
+import React, { CSSProperties } from "react";
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
+import { Text } from "office-ui-fabric-react";
+
+const navLinkActiveStyle: CSSProperties = {
+  borderBottom: "3px solid #5e5eff",
+};
+
+const MyNavLink = styled(NavLink)`     
+   color: black;
+   padding: 25px 12px 5px 12px;
+   text-align: center;
+   display: inline-block;
+   text-decoration: none;
+   margin: 7px;
+   border-bottom: 3px solid #c9c9c9;
+
+  :hover  {
+    text-decoration: none;    
+    border-bottom: 3px solid #9e9e9e;
+  };
+`;
+
+const NavText = styled(Text)`
+  font-size: 18px;
+`;
 
 export class Menu extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <nav>
-        <Pivot linkSize={PivotLinkSize.large} onLinkClick={this.onLinkClick}>
-          <PivotItem headerText="Home" itemKey="#" />
-          <PivotItem headerText="Projects" itemKey="#/projects" />
-        </Pivot>
+        <MyNavLink to="/" exact activeStyle={navLinkActiveStyle}>
+          <NavText>Home</NavText>
+        </MyNavLink>
+        <MyNavLink to="/projects" activeStyle={navLinkActiveStyle}>
+          <NavText>Projects</NavText>
+        </MyNavLink>
       </nav>
     );
-  }
-
-  public onLinkClick(item?: PivotItem, ev?: React.MouseEvent<HTMLElement>): void {
-    if (item) {
-      console.log(item.props.itemKey);
-      window.open(item.props.itemKey, '_self');
-    }
   }
 }

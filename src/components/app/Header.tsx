@@ -7,7 +7,7 @@ import { Menu } from "./Menu";
 export const Header: React.StatelessComponent = () => {
   return (
     <header>
-      <Stack horizontal wrap verticalAlign='end' horizontalAlign="center" gap="10px">
+      <Stack horizontal wrap verticalAlign='end' horizontalAlign="center" tokens={{childrenGap:10}}>
         <Link href="/">
           <Image src={Images.uwpCommunityLogo} />
         </Link>
