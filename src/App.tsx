@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Switch, HashRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 import { Projects } from './views/Projects';
 import { Home } from './views/Home';
@@ -14,7 +14,7 @@ library.add(fab, faDiscord, faMedium, faGithub);
 
 export const App: React.StatelessComponent = () => {
   return (
-    <HashRouter basename="/">
+    <BrowserRouter basename="/">
       <Stack horizontalAlign="center">
         <AppHeader />
         <Switch>
@@ -23,6 +23,6 @@ export const App: React.StatelessComponent = () => {
           <Route component={Home} />}
         </Switch>
       </Stack>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
