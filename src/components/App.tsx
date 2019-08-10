@@ -1,13 +1,10 @@
 import * as React from "react";
-import {
-  Route,
-  Switch,
-  HashRouter
-} from 'react-router-dom';
+import { Route, Switch, HashRouter } from 'react-router-dom';
+
 import { Projects } from './Projects';
 import { Home } from './app/Home';
-//  import { NotFound } from './NotFound';
 import { Header } from "./app/Header";
+
 import { Stack } from "office-ui-fabric-react";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
