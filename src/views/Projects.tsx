@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Stack } from "office-ui-fabric-react";
-import { SubHeader } from "./app/SubHeader";
-import { List } from "./projects/List";
+import { SubHeader } from "../components/app/SubHeader";
+import { ProjectList as ProjectListElement } from "../components/projects/ProjectList";
 import ProjectList from '../common/projectList.json';
 
 export const Projects: React.StatelessComponent = () => {
@@ -11,7 +11,7 @@ export const Projects: React.StatelessComponent = () => {
     <Stack horizontalAlign="center">
       {/* <SubHeader title="Projects //" subTitle={ProjectList.projects.length.toString()} /> */}
       
-      <List projects={ProjectList} />
+      <ProjectListElement projects={ProjectList} />
     </Stack>
   );
 };

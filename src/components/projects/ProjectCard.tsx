@@ -1,5 +1,5 @@
 import React from "react";
-import { Project } from "../../common/interfaces";
+import { IProject } from "../../common/interfaces";
 import {
   DocumentCard,
   DocumentCardTitle,
@@ -13,7 +13,7 @@ import { Stack, Link, IStackTokens } from "office-ui-fabric-react";
 import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
 
 interface ListItemProps {
-  project: Project;
+  project: IProject;
 }
 
 
@@ -75,7 +75,7 @@ function Discord(discord?: string) {
 }
 
 
-export class ListItem extends React.Component<ListItemProps> {
+export class ProjectCard extends React.Component<ListItemProps> {
   render() {
     return (
       <DocumentCard styles={cardStyles}>

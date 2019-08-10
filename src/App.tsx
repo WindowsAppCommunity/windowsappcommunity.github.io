@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Route, Switch, HashRouter } from 'react-router-dom';
 
-import { Projects } from './Projects';
-import { Home } from './app/Home';
-import { Header } from "./app/Header";
+import { Projects } from './views/Projects';
+import { Home } from './components/app/Home';
+import { Header } from "./components/app/Header";
 
 import { Stack } from "office-ui-fabric-react";
 
