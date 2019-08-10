@@ -1,9 +1,9 @@
 export const getSreenshotUrl = (id: string) => {
-  return `assets/screenshots/${id}.png`;
+  return `/assets/screenshots/${id}.png`;
 }
 
 export const getThumbUrl = (id: string) => {
-  return `assets/thumbs/${id}.png`;
+  return `/assets/thumbs/${id}.png`;
 }
 
 export const getStoreUrl = (id: string) => {
@@ -26,14 +26,14 @@ export const Links = {
 };
 
 export const Images = {
-  discordChatExample: "assets/img/discordchatexample.png",
-  githubOrgScreenshot: "assets/img/githuborgscreenshot.png",
-  launchHeroImage: "assets/img/LaunchHero.png",
+  discordChatExample: "/assets/img/discordchatexample.png",
+  githubOrgScreenshot: "/assets/img/githuborgscreenshot.png",
+  launchHeroImage: "/assets/img/LaunchHero.png",
 
-  uwpCommunityLogo: "assets/img/uwpCommunityLogo.png",
+  uwpCommunityLogo: "/assets/img/uwpCommunityLogo.png",
   Badges: {
-    msstore: "assets/img/msstoreBadge.png",
-    github: "assets/img/githubBadge.png",
-    discord: "assets/img/discordBadge.png"
+    msstore: "/assets/img/msstoreBadge.png",
+    github: "/assets/img/githubBadge.png",
+    discord: "/assets/img/discordBadge.png"
   }
 };
