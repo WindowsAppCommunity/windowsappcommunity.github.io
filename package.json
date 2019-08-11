@@ -32,8 +32,11 @@
     "postbuild": "react-snap",
     "test": "react-scripts test --env=jsdom",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -b origin/master",
-    "gh-help": "gh-pages --help",
+    "deploy": "gh-pages -d build",
+    "predeployLive": "npm run build",
+    "deployLive": "npm run cleanup && gh-pages -d build -b master",
+    "cleanup": "rm -rf node_modules/gh-pages/.cache",
+    "ghp-help": "gh-pages --help",
     "eject": "react-scripts eject"
   },
   "browserslist": [
