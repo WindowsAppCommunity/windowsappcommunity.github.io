@@ -32,7 +32,7 @@
     "postbuild": "react-snap",
     "test": "react-scripts test --env=jsdom",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d build -b master",
     "eject": "react-scripts eject"
   },
   "browserslist": [
