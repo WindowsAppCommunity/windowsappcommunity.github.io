@@ -43,4 +43,4 @@ _key*
 /.vs
 
 # Build Files
-.build/
+build/
