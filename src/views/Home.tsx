@@ -92,7 +92,7 @@ export const Home: React.StatelessComponent = () => {
               <Img src={Images.launchHeroImage} />
               <Stack horizontal verticalAlign="center" horizontalAlign="center"  tokens={{childrenGap:7}}>
                 <Stack style={{ margin: "10px" }} tokens={{childrenGap:10}}>
-                  <Text>As a community of talented developers, each year we Launch our projects together in an annnual event known as <code>Launch</code></Text>
+                  <Text>As a community of talented developers, each year we Launch our projects together in an annual event known as <code>Launch</code></Text>
                   <Link href={Links.launch2019Medium} target="_blank">Read about Launch 2019</Link>
                 </Stack>
                 <FontAwesomeIcon style={FaIconStyle} icon={["fab", "medium"]} />

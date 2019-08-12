@@ -41,3 +41,6 @@ spec/out/
 # Safe files
 _key*
 /.vs
+
+# Build files
+build/
