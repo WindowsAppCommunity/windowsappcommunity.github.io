@@ -1,6 +1,14 @@
 {
   "projects": [
     {
+      "id": "appraisit",
+      "title": "Appraisit",
+      "description": "Discover new app release, updates, games and more!",
+      "category": "",
+      "github": "FireCubeStudios/Appraisit",
+      "store": "9nrdk6v968dv"
+    },
+    {
       "id": "bandsaroundConcerts",
       "title": "Bandsaround Concerts",
       "description": "An unofficial Bandsintown application",
