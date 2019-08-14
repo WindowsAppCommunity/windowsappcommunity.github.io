@@ -7,12 +7,14 @@ import {
   DocumentCardImage,
   IDocumentCardStyles
 } from "office-ui-fabric-react/lib/DocumentCard";
-import { Image, ImageFit } from "office-ui-fabric-react/lib/Image";
+import { ImageFit } from "office-ui-fabric-react/lib/Image";
 import { Images } from "../common/const";
 import Helpers from "../common/helpers";
 
 import { Stack, Link, IStackTokens } from "office-ui-fabric-react";
 import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
+import SVG from 'react-inlinesvg';
+
 
 interface ListItemProps {
   project: IProject;
@@ -40,44 +42,38 @@ const itemAlignmentsStackTokens: IStackTokens = {
 export class ProjectCard extends React.Component<ListItemProps> {
   constructor(props: ListItemProps) {
     super(props);
+    this.GetBadge.bind(this);
     this.GetDiscordBadge.bind(this);
     this.GetStoreBadge.bind(this);
     this.GetGithubBadge.bind(this);
   }
 
-  private GetDiscordBadge(discord?: string) {
-    if (!discord) return "";
+  private GetBadge(badge:string, url: string) {
+    console.log(badge);
+    console.log(url);
 
     return (
       <Stack.Item>
-        <Link href={Helpers.getDiscordUrl(discord)} target="_blank">
-          <Image src={Images.Badges.discord} />
+        <Link href={url} target="_blank">
+          <SVG src={badge} />
         </Link>
       </Stack.Item>
     );
+  };
+
+  private GetDiscordBadge(discord?: string) {
+    if (!discord) return "";
+    return this.GetBadge(Images.Badges.discord, Helpers.getDiscordUrl(discord));
   };
 
   private GetStoreBadge(store: string) {
     if (!store) return "";
-
-    return (
-      <Stack.Item>
-        <Link href={Helpers.getStoreUrl(store)} target="_blank">
-          <Image src={Images.Badges.msstore} />
-        </Link>
-      </Stack.Item>
-    );
+    return this.GetBadge(Images.Badges.msstore, Helpers.getStoreUrl(store));
   };
 
   private GetGithubBadge(github: string) {
     if (!github) return "";
-    return (
-      <Stack.Item>
-        <Link href={Helpers.getGithubUrl(github)} target="_blank">
-          <Image src={Images.Badges.github} />
-        </Link>
-      </Stack.Item>
-    );
+    return this.GetBadge(Images.Badges.github, Helpers.getGithubUrl(github));
   };
 
   render() {
