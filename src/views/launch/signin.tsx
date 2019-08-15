@@ -47,7 +47,7 @@ export const Signin = () => {
 };
 
 export const SignInStatus = (props: IConnectionState) => {
-    let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.connectionId}`;
+    let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.connectionId}`;
 
     const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
 
