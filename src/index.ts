@@ -41,14 +41,14 @@ const DEBUG = process.env.DEBUG == "local";
 
 let RegexMethods = /((?:post|get|put|patch|delete|ws)+)(?:.js)/;
 
-glob(__dirname + '/**/*.js', function (err: string, result: string[]) {
+glob(__dirname + '/**/*.js', function (err: Error, result: string[]) {
 
     for (let filePath of result) {
 
         if (!filePath.includes("node_modules") && helpers.match(filePath, RegexMethods)) {
             let serverPath = filePath.replace(RegexMethods, "").replace("/app", "").replace("/build", "");
-
-            if (DEBUG) serverPath = serverPath.replace(__dirname.replace(/\\/g, `/`), "");
+            
+            if (DEBUG) serverPath = serverPath.replace(__dirname.replace(/\\/g, `/`).replace("/build", ""), "");
 
             const method = helpers.match(filePath, RegexMethods);
             console.log(`Setting up ${filePath} as ${method.toUpperCase()} ${serverPath}`);
