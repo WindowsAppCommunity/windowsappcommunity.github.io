@@ -1,11 +1,11 @@
-import { Text, Stack, Button, BaseButton } from "office-ui-fabric-react";
-import React, { useState, CSSProperties } from "react";
+import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
+import React, { useState, useEffect } from "react";
 
 let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/");
 
 const WebSocketContainer: React.FC<any> = (props: any) => {
     const [connectionId, setConnectionId] = useState<number>(Math.floor(Math.random() * 10000000) + 1);
-    const [status, setStatus] = useState<string>("start");
+    const [status, setStatus] = useState<"start" | "inprogress" | "done">("start");
 
     function WebSocket_Init() {
         connection.onopen = WebSocket_OnOpen;
@@ -14,7 +14,7 @@ const WebSocketContainer: React.FC<any> = (props: any) => {
 
     function WebSocket_OnOpen(this: WebSocket, ev: Event) {
         console.info("Handshake established with login verification server");
-        let connectionState : IConnectionState = {
+        let connectionState: IConnectionState = {
             connectionId, status
         }
         connection.send(JSON.stringify(connectionState));
@@ -25,7 +25,7 @@ const WebSocketContainer: React.FC<any> = (props: any) => {
         console.info("Socket message: ", message);
 
         if (message) {
-            setStatus(message);            
+            setStatus(message);
         }
     }
 
@@ -33,7 +33,7 @@ const WebSocketContainer: React.FC<any> = (props: any) => {
 
     return (
         <div>
-            <SignInStatus connectionId={connectionId} status={status}  />
+            <SignInStatus connectionId={connectionId} status={status} />
         </div>
     )
 };
@@ -47,17 +47,39 @@ export const Signin = () => {
 };
 
 export const SignInStatus = (props: IConnectionState) => {
+    let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.connectionId}`;
+
+    const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
+
+    if (props.status == "start") window.open(discordAuthEndpoint);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowRedirectLink(true);
+        }, 7000);
+        return () => clearTimeout(timer);
+    }, [])
+
     return (
         <Stack>
-            
-            {props.status}
+            {
+                props.status == "start" ? (
+                    <Stack horizontalAlign="center">
+                        <Label>Taking you to Discord</Label>
+                        <Spinner label="Hold on tight" ariaLive="assertive" />
+                        <Text style={{ visibility: showRedirectLink ? "visible" : "hidden" }}>If not redirected automatically, <a href={discordAuthEndpoint} target="_blank">click here</a></Text>
+                    </Stack>
+                )
+                    : props.status == "inprogress" ? <Text>In Progress</Text>
+                        : props.status == "done" ? <Text>Done!</Text> : ""
+            }
         </Stack>
     )
 };
 
 interface IConnectionState {
     connectionId: number;
-    status: any;
+    status: "start" | "inprogress" | "done";
 }
 
 
@@ -65,7 +87,7 @@ function SignIntoDiscord_Clicked() {
     /**
      * TODO: Basic sign in 
      * https://discordapp.com/developers/docs/topics/oauth2
-     * https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=https%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin&response_type=code&scope=guilds%20identify
+     * 
      * 
      * Generate unique id
      * Establish WebSocket to backend with id
