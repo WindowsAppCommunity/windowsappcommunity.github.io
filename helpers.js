@@ -10,12 +10,12 @@ function match(toMatch, regex) {
     return (m && m[1]) ? m[1] : undefined;
 }
 
-function replaceAll(target, replacement) {
-    return this.split(target).join(replacement);
+function replaceAll(text, target, replacement) {
+    return text.split(target).join(replacement);
 };
 
-function remove(target) {
-    return this.split(target).join("");
+function remove(text, target) {
+    return text.split(target).join("");
 };
 
 module.exports = {
