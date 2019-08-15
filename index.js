@@ -7,6 +7,8 @@
  * 
  * Example: 
  * The file `./myapp/bugreport/post.js` is set up at `POST https://example.com/myapp/bugreport/`
+ * 
+ * For local development, set the "DEBUG" environment variable to "local" before starting the app
  */
 
 const express = require('express'), app = express();
@@ -35,16 +37,20 @@ app.use(function (req, res, next) {
 });
 
 const PORT = process.env.PORT || 5000;
+const DEBUG = process.env.DEBUG == "local";
 
 let RegexMethods = /((?:post|get|put|patch|delete)+)(?:.js)/;
 
 glob(__dirname + '/**/*.js', function (err, result) {
+    console.log(__dirname);
     for (let filePath of result) {
 
         if (!filePath.includes("node_modules") && helpers.match(filePath, RegexMethods)) {
             let serverPath = filePath.replace(RegexMethods, "").replace("/app", "");
+            
+            if (DEBUG) serverPath = helpers.remove(__dirname);
+            
             const method = helpers.match(filePath, RegexMethods);
-
             console.log(`Setting up ${filePath} as ${method.toUpperCase()} ${serverPath}`);
 
             switch (method) {
