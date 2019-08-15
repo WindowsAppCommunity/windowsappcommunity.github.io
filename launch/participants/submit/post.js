@@ -1,5 +1,5 @@
 // This endpoint submits an app to review for Launch, it does not modify the actual participants list
-let db = require("./dbclient");
+let db = require("../dbclient");
 const currentLaunchYear = 2020;
 
 /**
