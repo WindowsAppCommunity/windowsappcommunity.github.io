@@ -37,12 +37,14 @@ function createTable() {
 function getLaunchTable(year, res, cb) {
     client.query(`select * from launch${year}`, (err, queryResults) => {
         if (err.toString().includes("does not exist")) {
-            console.error(err);
             res.status(404);
             res.json(JSON.stringify({
                 error: "Not found",
                 reason: `Data does not exist for year ${year}`
             }));
+            return;
+        } else if (err.toString()) {
+            console.error(err);
             return;
         }
 
