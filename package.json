@@ -2,7 +2,7 @@
   "name": "uwpcommunity.github.io",
   "version": "1.0.0",
   "description": "Backend for the UWP Community website",
-  "main": "build/index.js",
+  "main": "./build/index.js",
   "engines": {
     "node": "10.x"
   },
@@ -21,7 +21,8 @@
     "typescript": "^3.5.3"
   },
   "scripts": {
-    "start": "tsc && node ./build/index.js"
+    "start": "tsc && node ./build/index.js",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
