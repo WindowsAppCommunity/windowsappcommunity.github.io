@@ -1,50 +1,27 @@
 {
-  "name": "new",
+  "name": "uwpcommunity.github.io",
   "version": "1.0.0",
-  "homepage": "https://uwpcommunity.github.io",
-  "description": "",
-  "keywords": [],
-  "main": "src/index.tsx",
+  "description": "Backend for the UWP Community website",
+  "main": "index.js",
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.21",
-    "@fortawesome/free-brands-svg-icons": "^5.10.1",
-    "@fortawesome/free-solid-svg-icons": "^5.10.1",
-    "@fortawesome/react-fontawesome": "^0.1.4",
-    "@types/react": "^16.9.1",
-    "@types/react-dom": "16.8.5",
-    "@types/react-router-dom": "^4.3.4",
-    "@types/styled-components": "^4.1.18",
-    "@uifabric/fluent-theme": "^7.1.0",
-    "@uifabric/icons": "7.1.1",
-    "gh-pages": "^2.1.1",
-    "office-ui-fabric-react": "^7.22.1",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.1.0",
-    "react-snap": "^1.23.0",
-    "styled-components": "^4.3.2",
-    "typescript": "^3.5.3"
+    "ejs": "^2.5.6",
+    "express": "^4.15.2"
   },
+  "devDependencies": {},
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "postbuild": "react-snap",
-    "test": "react-scripts test --env=jsdom",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "deployClean": "npm run cleanup && gh-pages -d build",
-    "predeployLive": "npm run build",
-    "deployLive": "npm run cleanup && gh-pages -d build -b master",
-    "cleanup": "rm -rf node_modules/gh-pages/.cache",
-    "ghp-help": "gh-pages --help",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "devDependencies": {}
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UWPCommunity/uwpcommunity.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UWPCommunity/uwpcommunity.github.io/issues"
+  },
+  "homepage": "https://github.com/UWPCommunity/uwpcommunity.github.io#readme"
 }
