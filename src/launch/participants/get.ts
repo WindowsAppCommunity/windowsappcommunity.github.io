@@ -1,6 +1,12 @@
-const db = require('./dbclient');
+import { Request, Response } from "express";
+import { Buffer } from "buffer";
+import { Dirent } from "fs";
+import { IQueryResult } from "./dbclient";
 
-module.exports = (req, res) => {
+let db = require('./dbclient');
+
+
+module.exports = (req: Request, res: Response) => {
     if (!req.query.year) {
         res.status(422);
         res.json(JSON.stringify({
@@ -9,13 +15,13 @@ module.exports = (req, res) => {
         }));
         return;
     }
-    getLaunchCached(req.query.year, res, results => {
+    getLaunchCached(req.query.year, res, (results: string) => {
         res.end(results);
     });
 };
 
-function getLaunchTable(year, res, cb) {
-    db.query(`select * from launch${year}participants`, (err, queryResults) => {
+function getLaunchTable(year: number, res: Response, cb: Function) {
+    db.query(`select * from launch${year}participants`, (err: string, queryResults: IQueryResult) => {
         if (err.toString().includes("does not exist")) {
             res.status(404);
             res.json(JSON.stringify({
@@ -41,23 +47,23 @@ function getLaunchTable(year, res, cb) {
 // Get and cache the list of launch participants
 // This API is our only surface for interacting with the database, so the cache should be updated when a new participant is added
 const fs = require("fs");
-const launchCacheFilename = "launchCache.json";
+const launchCacheFilename: string = "launchCache.json";
 const launchCachePath = __dirname + "/" + launchCacheFilename;
 
-function getLaunchCached(year, res, cb) {
-    fs.readdir(__dirname, (err, fileResults) => {
+function getLaunchCached(year: number, res: Response, cb: Function) {
+    fs.readdir(__dirname, (err: Error, fileResults: string[] | Buffer[] | Dirent) => {
 
         // If missing, get data from database and create the cache
-        if (!fileResults.includes(launchCacheFilename)) {
+        if (fileResults instanceof Array && fileResults instanceof String && !fileResults.includes(launchCacheFilename)) {
             console.info("Data not cached, refreshing from DB");
-            getLaunchTable(year, res, result => {
+            getLaunchTable(year, res, (result: string) => {
                 cb(result);
             });
             return;
         }
 
         // If the file exists, get the contents
-        fs.readFile(launchCachePath, (err, file) => {
+        fs.readFile(launchCachePath, (err: Error, file: string[] | Buffer[] | Dirent) => {
             let fileContents = file.toString();
 
             if (fileContents.length <= 5) {

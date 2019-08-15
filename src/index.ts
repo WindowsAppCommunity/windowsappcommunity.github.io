@@ -1,3 +1,5 @@
+import { Request, Response, NextFunction } from "express";
+
 /**
  * This file sets up API endpoints based on the current folder tree in Heroku.
  * 
@@ -18,7 +20,7 @@ const helpers = require('./helpers');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(function (req, res, next) {
+app.use((req: Request, res: Response, next: NextFunction) => {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'uwpcommunity.github.io');
 
@@ -27,10 +29,6 @@ app.use(function (req, res, next) {
 
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
 
     // Pass to next layer of middleware
     next();
@@ -41,15 +39,15 @@ const DEBUG = process.env.DEBUG == "local";
 
 let RegexMethods = /((?:post|get|put|patch|delete)+)(?:.js)/;
 
-glob(__dirname + '/**/*.js', function (err, result) {
-    
+glob(__dirname + '/**/*.js', function (err: string, result: string[]) {
+
     for (let filePath of result) {
 
         if (!filePath.includes("node_modules") && helpers.match(filePath, RegexMethods)) {
             let serverPath = filePath.replace(RegexMethods, "").replace("/app", "");
-            
+
             if (DEBUG) serverPath = serverPath.replace(__dirname.replace(/\\/g, `/`), "");
-            
+
             const method = helpers.match(filePath, RegexMethods);
             console.log(`Setting up ${filePath} as ${method.toUpperCase()} ${serverPath}`);
 
@@ -75,7 +73,7 @@ glob(__dirname + '/**/*.js', function (err, result) {
 });
 
 
-app.listen(PORT, (err) => {
+app.listen(PORT, (err: string) => {
     if (err) {
         console.error(`Error while setting up port ${PORT}:`, err);
         return;

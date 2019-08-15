@@ -1,26 +1,28 @@
+import { Request, Response } from "express";
+import { IQueryResult } from "../dbclient";
+
 // This endpoint submits an app to review for Launch, it does not modify the actual participants list
 let db = require("../dbclient");
 const currentLaunchYear = 2020;
 
-/**
- * Example participant request obj
- */
-let exampleParticipantRequest = {
-    appName: "App",
-    author: "SomeDev",
-    description: "Brief app description",
-    isPrivate: true,
-    contact: {
-        email: "", // Optional
-        discord: "" // Required, server presence should be verified by discord bot
-    }
+interface IParticipantContact {
+    email?: string;
+    discord: string;
 };
 
-module.exports = (req, res) => {
-    const body = req.body;
-    const bodyCheck = checkBody(body);
+interface IParticipantRequest {
+    appName: string;
+    author: string;
+    description: string;
+    isPrivate: boolean;
+    contact: IParticipantContact
+};
 
-    if (!bodyCheck || bodyCheck[0] === false) {
+module.exports = (req: Request, res: Response) => {
+    const body = req.body;
+    const bodyCheck: true | (string | boolean)[] = checkBody(body);
+
+    if (!bodyCheck || bodyCheck instanceof Array && bodyCheck[0] === false) {
         res.status(422);
         res.json(JSON.stringify({
             error: "Malformed request",
@@ -28,12 +30,12 @@ module.exports = (req, res) => {
         }));
         return;
     }
-    submitParticipant(body, results => {
-        res.end(results);
+    submitParticipant(body, (results: IQueryResult) => {
+        res.end(JSON.stringify(results));
     });
 };
 
-function checkBody(body) {
+function checkBody(body: IParticipantRequest) {
     if (!body.appName) return [false, "appName"];
     if (!body.author) return [false, "author"];
     if (!body.description) return [false, "description"];
@@ -42,18 +44,18 @@ function checkBody(body) {
     return true;
 }
 
-function submitParticipant(participantData, cb) {
-    db.query(`select * from launch${currentLaunchYear}submissions`, (err, queryResults) => {
+function submitParticipant(participantData: IParticipantRequest, cb: Function) {
+    db.query(`select * from launch${currentLaunchYear}submissions`, (err: Error, queryResults: IQueryResult) => {
         if (err.toString().includes("does not exist")) {
             // create the table
-            createTable(participantData, result => {
+            createTable(participantData, (result: IQueryResult) => {
                 cb(result);
             });
         }
     });
 }
 
-function createTable(participantData, cb) {
+function createTable(participantData: IParticipantRequest, cb: Function) {
     db.query(`CREATE TABLE launch${currentLaunchYear} (
         appname VARCHAR,
         author VARCHAR,
@@ -61,7 +63,7 @@ function createTable(participantData, cb) {
         private int(1),
         
     )`,
-        (err, queryResults) => {
+        (err: Error, queryResults: IQueryResult) => {
             cb(queryResults);
         });
 }

@@ -7,6 +7,9 @@
     "node": "10.x"
   },
   "dependencies": {
+    "@types/express": "^4.17.0",
+    "@types/glob": "^7.1.1",
+    "@types/node": "^12.7.2",
     "@types/pg": "^7.4.14",
     "body-parser": "^1.19.0",
     "ejs": "^2.5.6",
@@ -17,7 +20,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./build.js"
   },
   "repository": {
     "type": "git",
