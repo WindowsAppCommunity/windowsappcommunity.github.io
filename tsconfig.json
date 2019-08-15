@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es6",
         "lib": [
             "esnext"
         ],
@@ -11,10 +11,16 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "resolveJsonModule": true,
-        "noEmit": true,
-        "outDir": "./build"
+        "outDir": "./build",
+        "rootDir": "./src",
+        "sourceMap": true,
+        "sourceRoot": "./src",
+        "mapRoot": "./src"
     },
     "include": [
-        "src"
+        "./src/**/*"
+    ],
+    "exclude": [
+        "./node_modules"
     ]
 }

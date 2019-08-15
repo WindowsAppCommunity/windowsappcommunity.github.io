@@ -54,7 +54,7 @@ function getLaunchCached(year: number, res: Response, cb: Function) {
     fs.readdir(__dirname, (err: Error, fileResults: string[] | Buffer[] | Dirent) => {
 
         // If missing, get data from database and create the cache
-        if (fileResults instanceof Array && fileResults instanceof String && !fileResults.includes(launchCacheFilename)) {
+        if (!(fileResults instanceof Array && fileResults instanceof String) || !fileResults.includes(launchCacheFilename)) {
             console.info("Data not cached, refreshing from DB");
             getLaunchTable(year, res, (result: string) => {
                 cb(result);
