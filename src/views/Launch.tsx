@@ -35,7 +35,7 @@ const LaunchViewSelection = () => {
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
                 <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" />
 
-                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" buttonText="Sign up now" path="/launch/signup" />                    
+                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" buttonText="Sign up now" path="/launch/signup" buttonDisabled={true} />                    
             </Stack>
         </Stack>
     );
@@ -46,6 +46,7 @@ interface ILaunchCardProps {
     description: string;
     path: string;
     buttonText?: string;
+    buttonDisabled?: boolean;
 };
 const LaunchCardStyle = styled(HoverBox)`
     max-height: 500px;
@@ -62,12 +63,12 @@ const LaunchCard: React.FC<ILaunchCardProps> = (props: ILaunchCardProps) => {
             <Stack>
                 <Stack horizontal tokens={{ childrenGap: 5 }}>
                     <Text variant="xLarge">{props.header}</Text>
-                    <NavLink to={props.path}>
+                    <NavLink to={(props.buttonDisabled? window.location.pathname : props.path)}>
                         {
                             props.buttonText ?
-                                <Button style={{ marginLeft: "10px" }} text={props.buttonText} />
+                                <Button disabled={props.buttonDisabled} style={{ marginLeft: "10px" }} text={props.buttonText} />
                                 :
-                                <IconButton primary iconProps={{ iconName: 'Go' }} />
+                                <IconButton disabled={props.buttonDisabled} primary iconProps={{ iconName: 'Go' }} />
                         }
                     </NavLink>
                 </Stack>
