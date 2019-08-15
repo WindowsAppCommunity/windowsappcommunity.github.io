@@ -49,9 +49,6 @@ export class ProjectCard extends React.Component<ListItemProps> {
   }
 
   private GetBadge(badge:string, url: string) {
-    console.log(badge);
-    console.log(url);
-
     return (
       <Stack.Item>
         <Link href={url} target="_blank">

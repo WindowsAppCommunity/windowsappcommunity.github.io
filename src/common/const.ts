@@ -12,8 +12,8 @@ export const Images = {
 
   uwpCommunityLogo: "/assets/img/uwpCommunityLogo.png",
   Badges: {
-    msstore: "./assets/img/msstoreBadge.svg",
-    github: "./assets/img/githubBadge.svg",
-    discord: "./assets/img/discordBadge.svg"
+    msstore: "/assets/img/msstoreBadge.svg",
+    github: "/assets/img/githubBadge.svg",
+    discord: "/assets/img/discordBadge.svg"
   }
 };

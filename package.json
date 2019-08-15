@@ -17,7 +17,7 @@
     "@uifabric/fluent-theme": "^7.1.1",
     "@uifabric/icons": "7.1.1",
     "gh-pages": "^2.1.1",
-    "office-ui-fabric-react": "^7.23.0",
+    "office-ui-fabric-react": "^7.24.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-inlinesvg": "^1.1.5",
