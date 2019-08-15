@@ -39,12 +39,12 @@ const DEBUG = process.env.DEBUG == "local";
 
 let RegexMethods = /((?:post|get|put|patch|delete)+)(?:.js)/;
 
-glob(__dirname + '/**/*.js', function (err: string, result: string[]) {
+glob(__dirname + './src/**/*.js', function (err: string, result: string[]) {
 
     for (let filePath of result) {
 
         if (!filePath.includes("node_modules") && helpers.match(filePath, RegexMethods)) {
-            let serverPath = filePath.replace(RegexMethods, "").replace("/app", "");
+            let serverPath = filePath.replace(RegexMethods, "").replace("/app", "").replace("/build", "");
 
             if (DEBUG) serverPath = serverPath.replace(__dirname.replace(/\\/g, `/`), "");
 
