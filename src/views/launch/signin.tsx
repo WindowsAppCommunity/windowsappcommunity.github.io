@@ -1,40 +1,63 @@
 import { Text, Stack, Button, BaseButton } from "office-ui-fabric-react";
 import React, { useState, CSSProperties } from "react";
 
-export const Signin = () => {
-    const [connectionState, setConnectionState] = useState<IConnectionState>({
-        id: Math.floor(Math.random() * 10000000) + 1,
-        status: "start"
-    });
+let connection = new WebSocket("ws://localhost:5000/launch/participants/signin/");
 
-    let connection: WebSocket;
+const WebSocketContainer: React.FC<any> = (props: any) => {
+    const [connectionId, setConnectionId] = useState<number>(1 || Math.floor(Math.random() * 10000000) + 1);
+    const [status, setStatus] = useState<string>("start");
 
     function WebSocket_Init() {
-        connection = new WebSocket("ws://localhost:5000/launch/participants/signin/");
+        connection.onopen = WebSocket_OnOpen;
         connection.onmessage = WebSocket_OnMessage;
     }
 
-    function WebSocket_OnMessage(this: WebSocket, ev: MessageEvent) {
-        let message = ev.data as IConnectionState;
-        console.log(message);
+    function WebSocket_OnOpen(this: WebSocket, ev: Event) {
+        console.info("Handshake established with login verification server");
+        let connectionState : IConnectionState = {
+            connectionId, status
+        }
+        connection.send(JSON.stringify(connectionState));
+    }
 
-        if (message.status) {
-            setConnectionState(message);
+    function WebSocket_OnMessage(this: WebSocket, ev: MessageEvent) {
+        let message = ev.data;
+        console.info("Socket message: ", message);
+
+        if (message) {
+            setStatus(message);            
         }
     }
 
     WebSocket_Init();
+
+    return (
+        <div>
+            <SignInStatus connectionId={connectionId} status={status}  />
+        </div>
+    )
+};
+
+export const Signin = () => {
     return (
         <Stack>
-            {JSON.stringify(connectionState)}
+            <WebSocketContainer />
+        </Stack>
+    )
+};
+
+export const SignInStatus = (props: IConnectionState) => {
+    return (
+        <Stack>
+            Status:
+            {props.status}
         </Stack>
     )
 };
 
 interface IConnectionState {
-    id: Number;
-    status: "start" | "inprogress" | "done";
-    participatingAddresses?: string[];
+    connectionId: number;
+    status: any;
 }
 
 
