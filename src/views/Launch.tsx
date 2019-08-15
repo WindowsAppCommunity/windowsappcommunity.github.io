@@ -1,5 +1,5 @@
 import React, { useState, CSSProperties } from "react";
-import { Text, Stack, Button, IconButton, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
+import { Text, Stack, Button, IconButton, Image, ImageCoverStyle, ImageFit, Separator } from "office-ui-fabric-react";
 import { Route } from "react-router";
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
@@ -26,9 +26,11 @@ const LaunchViewSelection = () => {
                 <Stack horizontal wrap>
                     <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
                     <Stack style={{margin: "20px"}}>
-                        <Text variant="xLargePlus">//Launch</Text>
-                        <Text variant="large">An annual event where a community of Windows App developers release their UWP-related projects</Text>
-                        <Text style={{marginTop: "10px"}}>Our Discord server provides direct, 2 way user feedback from users, and a place for newbies to ask questions and learn from those with more experience, creating the perfect environment for apps to grow into something more</Text>
+
+                        <Text style={{fontFamily: "Segoe UI", fontSize: "40px", fontWeight: "lighter"}}>// Launch</Text>
+
+                        <Text  style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">An annual event where a community of Windows App developers release their UWP-related projects</Text>
+                        <Text style={{marginTop: "10px"}} variant="mediumPlus">Our Discord server provides direct, 2 way user feedback from users, and a place for newbies to ask questions and learn from those with more experience, creating the perfect environment for apps to grow into something more</Text>
                     </Stack>
                 </Stack>
             </HoverBox>
