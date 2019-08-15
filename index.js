@@ -12,7 +12,7 @@
 const express = require('express'), app = express();
 const bodyParser = require('body-parser');
 const glob = require('glob');
-import helpers from './helpers';
+const helpers = require('./helpers');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
