@@ -98,6 +98,14 @@
       "store": "9nsb2np5vrp9"
     },
     {
+      "id": "ghostly",
+      "title": "Ghostly",
+      "description": "A GitHub notification client for Windows 10",
+      "category": "",
+      "github": "",
+      "store": "9n5mvrb0xc60"
+    },
+    {
       "id": "huetroForHue",
       "title": "Huetro For Hue",
       "description": "Huetro is the best Hue app on the Windows Store",
