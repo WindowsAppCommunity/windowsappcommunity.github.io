@@ -1,10 +1,10 @@
 import { Text, Stack, Button, BaseButton } from "office-ui-fabric-react";
 import React, { useState, CSSProperties } from "react";
 
-let connection = new WebSocket("ws://localhost:5000/launch/participants/signin/");
+let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/");
 
 const WebSocketContainer: React.FC<any> = (props: any) => {
-    const [connectionId, setConnectionId] = useState<number>(1 || Math.floor(Math.random() * 10000000) + 1);
+    const [connectionId, setConnectionId] = useState<number>(Math.floor(Math.random() * 10000000) + 1);
     const [status, setStatus] = useState<string>("start");
 
     function WebSocket_Init() {
@@ -49,7 +49,7 @@ export const Signin = () => {
 export const SignInStatus = (props: IConnectionState) => {
     return (
         <Stack>
-            Status:
+            
             {props.status}
         </Stack>
     )
