@@ -1,36 +1,49 @@
 import { Request } from "express";
-import { stat } from "fs";
+import { connect } from "tls";
 
-let verificationQueue: IConnectionState[] = [];
+let connectionsPool: IConnectionState[] = [];
 
 module.exports = function (expressWs: any, endpoint: string) {
-
     return (ws: any, req: Request) => {
-        console.log("Websocket established with " + req.ip);
+        console.log("Websocket established");
 
-        ws.on('message', function (msg: IConnectionState) {
+        ws.on('close', function close() {
+            console.log('disconnected');
+        });
+
+        ws.on('message', function (data: string) {
+            let msg: IConnectionState = JSON.parse(data);
+            console.log("Message received: ", msg);
+
             if (instanceOfIConnectionState(msg)) {
-                let existingConState = getStoredConnectionById(msg.id);
+
+                let existingConState = getStoredConnectionById(msg.connectionId);
                 switch (msg.status) {
                     case "start":
-                        verificationQueue.push(msg);
-                        addParticipatingAddress(msg.id, req.ip);
+                        ws.id = msg.connectionId;
+                        msg.ws = [ws];
+                        connectionsPool.push(msg);
+
+                        setTimeout(() => {
+                            msg.status = "inprogress";
+                            broadcast(msg);
+                        }, 2000);
                         break;
                     case "inprogress":
-                        addParticipatingAddress(msg.id, req.ip)
+                        addParticipatingWs(msg.connectionId, ws);
 
                         if (existingConState) {
                             existingConState.status = msg.status;
-                            broadcast(existingConState, expressWs, endpoint);
+                            broadcast(existingConState);
                         } else console.error("In progress signal recieved for a nonexistent connection");
                         break;
                     case "done":
-                        addParticipatingAddress(msg.id, req.ip)
-                        broadcast(msg, expressWs, endpoint);
+                        addParticipatingWs(msg.connectionId, ws);
+                        broadcast(msg);
 
                         if (existingConState) {
                             existingConState.status = msg.status;
-                            closeAll(existingConState, expressWs, endpoint);
+                            closeAll(existingConState);
                         } else console.error("Done signal recieved for a nonexistent connection");
                         break;
                 }
@@ -39,51 +52,46 @@ module.exports = function (expressWs: any, endpoint: string) {
     };
 };
 
-function addParticipatingAddress(id: Number, address: string) {
-    for (let item of verificationQueue) {
-        if (item.id == id) {
-            item.participatingAddresses.push(address);
+function addParticipatingWs(connectionId: number, ws: any) {
+    for (let item of connectionsPool) {
+        if (item.connectionId == connectionId) { // Need the correct ID to get added to the pool
+            if (item.ws) item.ws.push();
         }
     }
 }
 
-function getStoredConnectionById(id: Number): IConnectionState | undefined {
-    let connectionMatches: IConnectionState[] = verificationQueue.filter(state => state.id == id);
+function getStoredConnectionById(id: number): IConnectionState | undefined {
+    let connectionMatches: IConnectionState[] = connectionsPool.filter(state => state.connectionId == id);
     if (connectionMatches[0]) return connectionMatches[0];
 }
 
-function closeAll(conState: IConnectionState, wsExpress: any, endpoint: string) {
-    let connections: any[] = wsExpress.getWss(endpoint).clients;
+function closeAll(conState: IConnectionState) {
+    let wss = conState.ws;
+    if (!wss) return;
 
-    for (let connection of connections) {
-        for (let address in conState.participatingAddresses) {
-            if (connection.remoteAddress == address) {
-                conState.status = "done";
-                connection.send(conState);
-                connection.terminate();
-            }
-        }
+    for (let ws of wss) {
+        conState.status = "done";
+        ws.send(JSON.stringify(conState));
     }
 }
 
-function broadcast(status: IConnectionState, wsExpress: any, endpoint: string) {
-    let connections: any[] = wsExpress.getWss(endpoint).clients;
+function broadcast(conState: IConnectionState) {
+    console.log("Broadcasting: " + conState.status);
+    let wss = conState.ws;
+    if (!wss) return;
 
-    for (let connection of connections) {
-        for (let address in status.participatingAddresses) {
-            if (connection.remoteAddress == address) {
-                connection.send(status);
-            }
-        }
+    for (let ws of wss) {
+        ws.send(conState.status);
     }
 }
+
 
 interface IConnectionState {
-    id: Number;
+    connectionId: number;
     status: "start" | "inprogress" | "done";
-    participatingAddresses: string[];
+    ws?: any[];
 }
 
 function instanceOfIConnectionState(object: any): object is IConnectionState {
-    return 'id' in object;
+    return object.connectionId != undefined;
 }
