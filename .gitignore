@@ -44,3 +44,5 @@ _key*
 
 # Build files
 build/
+
+*[cC]ache*.json
