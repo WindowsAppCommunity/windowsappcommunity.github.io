@@ -17,7 +17,15 @@ function exitHandler(options, exitCode) {
 //#endregion
 
 module.exports = (req, res) => {
-    getLaunchCached(results => {
+    if (!req.query.year) {
+        res.status(422);
+        res.json(JSON.stringify({
+            error: "Malformed request",
+            reason: "Year parameter not specified"
+        }));
+        return;
+    }
+    getLaunchCached(req.query.year, res, results => {
         res.end(results);
     });
 };
@@ -26,18 +34,22 @@ function createTable() {
 
 }
 
-function getLaunchTable(cb) {
-    client.query(`select table_name from information_schema.tables`, (err, queryResults) => {
-        if (err) {
+function getLaunchTable(year, res, cb) {
+    client.query(`select * from launch${year}`, (err, queryResults) => {
+        if (err.toString().includes("does not exist")) {
             console.error(err);
-            client.end();
-            cb(err);
+            res.status(404);
+            res.json(JSON.stringify({
+                error: "Not found",
+                reason: `Data does not exist for year ${year}`
+            }));
+            return;
         }
+
         let results = [];
         for (let row of queryResults.rows) {
             results.push(JSON.stringify(row));
         }
-        client.end();
 
         fs.writeFile(launchCachePath, results, () => { }); // Cache the results
         cb(JSON.stringify(results));
@@ -50,14 +62,13 @@ const fs = require("fs");
 const launchCacheFilename = "launchCache.json";
 const launchCachePath = __dirname + "/" + launchCacheFilename;
 
-function getLaunchCached(cb) {
+function getLaunchCached(year, res, cb) {
     fs.readdir(__dirname, (err, fileResults) => {
 
         // If missing, get data from database and create the cache
         if (!fileResults.includes(launchCacheFilename)) {
             console.info("Data not cached, refreshing from DB");
-            getLaunchTable(result => {
-                fs.writeFile(launchCachePath, result, () => { });
+            getLaunchTable(year, res, result => {
                 cb(result);
             });
             return;
@@ -69,7 +80,7 @@ function getLaunchCached(cb) {
 
             if (fileContents.length <= 5) {
                 // Retry
-                getLaunchCached(cb);
+                getLaunchCached(year, res, cb);
                 return;
             }
             cb(fileContents);
