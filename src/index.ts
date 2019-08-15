@@ -39,7 +39,7 @@ const DEBUG = process.env.DEBUG == "local";
 
 let RegexMethods = /((?:post|get|put|patch|delete)+)(?:.js)/;
 
-glob(__dirname + './src/**/*.js', function (err: string, result: string[]) {
+glob(__dirname + '/**/*.js', function (err: string, result: string[]) {
 
     for (let filePath of result) {
 
