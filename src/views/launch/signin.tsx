@@ -1,22 +1,41 @@
 import { Text, Stack, Button, BaseButton } from "office-ui-fabric-react";
 import React, { useState, CSSProperties } from "react";
-import { NavLink } from 'react-router-dom';
-
 
 export const Signin = () => {
-    const [signedIn, setSignedIn] = useState(false);
+    const [connectionState, setConnectionState] = useState<IConnectionState>({
+        id: Math.floor(Math.random() * 10000000) + 1,
+        status: "start"
+    });
 
-    const handshakeId = Math.floor(Math.random() * 10000000) + 1;
-    
+    let connection: WebSocket;
+
+    function WebSocket_Init() {
+        connection = new WebSocket("ws://localhost:5000/launch/participants/signin/");
+        connection.onmessage = WebSocket_OnMessage;
+    }
+
+    function WebSocket_OnMessage(this: WebSocket, ev: MessageEvent) {
+        let message = ev.data as IConnectionState;
+        console.log(message);
+
+        if (message.status) {
+            setConnectionState(message);
+        }
+    }
+
+    WebSocket_Init();
     return (
         <Stack>
-            <Text>
-                {handshakeId}
-            </Text>
+            {JSON.stringify(connectionState)}
         </Stack>
     )
 };
 
+interface IConnectionState {
+    id: Number;
+    status: "start" | "inprogress" | "done";
+    participatingAddresses?: string[];
+}
 
 
 function SignIntoDiscord_Clicked() {
@@ -25,7 +44,7 @@ function SignIntoDiscord_Clicked() {
      * https://discordapp.com/developers/docs/topics/oauth2
      * https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=https%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin&response_type=code&scope=guilds%20identify
      * 
-     * Generate unique id `
+     * Generate unique id
      * Establish WebSocket to backend with id
      * Open discord auth endpoint in new tab, pass id as state param
      * Wait for user to authenticate
@@ -34,6 +53,8 @@ function SignIntoDiscord_Clicked() {
      * Use localstorage to keep the user logged in 
      */
 }
+
+
 
 
 /**
