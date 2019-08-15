@@ -14,6 +14,8 @@ import { Request, Response, NextFunction } from "express";
  */
 
 const express = require('express'), app = express();
+const expressWs = require('express-ws')(app);
+
 const bodyParser = require('body-parser');
 const glob = require('glob');
 const helpers = require('./helpers');
@@ -37,7 +39,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 const PORT = process.env.PORT || 5000;
 const DEBUG = process.env.DEBUG == "local";
 
-let RegexMethods = /((?:post|get|put|patch|delete)+)(?:.js)/;
+let RegexMethods = /((?:post|get|put|patch|delete|ws)+)(?:.js)/;
 
 glob(__dirname + '/**/*.js', function (err: string, result: string[]) {
 
@@ -66,6 +68,9 @@ glob(__dirname + '/**/*.js', function (err: string, result: string[]) {
                     break;
                 case "delete":
                     app.delete(serverPath, require(filePath));
+                    break;
+                case "ws":
+                    app.ws(serverPath, require(filePath));
                     break;
             }
         }
