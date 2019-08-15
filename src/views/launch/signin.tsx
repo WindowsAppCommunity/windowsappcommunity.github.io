@@ -23,9 +23,9 @@ function SignIntoDiscord_Clicked() {
     /**
      * TODO: Basic sign in 
      * https://discordapp.com/developers/docs/topics/oauth2
+     * https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=https%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin&response_type=code&scope=guilds%20identify
      * 
-     * 
-     * Generate unique id
+     * Generate unique id `
      * Establish WebSocket to backend with id
      * Open discord auth endpoint in new tab, pass id as state param
      * Wait for user to authenticate
