@@ -20,7 +20,7 @@ export const Launch: React.StatelessComponent<any> = ({ match }: any) => {
     return (
         <Stack>
             <Route path={`${match.path}/participants`} component={Participants} />
-            <Route path={`${match.path}/sign`} component={Signin} />
+            <Route path={`${match.path}/signin`} component={Signin} />
             <Route exact path={match.path} component={LaunchViewSelection} />
         </Stack>
     );

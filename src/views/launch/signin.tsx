@@ -2,12 +2,17 @@ import { Text, Stack, Button, BaseButton } from "office-ui-fabric-react";
 import React, { useState, CSSProperties } from "react";
 import { NavLink } from 'react-router-dom';
 
+
 export const Signin = () => {
     const [signedIn, setSignedIn] = useState(false);
 
+    const handshakeId = Math.floor(Math.random() * 10000000) + 1;
+    
     return (
         <Stack>
-
+            <Text>
+                {handshakeId}
+            </Text>
         </Stack>
     )
 };
@@ -33,7 +38,7 @@ function SignIntoDiscord_Clicked() {
 
 /**
  * Todo: Post-sign in
- * 
+ *
  * Redirect to a /me/ page to manage apps
  * Use discord.js to verify the user is in the server
  * Ask the user to join if not (provide link)
