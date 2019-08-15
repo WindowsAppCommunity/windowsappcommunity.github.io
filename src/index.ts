@@ -70,7 +70,7 @@ glob(__dirname + '/**/*.js', function (err: string, result: string[]) {
                     app.delete(serverPath, require(filePath));
                     break;
                 case "ws":
-                    app.ws(serverPath, require(filePath));
+                    app.ws(serverPath, require(filePath)(expressWs, serverPath));
                     break;
             }
         }
