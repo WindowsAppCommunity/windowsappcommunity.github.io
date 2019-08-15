@@ -16,18 +16,13 @@ module.exports = function (expressWs: any, endpoint: string) {
             console.log("Message received: ", msg);
 
             if (instanceOfIConnectionState(msg)) {
-
                 let existingConState = getStoredConnectionById(msg.connectionId);
+                
                 switch (msg.status) {
                     case "start":
                         ws.id = msg.connectionId;
                         msg.ws = [ws];
                         connectionsPool.push(msg);
-
-                        setTimeout(() => {
-                            msg.status = "inprogress";
-                            broadcast(msg);
-                        }, 2000);
                         break;
                     case "inprogress":
                         addParticipatingWs(msg.connectionId, ws);
