@@ -76,7 +76,10 @@ export const SignInStatus = (props: IConnectionState) => {
                     </Stack>
                 )
                     : props.status == "inprogress" ? <Text>In Progress</Text>
-                        : <Text variant="xLarge">Authenticated successfully</Text>
+                        : <Stack>
+                            <Text variant="xLarge">Authenticated successfully</Text>
+                            <Text variant="mediumPlus">This page is still under development</Text>
+                        </Stack>
             }
         </Stack>
     )
