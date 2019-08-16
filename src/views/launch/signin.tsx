@@ -89,25 +89,6 @@ interface IConnectionState {
 }
 
 
-function SignIntoDiscord_Clicked() {
-    /**
-     * TODO: Basic sign in 
-     * https://discordapp.com/developers/docs/topics/oauth2
-     * 
-     * 
-     * Generate unique id
-     * Establish WebSocket to backend with id
-     * Open discord auth endpoint in new tab, pass id as state param
-     * Wait for user to authenticate
-     * Set up discord auth redirect URI on backend to ping "ok" back to the page via the websocket, using state to ping the right socket
-     * Attempt to auto close the redirect auth page
-     * Use localstorage to keep the user logged in 
-     */
-}
-
-
-
-
 /**
  * Todo: Post-sign in
  *
