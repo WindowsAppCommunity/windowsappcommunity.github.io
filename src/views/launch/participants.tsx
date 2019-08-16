@@ -3,6 +3,9 @@ import React, { useState, CSSProperties } from "react";
 
 export const Participants = () => {
     return (
-        <Text>Participants</Text>
+        <Stack horizontalAlign="center" tokens={{childrenGap: 25}}>
+            <Text variant="xLargePlus">Participants</Text>
+            <Text variant="superLarge">Under construction</Text>
+        </Stack>
     )
 };
