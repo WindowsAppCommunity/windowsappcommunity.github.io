@@ -25,6 +25,8 @@ module.exports = (req: Request, res: Response) => {
             status: "done"
         };
         connection.send(JSON.stringify(NewState));
+
+        res.send(`<script> window.close(); </script>`);
         connection.close();
     });
     client.connect('ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/');
