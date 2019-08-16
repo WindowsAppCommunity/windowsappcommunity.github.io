@@ -1,9 +1,9 @@
 import React, { CSSProperties } from "react";
 import { Stack, Text, PrimaryButton } from "office-ui-fabric-react";
 import { Links, Images } from "../common/const";
-import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import HoverBox from '../components/HoverBox';
 
 const FaIconStyle: CSSProperties = {
   color: "black",
@@ -15,14 +15,6 @@ const LinkCard = styled.section`
     font-family: Segoe UI, sans-serif;
     padding: 7px;
     max-width: 400px;
-`;
-
-const HoverBox = styled.div`
-    box-shadow: ${Depths.depth4};
-    :hover {
-      box-shadow: ${Depths.depth16};
-    };
-    transition: 150ms all;
 `;
 
 let Link = styled.a`

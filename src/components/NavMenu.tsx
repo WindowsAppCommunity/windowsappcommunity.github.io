@@ -36,6 +36,9 @@ export class NavMenu extends React.Component<any, any> {
         <MyNavLink to="/projects" activeStyle={navLinkActiveStyle}>
           <NavText>Projects</NavText>
         </MyNavLink>
+        <MyNavLink to="/launch" activeStyle={navLinkActiveStyle}>
+            <NavText>Launch</NavText>
+        </MyNavLink>
       </nav>
     );
   }

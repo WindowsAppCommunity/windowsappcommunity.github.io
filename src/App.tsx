@@ -4,6 +4,7 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Projects } from './views/Projects';
 import { Home } from './views/Home';
 import { AppHeader } from "./components/AppHeader";
+import { Launch } from "./views/Launch";
 
 import { Stack } from "office-ui-fabric-react";
 
@@ -20,6 +21,7 @@ export const App: React.StatelessComponent = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/projects" component={Projects} />
+          <Route path="/launch" component={Launch} />
           <Route component={Home} />}
         </Switch>
       </Stack>
