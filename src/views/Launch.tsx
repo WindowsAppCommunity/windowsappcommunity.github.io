@@ -27,6 +27,8 @@ export const Launch: React.StatelessComponent<any> = ({ match }: any) => {
 };
 
 const LaunchViewSelection = () => {
+    const [launchButtonEnabled, setLaunchButtonEnabled] = useState<boolean>(false);
+
     return (
         <Stack tokens={{childrenGap: 25}}>
             <HoverBox>
@@ -44,7 +46,7 @@ const LaunchViewSelection = () => {
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
                 <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" />
 
-                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/launch/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}} buttonDisabled={false}>
+                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/launch/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}} buttonDisabled={launchButtonEnabled}>
                     <Text>Sign in </Text>
                     <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
                 </LaunchCard>       
