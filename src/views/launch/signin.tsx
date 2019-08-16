@@ -1,9 +1,9 @@
 import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
 import React, { useState, useEffect } from "react";
 
-let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/");
-
 const WebSocketContainer: React.FC<any> = (props: any) => {
+    let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/");
+
     const [connectionId, setConnectionId] = useState<number>(Math.floor(Math.random() * 10000000) + 1);
     const [status, setStatus] = useState<"start" | "inprogress" | "done">("start");
 
@@ -46,7 +46,7 @@ export const Signin = () => {
     )
 };
 
-let windowOpened : boolean = false;
+let windowOpened: boolean = false;
 
 export const SignInStatus = (props: IConnectionState) => {
     let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.connectionId}`;
