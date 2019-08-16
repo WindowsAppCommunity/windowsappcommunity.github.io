@@ -46,12 +46,17 @@ export const Signin = () => {
     )
 };
 
+let windowOpened : boolean = false;
+
 export const SignInStatus = (props: IConnectionState) => {
     let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.connectionId}`;
 
     const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
 
-    if (props.status == "start") window.open(discordAuthEndpoint);
+    if (props.status == "start" && !windowOpened) {
+        window.open(discordAuthEndpoint);
+        windowOpened = true;
+    }
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -71,7 +76,7 @@ export const SignInStatus = (props: IConnectionState) => {
                     </Stack>
                 )
                     : props.status == "inprogress" ? <Text>In Progress</Text>
-                        : props.status == "done" ? <Text>Done!</Text> : ""
+                        : <Text variant="xLarge">Authenticated successfully</Text>
             }
         </Stack>
     )
@@ -79,7 +84,8 @@ export const SignInStatus = (props: IConnectionState) => {
 
 interface IConnectionState {
     connectionId: number;
-    status: "start" | "inprogress" | "done";
+    status: string;
+    discordToken?: string;
 }
 
 
