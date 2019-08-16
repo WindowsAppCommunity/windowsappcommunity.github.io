@@ -2,7 +2,7 @@ import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
 import React, { useState, useEffect } from "react";
 
 const WebSocketContainer: React.FC<any> = (props: any) => {
-    let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/");
+    let connection = new WebSocket("wss://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/");
 
     const [connectionId, setConnectionId] = useState<number>(Math.floor(Math.random() * 10000000) + 1);
     const [status, setStatus] = useState<"start" | "inprogress" | "done">("start");
