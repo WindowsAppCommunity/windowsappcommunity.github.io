@@ -66,7 +66,7 @@ function closeAll(conState: IConnectionState) {
 
     for (let ws of wss) {
         conState.status = "done";
-        ws.send(JSON.stringify(conState));
+        ws.send(JSON.stringify(conState.status));
     }
 }
 
