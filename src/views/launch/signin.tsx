@@ -6,11 +6,10 @@ const WebSocketContainer: React.FC<any> = (props: any) => {
 
     const [connectionId, setConnectionId] = useState<number>(Math.floor(Math.random() * 10000000) + 1);
     const [status, setStatus] = useState<"start" | "inprogress" | "done">("start");
+    const [WebSocketReady, SetWebSocketReady] = useState<boolean>(false);
 
-    function WebSocket_Init() {
-        connection.onopen = WebSocket_OnOpen;
-        connection.onmessage = WebSocket_OnMessage;
-    }
+    connection.onopen = WebSocket_OnOpen;
+    connection.onmessage = WebSocket_OnMessage;
 
     function WebSocket_OnOpen(this: WebSocket, ev: Event) {
         console.info("Handshake established with login verification server");
@@ -18,6 +17,7 @@ const WebSocketContainer: React.FC<any> = (props: any) => {
             connectionId, status
         }
         connection.send(JSON.stringify(connectionState));
+        SetWebSocketReady(true);
     }
 
     function WebSocket_OnMessage(this: WebSocket, ev: MessageEvent) {
@@ -29,11 +29,11 @@ const WebSocketContainer: React.FC<any> = (props: any) => {
         }
     }
 
-    WebSocket_Init();
-
     return (
         <div>
-            <SignInStatus connectionId={connectionId} status={status} />
+            <SignInStatus ConnectionState={{
+                connectionId, status
+            }} ready={WebSocketReady} />
         </div>
     )
 };
@@ -48,12 +48,17 @@ export const Signin = () => {
 
 let windowOpened: boolean = false;
 
-export const SignInStatus = (props: IConnectionState) => {
-    let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.connectionId}`;
+interface ISignInStatus {
+    ConnectionState: IConnectionState,
+    ready: boolean;
+};
+
+export const SignInStatus = (props: ISignInStatus) => {
+    let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.ConnectionState.connectionId}`;
 
     const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
 
-    if (props.status == "start" && !windowOpened) {
+    if (props.ConnectionState.status == "start" && !windowOpened && props.ready) {
         window.open(discordAuthEndpoint);
         windowOpened = true;
     }
@@ -63,19 +68,19 @@ export const SignInStatus = (props: IConnectionState) => {
             setShowRedirectLink(true);
         }, 7000);
         return () => clearTimeout(timer);
-    }, [])
+    }, []);
 
     return (
         <Stack>
             {
-                props.status == "start" ? (
+                props.ConnectionState.status == "start" ? (
                     <Stack horizontalAlign="center">
                         <Label>Taking you to Discord</Label>
                         <Spinner label="Hold on tight" ariaLive="assertive" />
                         <Text style={{ visibility: showRedirectLink ? "visible" : "hidden" }}>If not redirected automatically, <a href={discordAuthEndpoint} target="_blank">click here</a></Text>
                     </Stack>
                 )
-                    : props.status == "inprogress" ? <Text>In Progress</Text>
+                    : props.ConnectionState.status == "inprogress" ? <Text>In Progress</Text>
                         : <Stack>
                             <Text variant="xLarge">Authenticated successfully</Text>
                             <Text variant="mediumPlus">This page is still under development</Text>
