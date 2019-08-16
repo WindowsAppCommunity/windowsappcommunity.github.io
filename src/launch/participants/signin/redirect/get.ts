@@ -12,6 +12,8 @@ module.exports = (req: Request, res: Response) => {
     }
 
     let state = req.query.state;
+    let code = req.query.code;
+    
     var client = new WebSocketClient();
 
     client.on('connect', function (connection: any) {
@@ -22,7 +24,8 @@ module.exports = (req: Request, res: Response) => {
 
         let NewState: IConnectionState = {
             connectionId: state,
-            status: "done"
+            status: "done",
+            code: code
         };
         connection.send(JSON.stringify(NewState));
 
@@ -31,11 +34,12 @@ module.exports = (req: Request, res: Response) => {
             connection.close();
         }, 2000);
     });
-    client.connect('ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/', null, null, null, null);
+    client.connect('wss://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/', null, null, null, null);
 };
 
 
 interface IConnectionState {
     connectionId: number;
     status: "start" | "inprogress" | "done";
+    code?: string;
 }
