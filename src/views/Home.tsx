@@ -41,7 +41,7 @@ export const Home: React.StatelessComponent = () => {
               <Text variant="mediumPlus">Check back later</Text>
               <PrimaryButton style={{marginTop : "15px"}} text="Submit your app" disabled />
             </Stack>
-            <Img src={Images.launchHeroImage} />
+            <Img src={Images.launchHeroImageHD} />
           </Stack>
       </HoverBox>
 
