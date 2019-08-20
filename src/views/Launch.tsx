@@ -1,5 +1,5 @@
 import React, { useState, CSSProperties } from "react";
-import { Text, Stack, Button, IconButton, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
+import { Text, Stack, PrimaryButton, IconButton, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
 import { Route } from "react-router";
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
@@ -68,6 +68,7 @@ interface ILaunchCardProps {
     buttonDisabled?: boolean;
     buttonStyle?: CSSProperties;
 };
+
 const LaunchCardStyle = styled(HoverBox)`
     max-height: 500px;
     max-width: 350px;
@@ -86,7 +87,7 @@ const LaunchCard: React.FunctionComponent<ILaunchCardProps> = (props: React.Prop
                     <NavLink to={(props.buttonDisabled? window.location.pathname : props.path)}>
                         {
                             props.buttonText || props.children ?
-                                <Button primary disabled={props.buttonDisabled} style={props.buttonStyle} text={props.buttonText}>{props.children}</Button>
+                                <PrimaryButton primary disabled={props.buttonDisabled} style={props.buttonStyle} text={props.buttonText}>{props.children}</PrimaryButton>
                                 :
                                 <IconButton disabled={props.buttonDisabled} primary iconProps={{ iconName: 'Go' }} />
                         }
