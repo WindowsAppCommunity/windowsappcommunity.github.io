@@ -31,7 +31,7 @@ const LaunchViewSelection = () => {
     const [launchButtonDisabled, setLaunchButtonDisabled] = useState<boolean>(true);
 
     document.addEventListener("keydown", (ev:any)=>{
-        if(ev.keyCode == 27) setLaunchButtonDisabled(false);
+        if(ev.keyCode === 27) setLaunchButtonDisabled(false);
     });
     
     return (
