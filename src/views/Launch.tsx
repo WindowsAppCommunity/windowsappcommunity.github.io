@@ -37,7 +37,7 @@ const LaunchViewSelection = () => {
     return (
         <Stack tokens={{childrenGap: 25}}>
             <HoverBox>
-                <Stack horizontal wrap>
+                <Stack horizontal wrap maxWidth="1200px">
                     <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
                     <Stack style={{margin: "20px"}}>
 
