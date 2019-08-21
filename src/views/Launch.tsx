@@ -49,12 +49,12 @@ const LaunchViewSelection = () => {
                 </Stack>
             </HoverBox>
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
-                <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" />
+                <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" buttonDisabled={launchButtonDisabled} />
 
                 <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/launch/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}}  buttonDisabled={launchButtonDisabled}>
                     <Text>Sign in </Text>
                     <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-                </LaunchCard>       
+                </LaunchCard>
             </Stack>
         </Stack>
     );
