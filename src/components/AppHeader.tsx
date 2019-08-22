@@ -20,7 +20,7 @@ const NavArea = styled.div`
 
 export const AppHeader: React.StatelessComponent = () => {
   return (
-    <header>
+    <header style={{ margin: "10px" }}>
       <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 25 }} verticalAlign='end' horizontalAlign="space-around">
 
         <Link href="/">

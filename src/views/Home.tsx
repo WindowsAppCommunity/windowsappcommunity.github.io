@@ -49,8 +49,8 @@ const LargeCard = styled(HoverBox)`
 
 export const Home: React.StatelessComponent = () => {
   return (
-    <Stack horizontalAlign="center">
-      <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: "10px" }}>The homepage for the unofficial Discord server </p>
+    <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+      <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: 0 }}>The homepage for the unofficial Discord server </p>
 
       <Stack wrap horizontal horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
 
