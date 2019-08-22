@@ -2,6 +2,7 @@ import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
 import React, { useState, useEffect } from "react";
 
 const WebSocketContainer: React.FC<any> = (props: any) => {
+    // A container to help manage the web socket so it doesn't reload every time data from the socket updates data on the page
     let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/");
 
     const [connectionId] = useState<number>(Math.floor(Math.random() * 10000000) + 1);
