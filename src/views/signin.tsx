@@ -1,16 +1,15 @@
 import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
 import React, { useState, useEffect } from "react";
-import { start } from "repl";
 
 let Authenticated: boolean = false;
 
 const WebSocketContainer: React.FC<any> = (props: any) => {
     // A container to help manage the web socket so it doesn't reload every time data from the socket updates data on the page
-    let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/");
+    let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/signin/");
 
     const [connectionState, setConnectionState] = useState<IConnectionState>({
         connectionId: (Math.floor(Math.random() * 10000000) + 1),
-        status: "start"
+        status: Authenticated ? "done" : "start"
     });
 
     const [WebSocketReady, SetWebSocketReady] = useState<boolean>(false);
@@ -32,7 +31,8 @@ const WebSocketContainer: React.FC<any> = (props: any) => {
         console.info("Socket message: ", ev.data);
         let message: IConnectionState = JSON.parse(ev.data);
 
-        if (message.status === "done") {
+        if (message.status === "done" && message.discordAuthResponse) {
+            localStorage.setItem("discordAuthData", JSON.stringify(message.discordAuthResponse));
             setConnectionState(message);
             Authenticated = true;
         }
@@ -61,7 +61,7 @@ interface ISignInStatus {
 };
 
 export const SignInStatus = (props: ISignInStatus) => {
-    let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Flaunch%2Fparticipants%2Fsignin%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.ConnectionState.connectionId}`;
+    let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Fsignin%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.ConnectionState.connectionId}`;
 
     const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
 
@@ -88,10 +88,11 @@ export const SignInStatus = (props: ISignInStatus) => {
                     </Stack>
                 )
                     :
-                    props.ConnectionState.discordToken != undefined ? // Make sure the token is present
+                    props.ConnectionState.discordAuthResponse != undefined ? // Make sure the token is present
                         <Stack>
                             <Text variant="xLarge">Authenticated successfully</Text>
                             <Text variant="mediumPlus">This page is still under development</Text>
+                            <Text variant="medium">{JSON.stringify(props.ConnectionState)}</Text>
                         </Stack> :
                         <Text>Authentication failed: {JSON.stringify(props.ConnectionState)}</Text>
             }
@@ -102,9 +103,16 @@ export const SignInStatus = (props: ISignInStatus) => {
 interface IConnectionState {
     connectionId: number;
     status: string;
-    discordToken?: string;
+    discordAuthResponse?: IDiscordAuthResponse;
 }
 
+interface IDiscordAuthResponse {
+    "access_token": string;
+    "token_type": "Bearer"
+    "expires_in": number,
+    "refresh_token": string,
+    "scope": string;
+  }
 
 /**
  * Todo: Post-sign in
