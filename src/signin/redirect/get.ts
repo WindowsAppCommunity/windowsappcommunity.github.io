@@ -55,8 +55,16 @@ module.exports = (req: Request, res: Response) => {
 };
 
 
+interface IDiscordAuthResponse {
+    "access_token": string;
+    "token_type": "Bearer"
+    "expires_in": number,
+    "refresh_token": string,
+    "scope": string;
+  }
+
 interface IConnectionState {
     connectionId: number;
     status: "start" | "done";
-    discordAuthResponse?: object;
+    discordAuthResponse?: IDiscordAuthResponse;
 }

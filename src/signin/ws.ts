@@ -74,13 +74,21 @@ function broadcast(conState: IConnectionState, terminateOnDone?: boolean) {
     }
 }
 
-
 interface IConnectionState {
     connectionId: number;
     status: "start" | "done";
     ws?: any[];
-    discordAuthResponse?: object;
+    discordAuthResponse?: IDiscordAuthResponse;
 }
+
+interface IDiscordAuthResponse {
+    "access_token": string;
+    "token_type": "Bearer"
+    "expires_in": number,
+    "refresh_token": string,
+    "scope": string;
+  }
+
 
 function instanceOfIConnectionState(object: any): object is IConnectionState {
     return object.connectionId != undefined;
