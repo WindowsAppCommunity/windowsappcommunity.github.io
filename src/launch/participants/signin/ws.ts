@@ -27,8 +27,7 @@ module.exports = function (expressWs: any, endpoint: string) {
                         addParticipatingWs(msg.connectionId, ws);
 
                         if (existingConState) {
-                            existingConState.status = msg.status;
-                            closeAll(existingConState);
+                            closeAll(msg);
                         } else console.error("Done signal recieved for a nonexistent connection");
                         break;
                 }
@@ -67,7 +66,7 @@ function broadcast(conState: IConnectionState) {
     console.log("Broadcasting: " + JSON.stringify(conState));
 
     conState.ws = undefined;
-    
+
     for (let con of connectionsPool) {
         if (con.connectionId == conState.connectionId && con.ws) {
             for (let ws of con.ws) {
