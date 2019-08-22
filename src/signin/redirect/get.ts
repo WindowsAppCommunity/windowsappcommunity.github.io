@@ -3,7 +3,7 @@ var WebSocketClient = require('websocket').client;
 const request = require("request");
 
 function log(log: string) {
-    log = "WS /signin/redirect: " + log;
+    log = "GET /signin/redirect: " + log;
 }
 
 module.exports = (req: Request, res: Response) => {
