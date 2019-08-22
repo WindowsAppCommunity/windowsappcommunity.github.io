@@ -16,22 +16,23 @@ const FaIconStyle: CSSProperties = {
 export const AppHeader: React.StatelessComponent = () => {
   return (
     <header>
-      <Stack style={{ margin: "25px" }} horizontal wrap tokens={{ childrenGap: 10 }} horizontalAlign="space-between">
-        <Stack horizontal wrap verticalAlign='end' horizontalAlign="center" >
+      <Stack style={{ width: "100vw", margin: "25px" }} horizontal wrap tokens={{ childrenGap: 25 }} verticalAlign='end' horizontalAlign="space-between">
 
-          <Link href="/">
-            <Image src={Images.uwpCommunityLogo} />
+        <Link href="/">
+          <Image style={{ marginLeft: "25px" }} src={Images.uwpCommunityLogo} />
+        </Link>
+        <NavMenu />
+
+        <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
+          <Link href="/singin">
+            <PrimaryButton>
+              <Text>Sign in</Text>
+              <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+            </PrimaryButton>
           </Link>
-          <NavMenu />
-        </Stack>
-
-        <Stack verticalAlign="end" style={{ marginBottom: "12px" }}>
-          <PrimaryButton>
-            <Text>Sign in </Text>
-            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-          </PrimaryButton>
         </Stack>
       </Stack>
+
     </header>
   );
 };
