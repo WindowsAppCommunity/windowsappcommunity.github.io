@@ -1,5 +1,4 @@
 import { Request } from "express";
-import { connect } from "tls";
 
 let connectionsPool: IConnectionState[] = [];
 
@@ -13,28 +12,19 @@ module.exports = function (expressWs: any, endpoint: string) {
 
         ws.on('message', function (data: string) {
             let msg: IConnectionState = JSON.parse(data);
-            console.log("Message received: ", msg);
+            console.log("WS Message received: ", msg);
 
             if (instanceOfIConnectionState(msg)) {
                 let existingConState = getStoredConnectionById(msg.connectionId);
-                
+
                 switch (msg.status) {
                     case "start":
                         ws.id = msg.connectionId;
                         msg.ws = [ws];
                         connectionsPool.push(msg);
                         break;
-                    case "inprogress":
-                        addParticipatingWs(msg.connectionId, ws);
-
-                        if (existingConState) {
-                            existingConState.status = msg.status;
-                            broadcast(existingConState);
-                        } else console.error("In progress signal recieved for a nonexistent connection");
-                        break;
                     case "done":
                         addParticipatingWs(msg.connectionId, ws);
-                        broadcast(msg);
 
                         if (existingConState) {
                             existingConState.status = msg.status;
@@ -64,27 +54,33 @@ function closeAll(conState: IConnectionState) {
     let wss = conState.ws;
     if (!wss) return;
 
-    for (let ws of wss) {
-        conState.status = "done";
-        ws.send(JSON.stringify(conState.status));
+    broadcast(conState);
+
+    for (let i = 0; i < connectionsPool.length; i++) {
+        if (connectionsPool[i].connectionId == conState.connectionId) {
+            connectionsPool.splice(i, 1);
+        }
     }
 }
 
 function broadcast(conState: IConnectionState) {
     console.log("Broadcasting: " + JSON.stringify(conState));
-    let wss = conState.ws;
-    if (!wss) return;
 
-    for (let ws of wss) {
-        ws.send(JSON.stringify(conState));
+    for (let con of connectionsPool) {
+        if (con.connectionId == conState.connectionId && con.ws) {
+            for (let ws of con.ws) {
+                ws.send(JSON.stringify(conState));
+            }
+        }
     }
 }
 
 
 interface IConnectionState {
     connectionId: number;
-    status: "start" | "inprogress" | "done";
+    status: "start" | "done";
     ws?: any[];
+    code?: string;
 }
 
 function instanceOfIConnectionState(object: any): object is IConnectionState {
