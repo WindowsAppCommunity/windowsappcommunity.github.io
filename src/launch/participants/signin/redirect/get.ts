@@ -33,7 +33,7 @@ module.exports = (req: Request, res: Response) => {
                 redirect_uri: "http://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/redirect",
                 scope: "identify guilds"
             }
-        }, (err: Error, httpResponse: any, body: object) => {
+        }, (err: Error, httpResponse: any, body: string) => {
             let NewState: IConnectionState = {
                 connectionId: state,
                 status: "done",
