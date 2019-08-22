@@ -28,7 +28,7 @@ module.exports = (req: Request, res: Response) => {
             scope: "identify guilds"
         }
     }, (err: Error, httpResponse: any, body: string) => {
-        res.send(body);
+        res.end(body.toString());
     });
 };
 
