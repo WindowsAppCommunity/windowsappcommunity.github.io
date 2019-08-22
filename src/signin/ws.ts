@@ -1,35 +1,32 @@
 import { Request } from "express";
 
+function log(log: string) {
+    log = "WS /signin: " + log;
+}
+
 let connectionsPool: IConnectionState[] = [];
 
 module.exports = function (expressWs: any, endpoint: string) {
     return (ws: any, req: Request) => {
-        console.log("Websocket established");
-
-        ws.on('close', function close() {
-            console.log('disconnected');
-        });
 
         ws.on('message', function (data: string) {
             let msg: IConnectionState = JSON.parse(data);
-            console.log("WS Message received: ", msg);
-
             if (instanceOfIConnectionState(msg)) {
                 let existingConState = getStoredConnectionById(msg.connectionId);
 
                 switch (msg.status) {
                     case "start":
-                        console.log("Started session with ID " + msg.connectionId);
+                        log("Started session with ID " + msg.connectionId);
                         msg.ws = [ws];
                         connectionsPool.push(msg);
                         break;
                     case "done":
-                        console.log("Done signal for session ID " + msg.connectionId);
+                        log("Done signal for session ID " + msg.connectionId);
                         addParticipatingWs(msg.connectionId, ws);
-                        
+
                         if (existingConState) {
                             closeAll(msg);
-                        } else console.error("Done signal recieved for a nonexistent connection");
+                        } else log("Done signal recieved for a nonexistent connection");
                         break;
                 }
             }
@@ -63,7 +60,7 @@ function closeAll(conState: IConnectionState) {
 }
 
 function broadcast(conState: IConnectionState, terminateOnDone?: boolean) {
-    console.log("Broadcasting: " + JSON.stringify(conState));
+    log("Broadcasting: " + JSON.stringify(conState));
 
     conState.ws = undefined;
 
@@ -71,7 +68,7 @@ function broadcast(conState: IConnectionState, terminateOnDone?: boolean) {
         if (con.connectionId == conState.connectionId && con.ws) {
             for (let ws of con.ws) {
                 ws.send(JSON.stringify(conState));
-                if(terminateOnDone) ws.terminate();
+                if (terminateOnDone) ws.terminate();
             }
         }
     }
