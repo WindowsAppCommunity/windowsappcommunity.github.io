@@ -21,6 +21,7 @@ module.exports = (req: Request, res: Response) => {
         connection.on('error', function (error: any) {
             console.log("Connection Error: " + error.toString());
         });
+        console.log("Token: " + code);
 
         let NewState: IConnectionState = {
             connectionId: state,
@@ -30,7 +31,7 @@ module.exports = (req: Request, res: Response) => {
         connection.send(JSON.stringify(NewState));
 
         setTimeout(() => {
-            res.send(`<script> window.close(); </script>`);
+            //res.send(`<script> window.close(); </script>`);
             connection.close();
         }, 2000);
     });
