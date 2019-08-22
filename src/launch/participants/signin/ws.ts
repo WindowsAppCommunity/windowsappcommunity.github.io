@@ -71,12 +71,12 @@ function closeAll(conState: IConnectionState) {
 }
 
 function broadcast(conState: IConnectionState) {
-    console.log("Broadcasting: " + conState.status);
+    console.log("Broadcasting: " + JSON.stringify(conState));
     let wss = conState.ws;
     if (!wss) return;
 
     for (let ws of wss) {
-        ws.send(conState.status);
+        ws.send(JSON.stringify(conState));
     }
 }
 
