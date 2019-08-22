@@ -26,14 +26,14 @@ module.exports = (req: Request, res: Response) => {
         let NewState: IConnectionState = {
             connectionId: state,
             status: "done",
-            code: code
+            discordToken: code
         };
         connection.send(JSON.stringify(NewState));
 
         setTimeout(() => {
-            //res.send(`<script> window.close(); </script>`);
+            res.send(`<script> window.close(); </script>`);
             connection.close();
-        }, 2000);
+        }, 1000);
     });
     client.connect('wss://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/', null, null, null, null);
 };
@@ -42,5 +42,5 @@ module.exports = (req: Request, res: Response) => {
 interface IConnectionState {
     connectionId: number;
     status: "start" | "inprogress" | "done";
-    code?: string;
+    discordToken?: string;
 }

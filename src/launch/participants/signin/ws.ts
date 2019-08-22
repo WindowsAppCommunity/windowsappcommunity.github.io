@@ -20,7 +20,6 @@ module.exports = function (expressWs: any, endpoint: string) {
                 switch (msg.status) {
                     case "start":
                         console.log("Started session with ID " + msg.connectionId);
-                        ws.id = msg.connectionId;
                         msg.ws = [ws];
                         connectionsPool.push(msg);
                         break;
@@ -52,7 +51,7 @@ function getStoredConnectionById(id: number): IConnectionState | undefined {
 }
 
 function closeAll(conState: IConnectionState) {
-    broadcast(conState);
+    broadcast(conState, true);
 
     setTimeout(() => {
         for (let i = 0; i < connectionsPool.length; i++) {
@@ -63,7 +62,7 @@ function closeAll(conState: IConnectionState) {
     }, 5000);
 }
 
-function broadcast(conState: IConnectionState) {
+function broadcast(conState: IConnectionState, terminateOnDone?: boolean) {
     console.log("Broadcasting: " + JSON.stringify(conState));
 
     conState.ws = undefined;
@@ -72,6 +71,7 @@ function broadcast(conState: IConnectionState) {
         if (con.connectionId == conState.connectionId && con.ws) {
             for (let ws of con.ws) {
                 ws.send(JSON.stringify(conState));
+                if(terminateOnDone) ws.terminate();
             }
         }
     }
@@ -82,7 +82,7 @@ interface IConnectionState {
     connectionId: number;
     status: "start" | "done";
     ws?: any[];
-    code?: string;
+    discordToken?: string;
 }
 
 function instanceOfIConnectionState(object: any): object is IConnectionState {
