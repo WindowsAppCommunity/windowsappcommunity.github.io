@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 var WebSocketClient = require('websocket').client;
 const request = require("request");
 
+function log(log: string) {
+    log = "WS /signin/redirect: " + log;
+}
+
 module.exports = (req: Request, res: Response) => {
     if (!req.query.state) {
         res.status(422);
