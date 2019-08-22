@@ -30,7 +30,7 @@ module.exports = (req: Request, res: Response) => {
                 client_secret: process.env.discord_secret,
                 grant_type: "authorization_code",
                 code: code,
-                redirect_uri: "http://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/redirect",
+                redirect_uri: "http://uwpcommunity-site-backend.herokuapp.com/signin/redirect",
                 scope: "identify guilds"
             }
         }, (err: Error, httpResponse: any, body: string) => {
@@ -47,7 +47,7 @@ module.exports = (req: Request, res: Response) => {
         });
 
     });
-    client.connect('wss://uwpcommunity-site-backend.herokuapp.com/launch/participants/signin/', null, null, null, null);
+    client.connect('wss://uwpcommunity-site-backend.herokuapp.com/signin/', null, null, null, null);
 };
 
 
