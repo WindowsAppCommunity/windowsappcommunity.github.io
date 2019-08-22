@@ -11,6 +11,7 @@
     "@types/glob": "^7.1.1",
     "@types/node": "^12.7.2",
     "@types/pg": "^7.4.14",
+    "@types/request": "^2.48.2",
     "@types/websocket": "0.0.40",
     "body-parser": "^1.19.0",
     "ejs": "^2.5.6",
@@ -18,6 +19,7 @@
     "express-ws": "^4.0.0",
     "glob": "^7.1.3",
     "pg": "^7.12.1",
+    "request": "^2.88.0",
     "websocket": "^1.0.29"
   },
   "devDependencies": {
