@@ -19,13 +19,15 @@ module.exports = function (expressWs: any, endpoint: string) {
 
                 switch (msg.status) {
                     case "start":
+                        console.log("Started session with ID " + msg.connectionId);
                         ws.id = msg.connectionId;
                         msg.ws = [ws];
                         connectionsPool.push(msg);
                         break;
                     case "done":
+                        console.log("Done signal for session ID " + msg.connectionId);
                         addParticipatingWs(msg.connectionId, ws);
-
+                        
                         if (existingConState) {
                             closeAll(msg);
                         } else console.error("Done signal recieved for a nonexistent connection");
