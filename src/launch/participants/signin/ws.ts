@@ -55,11 +55,14 @@ function closeAll(conState: IConnectionState) {
 
     broadcast(conState);
 
-    for (let i = 0; i < connectionsPool.length; i++) {
-        if (connectionsPool[i].connectionId == conState.connectionId) {
-            connectionsPool.splice(i, 1);
+    setTimeout(() => {
+
+        for (let i = 0; i < connectionsPool.length; i++) {
+            if (connectionsPool[i].connectionId == conState.connectionId) {
+                connectionsPool.splice(i, 1);
+            }
         }
-    }
+    }, 500);
 }
 
 function broadcast(conState: IConnectionState) {
