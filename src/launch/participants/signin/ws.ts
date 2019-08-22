@@ -66,6 +66,8 @@ function closeAll(conState: IConnectionState) {
 function broadcast(conState: IConnectionState) {
     console.log("Broadcasting: " + JSON.stringify(conState));
 
+    conState.ws = undefined;
+    
     for (let con of connectionsPool) {
         if (con.connectionId == conState.connectionId && con.ws) {
             for (let ws of con.ws) {
