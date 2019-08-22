@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HoverBox from '../components/HoverBox';
 import { Images } from "../common/const";
 import { Participants } from "../views/launch/participants";
-import { Signin } from "../views/launch/signin";
+import { Signin } from "./signin";
 
 const FaIconStyle: CSSProperties = {
     color: "white",
@@ -20,7 +20,7 @@ export const Launch: React.StatelessComponent<any> = ({ match }: any) => {
     return (
         <Stack>
             <Route path={`${match.path}/participants`} component={Participants} />
-            <Route path={`${match.path}/signin`} component={Signin} />
+            <Route path={`/signin`} component={Signin} />
             <Route exact path={match.path} component={LaunchViewSelection} />
         </Stack>
     );
@@ -51,7 +51,7 @@ const LaunchViewSelection = () => {
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
                 <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" buttonDisabled={launchButtonDisabled} />
 
-                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/launch/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}}  buttonDisabled={launchButtonDisabled}>
+                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}}  buttonDisabled={launchButtonDisabled}>
                     <Text>Sign in </Text>
                     <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
                 </LaunchCard>

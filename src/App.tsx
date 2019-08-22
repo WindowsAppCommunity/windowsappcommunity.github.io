@@ -5,6 +5,7 @@ import { Projects } from './views/Projects';
 import { Home } from './views/Home';
 import { AppHeader } from "./components/AppHeader";
 import { Launch } from "./views/Launch";
+import { Signin } from "./views/signin";
 
 import { Stack } from "office-ui-fabric-react";
 
@@ -22,6 +23,7 @@ export const App: React.StatelessComponent = () => {
           <Route path="/" exact component={Home} />
           <Route path="/projects" component={Projects} />
           <Route path="/launch" component={Launch} />
+          <Route path="/signin" component={Signin} />
           <Route component={Home} />}
         </Switch>
       </Stack>
