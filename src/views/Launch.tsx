@@ -31,7 +31,7 @@ const LaunchViewSelection = () => {
     const [launchButtonDisabled, setLaunchButtonDisabled] = useState<boolean>(true);
 
     document.addEventListener("keydown", (ev:any)=>{
-        if(ev.keyCode == 27) setLaunchButtonDisabled(false);
+        if(ev.keyCode === 27) setLaunchButtonDisabled(false);
     });
     
     return (
@@ -43,7 +43,7 @@ const LaunchViewSelection = () => {
 
                         <Text style={{fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter"}}>// Launch</Text>
 
-                        <Text  style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">An annual event where a community of Windows App developers release their UWP-related projects</Text>
+                        <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">An annual event where a community of Windows App developers release their UWP-related projects</Text>
                         <Text style={{marginTop: "10px"}} variant="mediumPlus">Our Discord server provides direct, 2 way user feedback from users, and a place for newbies to ask questions and learn from those with more experience, creating the perfect environment for apps to grow into something more</Text>
                     </Stack>
                 </Stack>

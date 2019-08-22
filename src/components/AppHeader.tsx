@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Stack, Link, Text, Button, PrimaryButton } from "office-ui-fabric-react";
+import { Stack, Link, Text, PrimaryButton } from "office-ui-fabric-react";
 import { Image } from "office-ui-fabric-react/lib/Image";
 import { Images } from "../common/const";
 import { NavMenu } from "./NavMenu";
