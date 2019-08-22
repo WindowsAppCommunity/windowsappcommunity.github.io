@@ -37,7 +37,7 @@ module.exports = (req: Request, res: Response) => {
             let NewState: IConnectionState = {
                 connectionId: state,
                 status: "done",
-                discordToken: body
+                discordAuthResponse: JSON.parse(body)
             };
             connection.send(JSON.stringify(NewState));
             setTimeout(() => {
@@ -54,5 +54,5 @@ module.exports = (req: Request, res: Response) => {
 interface IConnectionState {
     connectionId: number;
     status: "start" | "done";
-    discordToken?: object;
+    discordAuthResponse?: object;
 }

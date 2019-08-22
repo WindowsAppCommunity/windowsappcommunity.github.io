@@ -82,7 +82,7 @@ interface IConnectionState {
     connectionId: number;
     status: "start" | "done";
     ws?: any[];
-    discordToken?: object;
+    discordAuthResponse?: object;
 }
 
 function instanceOfIConnectionState(object: any): object is IConnectionState {
