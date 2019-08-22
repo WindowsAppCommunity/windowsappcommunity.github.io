@@ -5,6 +5,7 @@ import { Images } from "../common/const";
 import { NavMenu } from "./NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
+import styled from "styled-components";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -13,19 +14,26 @@ const FaIconStyle: CSSProperties = {
   paddingLeft: "10px"
 };
 
+const NavArea = styled.div`
+     margin-left: -90px;
+`;
+
 export const AppHeader: React.StatelessComponent = () => {
   return (
     <header>
-      <Stack style={{ width: "100vw", margin: "25px" }} horizontal wrap tokens={{ childrenGap: 25 }} verticalAlign='end' horizontalAlign="space-between">
+      <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 25 }} verticalAlign='end' horizontalAlign="space-around">
 
         <Link href="/">
-          <Image style={{ marginLeft: "25px" }} src={Images.uwpCommunityLogo} />
+          <Image src={Images.uwpCommunityLogo} />
         </Link>
-        <NavMenu />
+
+        <NavArea>
+          <NavMenu />
+        </NavArea>
 
         <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
           <Link href="/signin">
-            <PrimaryButton style={{ padding: "18px"}}>
+            <PrimaryButton style={{ padding: "18px" }}>
               <Text>Sign in</Text>
               <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
             </PrimaryButton>
