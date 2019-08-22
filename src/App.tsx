@@ -24,7 +24,7 @@ export const App: React.StatelessComponent = () => {
           <Route path="/projects" component={Projects} />
           <Route path="/launch" component={Launch} />
           <Route path="/signin" component={Signin} />
-          <Route component={Home} />}
+          <Route component={Home} />
         </Switch>
       </Stack>
     </BrowserRouter>

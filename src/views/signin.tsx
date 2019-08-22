@@ -1,7 +1,7 @@
 import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
 import React, { useState, useEffect } from "react";
 import { IDiscordAuthResponse } from "../common/interfaces";
-import helpers from "../common/helpers";
+import {AuthData} from "../common/loginService";
 
 let Authenticated: boolean = false;
 
@@ -34,7 +34,7 @@ const WebSocketContainer: React.FC<any> = (props: any) => {
         let message: IConnectionState = JSON.parse(ev.data);
 
         if (message.status === "done" && message.discordAuthResponse) {
-            helpers.AuthData.Set(message.discordAuthResponse);
+            AuthData.Set(message.discordAuthResponse);
             setConnectionState(message);
             Authenticated = true;
         }
