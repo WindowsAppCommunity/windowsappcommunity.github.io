@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Stack, Text, PrimaryButton } from "office-ui-fabric-react";
+import { Stack, Text, PrimaryButton, Image, ImageFit, ImageCoverStyle } from "office-ui-fabric-react";
 import { Links, Images } from "../common/const";
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,22 +31,40 @@ let Img = styled.img`
     max-height: 100%;
 `;
 
+const LargeCard = styled(HoverBox)`
+
+.heroImage, .heroImage img {
+  width: 620px;
+  height: 350px;
+}
+
+@media screen and (max-width: 1079px) {
+  width: min-content;
+  .heroImage, .heroImage img {
+      width: 750px;
+      height: 350px;
+  }
+}
+`;
+
 export const Home: React.StatelessComponent = () => {
   return (
     <Stack horizontalAlign="center">
       <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: "10px" }}>The homepage for the unofficial Discord server </p>
 
       <Stack wrap horizontal horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
-        <HoverBox>
-          <Stack wrap horizontal verticalAlign="center" horizontalAlign="center">
-            <Stack style={{ margin: "15px" }}>
+
+        <LargeCard>
+          <Stack horizontal wrap maxWidth="1200px" horizontalAlign="space-evenly">
+            <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchHeroImage} />
+
+            <Stack style={{ margin: "15px" }} verticalAlign="center">
               <Text variant="xLargePlus">Launch 2020 signup coming soon</Text>
               <Text variant="mediumPlus">Check back later</Text>
               <PrimaryButton style={{ marginTop: "15px" }} text="Submit your app" disabled />
             </Stack>
-            <Img src={Images.launchHeroImage} />
           </Stack>
-        </HoverBox>
+        </LargeCard>
 
         <Stack wrap horizontal horizontalAlign="space-around" tokens={{ childrenGap: 15 }}>
           <HoverBox>
