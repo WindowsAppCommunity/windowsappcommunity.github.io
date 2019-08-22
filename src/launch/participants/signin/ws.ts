@@ -52,9 +52,6 @@ function getStoredConnectionById(id: number): IConnectionState | undefined {
 }
 
 function closeAll(conState: IConnectionState) {
-    let wss = conState.ws;
-    if (!wss) return;
-
     broadcast(conState);
 
     setTimeout(() => {
