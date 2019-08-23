@@ -4,6 +4,7 @@ import { Links, Images } from "../common/const";
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HoverBox from '../components/HoverBox';
+import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 
 const FaIconStyle: CSSProperties = {
   color: "black",
@@ -31,8 +32,8 @@ let Img = styled.img`
     max-height: 100%;
 `;
 
-const LargeCard = styled(HoverBox)`
-
+const LargeCard = styled.div`
+box-shadow: ${Depths.depth16};
 .heroImage, .heroImage img {
   width: 620px;
   height: 350px;
@@ -56,7 +57,7 @@ export const Home: React.StatelessComponent = () => {
 
         <LargeCard>
           <Stack horizontal wrap maxWidth="1200px" horizontalAlign="space-evenly">
-            <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchHeroImage} />
+            <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchHeroImageHD} />
 
             <Stack style={{ margin: "15px" }} verticalAlign="center">
               <Text variant="xLargePlus">Launch 2020 signup coming soon</Text>

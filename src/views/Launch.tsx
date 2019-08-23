@@ -1,5 +1,5 @@
 import React, { useState, CSSProperties } from "react";
-import { Text, Stack, Button, IconButton, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
+import { Text, Stack, PrimaryButton, IconButton, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
 import { Route } from "react-router";
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import HoverBox from '../components/HoverBox';
 import { Images } from "../common/const";
 import { Participants } from "../views/launch/participants";
 import { Signin } from "./signin";
+import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 
 const FaIconStyle: CSSProperties = {
     color: "white",
@@ -36,8 +37,7 @@ const LaunchViewSelection = () => {
     
     return (
         <Stack tokens={{childrenGap: 25}}>
-            <HoverBox>
-                <Stack horizontal wrap maxWidth="1200px">
+                <Stack horizontal wrap style={{ boxShadow: Depths.depth16 }} maxWidth="1200px">
                     <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
                     <Stack style={{margin: "20px"}}>
 
@@ -47,7 +47,7 @@ const LaunchViewSelection = () => {
                         <Text style={{marginTop: "10px"}} variant="mediumPlus">Our Discord server provides direct, 2 way user feedback from users, and a place for newbies to ask questions and learn from those with more experience, creating the perfect environment for apps to grow into something more</Text>
                     </Stack>
                 </Stack>
-            </HoverBox>
+
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
                 <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" buttonDisabled={launchButtonDisabled} />
 
@@ -68,6 +68,7 @@ interface ILaunchCardProps {
     buttonDisabled?: boolean;
     buttonStyle?: CSSProperties;
 };
+
 const LaunchCardStyle = styled(HoverBox)`
     max-height: 500px;
     max-width: 350px;
@@ -86,7 +87,7 @@ const LaunchCard: React.FunctionComponent<ILaunchCardProps> = (props: React.Prop
                     <NavLink to={(props.buttonDisabled? window.location.pathname : props.path)}>
                         {
                             props.buttonText || props.children ?
-                                <Button primary disabled={props.buttonDisabled} style={props.buttonStyle} text={props.buttonText}>{props.children}</Button>
+                                <PrimaryButton primary disabled={props.buttonDisabled} style={props.buttonStyle} text={props.buttonText}>{props.children}</PrimaryButton>
                                 :
                                 <IconButton disabled={props.buttonDisabled} primary iconProps={{ iconName: 'Go' }} />
                         }

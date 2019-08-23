@@ -17,12 +17,16 @@ const FaIconStyle: CSSProperties = {
 const NavArea = styled.div`
      margin-left: -90px;
 `;
+import { Helmet } from "react-helmet";
+import { getHeadTitle } from "../common/helpers";
 
-export const AppHeader: React.StatelessComponent = () => {
+export const AppHeader: React.StatelessComponent = (props: any) => {
   return (
     <header style={{ margin: "10px" }}>
       <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 25 }} verticalAlign='end' horizontalAlign="space-around">
-
+        <Helmet>
+          <title>{getHeadTitle(props.location.pathname)}</title>
+        </Helmet>
         <Link href="/">
           <Image src={Images.uwpCommunityLogo} />
         </Link>

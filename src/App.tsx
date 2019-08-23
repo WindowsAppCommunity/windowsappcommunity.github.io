@@ -11,9 +11,14 @@ import { Stack } from "office-ui-fabric-react";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab, faDiscord, faMedium, faGithub } from '@fortawesome/free-brands-svg-icons'
+
 import { Init as InitDiscord } from './common/discordService';
+import { withRouter } from 'react-router-dom';
+import { NotFound } from "./views/NotFound";
 
 library.add(fab, faDiscord, faMedium, faGithub);
+
+const AppHeaderWithRouter = withRouter(props => <AppHeader {...props} />);
 
 export const App: React.StatelessComponent = () => {
   InitDiscord();
@@ -21,13 +26,13 @@ export const App: React.StatelessComponent = () => {
   return (
     <BrowserRouter basename="/">
       <Stack horizontalAlign="center">
-        <AppHeader />
+        <AppHeaderWithRouter />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/projects" component={Projects} />
           <Route path="/launch" component={Launch} />
           <Route path="/signin" component={Signin} />
-          <Route component={Home} />
+          <Route component={NotFound} />}
         </Switch>
       </Stack>
     </BrowserRouter>
