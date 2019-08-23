@@ -22,13 +22,12 @@ module.exports = (req: Request, res: Response) => {
         form: {
             client_id: process.env.discord_client,
             client_secret: process.env.discord_secret,
-            grant_type: "refresh_token",
             refresh_token: refreshToken,
             redirect_uri: "http://uwpcommunity-site-backend.herokuapp.com/signin/redirect",
             scope: "identify guilds"
         }
     }, (err: Error, httpResponse: any, body: string) => {
-        res.end(body.toString());
+        res.end(body);
     });
 };
 
