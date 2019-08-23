@@ -1,7 +1,4 @@
 import { IDiscordAuthResponse } from "./interfaces";
-import Discord from 'discord.js';
-
-export let DiscordClient: Discord.Client;
 
 export const AuthData = {
     Get: GetDiscordAuthData,
@@ -39,7 +36,5 @@ export async function Init() {
         SetDiscordAuthData(refreshData);
         Init();
     }
-    DiscordClient = new Discord.Client();
-    DiscordClient.login(auth.access_token);
-
+    
 }
