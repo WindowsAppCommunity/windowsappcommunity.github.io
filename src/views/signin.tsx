@@ -1,7 +1,7 @@
 import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
 import React, { useState, useEffect } from "react";
 import { IDiscordAuthResponse } from "../common/interfaces";
-import {AuthData} from "../common/loginService";
+import {AuthData} from "../common/discordService";
 
 let Authenticated: boolean = false;
 
@@ -90,7 +90,7 @@ export const SignInStatus = (props: ISignInStatus) => {
                     </Stack>
                 )
                     :
-                    props.ConnectionState.discordAuthResponse != undefined ? // Make sure the token is present
+                    props.ConnectionState.discordAuthResponse !== undefined ? // Make sure the token is present
                         <Stack>
                             <Text variant="xLarge">Authenticated successfully</Text>
                             <Text variant="mediumPlus">This page is still under development</Text>

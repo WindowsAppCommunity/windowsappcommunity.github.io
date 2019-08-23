@@ -16,6 +16,7 @@
     "@types/styled-components": "^4.1.18",
     "@uifabric/fluent-theme": "^7.1.1",
     "@uifabric/icons": "7.1.1",
+    "discord.js": "^11.5.1",
     "gh-pages": "^2.1.1",
     "office-ui-fabric-react": "^7.24.0",
     "react": "^16.9.0",
