@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
 import styled from "styled-components";
 
+import { Helmet } from "react-helmet";
+import { getHeadTitle } from "../common/helpers";
+
 const FaIconStyle: CSSProperties = {
   color: "white",
   height: "20px",
@@ -17,8 +20,6 @@ const FaIconStyle: CSSProperties = {
 const NavArea = styled.div`
      margin-left: -90px;
 `;
-import { Helmet } from "react-helmet";
-import { getHeadTitle } from "../common/helpers";
 
 export const AppHeader: React.StatelessComponent = (props: any) => {
   return (
