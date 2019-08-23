@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HoverBox from '../components/HoverBox';
 import { Images } from "../common/const";
 import { Participants } from "../views/launch/participants";
-import { Signin } from "../views/launch/signin";
+import { Signin } from "./signin";
 
 const FaIconStyle: CSSProperties = {
     color: "white",
@@ -20,7 +20,7 @@ export const Launch: React.StatelessComponent<any> = ({ match }: any) => {
     return (
         <Stack>
             <Route path={`${match.path}/participants`} component={Participants} />
-            <Route path={`${match.path}/signin`} component={Signin} />
+            <Route path={`/signin`} component={Signin} />
             <Route exact path={match.path} component={LaunchViewSelection} />
         </Stack>
     );
@@ -31,30 +31,30 @@ const LaunchViewSelection = () => {
     const [launchButtonDisabled, setLaunchButtonDisabled] = useState<boolean>(true);
 
     document.addEventListener("keydown", (ev:any)=>{
-        if(ev.keyCode == 27) setLaunchButtonDisabled(false);
+        if(ev.keyCode === 27) setLaunchButtonDisabled(false);
     });
     
     return (
         <Stack tokens={{childrenGap: 25}}>
             <HoverBox>
-                <Stack horizontal wrap>
+                <Stack horizontal wrap maxWidth="1200px">
                     <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
                     <Stack style={{margin: "20px"}}>
 
                         <Text style={{fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter"}}>// Launch</Text>
 
-                        <Text  style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">An annual event where a community of Windows App developers release their UWP-related projects</Text>
+                        <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">An annual event where a community of Windows App developers release their UWP-related projects</Text>
                         <Text style={{marginTop: "10px"}} variant="mediumPlus">Our Discord server provides direct, 2 way user feedback from users, and a place for newbies to ask questions and learn from those with more experience, creating the perfect environment for apps to grow into something more</Text>
                     </Stack>
                 </Stack>
             </HoverBox>
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
-                <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" />
+                <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" buttonDisabled={launchButtonDisabled} />
 
-                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/launch/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}}  buttonDisabled={launchButtonDisabled}>
+                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}}  buttonDisabled={launchButtonDisabled}>
                     <Text>Sign in </Text>
                     <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-                </LaunchCard>       
+                </LaunchCard>
             </Stack>
         </Stack>
     );

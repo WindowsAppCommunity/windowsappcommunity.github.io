@@ -1,4 +1,3 @@
-
 export const getStoreUrl = (id: string) => {
     return `https://www.microsoft.com/store/apps/${id}`;
 }
@@ -10,7 +9,6 @@ export const getGithubUrl = (id: string) => {
 export const getDiscordUrl = (id: string) => {
     return `https://www.discord.gg/${id}`;
 }
-
 export default {
     getDiscordUrl, getGithubUrl, getStoreUrl
 }

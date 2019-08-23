@@ -1,19 +1,44 @@
 import * as React from "react";
-import { Stack, Link } from "office-ui-fabric-react";
+import { Stack, Link, Text, PrimaryButton } from "office-ui-fabric-react";
 import { Image } from "office-ui-fabric-react/lib/Image";
 import { Images } from "../common/const";
 import { NavMenu } from "./NavMenu";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CSSProperties } from "react";
+import styled from "styled-components";
+
+const FaIconStyle: CSSProperties = {
+  color: "white",
+  height: "20px",
+  width: "20px",
+  paddingLeft: "10px"
+};
+
+const NavArea = styled.div`
+     margin-left: -90px;
+`;
 
 export const AppHeader: React.StatelessComponent = () => {
   return (
-    <header>
-      <Stack horizontal wrap verticalAlign='end' horizontalAlign="center" tokens={{childrenGap:10}}>
+    <header style={{ margin: "10px" }}>
+      <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 25 }} verticalAlign='end' horizontalAlign="space-around">
+
         <Link href="/">
           <Image src={Images.uwpCommunityLogo} />
         </Link>
-        <NavMenu />
+
+        <NavArea>
+          <NavMenu />
+        </NavArea>
+
+        <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
+          <PrimaryButton href="/signin" style={{ padding: "18px" }} disabled>
+            <Text>Sign in</Text>
+            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+          </PrimaryButton>
+        </Stack>
       </Stack>
-      <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: "10px" }}>The homepage for the unofficial Discord server </p>
+
     </header>
   );
 };

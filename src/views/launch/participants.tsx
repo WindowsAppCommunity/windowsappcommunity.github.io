@@ -1,5 +1,5 @@
-import { Text, Stack, Button } from "office-ui-fabric-react";
-import React, { useState, CSSProperties } from "react";
+import { Text, Stack } from "office-ui-fabric-react";
+import React from "react";
 
 export const Participants = () => {
     return (
