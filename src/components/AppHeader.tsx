@@ -32,12 +32,10 @@ export const AppHeader: React.StatelessComponent = () => {
         </NavArea>
 
         <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
-          <Link href="/signin">
-            <PrimaryButton style={{ padding: "18px" }}>
-              <Text>Sign in</Text>
-              <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-            </PrimaryButton>
-          </Link>
+          <PrimaryButton href="/signin" style={{ padding: "18px" }}>
+            <Text>Sign in</Text>
+            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+          </PrimaryButton>
         </Stack>
       </Stack>
 
