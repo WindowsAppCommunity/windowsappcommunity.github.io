@@ -7,7 +7,7 @@ let Authenticated: boolean = false;
 
 const WebSocketContainer: React.FC<any> = (props: any) => {
     // A container to help manage the web socket so it doesn't reload every time data from the socket updates data on the page
-    let connection = new WebSocket("ws://uwpcommunity-site-backend.herokuapp.com/signin/");
+    let connection = new WebSocket("wss://uwpcommunity-site-backend.herokuapp.com/signin/");
 
     const [connectionState, setConnectionState] = useState<IConnectionState>({
         connectionId: (Math.floor(Math.random() * 10000000) + 1),
