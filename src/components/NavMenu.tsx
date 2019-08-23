@@ -9,7 +9,7 @@ const navLinkActiveStyle: CSSProperties = {
 
 const MyNavLink = styled(NavLink)`     
    color: black;
-   padding: 25px 12px 5px 12px;
+   padding: 10px 12px 5px 12px;
    text-align: center;
    display: inline-block;
    text-decoration: none;

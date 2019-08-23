@@ -29,7 +29,7 @@ margin-right: 90px;
 export const AppHeader: React.StatelessComponent = (props: any) => {
   return (
     <header style={{ margin: "10px" }}>
-      <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 25 }} verticalAlign='end' horizontalAlign="space-around">
+      <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 10 }} verticalAlign='end' horizontalAlign="space-around">
         <Helmet>
           <title>{getHeadTitle(props.location.pathname)}</title>
         </Helmet>
