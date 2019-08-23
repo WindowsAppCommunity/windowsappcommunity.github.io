@@ -58,7 +58,7 @@ export const SignInStatus = (props: ISignInStatus) => {
 
     const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
 
-    if (props.ConnectionState.status == "start" && !windowOpened && props.ready) {
+    if (props.ConnectionState.status === "start" && !windowOpened && props.ready) {
         window.open(discordAuthEndpoint);
         windowOpened = true;
     }
@@ -73,14 +73,14 @@ export const SignInStatus = (props: ISignInStatus) => {
     return (
         <Stack>
             {
-                props.ConnectionState.status == "start" ? (
+                props.ConnectionState.status === "start" ? (
                     <Stack horizontalAlign="center">
                         <Label>Taking you to Discord</Label>
                         <Spinner label="Hold on tight" ariaLive="assertive" />
-                        <Text style={{ visibility: showRedirectLink ? "visible" : "hidden" }}>If not redirected automatically, <a href={discordAuthEndpoint} target="_blank">click here</a></Text>
+                        <Text style={{ visibility: showRedirectLink ? "visible" : "hidden" }}>If not redirected automatically, <a href={discordAuthEndpoint} target="_blank" rel="noopener noreferrer">click here</a></Text>
                     </Stack>
                 )
-                    : props.ConnectionState.status == "inprogress" ? <Text>In Progress</Text>
+                    : props.ConnectionState.status === "inprogress" ? <Text>In Progress</Text>
                         : <Stack>
                             <Text variant="xLarge">Authenticated successfully</Text>
                             <Text variant="mediumPlus">This page is still under development</Text>
