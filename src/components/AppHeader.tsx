@@ -18,7 +18,12 @@ const FaIconStyle: CSSProperties = {
 };
 
 const NavArea = styled.div`
-     margin-left: -90px;
+
+margin-right: 90px;
+     
+@media screen and (max-width: 1079px) {
+  margin-right: 0px;
+}
 `;
 
 export const AppHeader: React.StatelessComponent = (props: any) => {
