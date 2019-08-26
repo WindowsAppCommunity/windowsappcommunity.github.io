@@ -54,7 +54,7 @@ export async function IsUserInServer(): Promise<boolean> {
 }
 
 
-export async function GetUser(): Promise<IDiscordUser> {
+export async function GetCurrentUser(): Promise<IDiscordUser> {
     const Auth = AuthData.Get();
     if (!Auth) throw new Error("No auth data found");
 
@@ -67,7 +67,7 @@ export async function GetUser(): Promise<IDiscordUser> {
 }
 
 export async function GetUserAvatar(user: IDiscordUser | undefined): Promise<string> {
-    if (!user) user = await GetUser();
+    if (!user) user = await GetCurrentUser();
     return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 }
 
