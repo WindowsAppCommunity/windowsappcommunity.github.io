@@ -45,7 +45,7 @@ export async function IsUserInServer(): Promise<boolean> {
 
     const Req = await fetch("https://discordapp.com/api/v6/users/@me/guilds", {
         headers: {
-            "Authorization": Auth.access_token
+            "Authorization": "Bearer " + Auth.access_token
         }
     });
     const Response: IDiscordGuild[] = await Req.json();
@@ -60,7 +60,7 @@ export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
 
     const Req = await fetch("https://discordapp.com/api/v6/users/@me", {
         headers: {
-            "Authorization": Auth.access_token
+            "Authorization": "Bearer " + Auth.access_token
         }
     });
     return await Req.json();

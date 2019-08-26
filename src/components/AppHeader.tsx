@@ -51,6 +51,7 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
 
 export const SignInButton: React.FC = () => {
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [buttonText, setButtonText] = React.useState("Sign in");
 
   React.useEffect(() => {
     setupLoggedInUser();
@@ -59,15 +60,16 @@ export const SignInButton: React.FC = () => {
   async function setupLoggedInUser() {
     const user = await GetCurrentUser();
     const avatarUrl = await GetUserAvatar(user);
-    if(!user || !avatarUrl) return;
+    if (!user || !avatarUrl) return;
 
-    
+    setButtonText(user.username);
+
   }
 
   return (
     <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
-      <PrimaryButton href="/signin" style={{ padding: "18px" }} disabled>
-        <Text>Sign in</Text>
+      <PrimaryButton href="/signin" style={{ padding: "18px" }} disabled={!loggedIn}>
+        <Text>{buttonText}</Text>
         <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
       </PrimaryButton>
     </Stack>
