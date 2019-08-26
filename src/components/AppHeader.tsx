@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, DirectionalHint, TooltipDelay, DefaultButton, IContextualMenuProps, IButtonProps, IContextualMenuItem, PersonaSize, PersonaPresence } from "office-ui-fabric-react";
-import { Image } from "office-ui-fabric-react/lib/Image";
+import { Image, ImageCoverStyle } from "office-ui-fabric-react/lib/Image";
 import { Images } from "../common/const";
 import { NavMenu } from "./NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,7 +35,8 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
           <title>{getHeadTitle(props.location.pathname)}</title>
         </Helmet>
         <Link href="/">
-          <Image src={Images.uwpCommunityLogo} />
+          {/* This is an img and not an Image from FabricUI because when rendered on the live server, the image randomly doesn't show */}
+          <img src={Images.uwpCommunityLogo} />
         </Link>
 
         <NavArea>
