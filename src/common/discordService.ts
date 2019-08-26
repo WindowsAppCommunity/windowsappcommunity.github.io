@@ -21,11 +21,11 @@ export function ClearDiscordAuthData() {
     localStorage.removeItem("discordAuthData");
 }
 
-export async function Init() {
+export async function RefreshTokenIfNeeded() {
     const UnixTime: number = Math.round((new Date()).getTime() / 1000);
     let auth = AuthData.Get();
-    console.log("Initializing login service");
-    if (!auth) throw new Error("Auth data missing, login service not initialized");
+
+    if (!auth) return;
 
     if (auth.expires_at && auth.expires_at < UnixTime) {
         let refreshData: IDiscordAuthResponse = await (await fetch("https://uwpcommunity-site-backend.herokuapp.com/signin/refresh?refreshToken=" + auth.refresh_token)).json();
@@ -34,12 +34,12 @@ export async function Init() {
 
         console.log(refreshData);
         SetDiscordAuthData(refreshData);
-        await Init();
     }
-
 }
 
 export async function IsUserInServer(): Promise<boolean> {
+    await RefreshTokenIfNeeded();
+    
     const Auth = AuthData.Get();
     if (!Auth) throw new Error("No auth data found");
 
