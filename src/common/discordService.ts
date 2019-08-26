@@ -25,7 +25,7 @@ export async function Init() {
     const UnixTime: number = Math.round((new Date()).getTime() / 1000);
     let auth = AuthData.Get();
     console.log("Initializing login service");
-    if (!auth) return;
+    if (!auth) throw new Error("Auth data missing, login service not initialized");
 
     if (auth.expires_at && auth.expires_at < UnixTime) {
         let refreshData: IDiscordAuthResponse = await (await fetch("https://uwpcommunity-site-backend.herokuapp.com/signin/refresh?refreshToken=" + auth.refresh_token)).json();
@@ -34,7 +34,31 @@ export async function Init() {
 
         console.log(refreshData);
         SetDiscordAuthData(refreshData);
-        Init();
+        await Init();
     }
     
+}
+ 
+export async function IsUserInServer() : Promise<boolean> {
+    const Auth = AuthData.Get();
+    if(!Auth) throw new Error("No auth data found");
+
+    const Req = await fetch("https://discordapp.com/api/v6/users/@me/guilds", {
+             headers: {
+                "Authorization": Auth.access_token
+             }
+    });
+    const Response : IDiscordGuild[] = await Req.json();
+    
+    return Response.filter(server=> server.id === "372137812037730304").length > 0;
+}
+
+
+
+interface IDiscordGuild {
+    "owner": boolean,
+    "permissions": number,
+    "icon": string,
+    "id": string,
+    "name": string;
 }
