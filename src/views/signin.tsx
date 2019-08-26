@@ -72,6 +72,14 @@ export const SignInStatus = (props: ISignInStatus) => {
         windowOpened = true;
     }
 
+    if (props.ConnectionState.discordAuthResponse !== undefined) {
+        if (document.referrer.includes("localhost") || document.referrer.includes(document.location.hostname)) {
+            window.history.back();
+        } else {
+            window.location.href = "/";
+        }
+    }
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowRedirectLink(true);
@@ -94,7 +102,6 @@ export const SignInStatus = (props: ISignInStatus) => {
                         <Stack>
                             <Text variant="xLarge">Authenticated successfully</Text>
                             <Text variant="medium">Redirecting...</Text>
-                            {window.history.back()}
                         </Stack> :
                         <Text>Authentication failed: {JSON.stringify(props.ConnectionState)}</Text>
             }
