@@ -36,34 +36,39 @@ export async function Init() {
         SetDiscordAuthData(refreshData);
         await Init();
     }
-    
+
 }
- 
-export async function IsUserInServer() : Promise<boolean> {
+
+export async function IsUserInServer(): Promise<boolean> {
     const Auth = AuthData.Get();
-    if(!Auth) throw new Error("No auth data found");
+    if (!Auth) throw new Error("No auth data found");
 
     const Req = await fetch("https://discordapp.com/api/v6/users/@me/guilds", {
-             headers: {
-                "Authorization": Auth.access_token
-             }
+        headers: {
+            "Authorization": Auth.access_token
+        }
     });
-    const Response : IDiscordGuild[] = await Req.json();
-    
-    return Response.filter(server=> server.id === "372137812037730304").length > 0;
+    const Response: IDiscordGuild[] = await Req.json();
+
+    return Response.filter(server => server.id === "372137812037730304").length > 0;
 }
 
- 
-export async function GetUser() : Promise<IDiscordUser> {
+
+export async function GetUser(): Promise<IDiscordUser> {
     const Auth = AuthData.Get();
-    if(!Auth) throw new Error("No auth data found");
+    if (!Auth) throw new Error("No auth data found");
 
     const Req = await fetch("https://discordapp.com/api/v6/users/@me", {
-             headers: {
-                "Authorization": Auth.access_token
-             }
+        headers: {
+            "Authorization": Auth.access_token
+        }
     });
     return await Req.json();
+}
+
+export async function GetUserAvatar(user: IDiscordUser | undefined): Promise<string> {
+    if (!user) user = await GetUser();
+    return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 }
 
 interface IDiscordUser {
@@ -75,7 +80,7 @@ interface IDiscordUser {
     "avatar": string;
     "discriminator": string;
     "id": string;
-  }
+}
 
 
 interface IDiscordGuild {
