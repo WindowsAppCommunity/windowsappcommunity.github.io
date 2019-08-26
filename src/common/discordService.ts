@@ -48,6 +48,8 @@ export async function IsUserInServer(): Promise<boolean> {
             "Authorization": "Bearer " + Auth.access_token
         }
     });
+    if (Req.status !== 200) return true; // If something goes wrong, give the benefit of the doubt
+
     const Response: IDiscordGuild[] = await Req.json();
 
     return Response.filter(server => server.id === "372137812037730304").length > 0;
@@ -63,6 +65,7 @@ export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
             "Authorization": "Bearer " + Auth.access_token
         }
     });
+    if (!Req || Req.status != 200) return;
     return await Req.json();
 }
 

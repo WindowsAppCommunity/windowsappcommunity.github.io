@@ -8,7 +8,6 @@ import { CSSProperties } from "react";
 import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../common/discordService";
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
-import { constants } from "crypto";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -42,7 +41,7 @@ export const SignInButton: React.FC = () => {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [user, setUser] = React.useState<IDiscordUser>();
   const [userAvatar, setUserAvatar] = React.useState<string>();
-  const [joinServerAlertShown, setJoinServerAlertShown] = React.useState(false);
+  const [joinServerAlertHidden, setJoinServerAlertHidden] = React.useState(true);
 
   React.useEffect(() => {
     setupLoggedInUser();
@@ -55,10 +54,12 @@ export const SignInButton: React.FC = () => {
     setLoggedIn(true);
     setUser(user);
 
-    if (!(await IsUserInServer())) {
-      setJoinServerAlertShown(true);
+    let userIsInServer = await IsUserInServer();
+    if (!userIsInServer) {
+      setJoinServerAlertHidden(false);
       return;
     }
+
 
     setUserAvatar(await GetUserAvatar(user));
   }
@@ -82,7 +83,7 @@ export const SignInButton: React.FC = () => {
   }
 
   function CloseJoinServerDialog() {
-    setJoinServerAlertShown(false);
+    setJoinServerAlertHidden(true);
     LogOut();
   }
 
@@ -90,7 +91,7 @@ export const SignInButton: React.FC = () => {
     loggedIn && user ?
       <Stack style={{ marginBottom: "10px" }}>
         <Dialog
-          hidden={joinServerAlertShown}
+          hidden={joinServerAlertHidden}
           dialogContentProps={{
             type: DialogType.normal,
             title: "Join the Community to continue",
@@ -103,7 +104,7 @@ export const SignInButton: React.FC = () => {
         >
           <DialogFooter>
             <PrimaryButton href={Links.discordServerInvite} text="Join the server" />
-            <DefaultButton onClick={CloseJoinServerDialog} text="Cancel" />
+            <DefaultButton onClick={CloseJoinServerDialog} text="Sign out" />
           </DialogFooter>
         </Dialog>
         <TooltipHost content={`Logged in as ${user.username}`} delay={TooltipDelay.long}>

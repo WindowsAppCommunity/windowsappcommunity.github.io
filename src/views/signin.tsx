@@ -73,11 +73,7 @@ export const SignInStatus = (props: ISignInStatus) => {
     }
 
     if (props.ConnectionState.discordAuthResponse !== undefined) {
-        if (document.referrer.includes("localhost") || document.referrer.includes(document.location.hostname)) {
-            window.history.back();
-        } else {
-            window.location.href = "/";
-        }
+        window.location.href = "/";
     }
 
     useEffect(() => {
