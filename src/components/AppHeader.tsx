@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
 import styled from "styled-components";
 
+import { GetUserAvatar, GetCurrentUser } from "../common/discordService";
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 
@@ -41,14 +42,34 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
           <NavMenu />
         </NavArea>
 
-        <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
-          <PrimaryButton href="/signin" style={{ padding: "18px" }} disabled>
-            <Text>Sign in</Text>
-            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-          </PrimaryButton>
-        </Stack>
+        <SignInButton />
       </Stack>
 
     </header>
+  );
+};
+
+export const SignInButton: React.FC = () => {
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  React.useEffect(() => {
+    setupLoggedInUser();
+  }, []);
+
+  async function setupLoggedInUser() {
+    const user = await GetCurrentUser();
+    const avatarUrl = await GetUserAvatar(user);
+    if(!user || !avatarUrl) return;
+
+    
+  }
+
+  return (
+    <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
+      <PrimaryButton href="/signin" style={{ padding: "18px" }} disabled>
+        <Text>Sign in</Text>
+        <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+      </PrimaryButton>
+    </Stack>
   );
 };

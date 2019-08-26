@@ -39,7 +39,7 @@ export async function RefreshTokenIfNeeded() {
 
 export async function IsUserInServer(): Promise<boolean> {
     await RefreshTokenIfNeeded();
-    
+
     const Auth = AuthData.Get();
     if (!Auth) throw new Error("No auth data found");
 
@@ -54,9 +54,9 @@ export async function IsUserInServer(): Promise<boolean> {
 }
 
 
-export async function GetCurrentUser(): Promise<IDiscordUser> {
+export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
     const Auth = AuthData.Get();
-    if (!Auth) throw new Error("No auth data found");
+    if (!Auth) return;
 
     const Req = await fetch("https://discordapp.com/api/v6/users/@me", {
         headers: {
@@ -66,8 +66,9 @@ export async function GetCurrentUser(): Promise<IDiscordUser> {
     return await Req.json();
 }
 
-export async function GetUserAvatar(user: IDiscordUser | undefined): Promise<string> {
-    if (!user) user = await GetCurrentUser();
+export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undefined> {
+    user = user || await GetCurrentUser();
+    if (!user) return;
     return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 }
 
