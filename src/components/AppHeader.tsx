@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, DirectionalHint, TooltipDelay, DefaultButton, IContextualMenuProps, IButtonProps, IContextualMenuItem } from "office-ui-fabric-react";
+import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, DirectionalHint, TooltipDelay, DefaultButton, IContextualMenuProps, IButtonProps, IContextualMenuItem, PersonaSize, PersonaPresence } from "office-ui-fabric-react";
 import { Image } from "office-ui-fabric-react/lib/Image";
 import { Images } from "../common/const";
 import { NavMenu } from "./NavMenu";
@@ -89,7 +89,7 @@ export const SignInButton: React.FC = () => {
       <Stack style={{ marginBottom: "10px" }}>
         <TooltipHost content={`Logged in as ${user.username}`} delay={TooltipDelay.long}>
           <DefaultButton style={{ padding: "25px", border: "0px solid black" }} menuProps={LoggedInButtonDropdownItems}>
-            <Persona text={user.username} imageUrl={userAvatar} />
+            <Persona size={PersonaSize.size40} text={user.username} imageUrl={userAvatar} />
           </DefaultButton>
         </TooltipHost>
       </Stack>
