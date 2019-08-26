@@ -53,6 +53,29 @@ export async function IsUserInServer() : Promise<boolean> {
     return Response.filter(server=> server.id === "372137812037730304").length > 0;
 }
 
+ 
+export async function GetUser() : Promise<IDiscordUser> {
+    const Auth = AuthData.Get();
+    if(!Auth) throw new Error("No auth data found");
+
+    const Req = await fetch("https://discordapp.com/api/v6/users/@me", {
+             headers: {
+                "Authorization": Auth.access_token
+             }
+    });
+    return await Req.json();
+}
+
+interface IDiscordUser {
+    "username": string;
+    "locale": string;
+    "premium_type": number;
+    "mfa_enabled": boolean;
+    "flags": number;
+    "avatar": string;
+    "discriminator": string;
+    "id": string;
+  }
 
 
 interface IDiscordGuild {
