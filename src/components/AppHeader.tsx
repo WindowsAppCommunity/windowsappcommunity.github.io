@@ -18,15 +18,6 @@ const FaIconStyle: CSSProperties = {
   paddingLeft: "10px"
 };
 
-const NavArea = styled.div`
-
-margin-right: 90px;
-     
-@media screen and (max-width: 1079px) {
-  margin-right: 0px;
-}
-`;
-
 export const AppHeader: React.StatelessComponent = (props: any) => {
   return (
     <header style={{ margin: "10px" }}>
@@ -39,9 +30,7 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
           <img src={Images.uwpCommunityLogo} />
         </Link>
 
-        <NavArea>
-          <NavMenu />
-        </NavArea>
+        <NavMenu />
 
         <SignInButton />
       </Stack>
