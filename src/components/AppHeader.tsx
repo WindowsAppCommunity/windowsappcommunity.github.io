@@ -1,13 +1,11 @@
 import * as React from "react";
-import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, DirectionalHint, TooltipDelay, DefaultButton, IContextualMenuProps, IButtonProps, IContextualMenuItem, PersonaSize, PersonaPresence } from "office-ui-fabric-react";
-import { Image, ImageCoverStyle } from "office-ui-fabric-react/lib/Image";
-import { Images } from "../common/const";
+import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, TooltipDelay, DefaultButton, IContextualMenuProps, IContextualMenuItem, PersonaSize, Dialog, DialogFooter, DialogType } from "office-ui-fabric-react";
+import { Images, Links } from "../common/const";
 import { NavMenu } from "./NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
-import styled from "styled-components";
 
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData } from "../common/discordService";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../common/discordService";
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 
@@ -43,6 +41,7 @@ export const SignInButton: React.FC = () => {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [user, setUser] = React.useState<IDiscordUser>();
   const [userAvatar, setUserAvatar] = React.useState<string>();
+  const [joinServerAlertHidden, setJoinServerAlertHidden] = React.useState(true);
 
   React.useEffect(() => {
     setupLoggedInUser();
@@ -54,6 +53,13 @@ export const SignInButton: React.FC = () => {
     if (!user || !avatarUrl) return;
     setLoggedIn(true);
     setUser(user);
+
+    let userIsInServer = await IsUserInServer();
+    if (!userIsInServer) {
+      setJoinServerAlertHidden(false);
+      return;
+    }
+
 
     setUserAvatar(await GetUserAvatar(user));
   }
@@ -68,15 +74,39 @@ export const SignInButton: React.FC = () => {
   }
 
   function OnMenuItemClick(ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined, item?: IContextualMenuItem | undefined) {
-    if (item && item.key == "logOut") {
-      AuthData.Clear();
-      window.location.reload();
-    }
+    if (item && item.key == "logOut") LogOut();
+  }
+
+  function LogOut() {
+    AuthData.Clear();
+    window.location.reload();
+  }
+
+  function CloseJoinServerDialog() {
+    setJoinServerAlertHidden(true);
+    LogOut();
   }
 
   return (
     loggedIn && user ?
       <Stack style={{ marginBottom: "10px" }}>
+        <Dialog
+          hidden={joinServerAlertHidden}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: "Join the Community to continue",
+            subText: "Looks like you aren't part of the UWP Community. To sign in, you'll need to join the server first"
+          }}
+          modalProps={{
+            isBlocking: true,
+            styles: { main: { maxWidth: 450 } }
+          }}
+        >
+          <DialogFooter>
+            <PrimaryButton href={Links.discordServerInvite} text="Join the server" />
+            <DefaultButton onClick={CloseJoinServerDialog} text="Sign out" />
+          </DialogFooter>
+        </Dialog>
         <TooltipHost content={`Logged in as ${user.username}`} delay={TooltipDelay.long}>
           <DefaultButton style={{ padding: "25px", border: "0px solid black" }} menuProps={LoggedInButtonDropdownItems}>
             <Persona size={PersonaSize.size40} text={user.username} imageUrl={userAvatar} />
