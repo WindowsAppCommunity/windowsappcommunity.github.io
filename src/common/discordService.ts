@@ -72,7 +72,7 @@ export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undef
     return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 }
 
-interface IDiscordUser {
+export interface IDiscordUser {
     "username": string;
     "locale": string;
     "premium_type": number;
@@ -84,7 +84,7 @@ interface IDiscordUser {
 }
 
 
-interface IDiscordGuild {
+export interface IDiscordGuild {
     "owner": boolean,
     "permissions": number,
     "icon": string,

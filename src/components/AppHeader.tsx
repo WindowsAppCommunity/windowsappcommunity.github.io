@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Stack, Link, Text, PrimaryButton } from "office-ui-fabric-react";
+import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, DirectionalHint, TooltipDelay, DefaultButton, IContextualMenuProps, IButtonProps, IContextualMenuItem } from "office-ui-fabric-react";
 import { Image } from "office-ui-fabric-react/lib/Image";
 import { Images } from "../common/const";
 import { NavMenu } from "./NavMenu";
@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
 import styled from "styled-components";
 
-import { GetUserAvatar, GetCurrentUser } from "../common/discordService";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData } from "../common/discordService";
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 
@@ -51,7 +51,8 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
 
 export const SignInButton: React.FC = () => {
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [buttonText, setButtonText] = React.useState("Sign in");
+  const [user, setUser] = React.useState<IDiscordUser>();
+  const [userAvatar, setUserAvatar] = React.useState<string>();
 
   React.useEffect(() => {
     setupLoggedInUser();
@@ -61,17 +62,43 @@ export const SignInButton: React.FC = () => {
     const user = await GetCurrentUser();
     const avatarUrl = await GetUserAvatar(user);
     if (!user || !avatarUrl) return;
+    setLoggedIn(true);
+    setUser(user);
 
-    setButtonText(user.username);
+    setUserAvatar(await GetUserAvatar(user));
+  }
 
+  const LoggedInButtonDropdownItems: IContextualMenuProps = {
+    onItemClick: OnMenuItemClick,
+    items: [{
+      key: "logOut",
+      text: "Log out",
+      iconProps: { iconName: "SignOut" }
+    }]
+  }
+
+  function OnMenuItemClick(ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined, item?: IContextualMenuItem | undefined) {
+    if (item && item.key == "logOut") {
+      AuthData.Clear();
+      window.location.reload();
+    }
   }
 
   return (
-    <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
-      <PrimaryButton href="/signin" style={{ padding: "18px" }} disabled={!loggedIn}>
-        <Text>{buttonText}</Text>
-        <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-      </PrimaryButton>
-    </Stack>
+    loggedIn && user ?
+      <Stack style={{ marginBottom: "10px" }}>
+        <TooltipHost content={`Logged in as ${user.username}`} delay={TooltipDelay.long}>
+          <DefaultButton style={{ padding: "25px", border: "0px solid black" }} menuProps={LoggedInButtonDropdownItems}>
+            <Persona text={user.username} imageUrl={userAvatar} />
+          </DefaultButton>
+        </TooltipHost>
+      </Stack>
+      :
+      <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
+        <PrimaryButton href="/signin" style={{ padding: "18px" }}>
+          <Text>Sign in</Text>
+          <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+        </PrimaryButton>
+      </Stack>
   );
 };
