@@ -19,7 +19,7 @@ interface IParticipantRequest {
 };
 
 module.exports = (req: Request, res: Response) => {
-    const body = req.body;
+    const body = JSON.parse(req.body);
     const bodyCheck: true | (string | boolean)[] = checkBody(body);
 
     if (!bodyCheck || bodyCheck instanceof Array && bodyCheck[0] === false) {
