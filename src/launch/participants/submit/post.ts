@@ -19,7 +19,7 @@ interface IParticipantRequest {
 };
 
 module.exports = (req: Request, res: Response) => {
-    const body = JSON.parse(req.body);
+    const body = req.body;
     const bodyCheck: true | (string | boolean)[] = checkBody(body);
 
     if (!bodyCheck || bodyCheck instanceof Array && bodyCheck[0] === false) {
@@ -39,7 +39,7 @@ function checkBody(body: IParticipantRequest) {
     if (!body.appName) return [false, "appName"];
     if (!body.author) return [false, "author"];
     if (!body.description) return [false, "description"];
-    if (!body.isPrivate != undefined) return [false, "isPrivate"];
+    if (body.isPrivate == undefined) return [false, "isPrivate"];
     if (!body.contact || !body.contact.discord) return [false, "contact"];
     return true;
 }
