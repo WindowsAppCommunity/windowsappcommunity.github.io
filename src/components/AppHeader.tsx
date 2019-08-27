@@ -4,10 +4,12 @@ import { Images, Links } from "../common/const";
 import { NavMenu } from "./NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
+import { Route } from 'react-router-dom';
 
 import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../common/discordService";
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
+import { History } from "history";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -18,26 +20,28 @@ const FaIconStyle: CSSProperties = {
 
 export const AppHeader: React.StatelessComponent = (props: any) => {
   return (
-    <header style={{ margin: "10px" }}>
-      <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 10 }} verticalAlign='end' horizontalAlign="space-around">
-        <Helmet>
-          <title>{getHeadTitle(props.location.pathname)}</title>
-        </Helmet>
-        <Link href="/">
-          {/* This is an img and not an Image from FabricUI because when rendered on the live server, the image randomly doesn't show */}
-          <img src={Images.uwpCommunityLogo} />
-        </Link>
+    <Route render={({ history }) => (
+      <header style={{ margin: "10px" }}>
+        <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 10 }} verticalAlign='end' horizontalAlign="space-around">
+          <Helmet>
+            <title>{getHeadTitle(props.location.pathname)}</title>
+          </Helmet>
+          <Link href="/">
+            {/* This is an img and not an Image from FabricUI because when rendered on the live server, the image randomly doesn't show */}
+            <img src={Images.uwpCommunityLogo} />
+          </Link>
 
-        <NavMenu />
+          <NavMenu />
 
-        <SignInButton />
-      </Stack>
+          <SignInButton history={history} />
+        </Stack>
 
-    </header>
+      </header>
+    )} />
   );
 };
 
-export const SignInButton: React.FC = () => {
+export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [user, setUser] = React.useState<IDiscordUser>();
   const [userAvatar, setUserAvatar] = React.useState<string>();
@@ -66,7 +70,12 @@ export const SignInButton: React.FC = () => {
 
   const LoggedInButtonDropdownItems: IContextualMenuProps = {
     onItemClick: OnMenuItemClick,
+    useTargetWidth: true,
     items: [{
+      key: "dashboard",
+      text: "Dashboard",
+      iconProps: { iconName: "ViewDashboard" }
+    }, {
       key: "logOut",
       text: "Log out",
       iconProps: { iconName: "SignOut" }
@@ -74,11 +83,20 @@ export const SignInButton: React.FC = () => {
   }
 
   function OnMenuItemClick(ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined, item?: IContextualMenuItem | undefined) {
-    if (item && item.key == "logOut") LogOut();
+    if (!item) return;
+
+    switch (item.key) {
+      case "logOut":
+        LogOut();
+        break;
+      case "dashboard":
+        history.push("/dashboard");
+    }
   }
 
   function LogOut() {
     AuthData.Clear();
+    history.push("/");
     window.location.reload();
   }
 
