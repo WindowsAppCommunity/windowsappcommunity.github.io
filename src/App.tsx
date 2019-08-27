@@ -5,6 +5,7 @@ import { Projects } from './views/Projects';
 import { Home } from './views/Home';
 import { AppHeader } from "./components/AppHeader";
 import { Launch } from "./views/Launch";
+import { Register } from "./views/launch/register";
 import { Signin } from "./views/signin";
 import { Dashboard } from "./views/dashboard";
 
@@ -29,9 +30,10 @@ export const App: React.StatelessComponent = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/projects" component={Projects} />
-          <Route path="/launch" component={Launch} />
-          <Route path="/signin" component={Signin} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route exact path="/launch" component={Launch} />
+          <Route exact path="/launch/register" component={Register} />
+          <Route exact path="/signin" component={Signin} />
+          <Route exact path="/dashboard" component={Dashboard} />
           <Route component={NotFound} />}
         </Switch>
       </Stack>
