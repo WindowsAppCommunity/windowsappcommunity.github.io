@@ -27,6 +27,7 @@
   },
   "scripts": {
     "start": "tsc && node ./build/index.js",
+    "start dev": "tsc && node ./build/index.js",
     "build": "tsc"
   },
   "repository": {

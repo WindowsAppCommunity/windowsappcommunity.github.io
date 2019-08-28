@@ -10,7 +10,7 @@ import { Request, Response, NextFunction } from "express";
  * Example: 
  * The file `./myapp/bugreport/post.js` is set up at `POST https://example.com/myapp/bugreport/`
  * 
- * For local development, set the "DEBUG" environment variable to "local" before starting the app
+ * For local development, run `npm start dev`
  */
 
 const express = require('express'), app = express();
@@ -37,7 +37,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 const PORT = process.env.PORT || 5000;
-const DEBUG = process.env.DEBUG == "local";
+const DEBUG = process.argv.filter(val => val == 'dev').length > 0;
 
 let RegexMethods = /((?:post|get|put|patch|delete|ws)+)(?:.js)/;
 
@@ -47,7 +47,7 @@ glob(__dirname + '/**/*.js', function (err: Error, result: string[]) {
 
         if (!filePath.includes("node_modules") && helpers.match(filePath, RegexMethods)) {
             let serverPath = filePath.replace(RegexMethods, "").replace("/app", "").replace("/build", "");
-            
+
             if (DEBUG) serverPath = serverPath.replace(__dirname.replace(/\\/g, `/`).replace("/build", ""), "");
 
             const method = helpers.match(filePath, RegexMethods);
