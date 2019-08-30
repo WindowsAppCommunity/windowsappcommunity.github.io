@@ -21,17 +21,19 @@ module.exports = (req: Request, res: Response) => {
 };
 
 function getLaunchTable(year: number, res: Response, cb: Function) {
-    db.query(`select * from launch${year}participants`, (err: string, queryResults: IQueryResult) => {
-        if (err.toString().includes("does not exist")) {
-            res.status(404);
-            res.json(JSON.stringify({
-                error: "Not found",
-                reason: `Data does not exist for year ${year}`
-            }));
-            return;
-        } else if (err.toString()) {
-            console.error(err);
-            return;
+    db.query(`select * from participants LEFT JOIN years ON participants.year_id = years.id where years.year = '${year}'`, (err: string, queryResults: IQueryResult) => {
+        if (err) {
+            if (err.toString().includes("does not exist")) {
+                res.status(404);
+                res.json(JSON.stringify({
+                    error: "Not found",
+                    reason: `Data does not exist for year ${year}`
+                }));
+                return;
+            } else if (err.toString()) {
+                console.error(err);
+                return;
+            }
         }
 
         let results = [];

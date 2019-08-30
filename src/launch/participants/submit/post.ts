@@ -45,25 +45,25 @@ function checkBody(body: IParticipantRequest) {
 }
 
 function submitParticipant(participantData: IParticipantRequest, cb: Function) {
-    db.query(`select * from launch${currentLaunchYear}submissions`, (err: Error, queryResults: IQueryResult) => {
-        if (err.toString().includes("does not exist")) {
-            // create the table
-            createTable(participantData, (result: IQueryResult) => {
-                cb(result);
-            });
-        }
-    });
+    // db.query(`select * from launch${currentLaunchYear}submissions`, (err: Error, queryResults: IQueryResult) => {
+    //     if (err.toString().includes("does not exist")) {
+    //         // create the table
+    //         createTable(participantData, (result: IQueryResult) => {
+    //             cb(result);
+    //         });
+    //     }
+    // });
 }
 
-function createTable(participantData: IParticipantRequest, cb: Function) {
-    db.query(`CREATE TABLE launch${currentLaunchYear} (
-        appname VARCHAR,
-        author VARCHAR,
-        description VARCHAR,
-        private int(1),
+// function createTable(participantData: IParticipantRequest, cb: Function) {
+//     db.query(`CREATE TABLE launch${currentLaunchYear} (
+//         appname VARCHAR,
+//         author VARCHAR,
+//         description VARCHAR,
+//         private int(1),
         
-    )`,
-        (err: Error, queryResults: IQueryResult) => {
-            cb(queryResults);
-        });
-}
+//     )`,
+//         (err: Error, queryResults: IQueryResult) => {
+//             cb(queryResults);
+//         });
+// }
