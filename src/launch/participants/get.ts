@@ -22,6 +22,7 @@ module.exports = (req: Request, res: Response) => {
 
 function getLaunchTable(year: number, res: Response, cb: Function) {
     db.query(`select * from participants LEFT JOIN years ON participants.year_id = years.id where years.year = '${year}'`, (err: string, queryResults: IQueryResult) => {
+
         if (err) {
             if (err.toString().includes("does not exist")) {
                 res.status(404);
@@ -30,7 +31,7 @@ function getLaunchTable(year: number, res: Response, cb: Function) {
                     reason: `Data does not exist for year ${year}`
                 }));
                 return;
-            } else if (err.toString()) {
+            } else {
                 console.error(err);
                 return;
             }
