@@ -49,6 +49,7 @@ const LaunchViewSelection = () => {
                 </Stack>
 
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
+                {/* Todo: Add launch 2019 summary */}
                 <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" buttonDisabled={launchButtonDisabled} />
 
                 <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}}  buttonDisabled={launchButtonDisabled}>
