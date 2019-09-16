@@ -2,12 +2,13 @@ import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
 import React, { useState, useEffect } from "react";
 import { IDiscordAuthResponse } from "../common/interfaces";
 import { AuthData } from "../common/discordService";
+import { backendHost, isBackend } from "../common/const";
 
 let Authenticated: boolean = false;
 
 const WebSocketContainer: React.FC<any> = (props: any) => {
     // A container to help manage the web socket so it doesn't reload every time data from the socket updates data on the page
-    let connection = new WebSocket("wss://uwpcommunity-site-backend.herokuapp.com/signin/");
+    let connection = new WebSocket(`ws://${backendHost}/signin/`);
 
     const [connectionState, setConnectionState] = useState<IConnectionState>({
         connectionId: (Math.floor(Math.random() * 10000000) + 1),
@@ -63,7 +64,12 @@ interface ISignInStatus {
 };
 
 export const SignInStatus = (props: ISignInStatus) => {
-    let discordAuthEndpoint = `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Fsignin%2Fredirect&response_type=code&scope=guilds%20identify&state=${props.ConnectionState.connectionId}`;
+    let discordAuthEndpoint = (
+        isBackend ?
+            `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fsignin%2Fredirect%2F&response_type=code&scope=identify%20guilds&state=${props.ConnectionState.connectionId}`
+            :
+            `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds&state=${props.ConnectionState.connectionId}`
+    );
 
     const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
 

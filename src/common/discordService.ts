@@ -1,4 +1,5 @@
 import { IDiscordAuthResponse } from "./interfaces";
+import { backendHost } from "./const";
 
 export const AuthData = {
     Get: GetDiscordAuthData,
@@ -28,7 +29,7 @@ export async function RefreshTokenIfNeeded() {
     if (!auth) return;
 
     if (auth.expires_at && auth.expires_at < UnixTime) {
-        let refreshData: IDiscordAuthResponse = await (await fetch("https://uwpcommunity-site-backend.herokuapp.com/signin/refresh?refreshToken=" + auth.refresh_token)).json();
+        let refreshData: IDiscordAuthResponse = await (await fetch(`https://${backendHost}/signin/refresh?refreshToken=${auth.refresh_token}`)).json();
 
         if (refreshData.expires_in) refreshData.expires_at = UnixTime + refreshData.expires_in;
 

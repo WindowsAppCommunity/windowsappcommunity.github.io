@@ -2,6 +2,7 @@ import { Text, Stack, PrimaryButton, Checkbox, TextField, BaseButton, Button } f
 import React from "react";
 import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../../common/discordService";
 import HoverBox from "../../components/HoverBox";
+import { backendHost } from "../../common/const";
 
 interface IParticipantRequest {
     appName?: string;
@@ -16,7 +17,7 @@ interface IParticipantContact {
 };
 
 export const Register = () => {
-    let [participantRequest, setParticipantRequest] = React.useState<IParticipantRequest>({isPrivate: false});
+    let [participantRequest, setParticipantRequest] = React.useState<IParticipantRequest>({ isPrivate: false });
     let [participantContact, setParticipantContact] = React.useState<IParticipantContact>({});
     let [submissionStatus, setSubmissionStatus] = React.useState<string>("");
 
@@ -35,7 +36,7 @@ export const Register = () => {
             contact: contactInfo
         };
 
-        let request = await fetch("https://uwpcommunity-site-backend.herokuapp.com/launch/participants/submit", {
+        let request = await fetch(`https://${backendHost}/launch/participants/submit`, {
             headers: { "Content-Type": "application/json" },
             method: "POST",
             body: JSON.stringify(requestData)
