@@ -1,86 +1,28 @@
 import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
 import React, { useState, useEffect } from "react";
-import { IDiscordAuthResponse } from "../common/interfaces";
 import { AuthData } from "../common/discordService";
-import { backendHost, isBackend } from "../common/const";
+import { isLocalhost } from "../common/const";
 
-let Authenticated: boolean = false;
-
-const WebSocketContainer: React.FC<any> = (props: any) => {
-    // A container to help manage the web socket so it doesn't reload every time data from the socket updates data on the page
-    let connection = new WebSocket(`ws://${backendHost}/signin/`);
-
-    const [connectionState, setConnectionState] = useState<IConnectionState>({
-        connectionId: (Math.floor(Math.random() * 10000000) + 1),
-        status: Authenticated ? "done" : "start"
-    });
-
-    const [WebSocketReady, SetWebSocketReady] = useState<boolean>(false);
-
-    connection.onopen = WebSocket_OnOpen;
-    connection.onmessage = WebSocket_OnMessage;
-
-    function WebSocket_OnOpen(this: WebSocket, ev: Event) {
-        console.info("Handshake established with login verification server");
-        if (Authenticated) {
-            console.info("Already authenticated");
-            return;
-        }
-        connection.send(JSON.stringify(connectionState));
-        SetWebSocketReady(true);
-    }
-
-    function WebSocket_OnMessage(this: WebSocket, ev: MessageEvent) {
-        console.info("Socket message: ", ev.data);
-        let message: IConnectionState = JSON.parse(ev.data);
-
-        if (message.status === "done" && message.discordAuthResponse) {
-            AuthData.Set(message.discordAuthResponse);
-            setConnectionState(message);
-            Authenticated = true;
-        }
-    }
-
-    return (
-        <div>
-            <SignInStatus ConnectionState={connectionState} ready={WebSocketReady} />
-        </div>
-    )
-};
-
-export const Signin = () => {
-    return (
-        <Stack>
-            <WebSocketContainer />
-        </Stack>
-    )
-};
-
-let windowOpened: boolean = false;
-
-interface ISignInStatus {
-    ConnectionState: IConnectionState,
-    ready: boolean;
-};
-
-export const SignInStatus = (props: ISignInStatus) => {
+export const Signin: React.FC<any> = (props: any) => {
     let discordAuthEndpoint = (
-        isBackend ?
-            `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fsignin%2Fredirect%2F&response_type=code&scope=identify%20guilds&state=${props.ConnectionState.connectionId}`
+        isLocalhost ?
+            `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
             :
             `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds&state=${props.ConnectionState.connectionId}`
     );
 
+    let authResponse: string | null = (new URL(window.location.href)).searchParams.get("authResponse");
+    console.log(authResponse);
+    if (!authResponse) {
+        window.location.href = discordAuthEndpoint;
+    } else {
+        authResponse = atob(authResponse);
+        AuthData.Set(JSON.parse(authResponse));
+
+        window.location.href = "/dashboard";
+    }
+
     const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
-
-    if (props.ConnectionState.status === "start" && !windowOpened && props.ready) {
-        window.open(discordAuthEndpoint);
-        windowOpened = true;
-    }
-
-    if (props.ConnectionState.discordAuthResponse !== undefined) {
-        window.location.href = "/";
-    }
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -90,32 +32,17 @@ export const SignInStatus = (props: ISignInStatus) => {
     }, []);
 
     return (
-        <Stack>
-            {
-                props.ConnectionState.status === "start" ? (
-                    <Stack horizontalAlign="center">
-                        <Label>Taking you to Discord</Label>
-                        <Spinner label="Hold on tight" ariaLive="assertive" />
-                        <Text style={{ visibility: showRedirectLink ? "visible" : "hidden" }}>If not redirected automatically, <a href={discordAuthEndpoint} target="_blank" rel="noopener noreferrer">click here</a></Text>
-                    </Stack>
-                )
-                    :
-                    props.ConnectionState.discordAuthResponse !== undefined ? // Make sure the token is present
-                        <Stack>
-                            <Text variant="xLarge">Authenticated successfully</Text>
-                            <Text variant="medium">Redirecting...</Text>
-                        </Stack> :
-                        <Text>Authentication failed: {JSON.stringify(props.ConnectionState)}</Text>
-            }
-        </Stack>
+        <div>
+            <Stack>
+                <Stack horizontalAlign="center">
+                    <Label>Taking you to Discord</Label>
+                    <Spinner label="Hold on tight" ariaLive="assertive" />
+                    <Text style={{ visibility: showRedirectLink ? "visible" : "hidden" }}>If not redirected automatically, <a href={discordAuthEndpoint}>click here</a></Text>
+                </Stack>
+            </Stack>
+        </div>
     )
 };
-
-interface IConnectionState {
-    connectionId: number;
-    status: string;
-    discordAuthResponse?: IDiscordAuthResponse;
-}
 
 /**
  * Todo: Post-sign in
