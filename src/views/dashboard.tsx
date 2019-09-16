@@ -33,10 +33,10 @@ export const Dashboard = () => {
             <DashboardHeader>
                 <Stack style={{ padding: "10px" }} tokens={{ childrenGap: 10 }}>
                     <Persona style={{ margin: 0 }} styles={{ primaryText: { fontSize: "24px", color: "white" } }} size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
-                    <NavLink style={{ color: "white", width: "135px", textDecoration: "none" }} to="/dashboard/registerapp">
-                        <Stack verticalAlign="center" horizontal tokens={{childrenGap: 5}}>
+                    <NavLink hidden style={{ color: "white", width: "135px", textDecoration: "none" }} to="/dashboard/registerapp">
+                        <Stack verticalAlign="center" horizontal tokens={{ childrenGap: 5 }}>
                             <Icon iconName="AppIconDefaultAdd"></Icon>
-                            <Text variant="mediumPlus"> Register an app</Text>
+                            <Text variant="mediumPlus">Register an app</Text>
                         </Stack>
                     </NavLink>
 
@@ -46,8 +46,14 @@ export const Dashboard = () => {
             {/* Todo, move most of these options out of here and into the user menu dropdown */}
             <Stack horizontal wrap horizontalAlign="center" tokens={{ childrenGap: 25 }}>
                 <Stack horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                    <Text variant="xLarge">My apps</Text>
-                    <Text variant="large">You don't have any registered apps</Text>
+
+                    <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 10 }}>
+                        <Icon style={{ fontSize: "24px" }} iconName="BuildDefinition" />
+                        <Text variant="xLarge">Under construction</Text>
+                    </Stack>
+
+
+                    <Text variant="large">This area is still being worked on. Check back later</Text>
 
 
                 </Stack>
