@@ -33,7 +33,7 @@ export const Dashboard = () => {
             <DashboardHeader>
                 <Stack style={{ padding: "10px" }} tokens={{ childrenGap: 10 }}>
                     <Persona style={{ margin: 0 }} styles={{ primaryText: { fontSize: "24px", color: "white" } }} size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
-                    <NavLink style={{ color: "white", textDecoration: "none" }} to="/dashboard/registerapp">
+                    <NavLink style={{ color: "white", width: "135px", textDecoration: "none" }} to="/dashboard/registerapp">
                         <Stack verticalAlign="center" horizontal tokens={{childrenGap: 5}}>
                             <Icon iconName="AppIconDefaultAdd"></Icon>
                             <Text variant="mediumPlus"> Register an app</Text>
