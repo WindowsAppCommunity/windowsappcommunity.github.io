@@ -1,11 +1,21 @@
-import { Text, Stack, Checkbox, PrimaryButton } from "office-ui-fabric-react";
+import { Text, Stack, Checkbox, PrimaryButton, Toggle, Pivot, PivotItem, Persona, PersonaSize, DefaultButton, Icon } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../common/discordService";
 
 import HoverBox from "../components/HoverBox";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+
+const DashboardHeader = styled.header`
+background: linear-gradient(to bottom,#005799 0,#0076d1);
+box-shadow: 0 12px 45px -8px rgba(0,120,215,.35);
+width: 100vw;
+padding: 10px;
+`;
 
 export const Dashboard = () => {
     const [welcomeMessage, setWelcomeMessage] = React.useState("Signing in...");
+    const [userIcon, setUserIcon] = React.useState("");
 
     React.useEffect(() => {
         setupLoggedInUser();
@@ -13,32 +23,35 @@ export const Dashboard = () => {
 
     async function setupLoggedInUser() {
         let user: IDiscordUser | undefined = await GetCurrentUser();
-        if(!user) return;
+        if (!user) return;
         setWelcomeMessage(`Welcome, ${user.username}`);
+        setUserIcon(await GetUserAvatar(user) || "");
     }
 
     return (
-        <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-            <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: 0 }}>{welcomeMessage}</p>
-
-            <Stack horizontal wrap horizontalAlign="center" tokens={{ childrenGap: 25 }}>
-                <HoverBox style={{ padding: "20px" }}>
-                    <Stack horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                        <Text variant="xLarge">🐱‍🏍 Launch 2020</Text>
-                        <Text variant="large">You aren't registered for the Launch event</Text>
-
-                        <PrimaryButton href="/launch/register" style={{ marginTop: "20px" }} primary text="Register for Launch 2020" />
-                    </Stack>
-                </HoverBox>
-
-                <HoverBox style={{ height: "300px", width: "250px", padding: "15px" }} hidden>
-                    <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-                        <Text variant="xLarge">User settings</Text>
-                        <Stack horizontal verticalFill wrap tokens={{ childrenGap: 10 }}>
-                            <Checkbox label="I'm a developer" />
+        <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
+            <DashboardHeader>
+                <Stack style={{ padding: "10px" }} tokens={{ childrenGap: 10 }}>
+                    <Persona style={{ margin: 0 }} styles={{ primaryText: { fontSize: "24px", color: "white" } }} size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
+                    <NavLink style={{ color: "white", textDecoration: "none" }} to="/dashboard/registerapp">
+                        <Stack verticalAlign="center" horizontal tokens={{childrenGap: 5}}>
+                            <Icon iconName="AppIconDefaultAdd"></Icon>
+                            <Text variant="mediumPlus"> Register an app</Text>
                         </Stack>
-                    </Stack>
-                </HoverBox>
+                    </NavLink>
+
+                </Stack>
+            </DashboardHeader>
+
+            {/* Todo, move most of these options out of here and into the user menu dropdown */}
+            <Stack horizontal wrap horizontalAlign="center" tokens={{ childrenGap: 25 }}>
+                <Stack horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                    <Text variant="xLarge">My apps</Text>
+                    <Text variant="large">You don't have any registered apps</Text>
+
+
+                </Stack>
+
             </Stack>
         </Stack>
     )
