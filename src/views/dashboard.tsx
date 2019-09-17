@@ -1,4 +1,4 @@
-import { Text, Stack, Checkbox, PrimaryButton, Toggle, Pivot, PivotItem, Persona, PersonaSize, DefaultButton, Icon } from "office-ui-fabric-react";
+import { Text, Stack, Checkbox, PrimaryButton, Toggle, Pivot, PivotItem, Persona, PersonaSize, DefaultButton, Icon, IPersonaProps, IRenderFunction } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/services/discord";
 
@@ -31,11 +31,22 @@ export const Dashboard = () => {
         setUserIcon(await GetUserAvatar(user) || "");
     }
 
+    const PersonaDark = styled(Persona)`
+    * {
+        :hover {
+            color: white;
+        }
+        color: #f7f7f7;
+        font-size: 22px;
+    }
+    `;
+
     return (
         <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
             <DashboardHeader>
                 <Stack style={{ padding: "10px" }} tokens={{ childrenGap: 10 }}>
-                    <Persona style={{ margin: 0 }} styles={{ primaryText: { fontSize: "24px", color: "white" } }} size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
+                    <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
+
                     <NavLink hidden style={{ color: "white", width: "135px", textDecoration: "none" }} to="/dashboard/registerapp">
                         <Stack verticalAlign="center" horizontal tokens={{ childrenGap: 5 }}>
                             <Icon iconName="AppIconDefaultAdd"></Icon>
