@@ -43,12 +43,13 @@ const LaunchViewSelection = () => {
 
                         <Text style={{fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter"}}>// Launch</Text>
 
-                        <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">An annual event where a community of Windows App developers release their UWP-related projects</Text>
-                        <Text style={{marginTop: "10px"}} variant="mediumPlus">Our Discord server provides direct, 2 way user feedback from users, and a place for newbies to ask questions and learn from those with more experience, creating the perfect environment for apps to grow into something more</Text>
+                        <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">Learn, develop, and Launch together</Text>
+                        <Text style={{marginTop: "10px"}} variant="mediumPlus">Once a year, our community of Windows App developers join together to release their UWP-related projects. If you’re a developer, new or veteran, then we HIGHLY encourage you to join the server and register your app for the next Launch event!</Text>
                     </Stack>
                 </Stack>
 
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
+                {/* Todo: Add launch 2019 summary */}
                 <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" buttonDisabled={launchButtonDisabled} />
 
                 <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}}  buttonDisabled={launchButtonDisabled}>

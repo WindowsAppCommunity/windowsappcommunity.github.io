@@ -22,6 +22,12 @@ export const getHeadTitle = (path: string) => {
         case "/launch":
             title = title + " // Launch"
             break;
+        case "/dashboard":
+            title = title + " // Dashboard"
+            break;
+        case "/signin":
+            title = title + " // Sign in"
+            break;
         default:
             title = title + " // 404"
             break;

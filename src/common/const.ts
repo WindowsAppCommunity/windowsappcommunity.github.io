@@ -19,3 +19,8 @@ export const Images = {
     discord: "/assets/img/discordBadge.svg"
   }
 };
+
+export const isLocalhost = window.location.host.includes("localhost");
+export const backendHost: string = (
+  isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
+); 
