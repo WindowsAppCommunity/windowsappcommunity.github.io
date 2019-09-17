@@ -43,7 +43,7 @@ export const Register = () => {
 
                             <TextField label="Description" styles={{ root: { width: "100%" } }} multiline required autoAdjustHeight placeholder="Enter a brief description of your project" onChange={(e, value) => setProjectRequest({ ...projectRequest, description: value })} />
 
-                            <TextField label="Contact email:" description="Optional" styles={{ root: { width: "100%" } }} onChange={(e, value) => setProjectRequest({ ...setProjectRequest, email: value })} />
+                            <TextField label="Contact email:" description="Optional" styles={{ root: { width: "100%" } }} onChange={(e, value) => setProjectRequest({ ...projectRequest, email: value })} />
 
                             <Checkbox label="This project is private/secret" onChange={(e, value) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
 
