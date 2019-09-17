@@ -1,4 +1,4 @@
-import { Text, Stack, Checkbox, PrimaryButton, Toggle, Pivot, PivotItem, Persona, PersonaSize, DefaultButton, Icon, IPersonaProps, IRenderFunction } from "office-ui-fabric-react";
+import { Text, Stack, Checkbox, PrimaryButton, Toggle, Pivot, PivotItem, Persona, PersonaSize, DefaultButton, Icon, IPersonaProps, IRenderFunction, Separator, ITheme, createTheme } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/services/discord";
 
@@ -41,8 +41,10 @@ export const Dashboard = () => {
     }
     `;
 
+    const SectionTitleIconFontSize = 34;
+
     return (
-        <Stack horizontalAlign="center" tokens={{ childrenGap: 25 }}>
+        <Stack tokens={{ childrenGap: 25 }}>
             <DashboardHeader>
                 <Stack horizontal wrap style={{ padding: "15px 20px" }} verticalAlign="center" tokens={{ childrenGap: 20 }}>
                     <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
@@ -66,22 +68,22 @@ export const Dashboard = () => {
                 </Stack>
             </DashboardHeader>
 
-            {/* Todo, move most of these options out of here and into the user menu dropdown */}
-            <Stack horizontal wrap horizontalAlign="center" tokens={{ childrenGap: 25 }}>
-                <Stack horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-
-                    <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 10 }}>
-                        <Icon style={{ fontSize: "24px" }} iconName="BuildDefinition" />
-                        <Text variant="xLarge">Under construction</Text>
-                    </Stack>
-
-
-                    <Text variant="large">This area is still being worked on. Check back later</Text>
-
-
+            <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 10 }}>
+                    <Icon style={{ fontSize: "24px" }} iconName="BuildDefinition" />
+                    <Text variant="xLarge">Under construction</Text>
                 </Stack>
 
+                <Text variant="large">This area is still being worked on. Check back later</Text>
             </Stack>
+
+            {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
+            <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
+                <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
+
+                
         </Stack>
+        </Stack >
     )
 };
