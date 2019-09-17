@@ -12,7 +12,7 @@ interface IProjectSubmission {
     discordId?: string;
 };
 
-export const Register = () => {
+export const RegisterApp = () => {
     let [projectRequest, setProjectRequest] = React.useState<IProjectSubmission>({ isPrivate: false });
     let [submissionStatus, setSubmissionStatus] = React.useState<string>("");
 
