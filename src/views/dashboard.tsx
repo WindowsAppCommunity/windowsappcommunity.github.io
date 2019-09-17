@@ -23,7 +23,10 @@ export const Dashboard = () => {
 
     async function setupLoggedInUser() {
         let user: IDiscordUser | undefined = await GetCurrentUser();
-        if (!user) return;
+        if (!user) {
+            window.location.href
+            return;
+        };
         setWelcomeMessage(`Welcome, ${user.username}`);
         setUserIcon(await GetUserAvatar(user) || "");
     }
