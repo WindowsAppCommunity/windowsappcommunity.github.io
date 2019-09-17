@@ -1,6 +1,6 @@
-import { Text, Stack, Checkbox, PrimaryButton, Toggle, Pivot, PivotItem, Persona, PersonaSize, DefaultButton, Icon, IPersonaProps, IRenderFunction, Separator, ITheme, createTheme } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/services/discord";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint } from "../common/services/discord";
 
 import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
@@ -57,12 +57,12 @@ export const Dashboard = () => {
                             </Stack>
                         </NavLink>
 
-                        <NavLink style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
+                        <Link style={{ color: "white", width: "150px", textDecoration: "none", marginBottom: 2.5 }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                 <Icon style={{ fontSize: 35 }} iconName="Robot"></Icon>
                                 <Text variant="mediumPlus">Manage your roles</Text>
                             </Stack>
-                        </NavLink>
+                        </Link>
                     </Stack>
 
                 </Stack>
@@ -79,11 +79,12 @@ export const Dashboard = () => {
 
             {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
             <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-                <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
-                <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
+                <Stack horizontal tokens={{ childrenGap: 15 }}>
+                    <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
+                    <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
+                </Stack>
 
-                
-        </Stack>
+            </Stack>
         </Stack >
     )
 };
