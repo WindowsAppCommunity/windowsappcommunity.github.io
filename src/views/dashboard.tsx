@@ -27,7 +27,7 @@ export const Dashboard = () => {
             window.location.href = discordAuthEndpoint;
             return;
         };
-        setWelcomeMessage(`Welcome, ${user.username}`);
+        setWelcomeMessage(user.username);
         setUserIcon(await GetUserAvatar(user) || "");
     }
 
@@ -42,16 +42,23 @@ export const Dashboard = () => {
     `;
 
     return (
-        <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
+        <Stack horizontalAlign="center" tokens={{ childrenGap: 25 }}>
             <DashboardHeader>
-                <Stack style={{ padding: "10px" }} tokens={{ childrenGap: 20 }}>
+                <Stack horizontal wrap style={{ padding: "15px 20px" }} verticalAlign="center" tokens={{ childrenGap: 20 }}>
                     <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
 
-                    <Stack horizontal wrap tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
-                        <NavLink style={{ color: "white", width: "135px", textDecoration: "none" }} to="/dashboard/registerapp">
-                            <Stack verticalAlign="center" horizontal tokens={{ childrenGap: 5 }}>
-                                <Icon iconName="AppIconDefaultAdd"></Icon>
+                    <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
+                        <NavLink style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
+                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
                                 <Text variant="mediumPlus">Register an app</Text>
+                            </Stack>
+                        </NavLink>
+
+                        <NavLink style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
+                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                <Icon style={{ fontSize: 35 }} iconName="Robot"></Icon>
+                                <Text variant="mediumPlus">Manage your roles</Text>
                             </Stack>
                         </NavLink>
                     </Stack>
