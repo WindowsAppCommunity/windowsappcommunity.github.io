@@ -31,11 +31,6 @@ export const RegisterApp = () => {
         <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
             <Stack horizontal wrap horizontalAlign="center" tokens={{ childrenGap: 25 }}>
                 <HoverBox style={{ padding: "20px" }}>
-                    <Stack horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                        <Stack horizontal tokens={{childrenGap: 10}}>
-                            <Icon style={{ fontSize: 28 }} iconName="AppIconDefaultAdd" />
-                            <Text variant="xLarge">Register an app</Text>
-                        </Stack>
                         <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ width: "300px" }}>
                             <TextField label="Developer name:" description="Friendly name that users will see" styles={{ root: { width: "100%" } }} required onChange={(e, value) => setProjectRequest({ ...projectRequest, name: value })} />
 
@@ -50,7 +45,6 @@ export const RegisterApp = () => {
                             <Text style={{ color: "red" }}>{submissionStatus}</Text>
                             <PrimaryButton text="Register" onClick={submitParticipantRequest} />
                         </Stack>
-                    </Stack>
                 </HoverBox>
             </Stack>
         </Stack>

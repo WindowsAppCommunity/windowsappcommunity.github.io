@@ -5,6 +5,7 @@ import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint } from
 import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { RegisterApp } from "./dashboard/registerapp";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -43,10 +44,16 @@ export const Dashboard = () => {
 
     const SectionTitleIconFontSize = 34;
 
+    const DashboardColumnFiller = styled.div`
+    @media only screen and (max-width: 807px) {
+        display: none;
+    } 
+    `;
+
     return (
         <Stack tokens={{ childrenGap: 25 }}>
             <DashboardHeader>
-                <Stack horizontal wrap style={{ padding: "15px 20px" }} verticalAlign="center" tokens={{ childrenGap: 20 }}>
+                <Stack horizontal wrap style={{ padding: "15px 20px" }} verticalAlign="center" horizontalAlign="space-around" tokens={{ childrenGap: 20 }}>
                     <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
@@ -65,6 +72,7 @@ export const Dashboard = () => {
                         </Link>
                     </Stack>
 
+                    <DashboardColumnFiller style={{ width: 200 }} />
                 </Stack>
             </DashboardHeader>
 
@@ -77,13 +85,28 @@ export const Dashboard = () => {
                 <Text variant="large">This area is still being worked on. Check back later</Text>
             </Stack>
 
-            {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
-            <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-                <Stack horizontal tokens={{ childrenGap: 15 }}>
-                    <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
-                    <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
+            <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
+
+                {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
+                <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                    <Stack horizontal tokens={{ childrenGap: 15 }}>
+                        <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
+                        <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
+                    </Stack>
+
+                    <HoverBox style={{ height: 250, padding: 15 }}>
+                        <Text variant="large">You don't have any registered apps</Text>
+                    </HoverBox>
                 </Stack>
 
+
+                <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                    <Stack horizontal tokens={{ childrenGap: 10 }}>
+                        <Icon style={{ fontSize: 28 }} iconName="AppIconDefaultAdd" />
+                        <Text variant="xLarge">Register an app</Text>
+                    </Stack>
+                    <RegisterApp />
+                </Stack>
             </Stack>
         </Stack >
     )
