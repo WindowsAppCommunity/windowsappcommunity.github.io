@@ -34,12 +34,3 @@ export const Signin: React.FC<any> = () => {
         </div>
     )
 };
-
-/**
- * Todo: Post-sign in
- *
- * Redirect to a /me/ page to manage apps
- * Use discord.js to verify the user is in the server
- * Ask the user to join if not (provide link)
- * Display their name and icon on the page
- */
