@@ -44,15 +44,17 @@ export const Dashboard = () => {
     return (
         <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
             <DashboardHeader>
-                <Stack style={{ padding: "10px" }} tokens={{ childrenGap: 10 }}>
+                <Stack style={{ padding: "10px" }} tokens={{ childrenGap: 20 }}>
                     <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
 
-                    <NavLink hidden style={{ color: "white", width: "135px", textDecoration: "none" }} to="/dashboard/registerapp">
-                        <Stack verticalAlign="center" horizontal tokens={{ childrenGap: 5 }}>
-                            <Icon iconName="AppIconDefaultAdd"></Icon>
-                            <Text variant="mediumPlus">Register an app</Text>
-                        </Stack>
-                    </NavLink>
+                    <Stack horizontal wrap tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
+                        <NavLink style={{ color: "white", width: "135px", textDecoration: "none" }} to="/dashboard/registerapp">
+                            <Stack verticalAlign="center" horizontal tokens={{ childrenGap: 5 }}>
+                                <Icon iconName="AppIconDefaultAdd"></Icon>
+                                <Text variant="mediumPlus">Register an app</Text>
+                            </Stack>
+                        </NavLink>
+                    </Stack>
 
                 </Stack>
             </DashboardHeader>
