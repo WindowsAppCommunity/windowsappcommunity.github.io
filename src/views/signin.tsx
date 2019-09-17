@@ -13,13 +13,16 @@ export const Signin: React.FC<any> = (props: any) => {
 
     let authResponse: string | null = (new URL(window.location.href)).searchParams.get("authResponse");
     console.log(authResponse);
-    if (!authResponse) {
-        window.location.href = discordAuthEndpoint;
-    } else {
-        authResponse = atob(authResponse);
-        AuthData.Set(JSON.parse(authResponse));
 
-        window.location.href = "/dashboard";
+    if (navigator.userAgent != "ReactSnap") {
+        if (!authResponse) {
+            window.location.href = discordAuthEndpoint;
+        } else {
+            authResponse = atob(authResponse);
+            AuthData.Set(JSON.parse(authResponse));
+
+            window.location.href = "/dashboard";
+        }
     }
 
     const [showRedirectLink, setShowRedirectLink] = useState<boolean>(false);
