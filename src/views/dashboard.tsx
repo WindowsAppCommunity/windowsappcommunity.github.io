@@ -1,6 +1,6 @@
 import { Text, Stack, Checkbox, PrimaryButton, Toggle, Pivot, PivotItem, Persona, PersonaSize, DefaultButton, Icon } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../common/discordService";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/discordService";
 
 import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
@@ -24,7 +24,7 @@ export const Dashboard = () => {
     async function setupLoggedInUser() {
         let user: IDiscordUser | undefined = await GetCurrentUser();
         if (!user) {
-            window.location.href
+            window.location.href = discordAuthEndpoint;
             return;
         };
         setWelcomeMessage(`Welcome, ${user.username}`);
