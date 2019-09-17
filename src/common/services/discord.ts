@@ -1,6 +1,5 @@
-import { IDiscordAuthResponse } from "./interfaces";
-import { backendHost } from "./const";
-import { isLocalhost } from "./helpers";
+import { backendHost } from "../const";
+import { isLocalhost } from "../helpers";
 
 export const discordAuthEndpoint = (
     isLocalhost ?
@@ -102,4 +101,13 @@ export interface IDiscordGuild {
     "icon": string,
     "id": string,
     "name": string;
+}
+
+export interface IDiscordAuthResponse {
+  "access_token": string;
+  "token_type": "Bearer";
+  "expires_in": number;
+  "expires_at"?: number;
+  "refresh_token": string;
+  "scope": string;
 }

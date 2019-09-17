@@ -1,6 +1,6 @@
 import { Text, Stack, PrimaryButton, Checkbox, TextField, BaseButton, Button } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../../common/discordService";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../../common/services/discord";
 import HoverBox from "../../components/HoverBox";
 import { backendHost } from "../../common/const";
 
