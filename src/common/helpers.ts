@@ -34,6 +34,7 @@ export const getHeadTitle = (path: string) => {
     }
     return title
 }
+export const isLocalhost = window.location.host.includes("localhost") && navigator.userAgent != "ReactSnap";
 
 export default {
     getDiscordUrl, getGithubUrl, getStoreUrl

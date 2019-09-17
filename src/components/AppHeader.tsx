@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, TooltipDelay, DefaultButton, IContextualMenuProps, IContextualMenuItem, PersonaSize, Dialog, DialogFooter, DialogType } from "office-ui-fabric-react";
-import { Images, Links, isLocalhost } from "../common/const";
+import { Images, Links } from "../common/const";
 import { NavMenu } from "./NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
 import { Route } from 'react-router-dom';
 
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../common/discordService";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/discordService";
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 import { History } from "history";
@@ -104,12 +104,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
     setJoinServerAlertHidden(true);
     LogOut();
   }
-  let discordAuthEndpoint = (
-    isLocalhost ?
-      `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
-      :
-      `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
-  );
+
 
   return (
     loggedIn && user ?

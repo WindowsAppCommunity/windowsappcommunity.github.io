@@ -1,5 +1,13 @@
 import { IDiscordAuthResponse } from "./interfaces";
 import { backendHost } from "./const";
+import { isLocalhost } from "./helpers";
+
+export const discordAuthEndpoint = (
+    isLocalhost ?
+        `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
+        :
+        `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
+);
 
 export const AuthData = {
     Get: GetDiscordAuthData,

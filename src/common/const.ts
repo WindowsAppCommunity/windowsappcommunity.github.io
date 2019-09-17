@@ -1,3 +1,5 @@
+import { isLocalhost } from "./helpers";
+
 export const Links = {
   thisSiteRepo: "https://github.com/UWPCommunity/uwpcommunity.github.io/",
   launch2019Medium: "https://medium.com/@Arlodottxt/launch-2019-7efd37cc0877",
@@ -20,7 +22,6 @@ export const Images = {
   }
 };
 
-export const isLocalhost = window.location.host.includes("localhost") && navigator.userAgent != "ReactSnap";
 export const backendHost: string = (
   isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
 ); 
