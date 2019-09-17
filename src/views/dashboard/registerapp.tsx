@@ -31,7 +31,7 @@ export const RegisterApp = () => {
         <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
             <Stack horizontal wrap horizontalAlign="center" tokens={{ childrenGap: 25 }}>
                 <HoverBox style={{ padding: "20px" }}>
-                        <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ width: "300px" }}>
+                        <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ maxWidth: "100%", width: "300px" }}>
                             <TextField label="Developer name:" description="Friendly name that users will see" styles={{ root: { width: "100%" } }} required onChange={(e, value) => setProjectRequest({ ...projectRequest, name: value })} />
 
                             <TextField label="App name:" styles={{ root: { width: "100%" } }} required onChange={(e, value) => setProjectRequest({ ...projectRequest, appName: value })} />

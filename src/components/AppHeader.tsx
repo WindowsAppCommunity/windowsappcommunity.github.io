@@ -21,14 +21,14 @@ const FaIconStyle: CSSProperties = {
 export const AppHeader: React.StatelessComponent = (props: any) => {
   return (
     <Route render={({ history }) => (
-      <header style={{ margin: "10px" }}>
+      <header style={{ marginBottom: "10px", maxWidth: "98vw" }}>
         <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 10 }} verticalAlign='end' horizontalAlign="space-around">
           <Helmet>
             <title>{getHeadTitle(props.location.pathname)}</title>
           </Helmet>
           <Link href="/">
             {/* This is an img and not an Image from FabricUI because when rendered on the live server, the image randomly doesn't show */}
-            <img src={Images.uwpCommunityLogo} />
+            <img style={{ maxWidth: "100vw" }} src={Images.uwpCommunityLogo} />
           </Link>
 
           <NavMenu />
@@ -108,7 +108,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
 
   return (
     loggedIn && user ?
-      <Stack style={{ marginBottom: "10px" }}>
+      <Stack>
         <Dialog
           hidden={joinServerAlertHidden}
           dialogContentProps={{

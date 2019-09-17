@@ -11,7 +11,8 @@ const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
 box-shadow: 0 12px 45px -8px rgba(0,120,215,.35);
 width: 100vw;
-padding: 10px;
+margin: 0px;
+padding: 15px 0px;
 `;
 
 export const Dashboard = () => {
@@ -53,7 +54,7 @@ export const Dashboard = () => {
     return (
         <Stack tokens={{ childrenGap: 25 }}>
             <DashboardHeader>
-                <Stack horizontal wrap style={{ padding: "15px 20px" }} verticalAlign="center" horizontalAlign="space-around" tokens={{ childrenGap: 20 }}>
+                <Stack horizontal wrap style={{ padding: "15px 0px", margin: 0 }} verticalAlign="center" horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
                     <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>

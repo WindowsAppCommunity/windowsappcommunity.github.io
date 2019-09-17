@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Text } from "office-ui-fabric-react";
+import { Text, Stack } from "office-ui-fabric-react";
 
 const navLinkActiveStyle: CSSProperties = {
   borderBottom: "3px solid #5e5eff",
@@ -30,15 +30,17 @@ export class NavMenu extends React.Component<any, any> {
   public render(): JSX.Element {
     return (
       <nav>
-        <MyNavLink to="/" exact activeStyle={navLinkActiveStyle}>
-          <NavText>Home</NavText>
-        </MyNavLink>
-        <MyNavLink to="/projects" activeStyle={navLinkActiveStyle}>
-          <NavText>Projects</NavText>
-        </MyNavLink>
-        <MyNavLink to="/launch" activeStyle={navLinkActiveStyle}>
+        <Stack horizontal wrap style={{ maxWidth: "100%" }}>
+          <MyNavLink to="/" exact activeStyle={navLinkActiveStyle}>
+            <NavText>Home</NavText>
+          </MyNavLink>
+          <MyNavLink to="/projects" activeStyle={navLinkActiveStyle}>
+            <NavText>Projects</NavText>
+          </MyNavLink>
+          <MyNavLink to="/launch" activeStyle={navLinkActiveStyle}>
             <NavText>Launch</NavText>
-        </MyNavLink>
+          </MyNavLink>
+        </Stack>
       </nav>
     );
   }
