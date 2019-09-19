@@ -1,12 +1,12 @@
-import { Text, Stack, Persona, PersonaSize, Icon, Link } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint } from "../common/services/discord";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, getGuildMember } from "../common/services/discord";
 
 import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { RegisterApp } from "./dashboard/registerapp";
-import { RegisterUser } from "./dashboard/registeruser";
+import { RegisterAppForm } from "../components/forms/RegisterApp";
+import { RegisterDevForm } from "../components/forms/RegisterDev";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -20,6 +20,11 @@ export const Dashboard = () => {
     const [welcomeMessage, setWelcomeMessage] = React.useState("Signing in...");
     const [userIcon, setUserIcon] = React.useState("");
 
+    const [roles, setRoles] = React.useState<string[]>();
+
+    const [appRegistrationShown, setAppRegistrationShown] = React.useState(false);
+    const [devRegistrationShown, setDevRegistrationShown] = React.useState(false);
+
     React.useEffect(() => {
         setupLoggedInUser();
     }, []);
@@ -32,6 +37,11 @@ export const Dashboard = () => {
         };
         setWelcomeMessage(user.username);
         setUserIcon(await GetUserAvatar(user) || "");
+
+        const guildMember = await getGuildMember(user);
+        if (!guildMember) return;
+
+        setRoles(guildMember.roles);
     }
 
     const PersonaDark = styled(Persona)`
@@ -59,26 +69,29 @@ export const Dashboard = () => {
                     <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
-                        <NavLink style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registeruser">
-                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
-                                <Text variant="mediumPlus">Register an user</Text>
-                            </Stack>
-                        </NavLink>
 
-                        <NavLink style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
+                        {/*                         {!roles ? "" : roles.includes(developerRoleId.toString()) ?
+ */}                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                 <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
                                 <Text variant="mediumPlus">Register an app</Text>
                             </Stack>
-                        </NavLink>
-
-                        <Link style={{ color: "white", width: "150px", textDecoration: "none", marginBottom: 2.5 }} to="/dashboard/registerapp">
+                        </Link>
+                        {/*                             :
+ */}                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
+                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                <Icon style={{ fontSize: 35 }} iconName="code"></Icon>
+                                <Text variant="mediumPlus">Become a Developer</Text>
+                            </Stack>
+                        </Link>
+                        {/*                         }
+ */}                        <Link style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                 <Icon style={{ fontSize: 35 }} iconName="Robot"></Icon>
                                 <Text variant="mediumPlus">Manage your roles</Text>
                             </Stack>
                         </Link>
+
                     </Stack>
 
                     <DashboardColumnFiller style={{ width: 200 }} />
@@ -100,45 +113,22 @@ export const Dashboard = () => {
                 <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
                     <Stack horizontal tokens={{ childrenGap: 15 }}>
                         <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
-                        <Text variant="xLarge" style={{ fontWeight: 600 }}>User</Text>
-                    </Stack>
-
-                    <HoverBox style={{ height: 250, padding: 15 }}>
-                        <Text variant="large">User is registered?</Text>
-                    </HoverBox>
-                </Stack>
-
-                <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-                    <Stack horizontal tokens={{ childrenGap: 10 }}>
-                        <Icon style={{ fontSize: 28 }} iconName="AppIconDefaultAdd" />
-                        <Text variant="xLarge">Register user</Text>
-                    </Stack>
-                    <RegisterUser />
-                </Stack>
-            </Stack>
-
-            <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
-
-                {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
-                <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-                    <Stack horizontal tokens={{ childrenGap: 15 }}>
-                        <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
                         <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
                     </Stack>
 
-                    <HoverBox style={{ height: 250, padding: 15 }}>
-                        <Text variant="large">You don't have any registered apps</Text>
-                    </HoverBox>
+                    <Text variant="large">You don't have any registered apps</Text>
                 </Stack>
 
+                <Dialog isOpen={appRegistrationShown} dialogContentProps={{
+                    type: DialogType.largeHeader,
+                    title: 'Register an app',
+                }}>
+                    <RegisterAppForm onCancel={() => setAppRegistrationShown(false)} />
+                </Dialog>
 
-                <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-                    <Stack horizontal tokens={{ childrenGap: 10 }}>
-                        <Icon style={{ fontSize: 28 }} iconName="AppIconDefaultAdd" />
-                        <Text variant="xLarge">Register an app</Text>
-                    </Stack>
-                    <RegisterApp />
-                </Stack>
+                <Dialog isOpen={devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
+                    <RegisterDevForm onCancel={() => setDevRegistrationShown(false)} />
+                </Dialog>
             </Stack>
 
         </Stack >
