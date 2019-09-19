@@ -15,7 +15,7 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
     let [userRequest, setUserRequest] = React.useState<IUserSubmission>();
     let [submissionStatus, setSubmissionStatus] = React.useState<string>("");
 
-    /* Todo: Attempt to find an existing user in the DB and set this according, then repopulate the fields below */
+    /* Todo: Attempt to find an existing user in the DB and set this according, then prepopulate the fields below */
     let [modifying, setModifying] = React.useState(false);
 
     async function addUser() {
