@@ -2,6 +2,7 @@ import { backendHost } from "../const";
 import { isLocalhost } from "../helpers";
 
 export const uwpCommunityGuildId = 372137812037730304;
+export const developerRoleId = 372142246625017871;
 
 export const discordAuthEndpoint = (
     isLocalhost ?
