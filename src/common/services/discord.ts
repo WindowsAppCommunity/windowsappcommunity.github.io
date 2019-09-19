@@ -73,7 +73,7 @@ export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
             "Authorization": "Bearer " + Auth.access_token
         }
     });
-    if (!Req || Req.status != 200) return;
+    if (!Req || Req.status !== 200) return;
     return await Req.json();
 }
 

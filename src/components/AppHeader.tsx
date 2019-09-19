@@ -28,7 +28,7 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
           </Helmet>
           <Link href="/">
             {/* This is an img and not an Image from FabricUI because when rendered on the live server, the image randomly doesn't show */}
-            <img style={{ maxWidth: "100vw" }} src={Images.uwpCommunityLogo} />
+            <img style={{ maxWidth: "100vw" }} src={Images.uwpCommunityLogo} alt="uwpCommunityLogo"/>
           </Link>
 
           <NavMenu />

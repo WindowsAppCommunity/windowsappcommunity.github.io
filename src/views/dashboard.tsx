@@ -6,6 +6,7 @@ import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { RegisterApp } from "./dashboard/registerapp";
+import { RegisterUser } from "./dashboard/registeruser";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -58,6 +59,13 @@ export const Dashboard = () => {
                     <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
+                        <NavLink style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registeruser">
+                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
+                                <Text variant="mediumPlus">Register an user</Text>
+                            </Stack>
+                        </NavLink>
+
                         <NavLink style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                 <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
@@ -92,6 +100,29 @@ export const Dashboard = () => {
                 <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
                     <Stack horizontal tokens={{ childrenGap: 15 }}>
                         <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
+                        <Text variant="xLarge" style={{ fontWeight: 600 }}>User</Text>
+                    </Stack>
+
+                    <HoverBox style={{ height: 250, padding: 15 }}>
+                        <Text variant="large">User is registered?</Text>
+                    </HoverBox>
+                </Stack>
+
+                <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                    <Stack horizontal tokens={{ childrenGap: 10 }}>
+                        <Icon style={{ fontSize: 28 }} iconName="AppIconDefaultAdd" />
+                        <Text variant="xLarge">Register user</Text>
+                    </Stack>
+                    <RegisterUser />
+                </Stack>
+            </Stack>
+
+            <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
+
+                {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
+                <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                    <Stack horizontal tokens={{ childrenGap: 15 }}>
+                        <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
                         <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
                     </Stack>
 
@@ -109,6 +140,7 @@ export const Dashboard = () => {
                     <RegisterApp />
                 </Stack>
             </Stack>
+
         </Stack >
     )
 };
