@@ -1,7 +1,7 @@
 import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton } from "office-ui-fabric-react";
 import React from "react";
-import { backendHost } from "../common/const";
-import { GetCurrentUser, IDiscordUser, discordAuthEndpoint } from "../common/services/discord";
+import { backendHost } from "../../common/const";
+import { GetCurrentUser, IDiscordUser, discordAuthEndpoint } from "../../common/services/discord";
 
 interface IUserSubmission {
 

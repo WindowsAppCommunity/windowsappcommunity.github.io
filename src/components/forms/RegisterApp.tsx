@@ -1,7 +1,7 @@
 import { Text, Stack, PrimaryButton, Checkbox, TextField, Icon, DefaultButton } from "office-ui-fabric-react";
 import React from "react";
-import HoverBox from "./HoverBox";
-import { backendHost } from "../common/const";
+import HoverBox from "../HoverBox";
+import { backendHost } from "../../common/const";
 
 interface IProjectSubmission {
     appName?: string;
@@ -16,7 +16,7 @@ export interface IRegisterAppProps {
     onCancel?: Function;
 };
 
-export const RegisterApp = (props: IRegisterAppProps) => {
+export const RegisterAppForm = (props: IRegisterAppProps) => {
     let [projectRequest, setProjectRequest] = React.useState<IProjectSubmission>({ isPrivate: false });
     let [submissionStatus, setSubmissionStatus] = React.useState<string>("");
 

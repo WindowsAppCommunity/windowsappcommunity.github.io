@@ -5,8 +5,8 @@ import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, getGu
 import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { RegisterApp } from "../components/registerApp";
-import { RegisterDevForm } from "../components/RegisterDevForm";
+import { RegisterAppForm } from "../components/forms/RegisterApp";
+import { RegisterDevForm } from "../components/forms/RegisterDev";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -123,7 +123,7 @@ export const Dashboard = () => {
                     type: DialogType.largeHeader,
                     title: 'Register an app',
                 }}>
-                    <RegisterApp onCancel={() => setAppRegistrationShown(false)} />
+                    <RegisterAppForm onCancel={() => setAppRegistrationShown(false)} />
                 </Dialog>
 
                 <Dialog isOpen={devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
