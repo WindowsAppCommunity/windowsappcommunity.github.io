@@ -10,7 +10,8 @@ interface IProjectSubmission {
     isPrivate?: boolean;
 
     launchId?: number;
-    userId?: number;
+
+    discordId?: string;
 };
 
 export interface IRegisterAppProps {
@@ -35,7 +36,7 @@ export const RegisterAppForm = (props: IRegisterAppProps) => {
 
         if (projectRequest) {
             projectRequest.launchId = 2;
-            projectRequest.userId = 1;
+            projectRequest.discordId = user.id;
         }
 
         let request = await fetch(url, {
