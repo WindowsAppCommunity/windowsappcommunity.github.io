@@ -2,9 +2,7 @@ import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType } fro
 import React from "react";
 import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, getGuildMember } from "../common/services/discord";
 
-import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 import { RegisterAppForm } from "../components/forms/RegisterApp";
 import { RegisterDevForm } from "../components/forms/RegisterDev";
 

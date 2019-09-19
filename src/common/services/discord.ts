@@ -97,7 +97,7 @@ export async function getGuildMember(user: IDiscordUser): Promise<IDiscordGuildM
             "Authorization": "Bearer " + Auth.access_token
         }
     });
-    if (!Req || Req.status != 200) return;
+    if (!Req || Req.status !== 200) return;
     return await Req.json();
 }
 
