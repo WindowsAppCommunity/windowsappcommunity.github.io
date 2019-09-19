@@ -1,6 +1,8 @@
 import { backendHost } from "../const";
 import { isLocalhost } from "../helpers";
 
+export const uwpCommunityGuildId = 372137812037730304;
+
 export const discordAuthEndpoint = (
     isLocalhost ?
         `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
@@ -83,17 +85,48 @@ export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undef
     return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 }
 
+export async function getGuildMember(user: IDiscordUser): Promise<IDiscordGuildMember | undefined> {
+    const Auth = AuthData.Get();
+    if (!Auth) return;
+    user = user || await GetCurrentUser();
+    if (!user) return;
+
+    const Req = await fetch(`https://discordapp.com/api/v6/guilds/${uwpCommunityGuildId}/members/${user.id}`, {
+        headers: {
+            "Authorization": "Bearer " + Auth.access_token
+        }
+    });
+    if (!Req || Req.status != 200) return;
+    return await Req.json();
+}
+
 export interface IDiscordUser {
     "username": string;
-    "locale": string;
-    "premium_type": number;
+    "locale"?: string;
+    "premium_type"?: number;
     "mfa_enabled": boolean;
-    "flags": number;
+    "flags"?: number;
     "avatar": string;
     "discriminator": string;
     "id": string;
 }
 
+export interface IDiscordGuildMember {
+    /** @summary the user this guild member represents */
+    user: IDiscordUser;
+    /** @summary this users guild nickname (if one is set) */
+    nick?: string;
+    /** @summary array of role object ids @type Snowflake[] */
+    roles: string[];
+    /** @summary when the user joined the guild */
+    joined_at: string;
+    /** @summary when the user used their Nitro boost on the server */
+    premium_since?: string;
+    /** @summary whether the user is deafened in voice channels */
+    deaf: boolean;
+    /** @summary whether the user is muted in voice channels */
+    mute: boolean;
+};
 
 export interface IDiscordGuild {
     "owner": boolean,
@@ -104,10 +137,10 @@ export interface IDiscordGuild {
 }
 
 export interface IDiscordAuthResponse {
-  "access_token": string;
-  "token_type": "Bearer";
-  "expires_in": number;
-  "expires_at"?: number;
-  "refresh_token": string;
-  "scope": string;
+    "access_token": string;
+    "token_type": "Bearer";
+    "expires_in": number;
+    "expires_at"?: number;
+    "refresh_token": string;
+    "scope": string;
 }
