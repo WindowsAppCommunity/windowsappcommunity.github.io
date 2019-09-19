@@ -1,11 +1,12 @@
-import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, DefaultButton } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, getGuildMember, developerRoleId } from "../common/services/discord";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, getGuildMember } from "../common/services/discord";
 
 import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { RegisterApp } from "../components/registerApp";
+import { RegisterDevForm } from "../components/RegisterDevForm";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -40,7 +41,6 @@ export const Dashboard = () => {
         const guildMember = await getGuildMember(user);
         if (!guildMember) return;
 
-        console.log(guildMember);
         setRoles(guildMember.roles);
     }
 
@@ -70,21 +70,21 @@ export const Dashboard = () => {
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
 
-{/*                         {!roles ? "" : roles.includes(developerRoleId.toString()) ?
+                        {/*                         {!roles ? "" : roles.includes(developerRoleId.toString()) ?
  */}                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
-                                <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                    <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
-                                    <Text variant="mediumPlus">Register an app</Text>
-                                </Stack>
-                            </Link>
-{/*                             :
+                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
+                                <Text variant="mediumPlus">Register an app</Text>
+                            </Stack>
+                        </Link>
+                        {/*                             :
  */}                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
-                                <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                    <Icon style={{ fontSize: 35 }} iconName="code"></Icon>
-                                    <Text variant="mediumPlus">Become a Developer</Text>
-                                </Stack>
-                            </Link>
-{/*                         }
+                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                <Icon style={{ fontSize: 35 }} iconName="code"></Icon>
+                                <Text variant="mediumPlus">Become a Developer</Text>
+                            </Stack>
+                        </Link>
+                        {/*                         }
  */}                        <Link style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                 <Icon style={{ fontSize: 35 }} iconName="Robot"></Icon>
@@ -116,9 +116,7 @@ export const Dashboard = () => {
                         <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
                     </Stack>
 
-                    <HoverBox style={{ height: 250, padding: 15 }}>
-                        <Text variant="large">You don't have any registered apps</Text>
-                    </HoverBox>
+                    <Text variant="large">You don't have any registered apps</Text>
                 </Stack>
 
                 <Dialog isOpen={appRegistrationShown} dialogContentProps={{
@@ -129,7 +127,7 @@ export const Dashboard = () => {
                 </Dialog>
 
                 <Dialog isOpen={devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
-                    
+                    <RegisterDevForm onCancel={() => setDevRegistrationShown(false)} />
                 </Dialog>
             </Stack>
         </Stack >
