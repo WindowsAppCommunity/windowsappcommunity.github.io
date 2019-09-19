@@ -15,6 +15,9 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
     let [userRequest, setUserRequest] = React.useState<IUserSubmission>();
     let [submissionStatus, setSubmissionStatus] = React.useState<string>("");
 
+    /* Todo: Attempt to find an existing user in the DB and set this according, then repopulate the fields below */
+    let [modifying, setModifying] = React.useState(false);
+
     async function addUser() {
         let user: IDiscordUser | undefined = await GetCurrentUser();
         if (!user) {
@@ -24,7 +27,7 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
 
         let request = await fetch(`https://${backendHost}/user?token=${user.id}`, {
             headers: { "Content-Type": "application/json" },
-            method: "POST",
+            method: modifying ? "PUT" : "POST",
             body: JSON.stringify(userRequest)
         });
 

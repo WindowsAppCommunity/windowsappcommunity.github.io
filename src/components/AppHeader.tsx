@@ -10,6 +10,7 @@ import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer, 
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 import { History } from "history";
+import { RegisterDevForm } from "./forms/RegisterDev";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -46,6 +47,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   const [user, setUser] = React.useState<IDiscordUser>();
   const [userAvatar, setUserAvatar] = React.useState<string>();
   const [joinServerAlertHidden, setJoinServerAlertHidden] = React.useState(true);
+  const [editProfileShown, setEditProfileShown] = React.useState(false);
 
   React.useEffect(() => {
     setupLoggedInUser();
@@ -64,7 +66,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       return;
     }
 
-
+    
     setUserAvatar(await GetUserAvatar(user));
   }
 
@@ -75,6 +77,11 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       key: "dashboard",
       text: "Dashboard",
       iconProps: { iconName: "ViewDashboard" }
+    }, {
+      /* Todo: Only show this button if the user HAS a profile to edit */
+      key: "editProfile",
+      text: "Edit Profile",
+      iconProps: { iconName: "EditContact" }
     }, {
       key: "logOut",
       text: "Log out",
@@ -91,6 +98,10 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
         break;
       case "dashboard":
         history.push("/dashboard");
+        break;
+      case "editProfile":
+        setEditProfileShown(true);
+        break;
     }
   }
 
@@ -131,6 +142,10 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
             <Persona size={PersonaSize.size40} text={user.username} imageUrl={userAvatar} />
           </DefaultButton>
         </TooltipHost>
+
+        <Dialog isOpen={editProfileShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Edit profile" }}>
+          <RegisterDevForm onCancel={() => setEditProfileShown(false)} />
+        </Dialog>
       </Stack>
       :
       <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
