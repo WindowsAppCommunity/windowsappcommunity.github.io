@@ -1,8 +1,6 @@
 import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton } from "office-ui-fabric-react";
 import React from "react";
-import { backendHost } from "../../common/const";
-import { isLocalhost } from "../../common/helpers";
-import { GetCurrentUser, IDiscordUser, discordAuthEndpoint } from "../../common/services/discord";
+import { PostProject } from "../../common/services/httpClient";
 
 interface IProjectSubmission {
     appName?: string;
@@ -23,27 +21,11 @@ export const RegisterAppForm = (props: IRegisterAppProps) => {
     let [submissionStatus, setSubmissionStatus] = React.useState<string>("");
 
     async function submitParticipantRequest() {
-        let user: IDiscordUser | undefined = await GetCurrentUser();
-        if (!user) {
-            window.location.href = discordAuthEndpoint;
-            return;
-        };
-        
-        let url = `https://${backendHost}/projects?accessToken=${user.id}`;
-        if (isLocalhost) {
-            url = `http://${backendHost}/projects?accessToken=admin`;
-        }
-
         if (projectRequest) {
             projectRequest.launchId = 2;
-            projectRequest.discordId = user.id;
         }
 
-        let request = await fetch(url, {
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-            body: JSON.stringify(projectRequest)
-        });
+        let request = await PostProject(projectRequest);
 
         let json = await request.json();
         setSubmissionStatus(json);

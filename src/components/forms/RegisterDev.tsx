@@ -1,8 +1,6 @@
 import { Text, Stack, PrimaryButton, TextField, DefaultButton } from "office-ui-fabric-react";
 import React from "react";
-import { backendHost } from "../../common/const";
-import { GetCurrentUser, IDiscordUser, discordAuthEndpoint } from "../../common/services/discord";
-import { isLocalhost } from "../../common/helpers";
+import { PostUser } from "../../common/services/httpClient";
 
 interface IUserSubmission {
     name?: string;
@@ -19,29 +17,10 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
     let [submissionStatus, setSubmissionStatus] = React.useState<string>("");
 
     /* Todo: Attempt to find an existing user in the DB and set this according, then prepopulate the fields below */
-    let [modifying, setModifying] = React.useState(false);
+    let [modifying] = React.useState(false);
 
     async function addUser() {
-        let user: IDiscordUser | undefined = await GetCurrentUser();
-        if (!user) {
-            window.location.href = discordAuthEndpoint;
-            return;
-        };
-
-        let url = `https://${backendHost}/user?accessToken=${user.id}`;
-        if (isLocalhost) {
-            url = `http://${backendHost}/user?accessToken=admin`;
-        }
-
-        if (userRequest) {
-            userRequest.discordId = user.id;
-        }
-
-        let request = await fetch(url, {
-            headers: { "Content-Type": "application/json" },
-            method: modifying ? "PUT" : "POST",
-            body: JSON.stringify(userRequest)
-        });
+        let request = await PostUser(userRequest, modifying);
 
         let json = await request.json();
         setSubmissionStatus(json);
