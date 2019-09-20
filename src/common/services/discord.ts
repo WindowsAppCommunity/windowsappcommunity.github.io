@@ -76,29 +76,28 @@ export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
             "Authorization": "Bearer " + Auth.access_token
         }
     });
-    if (!Req || Req.status != 200) return;
+    if (!Req || Req.status !== 200) return;
     return await Req.json();
+}
+
+export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undefined> {
+    user = user || await GetCurrentUser();
+    const Auth = AuthData.Get();
+    if (!Auth) return;
+
+    const request = await fetch(`http://${backendHost}/bot/user/roles?discordId=${user.id}`);
+
+    if (request && request.status == 200) {
+        const result: IDiscordRoleData[] = await request.json();
+
+        return result.map(role => role.name);
+    }
 }
 
 export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undefined> {
     user = user || await GetCurrentUser();
     if (!user) return;
     return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-}
-
-export async function getGuildMember(user: IDiscordUser): Promise<IDiscordGuildMember | undefined> {
-    const Auth = AuthData.Get();
-    if (!Auth) return;
-    user = user || await GetCurrentUser();
-    if (!user) return;
-
-    const Req = await fetch(`https://discordapp.com/api/v6/guilds/${uwpCommunityGuildId}/members/${user.id}`, {
-        headers: {
-            "Authorization": "Bearer " + Auth.access_token
-        }
-    });
-    if (!Req || Req.status != 200) return;
-    return await Req.json();
 }
 
 export interface IDiscordUser {
@@ -110,6 +109,18 @@ export interface IDiscordUser {
     "avatar": string;
     "discriminator": string;
     "id": string;
+}
+
+export interface IDiscordRoleData {
+    deleted: boolean;
+    id: string;
+    name: string;
+    color: number;
+    hoist: boolean;
+    position: number;
+    permissions: number;
+    managed: boolean;
+    mentionable: boolean;
 }
 
 export interface IDiscordGuildMember {

@@ -1,6 +1,6 @@
 import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, getGuildMember } from "../common/services/discord";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, developerRoleId } from "../common/services/discord";
 
 import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
@@ -20,7 +20,7 @@ export const Dashboard = () => {
     const [welcomeMessage, setWelcomeMessage] = React.useState("Signing in...");
     const [userIcon, setUserIcon] = React.useState("");
 
-    const [roles, setRoles] = React.useState<string[]>();
+    const [roles, setRoles] = React.useState<string[]>([]);
 
     const [appRegistrationShown, setAppRegistrationShown] = React.useState(false);
     const [devRegistrationShown, setDevRegistrationShown] = React.useState(false);
@@ -38,10 +38,8 @@ export const Dashboard = () => {
         setWelcomeMessage(user.username);
         setUserIcon(await GetUserAvatar(user) || "");
 
-        const guildMember = await getGuildMember(user);
-        if (!guildMember) return;
-
-        setRoles(guildMember.roles);
+        const roles = await GetUserRoles(user);
+        if (roles) setRoles(roles);
     }
 
     const PersonaDark = styled(Persona)`
@@ -70,22 +68,22 @@ export const Dashboard = () => {
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
 
-                        {/*                         {!roles ? "" : roles.includes(developerRoleId.toString()) ?
- */}                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
-                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
-                                <Text variant="mediumPlus">Register an app</Text>
-                            </Stack>
-                        </Link>
-                        {/*                             :
- */}                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
-                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                <Icon style={{ fontSize: 35 }} iconName="code"></Icon>
-                                <Text variant="mediumPlus">Become a Developer</Text>
-                            </Stack>
-                        </Link>
-                        {/*                         }
- */}                        <Link style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
+                        {roles.includes("Developer") ?
+                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
+                                <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                    <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
+                                    <Text variant="mediumPlus">Register an app</Text>
+                                </Stack>
+                            </Link>
+                            :
+                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
+                                <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                    <Icon style={{ fontSize: 35 }} iconName="code"></Icon>
+                                    <Text variant="mediumPlus">Become a Developer</Text>
+                                </Stack>
+                            </Link>
+                        }
+                        <Link style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                 <Icon style={{ fontSize: 35 }} iconName="Robot"></Icon>
                                 <Text variant="mediumPlus">Manage your roles</Text>
