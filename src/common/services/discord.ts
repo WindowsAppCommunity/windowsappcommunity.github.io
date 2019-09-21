@@ -43,7 +43,6 @@ export async function RefreshTokenIfNeeded() {
 
         if (refreshData.expires_in) refreshData.expires_at = UnixTime + refreshData.expires_in;
 
-        console.log(refreshData);
         SetDiscordAuthData(refreshData);
     }
 }
@@ -91,7 +90,7 @@ export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undef
         }
     });
 
-    if (request && request.status == 200) {
+    if (request && request.status === 200) {
         const result: IDiscordRoleData[] = await request.json();
 
         return result.map(role => role.name);
