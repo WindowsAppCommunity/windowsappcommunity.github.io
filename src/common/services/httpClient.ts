@@ -3,6 +3,16 @@ import { GetCurrentUser, IDiscordUser, discordAuthEndpoint } from "../../common/
 import { isLocalhost } from "../helpers";
 import { backendHost } from "../../common/const";
 
+enum Route {
+    Projects = "projects",
+    User = "user"
+}
+
+enum Method {
+    POST = "POST",
+    PUT = "PUT"
+}
+
 export async function GetCurrentUserId(): Promise<string> {
     let user: IDiscordUser | undefined = await GetCurrentUser();
     if (!user) {
@@ -20,32 +30,30 @@ function BuildUrl(route: string, userId: string): string {
     }
 }
 
-export async function PostUser(request: any, modifying: boolean): Promise<Response> {
-    let method = modifying ? "PUT" : "POST";
-    return await SubmitRequest(Route.User, method, request);
+export async function PostUser(requestBody: any): Promise<Response> {
+    return await SubmitRequest(Route.User, Method.POST, requestBody);
 }
 
-export async function PostProject(request: any): Promise<Response> {
-    return await SubmitRequest(Route.Projects, "POST", request);
+export async function PutUser(requestBody: any): Promise<Response> {
+    return await SubmitRequest(Route.User, Method.PUT, requestBody);
 }
 
-async function SubmitRequest(route: string, method: string, request: any): Promise<Response> {
+export async function PostProject(requestBody: any): Promise<Response> {
+    return await SubmitRequest(Route.Projects, Method.POST, requestBody);
+}
+
+async function SubmitRequest(route: string, method: string, requestBody: any): Promise<Response> {
     let userId = await GetCurrentUserId();
 
     let url = BuildUrl(route, userId);
 
-    if (request) {
-        request.discordId = userId;
+    if (requestBody) {
+        requestBody.discordId = userId;
     }
 
     return await fetch(url, {
         headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(request)
+        method: method,
+        body: JSON.stringify(requestBody)
     });
-}
-
-enum Route {
-    Projects = "projects",
-    User = "user"
 }

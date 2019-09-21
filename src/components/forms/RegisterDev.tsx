@@ -1,6 +1,6 @@
 import { Text, Stack, PrimaryButton, TextField, DefaultButton } from "office-ui-fabric-react";
 import React from "react";
-import { PostUser } from "../../common/services/httpClient";
+import { PostUser, PutUser } from "../../common/services/httpClient";
 
 interface IUserSubmission {
     name?: string;
@@ -20,7 +20,8 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
     let [modifying] = React.useState(false);
 
     async function addUser() {
-        let request = await PostUser(userRequest, modifying);
+        let request = modifying ? await PutUser(userRequest)
+            : await PostUser(userRequest);
 
         let json = await request.json();
         setSubmissionStatus(json);
