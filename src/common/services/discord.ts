@@ -1,5 +1,7 @@
 import { backendHost } from "../const";
 import { isLocalhost } from "../helpers";
+import { IBackendReponseError } from "../interfaces";
+import { SubmitRequest } from "./httpClient";
 
 export const uwpCommunityGuildId = 372137812037730304;
 export const developerRoleId = 372142246625017871;
@@ -65,8 +67,10 @@ export async function IsUserInServer(): Promise<boolean> {
     return Response.filter(server => server.id === "372137812037730304").length > 0;
 }
 
-
+let CurrentUser: IDiscordUser;
 export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
+    if (CurrentUser) return CurrentUser;
+
     const Auth = AuthData.Get();
     if (!Auth) return;
 
@@ -76,7 +80,8 @@ export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
         }
     });
     if (!Req || Req.status !== 200) return;
-    return await Req.json();
+    CurrentUser = await Req.json();
+    return CurrentUser;
 }
 
 export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undefined> {
@@ -95,6 +100,10 @@ export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undef
 
         return result.map(role => role.name);
     }
+}
+
+export async function AssignUserRole(roleName: string, user?: IDiscordUser) {
+    return await SubmitRequest("bot/user/roles", "PUT", { role: roleName });
 }
 
 export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undefined> {

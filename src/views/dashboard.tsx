@@ -1,6 +1,6 @@
 import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, developerRoleId } from "../common/services/discord";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, developerRoleId, AssignUserRole } from "../common/services/discord";
 
 import styled from "styled-components";
 import { RegisterAppForm } from "../components/forms/RegisterApp";
@@ -38,6 +38,13 @@ export const Dashboard = () => {
 
         const roles = await GetUserRoles(user);
         if (roles) setRoles(roles);
+    }
+
+    async function onDevRegisterFormSuccess() {
+        setDevRegistrationShown(false);
+
+        AssignUserRole("Developer");
+        setupLoggedInUser();
     }
 
     const PersonaDark = styled(Persona)`
@@ -97,7 +104,7 @@ export const Dashboard = () => {
             <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
 
                 {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
-                <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
                     <Stack horizontal tokens={{ childrenGap: 15 }}>
                         <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
                         <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
@@ -114,7 +121,7 @@ export const Dashboard = () => {
                 </Dialog>
 
                 <Dialog hidden={!devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
-                    <RegisterDevForm onSuccess={()=> setDevRegistrationShown(false)} onCancel={() => setDevRegistrationShown(false)} />
+                    <RegisterDevForm onSuccess={onDevRegisterFormSuccess} onCancel={() => setDevRegistrationShown(false)} />
                 </Dialog>
             </Stack>
 

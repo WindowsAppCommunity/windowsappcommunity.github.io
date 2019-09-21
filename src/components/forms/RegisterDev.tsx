@@ -16,7 +16,8 @@ export interface IRegisterDevProps {
 
 export const RegisterDevForm = (props: IRegisterDevProps) => {
     let [userRequest, setUserRequest] = React.useState<IUserSubmission>();
-    let [submissionStatus, setSubmissionStatus] = React.useState<string>("");
+    let [submissionError, setSubmissionError] = React.useState<string>("");
+    let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
     /* Todo: Attempt to find an existing user in the DB and set this according, then prepopulate the fields below */
     let [modifying] = React.useState(false);
@@ -30,16 +31,21 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
         if (!success) {
             let error: IBackendReponseError = await request.json();
             if (error.error && error.reason) {
-                setSubmissionStatus(error.reason);
+                setSubmissionError(error.reason);
             }
         } else {
-            // Todo: show success indicator
+            setShowSuccessIndicator(true);
+            setTimeout(() => {
+                props.onSuccess();
+            }, 2500);
         }
     }
 
     return (
         <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-            <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ maxWidth: "100%", width: "300px" }}>
+            {/* Need to toggle both src and display so it trigger the animation, and space is taken up during the transition (while the svg loads) */}
+            <img style={{ display: (showSuccessIndicator ? "block" : "none"), height: "200px" }} src={showSuccessIndicator ? "/assets/img/checkanimated.svg" : ""} />
+            <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ maxWidth: "100%", width: "300px", display: (!showSuccessIndicator ? "block" : "none") }}>
                 <TextField label="Developer name:"
                     description="Friendly name that users will see"
                     styles={{ root: { width: "100%" } }}
@@ -51,7 +57,7 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
                     styles={{ root: { width: "100%" } }}
                     onChange={(e: any, value: any) => setUserRequest({ ...userRequest, email: value })} />
 
-                <Text style={{ color: "red" }}>{submissionStatus}</Text>
+                <Text style={{ color: "red" }}>{submissionError}</Text>
                 <Stack horizontal tokens={{ childrenGap: 10 }}>
                     <PrimaryButton text="Register"
                         onClick={addUser} />

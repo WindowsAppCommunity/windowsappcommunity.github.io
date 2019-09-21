@@ -34,7 +34,7 @@ export async function PostProject(requestBody: any): Promise<Response> {
     return await SubmitRequest(Route.Projects, Method.POST, requestBody);
 }
 
-async function SubmitRequest(route: string, method: string, requestBody: any): Promise<Response> {
+export async function SubmitRequest(route: string, method: string, requestBody: any): Promise<Response> {
     let userId = await GetCurrentUserId();
     let authData = await AuthData.Get();
     if (!authData) throw new Error("Auth data not present");
