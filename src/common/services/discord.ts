@@ -85,7 +85,11 @@ export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undef
     const Auth = AuthData.Get();
     if (!Auth) return;
 
-    const request = await fetch(`http://${backendHost}/bot/user/roles?discordId=${user.id}`);
+    const request = await fetch(`http://${backendHost}/bot/user/roles`, {
+        headers: {
+            "Authorization": "Bearer " + Auth.access_token
+        }
+    });
 
     if (request && request.status == 200) {
         const result: IDiscordRoleData[] = await request.json();
