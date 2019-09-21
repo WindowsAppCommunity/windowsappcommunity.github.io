@@ -143,7 +143,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
           </DefaultButton>
         </TooltipHost>
 
-        <Dialog isOpen={editProfileShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Edit profile" }}>
+        <Dialog hidden={!editProfileShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Edit profile" }}>
           <RegisterDevForm onCancel={() => setEditProfileShown(false)} />
         </Dialog>
       </Stack>

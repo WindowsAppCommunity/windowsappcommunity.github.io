@@ -115,14 +115,14 @@ export const Dashboard = () => {
                     <Text variant="large">You don't have any registered apps</Text>
                 </Stack>
 
-                <Dialog isOpen={appRegistrationShown} dialogContentProps={{
+                <Dialog hidden={!appRegistrationShown} dialogContentProps={{
                     type: DialogType.largeHeader,
                     title: 'Register an app',
                 }}>
                     <RegisterAppForm onCancel={() => setAppRegistrationShown(false)} />
                 </Dialog>
 
-                <Dialog isOpen={devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
+                <Dialog hidden={!devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
                     <RegisterDevForm onCancel={() => setDevRegistrationShown(false)} />
                 </Dialog>
             </Stack>
