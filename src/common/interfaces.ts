@@ -12,3 +12,7 @@ export interface IProjectList {
   projects: IProject[];
 }
 
+export interface IBackendReponseError {
+  error: string;
+  reason: string;
+}

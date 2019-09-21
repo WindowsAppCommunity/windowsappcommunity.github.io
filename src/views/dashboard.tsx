@@ -94,15 +94,6 @@ export const Dashboard = () => {
                 </Stack>
             </DashboardHeader>
 
-            <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-                <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 10 }}>
-                    <Icon style={{ fontSize: "24px" }} iconName="BuildDefinition" />
-                    <Text variant="xLarge">Under construction</Text>
-                </Stack>
-
-                <Text variant="large">This area is still being worked on. Check back later</Text>
-            </Stack>
-
             <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
 
                 {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
@@ -123,7 +114,7 @@ export const Dashboard = () => {
                 </Dialog>
 
                 <Dialog hidden={!devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
-                    <RegisterDevForm onCancel={() => setDevRegistrationShown(false)} />
+                    <RegisterDevForm onSuccess={()=> setDevRegistrationShown(false)} onCancel={() => setDevRegistrationShown(false)} />
                 </Dialog>
             </Stack>
 

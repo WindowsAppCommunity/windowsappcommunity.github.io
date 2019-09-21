@@ -1,6 +1,7 @@
 import { Text, Stack, PrimaryButton, TextField, DefaultButton } from "office-ui-fabric-react";
 import React from "react";
 import { PostUser, PutUser } from "../../common/services/httpClient";
+import { IBackendReponseError } from "../../common/interfaces";
 
 interface IUserSubmission {
     name?: string;
@@ -10,6 +11,7 @@ interface IUserSubmission {
 
 export interface IRegisterDevProps {
     onCancel?: Function;
+    onSuccess: Function;
 };
 
 export const RegisterDevForm = (props: IRegisterDevProps) => {
@@ -23,8 +25,16 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
         let request = modifying ? await PutUser(userRequest)
             : await PostUser(userRequest);
 
-        let json = await request.json();
-        setSubmissionStatus(json);
+        let success = await request.status === 200;
+
+        if (!success) {
+            let error: IBackendReponseError = await request.json();
+            if (error.error && error.reason) {
+                setSubmissionStatus(error.reason);
+            }
+        } else {
+            // Todo: show success indicator
+        }
     }
 
     return (
@@ -40,11 +50,6 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
                     description="Optional"
                     styles={{ root: { width: "100%" } }}
                     onChange={(e: any, value: any) => setUserRequest({ ...userRequest, email: value })} />
-
-                {/* <TextField label="Discord Id:"
-                    styles={{ root: { width: "100%" } }}
-                    onChange={(e: any, value: any) => setUserRequest({ ...userRequest, discordId: value })}
-                /> */}
 
                 <Text style={{ color: "red" }}>{submissionStatus}</Text>
                 <Stack horizontal tokens={{ childrenGap: 10 }}>

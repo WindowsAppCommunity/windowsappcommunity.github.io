@@ -29,7 +29,7 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
           </Helmet>
           <Link href="/">
             {/* This is an img and not an Image from FabricUI because when rendered on the live server, the image randomly doesn't show */}
-            <img style={{ maxWidth: "100vw" }} src={Images.uwpCommunityLogo} alt="Uwp Community Logo"/>
+            <img style={{ maxWidth: "100vw" }} src={Images.uwpCommunityLogo} alt="Uwp Community Logo" />
           </Link>
 
           <NavMenu />
@@ -66,7 +66,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       return;
     }
 
-    
+
     setUserAvatar(await GetUserAvatar(user));
   }
 
@@ -144,7 +144,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
         </TooltipHost>
 
         <Dialog hidden={!editProfileShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Edit profile" }}>
-          <RegisterDevForm onCancel={() => setEditProfileShown(false)} />
+          <RegisterDevForm onSuccess={() => setEditProfileShown(false)} onCancel={() => setEditProfileShown(false)} />
         </Dialog>
       </Stack>
       :

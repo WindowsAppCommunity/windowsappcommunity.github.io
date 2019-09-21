@@ -1,5 +1,5 @@
 
-import { GetCurrentUser, IDiscordUser, discordAuthEndpoint } from "../../common/services/discord";
+import { GetCurrentUser, IDiscordUser, discordAuthEndpoint, AuthData } from "../../common/services/discord";
 import { isLocalhost } from "../helpers";
 import { backendHost } from "../../common/const";
 
@@ -22,14 +22,6 @@ export async function GetCurrentUserId(): Promise<string> {
     return user.id;
 }
 
-function BuildUrl(route: string, userId: string): string {
-    if (isLocalhost) {
-        return `http://${backendHost}/${route}?accessToken=admin`;
-    } else {
-        return `https://${backendHost}/${route}?accessToken=${userId}`;
-    }
-}
-
 export async function PostUser(requestBody: any): Promise<Response> {
     return await SubmitRequest(Route.User, Method.POST, requestBody);
 }
@@ -44,15 +36,17 @@ export async function PostProject(requestBody: any): Promise<Response> {
 
 async function SubmitRequest(route: string, method: string, requestBody: any): Promise<Response> {
     let userId = await GetCurrentUserId();
+    let authData = await AuthData.Get();
+    if (!authData) throw new Error("Auth data not present");
 
-    let url = BuildUrl(route, userId);
+    let url = `http://${backendHost}/${route}`;
 
     if (requestBody) {
         requestBody.discordId = userId;
     }
 
     return await fetch(url, {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", authorization: authData.access_token },
         method: method,
         body: JSON.stringify(requestBody)
     });
