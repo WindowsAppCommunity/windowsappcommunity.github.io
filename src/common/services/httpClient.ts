@@ -1,6 +1,5 @@
 
 import { GetCurrentUser, IDiscordUser, discordAuthEndpoint, AuthData } from "../../common/services/discord";
-import { isLocalhost } from "../helpers";
 import { backendHost } from "../../common/const";
 
 enum Route {
