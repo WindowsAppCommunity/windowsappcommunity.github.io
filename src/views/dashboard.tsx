@@ -1,6 +1,6 @@
 import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, developerRoleId, AssignUserRole } from "../common/services/discord";
+import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
 import styled from "styled-components";
 import { RegisterAppForm } from "../components/forms/RegisterApp";
@@ -47,6 +47,10 @@ export const Dashboard = () => {
         setupLoggedInUser();
     }
 
+    async function onAppRegisterFormSuccess() {
+
+    }
+
     const PersonaDark = styled(Persona)`
     * {
         :hover {
@@ -73,21 +77,21 @@ export const Dashboard = () => {
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
 
-                        {roles.includes("Developer") ?
+                        {/* {roles.includes("Developer") ? */}
                             <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
                                 <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                     <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
                                     <Text variant="mediumPlus">Register an app</Text>
                                 </Stack>
                             </Link>
-                            :
+                            {/* : */}
                             <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
                                 <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                     <Icon style={{ fontSize: 35 }} iconName="code"></Icon>
                                     <Text variant="mediumPlus">Become a Developer</Text>
                                 </Stack>
                             </Link>
-                        }
+                        {/* } */}
                         <Link style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                 <Icon style={{ fontSize: 35 }} iconName="Robot"></Icon>
@@ -117,7 +121,7 @@ export const Dashboard = () => {
                     type: DialogType.largeHeader,
                     title: 'Register an app',
                 }}>
-                    <RegisterAppForm onCancel={() => setAppRegistrationShown(false)} />
+                    <RegisterAppForm onSuccess={onAppRegisterFormSuccess} onCancel={() => setAppRegistrationShown(false)} />
                 </Dialog>
 
                 <Dialog hidden={!devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>

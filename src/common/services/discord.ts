@@ -1,6 +1,5 @@
 import { backendHost } from "../const";
 import { isLocalhost } from "../helpers";
-import { IBackendReponseError } from "../interfaces";
 import { SubmitRequest } from "./httpClient";
 
 export const uwpCommunityGuildId = 372137812037730304;

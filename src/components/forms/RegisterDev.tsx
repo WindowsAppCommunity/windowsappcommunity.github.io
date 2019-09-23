@@ -44,7 +44,7 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
     return (
         <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
             {/* Need to toggle both src and display so it trigger the animation, and space is taken up during the transition (while the svg loads) */}
-            <img style={{ display: (showSuccessIndicator ? "block" : "none"), height: "200px" }} src={showSuccessIndicator ? "/assets/img/checkanimated.svg" : ""} />
+            <img style={{ display: (showSuccessIndicator ? "block" : "none"), height: "200px" }} src={showSuccessIndicator ? "/assets/img/checkanimated.svg" : ""} alt="Check"/>
             <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ maxWidth: "100%", width: "300px", display: (!showSuccessIndicator ? "block" : "none") }}>
                 <TextField label="Developer name:"
                     description="Friendly name that users will see"
