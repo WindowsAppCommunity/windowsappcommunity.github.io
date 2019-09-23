@@ -45,10 +45,10 @@ export const Dashboard = () => {
 
         AssignUserRole("Developer");
         setupLoggedInUser();
-    } 
-    
+    }
+
     async function onAppRegisterFormSuccess() {
-      
+
     }
 
     const PersonaDark = styled(Persona)`
