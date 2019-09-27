@@ -1,6 +1,5 @@
 import { backendHost } from "../const";
-import { isLocalhost } from "../helpers";
-import { SubmitRequest } from "./httpClient";
+import { isLocalhost, fetchBackend } from "../helpers";
 
 export const uwpCommunityGuildId = 372137812037730304;
 export const developerRoleId = 372142246625017871;
@@ -66,6 +65,7 @@ export async function IsUserInServer(): Promise<boolean> {
     return Response.filter(server => server.id === "372137812037730304").length > 0;
 }
 
+export let CurrentUser: IDiscordUser;
 let CurrentUser: IDiscordUser;
 export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
     if (CurrentUser) return CurrentUser;
@@ -102,7 +102,7 @@ export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undef
 }
 
 export async function AssignUserRole(roleName: string, user?: IDiscordUser) {
-    return await SubmitRequest("bot/user/roles", "PUT", { role: roleName });
+    return await fetchBackend("bot/user/roles", "PUT", { role: roleName });
 }
 
 export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undefined> {

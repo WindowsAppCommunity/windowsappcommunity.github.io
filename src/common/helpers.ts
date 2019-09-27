@@ -1,3 +1,6 @@
+import { AuthData, GetCurrentDiscordUser } from "./services/discord";
+import { backendHost } from "./const";
+
 export const getStoreUrl = (id: string) => {
     return `https://www.microsoft.com/store/apps/${id}`;
 }
@@ -36,6 +39,24 @@ export const getHeadTitle = (path: string) => {
 }
 export const isLocalhost = window.location.host.includes("localhost") && navigator.userAgent !== "ReactSnap";
 
+export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT" | "DELETE"), requestBody?: any): Promise<Response> {
+    if (!user) throw new Error("User not logged in");
+
+    let authData = await AuthData.Get();
+    if (!authData) throw new Error("Auth data not present");
+
+    let url = `http://${backendHost}/${route}`;
+
+    if (requestBody) {
+        requestBody.discordId = user.id;
+    }
+
+    return await fetch(url, {
+        headers: { "Content-Type": "application/json", authorization: authData.access_token },
+        method: method,
+        body: JSON.stringify(requestBody)
+    });
+}
 export default {
     getDiscordUrl, getGithubUrl, getStoreUrl
 }
