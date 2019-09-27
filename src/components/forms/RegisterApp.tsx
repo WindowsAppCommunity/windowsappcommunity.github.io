@@ -1,23 +1,7 @@
 import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox } from "office-ui-fabric-react";
 import React from "react";
-import { PostProject } from "../../common/services/httpClient";
 import { IBackendReponseError } from "../../common/interfaces";
-
-interface IProjectSubmission {
-    appName?: string;
-    description?: string;
-    isPrivate?: boolean;
-    downloadLink?: string;
-    githubLink?: string;
-    externalLink?: string;
-
-    launchId?: number;
-    categoryId?: number;
-
-    discordId?: string;
-    roleId?: number;
-    isOwner?: boolean;
-};
+import { CreateProject, ICreateProjectsRequestBody } from "../../common/services/projects";
 
 export interface IRegisterAppProps {
     onCancel?: Function;
@@ -26,10 +10,9 @@ export interface IRegisterAppProps {
 
 const roleOptions: IComboBoxOption[] = [
     { key: 1, text: 'Developer', selected: true },
-    { key: 2, text: 'Designer' },
-    { key: 3, text: 'Tester' },
-    { key: 4, text: 'Translator' },
-    { key: 5, text: 'Other' }
+    { key: 2, text: 'Beta tester' },
+    { key: 3, text: 'Translator' },
+    { key: 4, text: 'Other' }
 ];
 
 const categoryOptions: IComboBoxOption[] = [
@@ -37,22 +20,16 @@ const categoryOptions: IComboBoxOption[] = [
 ];
 
 export const RegisterAppForm = (props: IRegisterAppProps) => {
-    let [projectRequest, setProjectRequest] = React.useState<IProjectSubmission>({ isPrivate: false });
+    let [projectRequest, setProjectRequest] = React.useState<ICreateProjectsRequestBody>({
+        isPrivate: false, awaitingLaunchApproval: false, role: "Other"
+    });
+
     let [submissionError, setSubmissionError] = React.useState<string>("");
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
     async function submitParticipantRequest() {
-        if (projectRequest) {
-            projectRequest.launchId = 2;
-            if (projectRequest.categoryId === undefined) {
-                projectRequest.categoryId = 1;
-            }
-            if (projectRequest.roleId === undefined) {
-                projectRequest.roleId = 1;
-            }
-        }
 
-        let request = await PostProject(projectRequest);
+        let request = await CreateProject(projectRequest as ICreateProjectsRequestBody);
 
         let success = await request.status === 200;
 
@@ -84,33 +61,36 @@ export const RegisterAppForm = (props: IRegisterAppProps) => {
                     placeholder="Enter a brief description of your project"
                     onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, description: value })} />
 
-                <Checkbox label="This project is private/secret"
+                <Checkbox label="Project is private"
                     onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
 
                 <TextField label="Download Link:"
                     styles={{ root: { width: "100%" } }}
-                    required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, downloadLink: value })} />
+                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, downloadLink: value })} />
 
                 <TextField label="Github Link:"
                     styles={{ root: { width: "100%" } }}
-                    required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, githubLink: value })} />
+                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, githubLink: value })} />
 
-                <TextField label="External Link"
+                <TextField label="External link"
                     styles={{ root: { width: "100%" } }}
-                    required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, externalLink: value })} />
-
-                <Checkbox label="Is Owner"
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isOwner: value })} />
+                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, externalLink: value })} />
 
                 <ComboBox
-                    label="Role"
+                    label="Your role"
                     options={roleOptions}
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, roleId: value.key })} />
+                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, role: value.text })} />
 
                 <ComboBox
-                    label="Category"
+                    label="Category" hidden
                     options={categoryOptions}
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, categoryId: value.key })} />
+                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, category: value.text })} />
+
+
+                <Checkbox label="Partipation in Launch 2020"
+                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
+
+                <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>You will receive a notification once your app is approved for Launch 2020</Text>
 
                 <Text style={{ color: "red" }}>{submissionError}</Text>
                 <Stack horizontal tokens={{ childrenGap: 10 }}>

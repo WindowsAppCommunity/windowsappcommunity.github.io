@@ -48,7 +48,8 @@ export const Dashboard = () => {
     }
 
     async function onAppRegisterFormSuccess() {
-
+        setAppRegistrationShown(false);
+        
     }
 
     const PersonaDark = styled(Persona)`
@@ -77,21 +78,21 @@ export const Dashboard = () => {
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
 
-                        {/* {roles.includes("Developer") ? */}
+                        {roles.includes("Developer") ?
                             <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
                                 <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                     <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
                                     <Text variant="mediumPlus">Register an app</Text>
                                 </Stack>
                             </Link>
-                            {/* : */}
+                            :
                             <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
                                 <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                     <Icon style={{ fontSize: 35 }} iconName="code"></Icon>
                                     <Text variant="mediumPlus">Become a Developer</Text>
                                 </Stack>
                             </Link>
-                        {/* } */}
+                        }
                         <Link style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
                                 <Icon style={{ fontSize: 35 }} iconName="Robot"></Icon>

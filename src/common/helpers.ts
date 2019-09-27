@@ -58,6 +58,16 @@ export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT
         body: JSON.stringify(requestBody)
     });
 }
+
+export async function ObjectToPathQuery(data: object) {
+    let queryString: string = "";
+    for (let [key, value] of Object.entries(data)) {
+        queryString += `${key}=${value}&`;
+    }
+    // If the last character is an "&", remove it
+    if (queryString.charAt(queryString.length - 1) === "&") queryString = queryString.slice(0, -1);
+    return queryString;
+}
 export default {
     getDiscordUrl, getGithubUrl, getStoreUrl
 }
