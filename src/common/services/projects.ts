@@ -22,6 +22,10 @@ export async function ModifyProject(projectData: IModifyProjectsRequestBody, que
     return await fetchBackend(`projects?${ObjectToPathQuery(queryData)}`, "POST", projectData);
 }
 
+export async function GetProjectByDiscordId(discordId: string): Promise<IProject[]> {
+    return (await fetchBackend(`projects?discordId=${discordId}`, "GET")).json();
+}
+
 interface IModifyProjectsRequestBody {
     appName: string;
     description?: string;
