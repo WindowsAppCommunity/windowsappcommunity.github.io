@@ -5,6 +5,8 @@ import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint
 import styled from "styled-components";
 import { RegisterAppForm } from "../components/forms/RegisterApp";
 import { RegisterUserForm } from "../components/forms/RegisterUser";
+import { GetProjectByDiscordId, IProject } from "../common/services/projects";
+import HoverBox from "../components/HoverBox";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -23,9 +25,16 @@ export const Dashboard = () => {
     const [appRegistrationShown, setAppRegistrationShown] = React.useState(false);
     const [devRegistrationShown, setDevRegistrationShown] = React.useState(false);
 
+    const [apps, setApps] = React.useState<IProject[]>();
+
     React.useEffect(() => {
         setupLoggedInUser();
     }, []);
+
+    async function getUserApps(user: IDiscordUser) {
+        const projects = await GetProjectByDiscordId(user.id);
+        setApps(projects);
+    }
 
     async function setupLoggedInUser() {
         let user: IDiscordUser | undefined = await GetCurrentDiscordUser();
@@ -38,6 +47,8 @@ export const Dashboard = () => {
 
         const roles = await GetUserRoles(user);
         if (roles) setRoles(roles);
+
+        getUserApps(user);
     }
 
     async function onDevRegisterFormSuccess() {
@@ -49,7 +60,6 @@ export const Dashboard = () => {
 
     async function onAppRegisterFormSuccess() {
         setAppRegistrationShown(false);
-        
     }
 
     const PersonaDark = styled(Persona)`
@@ -107,7 +117,6 @@ export const Dashboard = () => {
             </DashboardHeader>
 
             <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
-
                 {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
                 <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
                     <Stack horizontal tokens={{ childrenGap: 15 }}>
@@ -115,7 +124,18 @@ export const Dashboard = () => {
                         <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
                     </Stack>
 
-                    <Text variant="large">You don't have any registered apps</Text>
+                    <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
+                        {
+                            apps ? apps.map(project =>
+                                <HoverBox style={{ height: 300, width: 200 }}>
+                                    <Stack horizontalAlign="center">
+                                        <Text variant="large">{project.appName}</Text>
+                                        <Text>{project.description}</Text>
+                                    </Stack>
+                                </HoverBox>
+                            ) : <Text variant="large">You don't have any registered apps</Text>
+                        }
+                    </Stack>
                 </Stack>
 
                 <Dialog hidden={!appRegistrationShown} dialogContentProps={{
