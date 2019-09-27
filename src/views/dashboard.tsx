@@ -1,10 +1,10 @@
 import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
+import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
 import styled from "styled-components";
 import { RegisterAppForm } from "../components/forms/RegisterApp";
-import { RegisterDevForm } from "../components/forms/RegisterDev";
+import { RegisterUserForm } from "../components/forms/RegisterUser";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -28,7 +28,7 @@ export const Dashboard = () => {
     }, []);
 
     async function setupLoggedInUser() {
-        let user: IDiscordUser | undefined = await GetCurrentUser();
+        let user: IDiscordUser | undefined = await GetCurrentDiscordUser();
         if (!user) {
             window.location.href = discordAuthEndpoint;
             return;
@@ -125,7 +125,7 @@ export const Dashboard = () => {
                 </Dialog>
 
                 <Dialog hidden={!devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
-                    <RegisterDevForm onSuccess={onDevRegisterFormSuccess} onCancel={() => setDevRegistrationShown(false)} />
+                    <RegisterUserForm onSuccess={onDevRegisterFormSuccess} onCancel={() => setDevRegistrationShown(false)} />
                 </Dialog>
             </Stack>
 

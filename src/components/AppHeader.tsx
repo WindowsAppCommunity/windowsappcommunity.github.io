@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
 import { Route } from 'react-router-dom';
 
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/services/discord";
+import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/services/discord";
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 import { History } from "history";
-import { RegisterDevForm } from "./forms/RegisterDev";
+import { RegisterUserForm } from "./forms/RegisterUser";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -54,7 +54,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   }, []);
 
   async function setupLoggedInUser() {
-    const user = await GetCurrentUser();
+    const user = await GetCurrentDiscordUser();
     const avatarUrl = await GetUserAvatar(user);
     if (!user || !avatarUrl) return;
     setLoggedIn(true);
@@ -66,8 +66,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       return;
     }
 
-
-    setUserAvatar(await GetUserAvatar(user));
+    setUserAvatar(avatarUrl);
   }
 
   const LoggedInButtonDropdownItems: IContextualMenuProps = {
@@ -144,7 +143,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
         </TooltipHost>
 
         <Dialog hidden={!editProfileShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Edit profile" }}>
-          <RegisterDevForm onSuccess={() => setEditProfileShown(false)} onCancel={() => setEditProfileShown(false)} />
+          <RegisterUserForm onSuccess={() => setEditProfileShown(false)} onCancel={() => setEditProfileShown(false)} />
         </Dialog>
       </Stack>
       :

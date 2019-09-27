@@ -40,6 +40,7 @@ export const getHeadTitle = (path: string) => {
 export const isLocalhost = window.location.host.includes("localhost") && navigator.userAgent !== "ReactSnap";
 
 export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT" | "DELETE"), requestBody?: any): Promise<Response> {
+    let user = await GetCurrentDiscordUser();
     if (!user) throw new Error("User not logged in");
 
     let authData = await AuthData.Get();

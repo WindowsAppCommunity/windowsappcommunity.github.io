@@ -1,21 +1,20 @@
 import { Text, Stack, PrimaryButton, TextField, DefaultButton } from "office-ui-fabric-react";
 import React from "react";
-import { PostUser, PutUser } from "../../common/services/httpClient";
 import { IBackendReponseError } from "../../common/interfaces";
-
-interface IUserSubmission {
-    name?: string;
-    email?: string;
-    discordId?: string;
-};
+import { CreateUser, IUser, ModifyUser } from "../../common/services/users";
+import { CurrentUser } from "../../common/services/discord";
 
 export interface IRegisterDevProps {
     onCancel?: Function;
     onSuccess: Function;
 };
 
-export const RegisterDevForm = (props: IRegisterDevProps) => {
-    let [userRequest, setUserRequest] = React.useState<IUserSubmission>();
+export const RegisterUserForm = (props: IRegisterDevProps) => {
+    let [userRequest, setUserRequest] = React.useState<IUser>({
+        discordId: CurrentUser.id,
+        name: "Username"
+    });
+
     let [submissionError, setSubmissionError] = React.useState<string>("");
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
@@ -23,8 +22,10 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
     let [modifying] = React.useState(false);
 
     async function addUser() {
-        let request = modifying ? await PutUser(userRequest)
-            : await PostUser(userRequest);
+        if (!userRequest) return;
+
+        let request = modifying ? await ModifyUser(userRequest)
+            : await CreateUser(userRequest);
 
         let success = await request.status === 200;
 
@@ -44,10 +45,10 @@ export const RegisterDevForm = (props: IRegisterDevProps) => {
     return (
         <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
             {/* Need to toggle both src and display so it trigger the animation, and space is taken up during the transition (while the svg loads) */}
-            <img style={{ display: (showSuccessIndicator ? "block" : "none"), height: "200px" }} src={showSuccessIndicator ? "/assets/img/checkanimated.svg" : ""} alt="Check"/>
+            <img style={{ display: (showSuccessIndicator ? "block" : "none"), height: "200px" }} src={showSuccessIndicator ? "/assets/img/checkanimated.svg" : ""} alt="Check" />
             <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ maxWidth: "100%", width: "300px", display: (!showSuccessIndicator ? "block" : "none") }}>
-                <TextField label="Developer name:"
-                    description="Friendly name that users will see"
+                <TextField label="Name:"
+                    description="Friendly name for other users/devs to see"
                     styles={{ root: { width: "100%" } }}
                     required
                     onChange={(e: any, value: any) => setUserRequest({ ...userRequest, name: value })} />

@@ -66,8 +66,7 @@ export async function IsUserInServer(): Promise<boolean> {
 }
 
 export let CurrentUser: IDiscordUser;
-let CurrentUser: IDiscordUser;
-export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
+export async function GetCurrentDiscordUser(): Promise<IDiscordUser | undefined> {
     if (CurrentUser) return CurrentUser;
 
     const Auth = AuthData.Get();
@@ -84,7 +83,7 @@ export async function GetCurrentUser(): Promise<IDiscordUser | undefined> {
 }
 
 export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undefined> {
-    user = user || await GetCurrentUser();
+    user = user || await GetCurrentDiscordUser();
     const Auth = AuthData.Get();
     if (!Auth) return;
 
@@ -106,7 +105,7 @@ export async function AssignUserRole(roleName: string, user?: IDiscordUser) {
 }
 
 export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undefined> {
-    user = user || await GetCurrentUser();
+    user = user || await GetCurrentDiscordUser();
     if (!user) return;
     return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 }
