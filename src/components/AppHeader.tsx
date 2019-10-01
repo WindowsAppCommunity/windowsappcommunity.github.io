@@ -73,7 +73,6 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
     const userRequest = await GetUser(discordUser.id);
     if (userRequest.status === 404) {
       // User isn't registered
-      alert("User not registered");
       setRegisterUserShown(true);
       return;
     }
@@ -158,8 +157,11 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
           </DefaultButton>
         </TooltipHost>
 
-        <Dialog hidden={!editProfileShown} dialogContentProps={{ type: DialogType.largeHeader, title: registerUserShown ? "One more step" : "Edit profile" }}>
-          <RegisterUserForm onSuccess={() => setEditProfileShown(false)} onCancel={() => setEditProfileShown(false)} />
+        <Dialog hidden={!editProfileShown && !registerUserShown} dialogContentProps={{ type: DialogType.largeHeader, title: registerUserShown ? "One more step" : "Edit profile" }}>
+          {registerUserShown ?
+            <Text variant="large">Complete your profile to get started</Text>
+            : <></>}
+          <RegisterUserForm onSuccess={() => setEditProfileShown(false)} onCancel={!registerUserShown ? () => setEditProfileShown(false) : undefined} />
         </Dialog>
       </Stack>
       :
