@@ -1,5 +1,5 @@
 import { IProject } from "../common/services/projects";
-import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, FontIcon, IButtonProps, IRenderFunction } from "office-ui-fabric-react";
+import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, FontIcon, IButtonProps, PrimaryButton } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -52,32 +52,36 @@ export const ProjectCard = (props: IProjectCard) => {
         <Stack tokens={{ padding: 15 }}>
           <Text>{props.project.description}</Text>
         </Stack>
-        <DocumentCardActions actions={[
-          {
-            data: {
-              type: ButtonType.Github,
-              link: props.project.githubLink
+        <Stack horizontal tokens={{ childrenGap: 5, padding: 10 }} verticalAlign="center">
+          {props.onEditButtonClicked !== undefined ? <PrimaryButton onClick={() => { if (props.onEditButtonClicked) props.onEditButtonClicked() }}>Edit</PrimaryButton> : <></>}
+
+          <DocumentCardActions actions={[
+            {
+              data: {
+                type: ButtonType.Github,
+                link: props.project.githubLink
+              },
+              href: props.project.githubLink,
+              onRenderIcon: onRenderIcon
             },
-            href: props.project.githubLink,
-            onRenderIcon: onRenderIcon
-          },
-          {
-            data: {
-              type: ButtonType.Download,
-              link: props.project.downloadLink
+            {
+              data: {
+                type: ButtonType.Download,
+                link: props.project.downloadLink
+              },
+              href: props.project.downloadLink,
+              onRenderIcon: onRenderIcon
             },
-            href: props.project.downloadLink,
-            onRenderIcon: onRenderIcon
-          },
-          {
-            data: {
-              type: ButtonType.External,
-              link: props.project.externalLink
-            },
-            href: props.project.externalLink,
-            onRenderIcon: onRenderIcon
-          }
-        ]} />
+            {
+              data: {
+                type: ButtonType.External,
+                link: props.project.externalLink
+              },
+              href: props.project.externalLink,
+              onRenderIcon: onRenderIcon
+            }
+          ]} />
+        </Stack>
       </DocumentCardDetails>
     </DocumentCard>
   )
