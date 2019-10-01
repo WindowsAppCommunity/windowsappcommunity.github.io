@@ -8,6 +8,7 @@ export interface IEditProjectDetailsFormProps {
     onCancel?: Function;
     onSuccess: Function;
     projectData: Partial<IProject>;
+    editing?: boolean;
 };
 
 const roleOptions: IComboBoxOption[] = [
@@ -76,6 +77,8 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                     <PivotItem headerText="Project links">
                         <Stack tokens={{ childrenGap: 10 }}>
                             <MaskedTextField label="Download Link:"
+                                disabled={!props.editing && props.projectData.downloadLink !== undefined}
+                                defaultValue={props.projectData.downloadLink}
                                 styles={{ root: { width: "100%" } }}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, downloadLink: value })} />
 
