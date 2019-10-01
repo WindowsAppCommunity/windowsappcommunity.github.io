@@ -12,10 +12,11 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
     const [verified, setVerified] = React.useState(false);
     const [codeVerificationDisplayed, setCodeVerificationDisplayed] = React.useState(false);
     const [manualReviewMessageShown, setManualReviewMessageShown] = React.useState(true);
+    const [projectData, setProjectData] = React.useState<Partial<IProject>>({});
 
     return (
         codeVerificationDisplayed ? <ProjectCodeVerifier onCancel={() => { setCodeVerificationDisplayed(false) }} onSuccess={(projectDetails) => {
-            props.projectData = projectDetails;
+            setProjectData(projectDetails);
 
             setCodeVerificationDisplayed(false);
             setVerified(true);
@@ -34,7 +35,7 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
                             <PrimaryButton onClick={() => setManualReviewMessageShown(false)}>Continue</PrimaryButton>
                         </Stack>
                     </Stack>
-                    : <EditProjectDetailsForm {...props} />)
+                    : <EditProjectDetailsForm {...props} projectData={projectData} />)
                 :
                 <Stack tokens={{ childrenGap: 10, padding: 5 }}>
                     <Text variant="large">Before we begin...</Text>
@@ -47,9 +48,9 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
                         <Text variant="medium">Do you have a "Publisher support" email listed on your apps' MS Store page?</Text>
                     </Stack>
                     <Stack style={{ marginTop: 20 }} horizontal tokens={{ childrenGap: 15 }} horizontalAlign="space-evenly">
-                        <DefaultButton onClick={() => { props.projectData.needsManualReview = true; setVerified(true) }}>No</DefaultButton>
+                        <DefaultButton onClick={() => { setProjectData({ ...projectData, needsManualReview: true }); setVerified(true) }}>No</DefaultButton>
                         <TooltipHost content="Automatic verification is possible. Your project will be immediately visible to the community" closeDelay={100} directionalHint={DirectionalHint.leftBottomEdge}>
-                            <PrimaryButton onClick={() => { props.projectData.needsManualReview = false; setCodeVerificationDisplayed(true) }}>Yes</PrimaryButton>
+                            <PrimaryButton onClick={() => { setProjectData({ ...projectData, needsManualReview: false }); setCodeVerificationDisplayed(true) }}>Yes</PrimaryButton>
                         </TooltipHost>
                     </Stack>
                 </Stack>
