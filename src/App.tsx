@@ -16,9 +16,13 @@ import { fab, faDiscord, faMedium, faGithub } from '@fortawesome/free-brands-svg
 import { withRouter } from 'react-router-dom';
 import { NotFound } from "./views/NotFound";
 
+import { createMarkdownPage } from './components/markdown-loader'
+import { prerenderedLoader } from './components/prerender-loader'
+
 library.add(fab, faDiscord, faMedium, faGithub);
 
 const AppHeaderWithRouter = withRouter(props => <AppHeader {...props} />);
+const PrivacyPolicy = prerenderedLoader(() => createMarkdownPage('/privacy-policy.md'));
 
 export const App: React.StatelessComponent = () => {
 
@@ -32,6 +36,7 @@ export const App: React.StatelessComponent = () => {
           <Route exact path="/launch" component={Launch} />
           <Route exact path="/signin" component={Signin} />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/privacy-policy" component={PrivacyPolicy} />
           <Route component={NotFound} />}
         </Switch>
       </Stack>
