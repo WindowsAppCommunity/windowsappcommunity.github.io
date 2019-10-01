@@ -1,4 +1,4 @@
-import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, Image, ImageFit, DefaultButton } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
@@ -127,12 +127,11 @@ export const Dashboard = () => {
                     <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                         {
                             apps && apps.length > 0 ? apps.map(project =>
-                                <HoverBox style={{ height: 300, width: 200 }}>
-                                    <Stack horizontalAlign="center">
-                                        <Text variant="large">{project.appName}</Text>
+                                <Stack horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: 5 }}>
+                                    <Text variant="xLarge">{project.appName}</Text>
                                         <Text>{project.description}</Text>
+                                    <Image imageFit={ImageFit.contain} width="400px" height="250px" src={project.heroImage}></Image>
                                     </Stack>
-                                </HoverBox>
                             ) : <Text variant="large">You don't have any registered apps</Text>
                         }
                     </Stack>
