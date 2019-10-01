@@ -8,15 +8,20 @@ import { Images } from "../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import { GetLaunchProjects, IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
+import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
 
 export const Launch = () => {
     const [projects, setProjects] = React.useState<IProject[]>();
+    const [user, setUser] = React.useState<IDiscordUser>();
 
     async function GetNextLaunchEventProjects() {
         setProjects(await GetLaunchProjects(2020));
     }
     React.useEffect(()=>{
         GetNextLaunchEventProjects();
+        (async () => {
+            setUser(await GetCurrentDiscordUser());
+        })();
     }, []);
 
     return (
@@ -29,6 +34,7 @@ export const Launch = () => {
 
                         <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">Learn, develop, and Launch together</Text>
                         <Text style={{marginTop: "10px"}} variant="mediumPlus">Once a year, our community of Windows App developers join together to release their UWP-related projects. If you’re a developer, new or veteran, then we HIGHLY encourage you to join the server and register your app for the next Launch event!</Text>
+                        <Text style={{marginTop: "10px"}} variant="large">{ user ? "Go to your dashboard to get started" : ""}</Text>
                     </Stack>
                 </Stack>
 
