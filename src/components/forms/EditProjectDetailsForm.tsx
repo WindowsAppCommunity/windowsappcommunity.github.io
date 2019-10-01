@@ -1,5 +1,5 @@
-import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, MaskedTextField, Pivot, PivotItem } from "office-ui-fabric-react";
-import React from "react";
+import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, MaskedTextField, Pivot, PivotItem, IComboBox } from "office-ui-fabric-react";
+import React, { FormEvent } from "react";
 import { IBackendReponseError } from "../../common/interfaces";
 import { CreateProject, ICreateProjectsRequestBody, IProject } from "../../common/services/projects";
 import { MicrosoftStoreAppCategories } from "../../common/const";
@@ -19,12 +19,12 @@ const roleOptions: IComboBoxOption[] = [
 ];
 
 const categoryOptions: IComboBoxOption[] = MicrosoftStoreAppCategories.map((category, index) => {
-    return { key: index, text: category, selected: index == 0 }
+    return { key: category, text: category }
 });
 
 export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
     let [projectRequest, setProjectRequest] = React.useState<Partial<ICreateProjectsRequestBody>>({
-        isPrivate: false, awaitingLaunchApproval: false, role: "Developer"
+        isPrivate: false, awaitingLaunchApproval: false, role: "Developer", ...props.projectData
     });
 
     let [submissionError, setSubmissionError] = React.useState<string>("");
@@ -58,11 +58,13 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                         <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Project name:" maxLength={50}
                                 styles={{ root: { width: "100%" } }}
+                                value={projectRequest.appName}
                                 required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, appName: value })} />
 
                             <TextField label="Description" maxLength={140}
                                 styles={{ root: { width: "100%" } }}
                                 multiline required autoAdjustHeight
+                                value={projectRequest.description}
                                 placeholder="Enter a brief description"
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, description: value })} />
 
@@ -70,23 +72,26 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                 type="url"
                                 styles={{ root: { width: "100%" } }}
                                 required
+                                value={projectRequest.heroImage}
                                 placeholder="External link to an image of your app"
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, externalLink: value })} />
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, heroImage: value })} />
                         </Stack>
                     </PivotItem>
                     <PivotItem headerText="Project links">
                         <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Download Link:"
-                                value={props.projectData.downloadLink}
+                                value={projectRequest.downloadLink}
                                 disabled={!props.editing && props.projectData.downloadLink !== undefined}
                                 styles={{ root: { width: "100%" } }}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, downloadLink: value })} />
 
                             <TextField label="Github Link:"
+                                value={projectRequest.githubLink}
                                 styles={{ root: { width: "100%" } }}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, githubLink: value })} />
 
                             <TextField label="External link"
+                                value={projectRequest.externalLink}
                                 styles={{ root: { width: "100%" } }}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, externalLink: value })} />
 
@@ -97,12 +102,18 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                             <ComboBox
                                 label="Category"
                                 options={categoryOptions}
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, category: value.text })} />
+                                defaultSelectedKey={projectRequest.category || categoryOptions[0].key}
+                                onChange={(e: FormEvent<IComboBox>, option: IComboBoxOption | undefined) => {
+                                    if (!option) return;
+                                    setProjectRequest({ ...projectRequest, category: option.text });
+                                }} />
 
                             <Checkbox label="Project is private/secret"
+                                checked={projectRequest.isPrivate}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
 
                             <Checkbox label="Partipation in Launch 2020"
+                                checked={projectRequest.awaitingLaunchApproval}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
 
                             <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>A moderator will contact you over Discord to help with the manual review process for Launch 2020</Text>
