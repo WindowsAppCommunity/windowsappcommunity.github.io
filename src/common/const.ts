@@ -30,7 +30,6 @@ export const MicrosoftStoreAppCategories = [
   "Entertainment",
   "Food & dining",
   "Government & politics",
-  "Education",
   "Kids & family",
   "Lifestyle",
   "Medical",
