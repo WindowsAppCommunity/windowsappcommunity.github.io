@@ -1,4 +1,4 @@
-import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, Image, ImageFit, DefaultButton } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, Image, ImageFit, DefaultButton, PrimaryButton, FontIcon } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
@@ -55,7 +55,9 @@ export const Dashboard = () => {
         setDevRegistrationShown(false);
 
         AssignUserRole("Developer");
-        setupLoggedInUser();
+        setTimeout(() => {
+            setupLoggedInUser();
+        }, 1000);
     }
 
     async function onAppRegisterFormSuccess() {
@@ -144,8 +146,19 @@ export const Dashboard = () => {
                     <CreateProjectForm projectData={{}} onSuccess={onAppRegisterFormSuccess} onCancel={() => setAppRegistrationShown(false)} />
                 </Dialog>
 
-                <Dialog hidden={!devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>
-                    <RegisterUserForm onSuccess={onDevRegisterFormSuccess} onCancel={() => setDevRegistrationShown(false)} />
+                <Dialog hidden={!devRegistrationShown} dialogContentProps={{
+                    type: DialogType.largeHeader, title: "Become a developer"
+                }}>
+                    <Stack tokens={{ childrenGap: 10 }} horizontalAlign="center">
+                        <FontIcon iconName="GiftboxOpen" style={{ fontSize: 56 }} />
+                        <Text variant="xLarge">Let's build something, together</Text>
+                        <Text variant="medium">Everyone, from seasoned veterans to enthusiastic novices can become a developer with just a click</Text>
+                        <Text variant="medium">You'll be given the Developer role in the UWP Community Discord server, and become eligible for app services exclusive to devs</Text>
+                        <Stack horizontal horizontalAlign="space-evenly" tokens={{ childrenGap: 10 }}>
+                            <DefaultButton onClick={() => setDevRegistrationShown(false)}>Cancel</DefaultButton>
+                            <PrimaryButton onClick={onDevRegisterFormSuccess}>Register</PrimaryButton>
+                        </Stack>
+                    </Stack>
                 </Dialog>
             </Stack>
 
