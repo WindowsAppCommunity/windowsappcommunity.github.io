@@ -21,7 +21,7 @@ const categoryOptions: IComboBoxOption[] = MicrosoftStoreAppCategories.map((cate
 });
 
 export const RegisterAppForm = (props: IRegisterAppProps) => {
-    let [projectRequest, setProjectRequest] = React.useState<ICreateProjectsRequestBody>({
+    let [projectRequest, setProjectRequest] = React.useState<Partial<ICreateProjectsRequestBody>>({
         isPrivate: false, awaitingLaunchApproval: false, role: "Developer"
     });
 
@@ -29,7 +29,7 @@ export const RegisterAppForm = (props: IRegisterAppProps) => {
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
     async function submitParticipantRequest() {
-        let request = await CreateProject(projectRequest);
+        let request = await CreateProject(projectRequest as ICreateProjectsRequestBody);
 
         let success = request.status === 200;
 

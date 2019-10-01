@@ -5,16 +5,19 @@ export async function CreateProject(projectData: ICreateProjectsRequestBody): Pr
     return await fetchBackend("projects", "POST", projectData);
 }
 export interface ICreateProjectsRequestBody {
-    role?: "Developer" | "Other"; // Only a developer or "Other" (manager, etc) can create a new project
-    appName?: string;
-    description?: string;
-    isPrivate?: boolean;
-    category?: string;
+    role: "Developer" | "Other"; // Only a developer or "Other" (manager, etc) can create a new project
+    appName: string;
+    category: string;
+    description: string;
+    isPrivate: boolean;
     downloadLink?: string;
     githubLink?: string;
     externalLink?: string;
-    launchYear?: number;
+    launchYear: number;
     awaitingLaunchApproval: boolean;
+    needsManualReview: boolean;
+    heroImage: string;
+    lookingForRoles: string[];
 }
 
 
