@@ -126,7 +126,7 @@ export const Dashboard = () => {
 
                     <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                         {
-                            apps ? apps.map(project =>
+                            apps && apps.length > 0 ? apps.map(project =>
                                 <HoverBox style={{ height: 300, width: 200 }}>
                                     <Stack horizontalAlign="center">
                                         <Text variant="large">{project.appName}</Text>
