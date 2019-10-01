@@ -174,6 +174,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
           id={'privacyPolicyHost'}
           calloutProps={{ gapSpace: 0 }}
           closeDelay={500}
+          delay={0}
           styles={{ root: { display: 'inline-block' } }}
         >
           <PrimaryButton href={discordAuthEndpoint} style={{ padding: "18px" }}>
