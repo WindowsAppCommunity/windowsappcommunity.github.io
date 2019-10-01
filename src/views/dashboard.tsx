@@ -3,7 +3,7 @@ import React from "react";
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
 import styled from "styled-components";
-import { RegisterAppForm } from "../components/forms/RegisterApp";
+import { CreateProjectForm } from "../components/forms/CreateProjectForm";
 import { RegisterUserForm } from "../components/forms/RegisterUser";
 import { GetProjectByDiscordId, IProject } from "../common/services/projects";
 import HoverBox from "../components/HoverBox";
@@ -142,7 +142,7 @@ export const Dashboard = () => {
                     type: DialogType.largeHeader,
                     title: 'Register an app',
                 }}>
-                    <RegisterAppForm onSuccess={onAppRegisterFormSuccess} onCancel={() => setAppRegistrationShown(false)} />
+                    <CreateProjectForm projectData={{}} onSuccess={onAppRegisterFormSuccess} onCancel={() => setAppRegistrationShown(false)} />
                 </Dialog>
 
                 <Dialog hidden={!devRegistrationShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Become a developer", subText: "You will be given the Developer role in the UWP Community Discord server, and become eligible for services exclusive to devs" }}>

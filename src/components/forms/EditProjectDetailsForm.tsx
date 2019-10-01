@@ -1,12 +1,13 @@
 import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, MaskedTextField, Pivot, PivotItem } from "office-ui-fabric-react";
 import React from "react";
 import { IBackendReponseError } from "../../common/interfaces";
-import { CreateProject, ICreateProjectsRequestBody } from "../../common/services/projects";
+import { CreateProject, ICreateProjectsRequestBody, IProject } from "../../common/services/projects";
 import { MicrosoftStoreAppCategories } from "../../common/const";
 
-export interface IRegisterAppProps {
+export interface IEditProjectDetailsFormProps {
     onCancel?: Function;
     onSuccess: Function;
+    projectData: Partial<IProject>;
 };
 
 const roleOptions: IComboBoxOption[] = [
@@ -20,7 +21,7 @@ const categoryOptions: IComboBoxOption[] = MicrosoftStoreAppCategories.map((cate
     return { key: index, text: category, selected: index == 0 }
 });
 
-export const RegisterAppForm = (props: IRegisterAppProps) => {
+export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
     let [projectRequest, setProjectRequest] = React.useState<Partial<ICreateProjectsRequestBody>>({
         isPrivate: false, awaitingLaunchApproval: false, role: "Developer"
     });
@@ -101,19 +102,19 @@ export const RegisterAppForm = (props: IRegisterAppProps) => {
                             <Checkbox label="Partipation in Launch 2020"
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
 
-                            <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>You will receive a notification once your app is manually approved</Text>
+                            <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>A moderator will contact you over Discord to help with the manual review process for Launch 2020</Text>
                         </Stack>
                     </PivotItem>
                 </Pivot>
 
                 <Text style={{ color: "red" }}>{submissionError}</Text>
-                <Stack horizontal tokens={{ childrenGap: 10 }}>
-                    <PrimaryButton text="Register" onClick={submitParticipantRequest} />
+                <Stack horizontal tokens={{ childrenGap: 10 }} horizontalAlign="space-evenly" style={{ marginTop: 20 }}>
                     {
                         props.onCancel ?
                             <DefaultButton text="Cancel" onClick={() => props.onCancel ? props.onCancel() : undefined} />
                             : ""
                     }
+                    <PrimaryButton text="Register" onClick={submitParticipantRequest} />
                 </Stack>
             </Stack>
         </Stack>
