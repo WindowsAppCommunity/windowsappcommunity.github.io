@@ -130,7 +130,9 @@ export const Dashboard = () => {
                     <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                         {
                             apps && apps.length > 0 ? apps.map(project =>
-                                <ProjectCard onEditButtonClicked={() => { }} project={project}></ProjectCard>
+                                <ProjectCard /* onEditButtonClicked={() => {
+                                    
+                                }} */ project={project}></ProjectCard>
                             ) : <Text variant="large">You don't have any registered apps</Text>
                         }
                     </Stack>
