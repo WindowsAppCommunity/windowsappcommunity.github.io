@@ -48,10 +48,6 @@ export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT
 
     let url = `http://${backendHost}/${route}`;
 
-    if (requestBody) {
-        requestBody.discordId = user.id;
-    }
-
     return await fetch(url, {
         headers: { "Content-Type": "application/json", authorization: authData.access_token },
         method: method,
