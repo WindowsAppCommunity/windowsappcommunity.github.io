@@ -11,6 +11,7 @@ import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 import { History } from "history";
 import { RegisterUserForm } from "./forms/RegisterUser";
+import { GetUser, IUser } from "../common/services/users";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -44,9 +45,11 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
 
 export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [user, setUser] = React.useState<IDiscordUser>();
+  const [discordUser, setDiscordUser] = React.useState<IDiscordUser>();
+  const [user, setUser] = React.useState<IUser>();
   const [userAvatar, setUserAvatar] = React.useState<string>();
   const [joinServerAlertHidden, setJoinServerAlertHidden] = React.useState(true);
+  const [registerUserShown, setRegisterUserShown] = React.useState(false);
   const [editProfileShown, setEditProfileShown] = React.useState(false);
 
   React.useEffect(() => {
@@ -54,11 +57,12 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   }, []);
 
   async function setupLoggedInUser() {
-    const user = await GetCurrentDiscordUser();
-    const avatarUrl = await GetUserAvatar(user);
-    if (!user || !avatarUrl) return;
+    const discordUser = await GetCurrentDiscordUser();
+    const avatarUrl = await GetUserAvatar(discordUser);
+
+    if (!discordUser || !avatarUrl) return;
     setLoggedIn(true);
-    setUser(user);
+    setDiscordUser(discordUser);
 
     let userIsInServer = await IsUserInServer();
     if (!userIsInServer) {
@@ -66,6 +70,18 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       return;
     }
 
+    const userRequest = await GetUser(discordUser.id);
+    if (userRequest.status === 404) {
+      // User isn't registered
+      alert("User not registered");
+      setRegisterUserShown(true);
+      return;
+    }
+    if (userRequest && userRequest.status !== 200) throw new Error(await userRequest.text());
+
+    let user: IUser = await userRequest.json();
+
+    setUser(user);
     setUserAvatar(avatarUrl);
   }
 
@@ -117,7 +133,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
 
 
   return (
-    loggedIn && user ?
+    loggedIn && discordUser ?
       <Stack>
         <Dialog
           hidden={joinServerAlertHidden}
@@ -136,13 +152,13 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
             <DefaultButton onClick={CloseJoinServerDialog} text="Sign out" />
           </DialogFooter>
         </Dialog>
-        <TooltipHost content={`Logged in as ${user.username}`} delay={TooltipDelay.long}>
+        <TooltipHost content={`Logged in as ${discordUser.username}`} delay={TooltipDelay.long}>
           <DefaultButton style={{ padding: "25px", border: "0px solid black" }} menuProps={LoggedInButtonDropdownItems}>
-            <Persona size={PersonaSize.size40} text={user.username} imageUrl={userAvatar} />
+            <Persona size={PersonaSize.size40} text={discordUser.username} imageUrl={userAvatar} />
           </DefaultButton>
         </TooltipHost>
 
-        <Dialog hidden={!editProfileShown} dialogContentProps={{ type: DialogType.largeHeader, title: "Edit profile" }}>
+        <Dialog hidden={!editProfileShown} dialogContentProps={{ type: DialogType.largeHeader, title: registerUserShown ? "One more step" : "Edit profile" }}>
           <RegisterUserForm onSuccess={() => setEditProfileShown(false)} onCancel={() => setEditProfileShown(false)} />
         </Dialog>
       </Stack>

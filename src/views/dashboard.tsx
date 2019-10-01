@@ -91,22 +91,22 @@ export const Dashboard = () => {
                         {roles.includes("Developer") ?
                             <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
                                 <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                    <Icon style={{ fontSize: 35 }} iconName="AppIconDefaultAdd"></Icon>
+                                    <Icon style={{ fontSize: 35, userSelect: "none" }} iconName="AppIconDefaultAdd"></Icon>
                                     <Text variant="mediumPlus">Register an app</Text>
                                 </Stack>
                             </Link>
                             :
                             <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
                                 <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                    <Icon style={{ fontSize: 35 }} iconName="code"></Icon>
+                                    <Icon style={{ fontSize: 35, userSelect: "none" }} iconName="code"></Icon>
                                     <Text variant="mediumPlus">Become a Developer</Text>
                                 </Stack>
                             </Link>
                         }
-                        <Link style={{ color: "white", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
+                        <Link style={{ color: "gray", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                <Icon style={{ fontSize: 35 }} iconName="Robot"></Icon>
-                                <Text variant="mediumPlus">Manage your roles</Text>
+                                <Icon style={{ fontSize: 35, color: "gray", userSelect: "none" }} iconName="Robot"></Icon>
+                                <Text style={{ color: "gray" }} variant="mediumPlus">Manage your roles</Text>
                             </Stack>
                         </Link>
 
@@ -129,9 +129,9 @@ export const Dashboard = () => {
                             apps && apps.length > 0 ? apps.map(project =>
                                 <Stack horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: 5 }}>
                                     <Text variant="xLarge">{project.appName}</Text>
-                                        <Text>{project.description}</Text>
+                                    <Text>{project.description}</Text>
                                     <Image imageFit={ImageFit.contain} width="400px" height="250px" src={project.heroImage}></Image>
-                                    </Stack>
+                                </Stack>
                             ) : <Text variant="large">You don't have any registered apps</Text>
                         }
                     </Stack>
