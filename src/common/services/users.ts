@@ -9,7 +9,7 @@ export async function ModifyUser(userData: IUser) {
 }
 
 export async function GetUser(discordId: string) {
-    return await fetchBackend(`users?discordId=${discordId}`, "GET");
+    return await fetchBackend(`user?discordId=${discordId}`, "GET");
 }
 
 export interface IUser {
