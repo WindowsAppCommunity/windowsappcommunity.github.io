@@ -17,9 +17,14 @@ import { fas, faGlobe, faArrowCircleDown } from '@fortawesome/free-solid-svg-ico
 import { withRouter } from 'react-router-dom';
 import { NotFound } from "./views/NotFound";
 
+import { createMarkdownPage } from './components/markdown-loader'
+import { prerenderedLoader } from './components/prerender-loader'
+
+library.add(fab, faDiscord, faMedium, faGithub);
 library.add(fab, fas, faGlobe, faArrowCircleDown, faDiscord, faMedium, faGithub);
 
 const AppHeaderWithRouter = withRouter(props => <AppHeader {...props} />);
+const PrivacyPolicy = prerenderedLoader(() => createMarkdownPage('/privacy-policy.md'));
 
 export const App: React.StatelessComponent = () => {
 
@@ -33,6 +38,7 @@ export const App: React.StatelessComponent = () => {
           <Route exact path="/launch" component={Launch} />
           <Route exact path="/signin" component={Signin} />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/privacy-policy" component={PrivacyPolicy} />
           <Route component={NotFound} />}
         </Switch>
       </Stack>

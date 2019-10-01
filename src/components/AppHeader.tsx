@@ -5,6 +5,7 @@ import { NavMenu } from "./NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
 import { Route } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/services/discord";
 import { Helmet } from "react-helmet";
@@ -42,6 +43,8 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
     )} />
   );
 };
+
+const PrivacyPolicyText: React.StatelessComponent = () => <p>Make sure you've read the <NavLink to="/privacy-policy">Privacy Policy</NavLink> first -- by logging in, you agree to accept this policy.</p>
 
 export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -166,10 +169,18 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       </Stack>
       :
       <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
-        <PrimaryButton href={discordAuthEndpoint} style={{ padding: "18px" }}>
-          <Text>Sign in</Text>
-          <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-        </PrimaryButton>
-      </Stack>
+        <TooltipHost
+          content={<PrivacyPolicyText />}
+          id={'privacyPolicyHost'}
+          calloutProps={{ gapSpace: 0 }}
+          closeDelay={500}
+          styles={{ root: { display: 'inline-block' } }}
+        >
+          <PrimaryButton href={discordAuthEndpoint} style={{ padding: "18px" }}>
+            <Text>Sign in</Text>
+            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+          </PrimaryButton>
+      </TooltipHost>
+    </Stack>
   );
 };
