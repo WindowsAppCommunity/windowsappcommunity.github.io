@@ -129,7 +129,7 @@ export const Dashboard = () => {
                     <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                         {
                             apps && apps.length > 0 ? apps.map(project =>
-                                <Stack horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: 5 }}>
+                                <Stack horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: 5, maxWidth: 400 }}>
                                     <Text variant="xLarge">{project.appName}</Text>
                                     <Text>{project.description}</Text>
                                     <Image imageFit={ImageFit.contain} width="400px" height="250px" src={project.heroImage}></Image>
