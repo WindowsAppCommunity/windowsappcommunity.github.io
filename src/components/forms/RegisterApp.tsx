@@ -21,17 +21,16 @@ const categoryOptions: IComboBoxOption[] = [
 
 export const RegisterAppForm = (props: IRegisterAppProps) => {
     let [projectRequest, setProjectRequest] = React.useState<ICreateProjectsRequestBody>({
-        isPrivate: false, awaitingLaunchApproval: false, role: "Other"
+        isPrivate: false, awaitingLaunchApproval: false, role: "Developer"
     });
 
     let [submissionError, setSubmissionError] = React.useState<string>("");
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
     async function submitParticipantRequest() {
+        let request = await CreateProject(projectRequest);
 
-        let request = await CreateProject(projectRequest as ICreateProjectsRequestBody);
-
-        let success = await request.status === 200;
+        let success = request.status === 200;
 
         if (!success) {
             let error: IBackendReponseError = await request.json();
