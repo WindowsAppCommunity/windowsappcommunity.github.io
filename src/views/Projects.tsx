@@ -18,7 +18,7 @@ export const Projects: React.StatelessComponent = () => {
     <Stack horizontalAlign="center" horizontal wrap tokens={{ childrenGap: 10 }}>
       {projects ? projects.map(project => {
         return (
-          <ProjectCard {...project}></ProjectCard>
+          <ProjectCard project={project}></ProjectCard>
         )
       }) : <> </>}
     </Stack>

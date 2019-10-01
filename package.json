@@ -58,6 +58,9 @@
     "@types/react-helmet": "^5.0.10"
   },
   "reactSnap": {
-    "include": ["/", "/privacy-policy"]
+    "include": [
+      "/",
+      "/privacy-policy"
+    ]
   }
 }

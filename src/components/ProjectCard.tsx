@@ -17,12 +17,17 @@ const FaIconStyle: React.CSSProperties = {
   width: "25px"
 };
 
-export const ProjectCard = (props: IProject) => {
+export interface IProjectCard {
+  project: IProject;
+  onEditButtonClicked?: Function;
+}
+
+export const ProjectCard = (props: IProjectCard) => {
 
   function onRenderIcon(buttonProps: IButtonProps | undefined) {
     if (!buttonProps) return null;
     const buttonData: ICustomButtonRenderProps = buttonProps.data;
-    if(!buttonData.link) return null;
+    if (!buttonData.link) return null;
 
     switch (buttonData.type.valueOf()) {
       case ButtonType.Download:
@@ -41,35 +46,35 @@ export const ProjectCard = (props: IProject) => {
 
   return (
     <DocumentCard>
-      <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={props.heroImage} />
+      <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={props.project.heroImage} />
       <DocumentCardDetails>
-        <DocumentCardTitle title={props.appName} shouldTruncate />
+        <DocumentCardTitle title={props.project.appName} shouldTruncate />
         <Stack tokens={{ padding: 15 }}>
-          <Text>{props.description}</Text>
+          <Text>{props.project.description}</Text>
         </Stack>
         <DocumentCardActions actions={[
           {
             data: {
               type: ButtonType.Github,
-              link: props.githubLink
+              link: props.project.githubLink
             },
-            href: props.githubLink,
+            href: props.project.githubLink,
             onRenderIcon: onRenderIcon
           },
           {
             data: {
               type: ButtonType.Download,
-              link: props.downloadLink
+              link: props.project.downloadLink
             },
-            href: props.downloadLink,
+            href: props.project.downloadLink,
             onRenderIcon: onRenderIcon
           },
           {
             data: {
               type: ButtonType.External,
-              link: props.externalLink
+              link: props.project.externalLink
             },
-            href: props.externalLink,
+            href: props.project.externalLink,
             onRenderIcon: onRenderIcon
           }
         ]} />

@@ -7,6 +7,7 @@ import { CreateProjectForm } from "../components/forms/CreateProjectForm";
 import { RegisterUserForm } from "../components/forms/RegisterUser";
 import { GetProjectByDiscordId, IProject } from "../common/services/projects";
 import HoverBox from "../components/HoverBox";
+import { ProjectCard } from "../components/ProjectCard";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -129,11 +130,7 @@ export const Dashboard = () => {
                     <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                         {
                             apps && apps.length > 0 ? apps.map(project =>
-                                <Stack horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: 5, maxWidth: 400 }}>
-                                    <Text variant="xLarge">{project.appName}</Text>
-                                    <Text>{project.description}</Text>
-                                    <Image imageFit={ImageFit.contain} width="400px" height="250px" src={project.heroImage}></Image>
-                                </Stack>
+                                <ProjectCard onEditButtonClicked={() => { }} project={project}></ProjectCard>
                             ) : <Text variant="large">You don't have any registered apps</Text>
                         }
                     </Stack>

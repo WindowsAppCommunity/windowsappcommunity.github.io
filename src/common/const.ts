@@ -50,5 +50,5 @@ export const MicrosoftStoreAppCategories = [
 ];
 
 export const backendHost: string = (
-  isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
+  !isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
 ); 
