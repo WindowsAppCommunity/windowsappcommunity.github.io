@@ -190,13 +190,13 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
                             </Stack>;
                         case VerficationState.Verified:
                             return <Stack horizontalAlign="center" tokens={{ childrenGap: 15, padding: 10 }}>
-                                <FontIcon style={{ fontSize: 44 }} iconName="ReminderPerson" />
+                                <FontIcon style={{ fontSize: 38 }} iconName="ReminderPerson" />
                                 <Text variant="xxLarge">Identity verified!</Text>
                                 <div style={{ display: "none" }}>
                                     {setTimeout(() => props.onSuccess({
                                         ...props.projectData,
                                         downloadLink: `http://microsoft.com/store/apps/${storeId}`
-                                    }), 3000)}
+                                    }), 1500)}
                                 </div>
                             </Stack>
                         default:
