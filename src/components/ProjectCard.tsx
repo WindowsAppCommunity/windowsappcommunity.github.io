@@ -1,99 +1,88 @@
-import React from "react";
-import { IProject } from "../common/interfaces";
-import {
-  DocumentCard,
-  DocumentCardTitle,
-  DocumentCardDetails,
-  DocumentCardImage,
-  IDocumentCardStyles
-} from "office-ui-fabric-react/lib/DocumentCard";
-import { ImageFit } from "office-ui-fabric-react/lib/Image";
-import { Images } from "../common/const";
-import Helpers from "../common/helpers";
+import { IProject } from "../common/services/projects";
+import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, FontIcon, IButtonProps, PrimaryButton } from "office-ui-fabric-react";
+import * as React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Stack, Link, IStackTokens } from "office-ui-fabric-react";
-import { Depths } from '@uifabric/fluent-theme/lib/fluent/FluentDepths';
-import SVG from 'react-inlinesvg';
+enum ButtonType {
+  Github, Download, External
+}
 
+interface ICustomButtonRenderProps {
+  type: ButtonType;
+  link: string;
+}
+const FaIconStyle: React.CSSProperties = {
+  color: "black",
+  height: "25px",
+  width: "25px"
+};
 
-interface ListItemProps {
+export interface IProjectCard {
   project: IProject;
+  onEditButtonClicked?: Function;
 }
 
-export const getThumbUrl = (id: string) => {
-  return `/assets/thumbs/${id}.png`;
-}
+export const ProjectCard = (props: IProjectCard) => {
 
-const cardStyles: IDocumentCardStyles = {
-  root: {
-    display: "inline-block",
-    marginRight: 10,
-    marginBottom: 10,
-    width: 320,
-    boxShadow: Depths.depth8
-  }
-};
+  function onRenderIcon(buttonProps: IButtonProps | undefined) {
+    if (!buttonProps) return null;
+    const buttonData: ICustomButtonRenderProps = buttonProps.data;
+    if (!buttonData.link) return null;
 
-const itemAlignmentsStackTokens: IStackTokens = {
-  childrenGap: 5
-};
-
-
-export class ProjectCard extends React.Component<ListItemProps> {
-  constructor(props: ListItemProps) {
-    super(props);
-    this.GetBadge.bind(this);
-    this.GetDiscordBadge.bind(this);
-    this.GetStoreBadge.bind(this);
-    this.GetGithubBadge.bind(this);
+    switch (buttonData.type.valueOf()) {
+      case ButtonType.Download:
+        if (buttonData.link && buttonData.link.includes("microsoft.com")) {
+          return <FontAwesomeIcon style={FaIconStyle} icon={["fab", "microsoft"]} />
+        } else {
+          return <FontAwesomeIcon style={FaIconStyle} icon="arrow-circle-down" />
+        }
+      case ButtonType.External:
+        return <FontAwesomeIcon style={FaIconStyle} icon={["fas", "globe"]} />
+      case ButtonType.Github:
+        return <FontAwesomeIcon style={FaIconStyle} icon={["fab", "github"]} />
+      default: return null;
+    }
   }
 
-  private GetBadge(badge:string, url: string) {
-    return (
-      <Stack.Item>
-        <Link href={url} target="_blank">
-          <SVG src={badge} />
-        </Link>
-      </Stack.Item>
-    );
-  };
+  return (
+    <DocumentCard>
+      <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={props.project.heroImage} />
+      <DocumentCardDetails>
+        <DocumentCardTitle title={props.project.appName} shouldTruncate />
+        <Stack tokens={{ padding: 15 }}>
+          <Text>{props.project.description}</Text>
+        </Stack>
+        <Stack horizontal tokens={{ childrenGap: 5, padding: 10 }} verticalAlign="center">
+          {props.onEditButtonClicked !== undefined ? <PrimaryButton onClick={() => { if (props.onEditButtonClicked) props.onEditButtonClicked() }}>Edit</PrimaryButton> : <></>}
 
-  private GetDiscordBadge(discord?: string) {
-    if (!discord) return "";
-    return this.GetBadge(Images.Badges.discord, Helpers.getDiscordUrl(discord));
-  };
-
-  private GetStoreBadge(store: string) {
-    if (!store) return "";
-    return this.GetBadge(Images.Badges.msstore, Helpers.getStoreUrl(store));
-  };
-
-  private GetGithubBadge(github: string) {
-    if (!github) return "";
-    return this.GetBadge(Images.Badges.github, Helpers.getGithubUrl(github));
-  };
-
-  render() {
-    return (
-      <DocumentCard styles={cardStyles}>
-        <DocumentCardImage
-          height={150}
-          imageFit={ImageFit.cover}
-          imageSrc={getThumbUrl(this.props.project.id)}
-        />
-        <DocumentCardDetails>
-          <DocumentCardTitle title={this.props.project.title} shouldTruncate />
-          <DocumentCardTitle title={this.props.project.description} showAsSecondaryTitle />
-
-          <Stack horizontal horizontalAlign="end" disableShrink tokens={itemAlignmentsStackTokens} style={{ marginRight: 10, marginBottom: 10 }}>
-            {this.GetGithubBadge(this.props.project.github)}
-
-            {this.GetStoreBadge(this.props.project.store)}
-
-            {this.GetDiscordBadge(this.props.project.discord)}
-          </Stack>
-        </DocumentCardDetails>
-      </DocumentCard>
-    );
-  }
+          <DocumentCardActions actions={[
+            {
+              data: {
+                type: ButtonType.Github,
+                link: props.project.githubLink
+              },
+              href: props.project.githubLink,
+              onRenderIcon: onRenderIcon
+            },
+            {
+              data: {
+                type: ButtonType.Download,
+                link: props.project.downloadLink
+              },
+              href: props.project.downloadLink,
+              onRenderIcon: onRenderIcon
+            },
+            {
+              data: {
+                type: ButtonType.External,
+                link: props.project.externalLink
+              },
+              href: props.project.externalLink,
+              onRenderIcon: onRenderIcon
+            }
+          ]} />
+        </Stack>
+      </DocumentCardDetails>
+    </DocumentCard>
+  )
 }

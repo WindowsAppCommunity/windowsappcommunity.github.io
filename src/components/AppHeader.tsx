@@ -1,15 +1,18 @@
 import * as React from "react";
 import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, TooltipDelay, DefaultButton, IContextualMenuProps, IContextualMenuItem, PersonaSize, Dialog, DialogFooter, DialogType } from "office-ui-fabric-react";
-import { Images, Links, isLocalhost } from "../common/const";
+import { Images, Links } from "../common/const";
 import { NavMenu } from "./NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties } from "react";
 import { Route } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../common/discordService";
+import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, AuthData, IsUserInServer, discordAuthEndpoint } from "../common/services/discord";
 import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 import { History } from "history";
+import { RegisterUserForm } from "./forms/RegisterUser";
+import { GetUser, IUser } from "../common/services/users";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -21,14 +24,14 @@ const FaIconStyle: CSSProperties = {
 export const AppHeader: React.StatelessComponent = (props: any) => {
   return (
     <Route render={({ history }) => (
-      <header style={{ margin: "10px" }}>
+      <header style={{ marginBottom: "10px", maxWidth: "98vw" }}>
         <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 10 }} verticalAlign='end' horizontalAlign="space-around">
           <Helmet>
             <title>{getHeadTitle(props.location.pathname)}</title>
           </Helmet>
           <Link href="/">
             {/* This is an img and not an Image from FabricUI because when rendered on the live server, the image randomly doesn't show */}
-            <img src={Images.uwpCommunityLogo} />
+            <img style={{ maxWidth: "100vw" }} src={Images.uwpCommunityLogo} alt="Uwp Community Logo" />
           </Link>
 
           <NavMenu />
@@ -41,22 +44,28 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
   );
 };
 
+const PrivacyPolicyText: React.StatelessComponent = () => <p>Make sure you've read the <NavLink to="/privacy-policy">Privacy Policy</NavLink> first -- by logging in, you agree to accept this policy.</p>
+
 export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [user, setUser] = React.useState<IDiscordUser>();
+  const [discordUser, setDiscordUser] = React.useState<IDiscordUser>();
+  const [user, setUser] = React.useState<IUser>();
   const [userAvatar, setUserAvatar] = React.useState<string>();
   const [joinServerAlertHidden, setJoinServerAlertHidden] = React.useState(true);
+  const [registerUserShown, setRegisterUserShown] = React.useState(false);
+  const [editProfileShown, setEditProfileShown] = React.useState(false);
 
   React.useEffect(() => {
     setupLoggedInUser();
   }, []);
 
   async function setupLoggedInUser() {
-    const user = await GetCurrentUser();
-    const avatarUrl = await GetUserAvatar(user);
-    if (!user || !avatarUrl) return;
+    const discordUser = await GetCurrentDiscordUser();
+    const avatarUrl = await GetUserAvatar(discordUser);
+
+    if (!discordUser || !avatarUrl) return;
     setLoggedIn(true);
-    setUser(user);
+    setDiscordUser(discordUser);
 
     let userIsInServer = await IsUserInServer();
     if (!userIsInServer) {
@@ -64,8 +73,18 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       return;
     }
 
+    const userRequest = await GetUser(discordUser.id);
+    if (userRequest.status === 404) {
+      // User isn't registered
+      setRegisterUserShown(true);
+      return;
+    }
+    if (userRequest && userRequest.status !== 200) throw new Error(await userRequest.text());
 
-    setUserAvatar(await GetUserAvatar(user));
+    let user: IUser = await userRequest.json();
+
+    setUser(user);
+    setUserAvatar(avatarUrl);
   }
 
   const LoggedInButtonDropdownItems: IContextualMenuProps = {
@@ -75,6 +94,11 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       key: "dashboard",
       text: "Dashboard",
       iconProps: { iconName: "ViewDashboard" }
+    }, {
+      /* Todo: Only show this button if the user HAS a profile to edit */
+      key: "editProfile",
+      text: "Edit Profile",
+      iconProps: { iconName: "EditContact" }
     }, {
       key: "logOut",
       text: "Log out",
@@ -91,6 +115,10 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
         break;
       case "dashboard":
         history.push("/dashboard");
+        break;
+      case "editProfile":
+        setEditProfileShown(true);
+        break;
     }
   }
 
@@ -104,16 +132,11 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
     setJoinServerAlertHidden(true);
     LogOut();
   }
-  let discordAuthEndpoint = (
-    isLocalhost ?
-      `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
-      :
-      `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
-  );
+
 
   return (
-    loggedIn && user ?
-      <Stack style={{ marginBottom: "10px" }}>
+    loggedIn && discordUser ?
+      <Stack>
         <Dialog
           hidden={joinServerAlertHidden}
           dialogContentProps={{
@@ -131,18 +154,34 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
             <DefaultButton onClick={CloseJoinServerDialog} text="Sign out" />
           </DialogFooter>
         </Dialog>
-        <TooltipHost content={`Logged in as ${user.username}`} delay={TooltipDelay.long}>
+        <TooltipHost content={`Logged in as ${discordUser.username}`} delay={TooltipDelay.long}>
           <DefaultButton style={{ padding: "25px", border: "0px solid black" }} menuProps={LoggedInButtonDropdownItems}>
-            <Persona size={PersonaSize.size40} text={user.username} imageUrl={userAvatar} />
+            <Persona size={PersonaSize.size40} text={discordUser.username} imageUrl={userAvatar} />
           </DefaultButton>
         </TooltipHost>
+
+        <Dialog hidden={!editProfileShown && !registerUserShown} dialogContentProps={{ type: DialogType.largeHeader, title: registerUserShown ? "One more step" : "Edit profile" }}>
+          {registerUserShown ?
+            <Text variant="large">Complete your profile to get started</Text>
+            : <></>}
+          <RegisterUserForm userData={user} onSuccess={() => { setRegisterUserShown(false); setEditProfileShown(false) }} onCancel={!registerUserShown ? () => setEditProfileShown(false) : undefined} />
+        </Dialog>
       </Stack>
       :
       <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
-        <PrimaryButton href={discordAuthEndpoint} style={{ padding: "18px" }}>
-          <Text>Sign in</Text>
-          <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-        </PrimaryButton>
-      </Stack>
+        <TooltipHost
+          content={<PrivacyPolicyText />}
+          id={'privacyPolicyHost'}
+          calloutProps={{ gapSpace: 0 }}
+          closeDelay={500}
+          delay={0}
+          styles={{ root: { display: 'inline-block' } }}
+        >
+          <PrimaryButton href={discordAuthEndpoint} style={{ padding: "18px" }}>
+            <Text>Sign in</Text>
+            <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
+          </PrimaryButton>
+      </TooltipHost>
+    </Stack>
   );
 };

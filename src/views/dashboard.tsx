@@ -1,64 +1,166 @@
-import { Text, Stack, Checkbox, PrimaryButton, Toggle, Pivot, PivotItem, Persona, PersonaSize, DefaultButton, Icon } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, Image, ImageFit, DefaultButton, PrimaryButton, FontIcon } from "office-ui-fabric-react";
 import React from "react";
-import { GetUserAvatar, GetCurrentUser, IDiscordUser, AuthData, IsUserInServer } from "../common/discordService";
+import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
-import HoverBox from "../components/HoverBox";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { CreateProjectForm } from "../components/forms/CreateProjectForm";
+import { RegisterUserForm } from "../components/forms/RegisterUser";
+import { GetProjectByDiscordId, IProject } from "../common/services/projects";
+import HoverBox from "../components/HoverBox";
+import { ProjectCard } from "../components/ProjectCard";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
 box-shadow: 0 12px 45px -8px rgba(0,120,215,.35);
 width: 100vw;
-padding: 10px;
+margin: 0px;
+padding: 15px 0px;
 `;
 
 export const Dashboard = () => {
     const [welcomeMessage, setWelcomeMessage] = React.useState("Signing in...");
     const [userIcon, setUserIcon] = React.useState("");
 
+    const [roles, setRoles] = React.useState<string[]>([]);
+
+    const [appRegistrationShown, setAppRegistrationShown] = React.useState(false);
+    const [devRegistrationShown, setDevRegistrationShown] = React.useState(false);
+
+    const [apps, setApps] = React.useState<IProject[]>();
+
     React.useEffect(() => {
         setupLoggedInUser();
     }, []);
 
-    async function setupLoggedInUser() {
-        let user: IDiscordUser | undefined = await GetCurrentUser();
-        if (!user) return;
-        setWelcomeMessage(`Welcome, ${user.username}`);
-        setUserIcon(await GetUserAvatar(user) || "");
+    async function getUserApps(user: IDiscordUser) {
+        const projects = await GetProjectByDiscordId(user.id);
+        setApps(projects);
     }
 
-    return (
-        <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
-            <DashboardHeader>
-                <Stack style={{ padding: "10px" }} tokens={{ childrenGap: 10 }}>
-                    <Persona style={{ margin: 0 }} styles={{ primaryText: { fontSize: "24px", color: "white" } }} size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
-                    <NavLink hidden style={{ color: "white", width: "135px", textDecoration: "none" }} to="/dashboard/registerapp">
-                        <Stack verticalAlign="center" horizontal tokens={{ childrenGap: 5 }}>
-                            <Icon iconName="AppIconDefaultAdd"></Icon>
-                            <Text variant="mediumPlus">Register an app</Text>
-                        </Stack>
-                    </NavLink>
+    async function setupLoggedInUser() {
+        let user: IDiscordUser | undefined = await GetCurrentDiscordUser();
+        if (!user) {
+            window.location.href = discordAuthEndpoint;
+            return;
+        };
+        setWelcomeMessage(user.username);
+        setUserIcon(await GetUserAvatar(user) || "");
 
+        const roles = await GetUserRoles(user);
+        if (roles) setRoles(roles);
+
+        getUserApps(user);
+    }
+
+    async function onDevRegisterFormSuccess() {
+        setDevRegistrationShown(false);
+
+        AssignUserRole("Developer");
+        setTimeout(() => {
+            setupLoggedInUser();
+        }, 1000);
+    }
+
+    async function onAppRegisterFormSuccess() {
+        setAppRegistrationShown(false);
+    }
+
+    const PersonaDark = styled(Persona)`
+    * {
+        :hover {
+            color: white;
+        }
+        color: #f7f7f7;
+        font-size: 22px;
+    }
+    `;
+
+    const SectionTitleIconFontSize = 34;
+
+    const DashboardColumnFiller = styled.div`
+    @media only screen and (max-width: 807px) {
+        display: none;
+    } 
+    `;
+
+    return (
+        <Stack tokens={{ childrenGap: 25 }}>
+            <DashboardHeader>
+                <Stack horizontal wrap style={{ padding: "15px 0px", margin: 0 }} verticalAlign="center" horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
+                    <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
+
+                    <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
+
+                        {roles.includes("Developer") ?
+                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
+                                <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                    <Icon style={{ fontSize: 35, userSelect: "none" }} iconName="AppIconDefaultAdd"></Icon>
+                                    <Text variant="mediumPlus">Register an app</Text>
+                                </Stack>
+                            </Link>
+                            :
+                            <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
+                                <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                    <Icon style={{ fontSize: 35, userSelect: "none" }} iconName="code"></Icon>
+                                    <Text variant="mediumPlus">Become a Developer</Text>
+                                </Stack>
+                            </Link>
+                        }
+                        <Link style={{ color: "gray", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
+                            <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
+                                <Icon style={{ fontSize: 35, color: "gray", userSelect: "none" }} iconName="Robot"></Icon>
+                                <Text style={{ color: "gray" }} variant="mediumPlus">Manage your roles</Text>
+                            </Stack>
+                        </Link>
+
+                    </Stack>
+
+                    <DashboardColumnFiller style={{ width: 200 }} />
                 </Stack>
             </DashboardHeader>
 
-            {/* Todo, move most of these options out of here and into the user menu dropdown */}
-            <Stack horizontal wrap horizontalAlign="center" tokens={{ childrenGap: 25 }}>
-                <Stack horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-
-                    <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 10 }}>
-                        <Icon style={{ fontSize: "24px" }} iconName="BuildDefinition" />
-                        <Text variant="xLarge">Under construction</Text>
+            <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
+                {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
+                <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                    <Stack horizontal tokens={{ childrenGap: 15 }}>
+                        <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
+                        <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
                     </Stack>
 
-
-                    <Text variant="large">This area is still being worked on. Check back later</Text>
-
-
+                    <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
+                        {
+                            apps && apps.length > 0 ? apps.map(project =>
+                                <ProjectCard /* onEditButtonClicked={() => {
+                                    
+                                }} */ project={project}></ProjectCard>
+                            ) : <Text variant="large">You don't have any registered apps</Text>
+                        }
+                    </Stack>
                 </Stack>
 
+                <Dialog hidden={!appRegistrationShown} dialogContentProps={{
+                    type: DialogType.largeHeader,
+                    title: 'Register an app',
+                }}>
+                    <CreateProjectForm projectData={{}} onSuccess={onAppRegisterFormSuccess} onCancel={() => setAppRegistrationShown(false)} />
+                </Dialog>
+
+                <Dialog hidden={!devRegistrationShown} dialogContentProps={{
+                    type: DialogType.largeHeader, title: "Become a developer"
+                }}>
+                    <Stack tokens={{ childrenGap: 10 }} horizontalAlign="center">
+                        <FontIcon iconName="GiftboxOpen" style={{ fontSize: 56 }} />
+                        <Text variant="xLarge">Let's build something, together</Text>
+                        <Text variant="medium">Everyone, from seasoned veterans to enthusiastic novices can become a developer with just a click</Text>
+                        <Text variant="medium">You'll be given the Developer role in the UWP Community Discord server, and become eligible for app services exclusive to devs</Text>
+                        <Stack horizontal horizontalAlign="space-evenly" tokens={{ childrenGap: 10 }}>
+                            <DefaultButton onClick={() => setDevRegistrationShown(false)}>Cancel</DefaultButton>
+                            <PrimaryButton onClick={onDevRegisterFormSuccess}>Register</PrimaryButton>
+                        </Stack>
+                    </Stack>
+                </Dialog>
             </Stack>
-        </Stack>
+
+        </Stack >
     )
 };
