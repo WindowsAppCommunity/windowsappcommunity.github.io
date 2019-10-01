@@ -7,6 +7,7 @@ import { CurrentUser } from "../../common/services/discord";
 export interface IRegisterDevProps {
     onCancel?: Function;
     onSuccess: Function;
+    userData?: Partial<IUser>;
 };
 
 export const RegisterUserForm = (props: IRegisterDevProps) => {
@@ -49,12 +50,14 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
             <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ maxWidth: "100%", width: "300px", display: (!showSuccessIndicator ? "block" : "none") }}>
                 <TextField label="Name:"
                     description="Friendly name for other users/devs to see"
+                    value={props.userData ? props.userData.name : ""}
                     styles={{ root: { width: "100%" } }}
                     required
                     onChange={(e: any, value: any) => setUserRequest({ ...userRequest, name: value })} />
 
                 <TextField label="Contact email:"
                     description="Optional"
+                    value={props.userData ? props.userData.email : ""}
                     styles={{ root: { width: "100%" } }}
                     onChange={(e: any, value: any) => setUserRequest({ ...userRequest, email: value })} />
 
