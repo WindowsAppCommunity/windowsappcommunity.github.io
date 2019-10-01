@@ -33,6 +33,10 @@ export async function GetAllProjects(): Promise<IProject[]> {
     return (await fetchBackend(`projects`, "GET")).json();
 }
 
+export async function GetLaunchProjects(year: number): Promise<IProject[]> {
+    return (await (await fetchBackend(`projects`, "GET")).json()).filter((project: IProject) => project.launchYear == year && project.awaitingLaunchApproval == false);
+}
+
 interface IModifyProjectsRequestBody {
     appName: string;
     description?: string;
