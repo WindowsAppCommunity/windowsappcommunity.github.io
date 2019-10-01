@@ -48,9 +48,9 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
                         <Text variant="medium">Do you have a "Publisher support" email listed on your apps' MS Store page?</Text>
                     </Stack>
                     <Stack style={{ marginTop: 20 }} horizontal tokens={{ childrenGap: 15 }} horizontalAlign="space-evenly">
-                        <DefaultButton onClick={() => { setProjectData({ ...projectData, needsManualReview: true }); setVerified(true) }}>No</DefaultButton>
+                        <DefaultButton onClick={() => { setProjectData({ ...props.projectData, needsManualReview: true }); setVerified(true) }}>No</DefaultButton>
                         <TooltipHost content="Automatic verification is possible. Your project will be immediately visible to the community" closeDelay={100} directionalHint={DirectionalHint.leftBottomEdge}>
-                            <PrimaryButton onClick={() => { setProjectData({ ...projectData, needsManualReview: false }); setCodeVerificationDisplayed(true) }}>Yes</PrimaryButton>
+                            <PrimaryButton onClick={() => { setProjectData({ ...props.projectData, ...projectData, needsManualReview: false }); setCodeVerificationDisplayed(true) }}>Yes</PrimaryButton>
                         </TooltipHost>
                     </Stack>
                 </Stack>
@@ -72,7 +72,7 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
     const [verificationCodeText, setVerificationCodeText] = React.useState<string>();
     const [verificationState, setVerificationState] = React.useState<VerficationState>(VerficationState.PreInit);
     const [errorMessage, setErrorMessage] = React.useState("");
-
+    
     async function BeginVerification() {
         if (!validateStoreIdField()) return;
         const request = await fetchBackend("projects/verification", "POST", {
