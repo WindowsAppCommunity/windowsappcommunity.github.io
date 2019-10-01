@@ -14,7 +14,9 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
     const [manualReviewMessageShown, setManualReviewMessageShown] = React.useState(true);
 
     return (
-        codeVerificationDisplayed ? <ProjectCodeVerifier onCancel={() => { setCodeVerificationDisplayed(false) }} onSuccess={() => {
+        codeVerificationDisplayed ? <ProjectCodeVerifier onCancel={() => { setCodeVerificationDisplayed(false) }} onSuccess={(projectDetails) => {
+            props.projectData = projectDetails;
+
             setCodeVerificationDisplayed(false);
             setVerified(true);
             setManualReviewMessageShown(false);
@@ -55,8 +57,9 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
 };
 
 interface IProjectCodeVerifierProps {
-    onSuccess: Function;
+    onSuccess: (projectDetails: Partial<IProject>) => void;
     onCancel: Function;
+    projectData?: Partial<IProject>;
 }
 export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
     enum VerficationState {
@@ -188,7 +191,10 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
                             return <Stack>
                                 <FontIcon iconName="ReminderPerson" />
                                 <Text variant="xxLarge">Identity verified!</Text>
-                                {setTimeout(props.onSuccess, 3000)}
+                                {setTimeout(() => props.onSuccess({
+                                    ...props.projectData,
+                                    downloadLink: `http://microsoft.com/store/apps/${storeId}`
+                                }), 3000)}
                             </Stack>
                         default:
                             return <></>
