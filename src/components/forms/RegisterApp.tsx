@@ -2,6 +2,7 @@ import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboB
 import React from "react";
 import { IBackendReponseError } from "../../common/interfaces";
 import { CreateProject, ICreateProjectsRequestBody } from "../../common/services/projects";
+import { MicrosoftStoreAppCategories } from "../../common/const";
 
 export interface IRegisterAppProps {
     onCancel?: Function;
@@ -15,9 +16,9 @@ const roleOptions: IComboBoxOption[] = [
     { key: 4, text: 'Other' }
 ];
 
-const categoryOptions: IComboBoxOption[] = [
-    { key: 1, text: 'Other', selected: true }
-];
+const categoryOptions: IComboBoxOption[] = MicrosoftStoreAppCategories.map((category, index) => {
+    return { key: index, text: category, selected: index == 0 }
+});
 
 export const RegisterAppForm = (props: IRegisterAppProps) => {
     let [projectRequest, setProjectRequest] = React.useState<ICreateProjectsRequestBody>({
@@ -54,14 +55,14 @@ export const RegisterAppForm = (props: IRegisterAppProps) => {
                     <PivotItem headerText="Basic info">
                         <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Project name:" maxLength={50}
-                    styles={{ root: { width: "100%" } }}
-                    required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, appName: value })} />
+                                styles={{ root: { width: "100%" } }}
+                                required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, appName: value })} />
 
                             <TextField label="Description" maxLength={140}
-                    styles={{ root: { width: "100%" } }}
-                    multiline required autoAdjustHeight
+                                styles={{ root: { width: "100%" } }}
+                                multiline required autoAdjustHeight
                                 placeholder="Enter a brief description"
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, description: value })} />
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, description: value })} />
 
                             <TextField label="Hero image"
                                 type="url"
@@ -74,31 +75,31 @@ export const RegisterAppForm = (props: IRegisterAppProps) => {
                     <PivotItem headerText="Project links">
                         <Stack tokens={{ childrenGap: 10 }}>
                             <MaskedTextField label="Download Link:"
-                    styles={{ root: { width: "100%" } }}
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, downloadLink: value })} />
+                                styles={{ root: { width: "100%" } }}
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, downloadLink: value })} />
 
                             <MaskedTextField label="Github Link:"
-                    styles={{ root: { width: "100%" } }}
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, githubLink: value })} />
+                                styles={{ root: { width: "100%" } }}
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, githubLink: value })} />
 
                             <MaskedTextField label="External link"
-                    styles={{ root: { width: "100%" } }}
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, externalLink: value })} />
+                                styles={{ root: { width: "100%" } }}
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, externalLink: value })} />
 
                         </Stack>
                     </PivotItem>
                     <PivotItem headerText="More info">
                         <Stack tokens={{ childrenGap: 10 }}>
-                <ComboBox
+                            <ComboBox
                                 label="Category"
-                    options={categoryOptions}
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, category: value.text })} />
+                                options={categoryOptions}
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, category: value.text })} />
 
                             <Checkbox label="Project is private/secret"
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
 
-                <Checkbox label="Partipation in Launch 2020"
-                    onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
+                            <Checkbox label="Partipation in Launch 2020"
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
 
                             <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>You will receive a notification once your app is manually approved</Text>
                         </Stack>

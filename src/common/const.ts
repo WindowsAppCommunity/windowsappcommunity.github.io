@@ -22,6 +22,34 @@ export const Images = {
   }
 };
 
+export const MicrosoftStoreAppCategories = [
+  "Books & reference",
+  "Business",
+  "Developer tools",
+  "Education",
+  "Entertainment",
+  "Food & dining",
+  "Government & politics",
+  "Education",
+  "Kids & family",
+  "Lifestyle",
+  "Medical",
+  "Multimedia design",
+  "Music",
+  "Navigation & maps",
+  "News & weather",
+  "Personal finance",
+  "Personalization",
+  "Photo & video",
+  "Productivity",
+  "Security",
+  "Shopping",
+  "Social",
+  "Sports",
+  "Travel",
+  "Utilities & tools"
+];
+
 export const backendHost: string = (
   isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
 ); 
