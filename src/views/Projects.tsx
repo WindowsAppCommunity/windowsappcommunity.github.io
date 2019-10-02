@@ -11,7 +11,10 @@ export const Projects: React.StatelessComponent = () => {
     setProjects(projectsApi);
   }
 
-  PopulateProjects();
+
+  React.useEffect(() => {
+    PopulateProjects();
+  }, []);
 
   return (
     /* Todo: Add a header with brief explanation of the below */
