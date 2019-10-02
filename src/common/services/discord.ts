@@ -84,14 +84,8 @@ export async function GetCurrentDiscordUser(): Promise<IDiscordUser | undefined>
 
 export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undefined> {
     user = user || await GetCurrentDiscordUser();
-    const Auth = AuthData.Get();
-    if (!Auth) return;
 
-    const request = await fetch(`http://${backendHost}/bot/user/roles`, {
-        headers: {
-            "Authorization": "Bearer " + Auth.access_token
-        }
-    });
+    const request = await fetchBackend("bot/user/roles", "GET");
 
     if (request && request.status === 200) {
         const result: IDiscordRoleData[] = await request.json();
