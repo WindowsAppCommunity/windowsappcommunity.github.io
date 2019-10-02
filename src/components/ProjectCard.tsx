@@ -45,7 +45,7 @@ export const ProjectCard = (props: IProjectCard) => {
   }
 
   return (
-    <DocumentCard>
+    <DocumentCard style={{ maxWidth: 300 }}>
       <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={props.project.heroImage} />
       <DocumentCardDetails>
         <DocumentCardTitle title={props.project.appName} shouldTruncate />
