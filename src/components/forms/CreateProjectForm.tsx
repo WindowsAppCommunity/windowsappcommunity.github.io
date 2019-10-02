@@ -195,6 +195,7 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
                                 <div style={{ display: "none" }}>
                                     {setTimeout(() => props.onSuccess({
                                         ...props.projectData,
+                                        needsManualReview: false,
                                         downloadLink: `http://microsoft.com/store/apps/${storeId}`
                                     }), 1500)}
                                 </div>
