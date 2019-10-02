@@ -121,22 +121,30 @@ export const Dashboard = () => {
 
             <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
                 {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
-                <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-                    <Stack horizontal tokens={{ childrenGap: 15 }}>
-                        <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
-                        <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
-                    </Stack>
+                {
+                    roles.includes("Developer") ?
+                        <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                            <Stack horizontal tokens={{ childrenGap: 15 }}>
+                                <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
+                                <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
+                            </Stack>
 
-                    <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
-                        {
-                            apps && apps.length > 0 ? apps.map(project =>
-                                <ProjectCard /* onEditButtonClicked={() => {
+                            <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
+                                {
+                                    (apps && apps.length > 0 ? apps.map(project =>
+                                        <ProjectCard /* onEditButtonClicked={() => {
                                     
                                 }} */ project={project}></ProjectCard>
-                            ) : <Text variant="large">You don't have any registered apps</Text>
-                        }
-                    </Stack>
-                </Stack>
+                                    ) : <Text variant="large">You don't have any registered apps</Text>)
+                                }
+                            </Stack>
+                        </Stack>
+                        :
+                        <Stack horizontalAlign="center">
+                            <Icon iconName="BuildDefinition" style={{ fontSize: 55 }} />
+                            <Text variant="xLarge" style={{ fontWeight: 600 }}>Under construction</Text>
+                            <Text variant="large">For now, this area is primarily for developers. Check back later for more</Text>
+                        </Stack>}
 
                 <Dialog hidden={!appRegistrationShown} dialogContentProps={{
                     type: DialogType.largeHeader,
