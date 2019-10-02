@@ -13,7 +13,7 @@ export interface IRegisterDevProps {
 export const RegisterUserForm = (props: IRegisterDevProps) => {
     let [userRequest, setUserRequest] = React.useState<IUser>({
         discordId: CurrentUser.id,
-        name: "Username"
+        name: ""
     });
 
     let [submissionError, setSubmissionError] = React.useState<string>("");
