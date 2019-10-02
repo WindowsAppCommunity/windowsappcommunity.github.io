@@ -45,7 +45,8 @@ export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT
     let authData = await AuthData.Get();
     if (authData) headers.push(["authorization", authData.access_token])
 
-    let url = `http://${backendHost}/${route}`;
+    let protocol = isLocalhost ? "http" : "https";
+    let url = `${protocol}://${backendHost}/${route}`;
 
     return await fetch(url, {
         headers: headers,
