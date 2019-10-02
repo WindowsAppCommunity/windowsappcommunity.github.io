@@ -1,7 +1,14 @@
 import { IUser } from "./users";
-import { fetchBackend, ObjectToPathQuery } from "../helpers";
+import { fetchBackend, ObjectToPathQuery, match } from "../helpers";
 
 export async function CreateProject(projectData: ICreateProjectsRequestBody): Promise<Response> {
+    // Reformat microsoft store links to an international format
+    if (projectData.downloadLink) {
+        const storeId = match(projectData.downloadLink, /http.*microsoft\..*([\w\d]{12})[\/|?]?/);
+        if (storeId) {
+            projectData.downloadLink = `https://www.microsoft.com/store/apps/${storeId}`;
+        }
+    }
     return await fetchBackend("projects", "POST", projectData);
 }
 export interface ICreateProjectsRequestBody {

@@ -54,7 +54,16 @@ export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT
         body: JSON.stringify(requestBody)
     });
 }
-
+/**
+ * @summary Get the first matching regex group, instead of an array with the full string and all matches
+ * @param {string} toMatch  
+ * @param {regex} regex 
+ * @returns {string} First matching regex group
+ */
+export function match(toMatch: string, regex: RegExp) {
+    let m = regex.exec(toMatch);
+    return (m && m[1]) ? m[1] : undefined;
+}
 export async function ObjectToPathQuery(data: object) {
     let queryString: string = "";
     for (let [key, value] of Object.entries(data)) {
