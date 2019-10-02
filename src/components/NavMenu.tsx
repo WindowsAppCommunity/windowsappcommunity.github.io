@@ -40,6 +40,10 @@ export class NavMenu extends React.Component<any, any> {
           <MyNavLink to="/launch" activeStyle={navLinkActiveStyle}>
             <NavText>Launch</NavText>
           </MyNavLink>
+          {/* Present but not shown, so it gets crawled */}
+          <MyNavLink style={{ display: "none" }} to="/dashboard" activeStyle={navLinkActiveStyle}>
+            <NavText>Dashboard</NavText>
+          </MyNavLink>
         </Stack>
       </nav>
     );
