@@ -4,9 +4,7 @@ import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint
 
 import styled from "styled-components";
 import { CreateProjectForm } from "../components/forms/CreateProjectForm";
-import { RegisterUserForm } from "../components/forms/RegisterUser";
 import { GetProjectByDiscordId, IProject } from "../common/services/projects";
-import HoverBox from "../components/HoverBox";
 import { ProjectCard } from "../components/ProjectCard";
 
 const DashboardHeader = styled.header`
@@ -39,10 +37,11 @@ export const Dashboard = () => {
 
     async function setupLoggedInUser() {
         let user: IDiscordUser | undefined = await GetCurrentDiscordUser();
+        if (navigator.userAgent.includes("ReactSnap")) return;
         if (!user) {
             window.location.href = discordAuthEndpoint;
             return;
-        };
+        }
         setWelcomeMessage(user.username);
         setUserIcon(await GetUserAvatar(user) || "");
 
