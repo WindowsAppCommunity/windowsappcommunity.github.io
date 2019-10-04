@@ -1,5 +1,5 @@
 import { IProject } from "../common/services/projects";
-import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, FontIcon, IButtonProps, PrimaryButton } from "office-ui-fabric-react";
+import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -63,7 +63,7 @@ export const ProjectCard = (props: IProjectCard) => {
 
     setProjectCardActions(projectCardsData);
 
-  }, []);
+  }, [props.project.githubLink, props.project.externalLink, props.project.downloadLink]);
 
   function onRenderIcon(buttonProps: IButtonProps | undefined) {
     if (!buttonProps) return null;
