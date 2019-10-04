@@ -93,10 +93,10 @@ export const ProjectCard = (props: IProjectCard) => {
         <Stack tokens={{ padding: 10 }}>
           <Text>{props.project.description}</Text>
         </Stack>
-        <Stack horizontal tokens={{ childrenGap: 5, padding: 10 }} verticalAlign="center">
+        <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
           {props.onEditButtonClicked !== undefined ? <PrimaryButton onClick={() => { if (props.onEditButtonClicked) props.onEditButtonClicked() }}>Edit</PrimaryButton> : <></>}
 
-          <DocumentCardActions actions={projectCardActions} />
+          <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
         </Stack>
       </DocumentCardDetails>
     </DocumentCard>
