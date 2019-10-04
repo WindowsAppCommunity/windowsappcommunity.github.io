@@ -23,6 +23,47 @@ export interface IProjectCard {
 }
 
 export const ProjectCard = (props: IProjectCard) => {
+  const [projectCardActions, setProjectCardActions] = React.useState<IButtonProps[]>([]);
+
+  React.useEffect(() => {
+    const projectCardsData: IButtonProps[] = [];
+
+    if (props.project.downloadLink) {
+      projectCardsData.push({
+        data: {
+          type: ButtonType.Download,
+          link: props.project.downloadLink
+        },
+        href: props.project.downloadLink,
+        onRenderIcon: onRenderIcon
+      });
+    }
+
+    if (props.project.githubLink) {
+      projectCardsData.push({
+        data: {
+          type: ButtonType.Github,
+          link: props.project.githubLink
+        },
+        href: props.project.githubLink,
+        onRenderIcon: onRenderIcon
+      });
+    }
+
+    if (props.project.externalLink) {
+      projectCardsData.push({
+        data: {
+          type: ButtonType.External,
+          link: props.project.externalLink
+        },
+        href: props.project.externalLink,
+        onRenderIcon: onRenderIcon
+      });
+    }
+
+    setProjectCardActions(projectCardsData);
+
+  }, []);
 
   function onRenderIcon(buttonProps: IButtonProps | undefined) {
     if (!buttonProps) return null;
@@ -55,32 +96,7 @@ export const ProjectCard = (props: IProjectCard) => {
         <Stack horizontal tokens={{ childrenGap: 5, padding: 10 }} verticalAlign="center">
           {props.onEditButtonClicked !== undefined ? <PrimaryButton onClick={() => { if (props.onEditButtonClicked) props.onEditButtonClicked() }}>Edit</PrimaryButton> : <></>}
 
-          <DocumentCardActions actions={[
-            {
-              data: {
-                type: ButtonType.Github,
-                link: props.project.githubLink
-              },
-              href: props.project.githubLink,
-              onRenderIcon: onRenderIcon
-            },
-            {
-              data: {
-                type: ButtonType.Download,
-                link: props.project.downloadLink
-              },
-              href: props.project.downloadLink,
-              onRenderIcon: onRenderIcon
-            },
-            {
-              data: {
-                type: ButtonType.External,
-                link: props.project.externalLink
-              },
-              href: props.project.externalLink,
-              onRenderIcon: onRenderIcon
-            }
-          ]} />
+          <DocumentCardActions actions={projectCardActions} />
         </Stack>
       </DocumentCardDetails>
     </DocumentCard>
