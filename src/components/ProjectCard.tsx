@@ -91,7 +91,7 @@ export const ProjectCard = (props: IProjectCard) => {
       <DocumentCardDetails>
         <DocumentCardTitle styles={{ root: { padding: 5, height: "auto" } }} title={props.project.appName} />
         <Stack tokens={{ padding: 10 }}>
-          <Text>{props.project.description}</Text>
+          <Text style={{ overflowY: "auto", height: 60 }}>{props.project.description}</Text>
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
           {props.onEditButtonClicked !== undefined ? <PrimaryButton onClick={() => { if (props.onEditButtonClicked) props.onEditButtonClicked() }}>Edit</PrimaryButton> : <></>}
