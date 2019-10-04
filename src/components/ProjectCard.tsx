@@ -45,11 +45,11 @@ export const ProjectCard = (props: IProjectCard) => {
   }
 
   return (
-    <DocumentCard style={{ maxWidth: 300 }}>
+    <DocumentCard style={{ width: 275 }}>
       <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={props.project.heroImage} />
       <DocumentCardDetails>
-        <DocumentCardTitle title={props.project.appName} shouldTruncate />
-        <Stack tokens={{ padding: 15 }}>
+        <DocumentCardTitle styles={{ root: { padding: 5, height: "auto" } }} title={props.project.appName} />
+        <Stack tokens={{ padding: 10 }}>
           <Text>{props.project.description}</Text>
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 10 }} verticalAlign="center">
