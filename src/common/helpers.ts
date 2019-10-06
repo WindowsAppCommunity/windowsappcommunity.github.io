@@ -39,6 +39,8 @@ export const getHeadTitle = (path: string) => {
 }
 export const isLocalhost = window.location.host.includes("localhost") || navigator.userAgent.includes("ReactSnap");
 
+export const isReactSnap = navigator.userAgent.includes("ReactSnap");
+
 export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT" | "DELETE"), requestBody?: any): Promise<Response> {
     let headers: string[][] = [["Content-Type", "application/json"]];
 
