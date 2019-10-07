@@ -24,7 +24,7 @@ const FaIconStyle: CSSProperties = {
 export const AppHeader: React.StatelessComponent = (props: any) => {
   return (
     <Route render={({ history }) => (
-      <header style={{ marginBottom: "10px", maxWidth: "98vw" }}>
+      <header style={{ marginBottom: "10px", maxWidth: "100vw" }}>
         <Stack style={{ width: "100vw", margin: "0px" }} horizontal wrap tokens={{ childrenGap: 10 }} verticalAlign='end' horizontalAlign="space-around">
           <Helmet>
             <title>{getHeadTitle(props.location.pathname)}</title>
