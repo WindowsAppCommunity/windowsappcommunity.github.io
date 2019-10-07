@@ -35,14 +35,14 @@ let Img = styled.img`
 const LargeCard = styled.div`
 box-shadow: ${Depths.depth16};
 .heroImage, .heroImage img {
-  width: 620px;
+  width: 720px;
   height: 350px;
 }
 
-@media screen and (max-width: 1079px) {
+@media screen and (max-width: 1479px) {
   width: min-content;
   .heroImage, .heroImage img {
-      width: 750px;
+      width: 850px;
       height: 350px;
   }
 }
@@ -56,13 +56,13 @@ export const Home: React.StatelessComponent = () => {
       <Stack wrap horizontal horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
 
         <LargeCard>
-          <Stack horizontal wrap maxWidth="1200px" horizontalAlign="space-evenly">
-            <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchHeroImageHD} />
+          <Stack horizontal wrap maxWidth="1400px" horizontalAlign="space-evenly">
+            <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchAppsHero} />
 
             <Stack style={{ margin: "15px" }} verticalAlign="center">
-              <Text variant="xLargePlus">Launch 2020 signup coming soon</Text>
-              <Text variant="mediumPlus">Check back later</Text>
-              <PrimaryButton style={{ marginTop: "15px" }} text="Submit your app" disabled />
+              <Text variant="xLargePlus">Project registration now open!</Text>
+              <Text variant="mediumPlus">Register your apps/projects to showcase on our website and participate in Launch 2020!</Text>
+              <PrimaryButton href="/dashboard" style={{ marginTop: "15px", width: 150 }} text="Get started" />
             </Stack>
           </Stack>
         </LargeCard>
