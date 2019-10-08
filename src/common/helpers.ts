@@ -1,5 +1,5 @@
-import { AuthData, GetCurrentDiscordUser } from "./services/discord";
-import { backendHost } from "./const";
+import { AuthData } from "./services/discord";
+import { backendHost, backendProtocol } from "./const";
 
 export const getStoreUrl = (id: string) => {
     return `https://www.microsoft.com/store/apps/${id}`;
@@ -37,7 +37,6 @@ export const getHeadTitle = (path: string) => {
     }
     return title
 }
-export const isLocalhost = window.location.host.includes("localhost") || navigator.userAgent.includes("ReactSnap");
 
 export const isReactSnap = navigator.userAgent.includes("ReactSnap");
 
@@ -47,8 +46,7 @@ export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT
     let authData = await AuthData.Get();
     if (authData) headers.push(["authorization", authData.access_token])
 
-    let protocol = isLocalhost ? "http" : "https";
-    let url = `${protocol}://${backendHost}/${route}`;
+    let url = `${backendProtocol}://${backendHost}/${route}`;
 
     return await fetch(url, {
         headers: headers,
