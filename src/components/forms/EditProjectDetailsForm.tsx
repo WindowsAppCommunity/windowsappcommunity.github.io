@@ -1,12 +1,12 @@
 import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, MaskedTextField, Pivot, PivotItem, IComboBox } from "office-ui-fabric-react";
 import React, { FormEvent } from "react";
 import { IBackendReponseError } from "../../common/interfaces";
-import { CreateProject, ICreateProjectsRequestBody, IProject } from "../../common/services/projects";
+import { CreateProject, ICreateProjectsRequestBody, IProject, ModifyProject, IModifyProjectsRequestBody, GetProjectsByDiscordId } from "../../common/services/projects";
 import { MicrosoftStoreAppCategories } from "../../common/const";
 
 export interface IEditProjectDetailsFormProps {
     onCancel?: Function;
-    onSuccess: Function;
+    onSuccess: (updatedProject?: IProject) => void;
     projectData: Partial<IProject>;
     editing?: boolean;
 };
@@ -31,7 +31,15 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
     async function submitParticipantRequest() {
-        let request = await CreateProject(projectRequest as ICreateProjectsRequestBody);
+        let request;
+        if (props.editing) {
+            if (!props.projectData.appName) {
+                throw new Error("Unable to modify project details. Missing app name prop");
+            }
+            request = await ModifyProject(projectRequest as IModifyProjectsRequestBody, { appName: props.projectData.appName });
+        } else {
+            request = await CreateProject(projectRequest as ICreateProjectsRequestBody);
+        }
 
         let success = request.status === 200;
 
@@ -43,7 +51,8 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
         } else {
             setShowSuccessIndicator(true);
             setTimeout(() => {
-                props.onSuccess();
+                // TODO. Make a new request to get new project details, the below only is only a temporary solution
+                props.onSuccess(projectRequest as IProject);
             }, 2500);
         }
     }
@@ -128,7 +137,7 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                             <DefaultButton text="Cancel" onClick={() => props.onCancel ? props.onCancel() : undefined} />
                             : ""
                     }
-                    <PrimaryButton text="Register" onClick={submitParticipantRequest} />
+                    <PrimaryButton text={props.editing ? "Update" : "Register"} onClick={submitParticipantRequest} />
                 </Stack>
             </Stack>
         </Stack>
