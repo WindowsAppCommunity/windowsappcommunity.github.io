@@ -86,12 +86,12 @@ export function useProjects(year?: number): [IProjectsState, () => Promise<void>
             }
             setRes(prevState => ({ ...prevState, isLoading: false, projects }))
 
-            if (isReactSnap) {
+            /* if (isReactSnap) {
                 var script = document.createElement("script");
                 script.type = "text/javascript";
                 script.innerHTML = `window['${cacheKey}'] = ${JSON.stringify(projects)}`;
                 document.getElementsByTagName('head')[0].appendChild(script);
-            }
+            } */
         } catch (error) {
             setRes(prevState => ({ ...prevState, isLoading: false, error }))
         }
