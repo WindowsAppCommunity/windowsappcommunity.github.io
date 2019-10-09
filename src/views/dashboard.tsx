@@ -4,7 +4,7 @@ import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint
 
 import styled from "styled-components";
 import { CreateProjectForm } from "../components/forms/CreateProjectForm";
-import { GetProjectByDiscordId, IProject } from "../common/services/projects";
+import { GetProjectsByDiscordId, IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 
 const DashboardHeader = styled.header`
@@ -31,7 +31,7 @@ export const Dashboard = () => {
     }, []);
 
     async function getUserApps(user: IDiscordUser) {
-        const projects = await GetProjectByDiscordId(user.id);
+        const projects = await GetProjectsByDiscordId(user.id);
         setApps(projects);
     }
 
@@ -131,9 +131,7 @@ export const Dashboard = () => {
                             <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                                 {
                                     (apps && apps.length > 0 ? apps.map(project =>
-                                        <ProjectCard /* onEditButtonClicked={() => {
-                                    
-                                }} */ project={project}></ProjectCard>
+                                        <ProjectCard editable={true} project={project}></ProjectCard>
                                     ) : <Text variant="large">You don't have any registered apps</Text>)
                                 }
                             </Stack>
@@ -145,10 +143,11 @@ export const Dashboard = () => {
                             <Text variant="large">For now, this area is primarily for developers. Check back later for more</Text>
                         </Stack>}
 
-                <Dialog hidden={!appRegistrationShown} dialogContentProps={{
-                    type: DialogType.largeHeader,
-                    title: 'Register an app',
-                }}>
+                <Dialog hidden={!appRegistrationShown}
+                    dialogContentProps={{
+                        type: DialogType.largeHeader,
+                        title: 'Register an app',
+                    }}>
                     <CreateProjectForm projectData={{}} onSuccess={onAppRegisterFormSuccess} onCancel={() => setAppRegistrationShown(false)} />
                 </Dialog>
 

@@ -30,10 +30,18 @@ export interface ICreateProjectsRequestBody {
 
 
 export async function ModifyProject(projectData: IModifyProjectsRequestBody, queryData: IModifyProjectRequestQuery) {
-    return await fetchBackend(`projects?${ObjectToPathQuery(queryData)}`, "POST", projectData);
+    // Reformat microsoft store links to an international format
+    if (projectData.downloadLink) {
+        const storeId = match(projectData.downloadLink, /http.*microsoft\..*([\w\d]{12})[\/|?]?/);
+        if (storeId) {
+            projectData.downloadLink = `https://www.microsoft.com/store/apps/${storeId}`;
+        }
+    }
+
+    return await fetchBackend(`projects?${await ObjectToPathQuery(queryData)}`, "PUT", projectData);
 }
 
-export async function GetProjectByDiscordId(discordId: string): Promise<IProject[]> {
+export async function GetProjectsByDiscordId(discordId: string): Promise<IProject[]> {
     return (await fetchBackend(`projects?discordId=${discordId}`, "GET")).json();
 }
 
@@ -59,7 +67,7 @@ export function useProjects(year?: number): [IProjectsState, () => Promise<void>
     if (!isReactSnap && cache && cache.length) {
         initialState.projects = cache
     }
-    
+
     const [res, setRes] = useState<IProjectsState>(initialState)
 
     const getProjects = async () => {
@@ -88,7 +96,7 @@ export function useProjects(year?: number): [IProjectsState, () => Promise<void>
     return [res, getProjects]
 }
 
-interface IModifyProjectsRequestBody {
+export interface IModifyProjectsRequestBody {
     appName: string;
     description?: string;
     isPrivate: boolean;
@@ -104,7 +112,7 @@ interface IModifyProjectsRequestBody {
     awaitingLaunchApproval: boolean;
 }
 
-interface IModifyProjectRequestQuery {
+export interface IModifyProjectRequestQuery {
     /** @summary The app name that's being modified */
     appName: string;
 }
