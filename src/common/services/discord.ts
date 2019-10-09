@@ -1,4 +1,4 @@
-import { backendHost } from "../const";
+import { getBackendHost } from "../const";
 import { isLocalhost, fetchBackend } from "../helpers";
 
 export const uwpCommunityGuildId = 372137812037730304;
@@ -39,7 +39,7 @@ export async function RefreshTokenIfNeeded() {
     if (!auth) return;
 
     if (auth.expires_at && auth.expires_at < UnixTime) {
-        let refreshData: IDiscordAuthResponse = await (await fetch(`https://${backendHost}/signin/refresh?refreshToken=${auth.refresh_token}`)).json();
+        let refreshData: IDiscordAuthResponse = await (await fetch(`https://${getBackendHost()}/signin/refresh?refreshToken=${auth.refresh_token}`)).json();
 
         if (refreshData.expires_in) refreshData.expires_at = UnixTime + refreshData.expires_in;
 

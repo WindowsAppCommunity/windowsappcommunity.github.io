@@ -49,6 +49,6 @@ export const MicrosoftStoreAppCategories = [
   "Utilities & tools"
 ];
 
-export const backendHost: string = (
-  isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
-); 
+export function getBackendHost(): string {
+  return isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
+}
