@@ -1,5 +1,5 @@
-import { AuthData, GetCurrentDiscordUser } from "./services/discord";
-import { backendHost } from "./const";
+import { AuthData } from "./services/discord";
+import { getBackendHost } from "./const";
 
 export const getStoreUrl = (id: string) => {
     return `https://www.microsoft.com/store/apps/${id}`;
@@ -66,7 +66,7 @@ export function match(toMatch: string, regex: RegExp) {
     let m = regex.exec(toMatch);
     return (m && m[1]) ? m[1] : undefined;
 }
-export async function ObjectToPathQuery(data: object) {
+export function ObjectToPathQuery(data: object) {
     let queryString: string = "";
     for (let [key, value] of Object.entries(data)) {
         queryString += `${key}=${value}&`;
