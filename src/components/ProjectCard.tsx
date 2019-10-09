@@ -1,5 +1,5 @@
-import { IProject } from "../common/services/projects";
-import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton } from "office-ui-fabric-react";
+import { IProject, DeleteProject } from "../common/services/projects";
+import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, DialogFooter } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
@@ -26,47 +26,48 @@ export interface IProjectCard {
 export const ProjectCard = (props: IProjectCard) => {
   const [projectCardActions, setProjectCardActions] = React.useState<IButtonProps[]>([]);
   const [showEditDialog, setShowEditDialog] = React.useState<boolean>(false);
-  const [projectViewModel, setProjectViewModel] = React.useState<IProject>(props.project);
+  const [showDeleteProjectDialog, setShowDeleteProjectDialog] = React.useState(false);
+  const [ViewModel, setProjectViewModel] = React.useState<IProject>(props.project);
 
   React.useEffect(() => {
     const projectCardsData: IButtonProps[] = [];
 
-    if (projectViewModel.downloadLink) {
+    if (ViewModel.downloadLink) {
       projectCardsData.push({
         data: {
           type: ButtonType.Download,
-          link: projectViewModel.downloadLink
+          link: ViewModel.downloadLink
         },
-        href: projectViewModel.downloadLink,
+        href: ViewModel.downloadLink,
         onRenderIcon: onRenderIcon
       });
     }
 
-    if (projectViewModel.githubLink) {
+    if (ViewModel.githubLink) {
       projectCardsData.push({
         data: {
           type: ButtonType.Github,
-          link: projectViewModel.githubLink
+          link: ViewModel.githubLink
         },
-        href: projectViewModel.githubLink,
+        href: ViewModel.githubLink,
         onRenderIcon: onRenderIcon
       });
     }
 
-    if (projectViewModel.externalLink) {
+    if (ViewModel.externalLink) {
       projectCardsData.push({
         data: {
           type: ButtonType.External,
-          link: projectViewModel.externalLink
+          link: ViewModel.externalLink
         },
-        href: projectViewModel.externalLink,
+        href: ViewModel.externalLink,
         onRenderIcon: onRenderIcon
       });
     }
 
     setProjectCardActions(projectCardsData);
 
-  }, [projectViewModel.githubLink, projectViewModel.externalLink, projectViewModel.downloadLink]);
+  }, [ViewModel.githubLink, ViewModel.externalLink, ViewModel.downloadLink]);
 
   function onRenderIcon(buttonProps: IButtonProps | undefined) {
     if (!buttonProps) return null;
@@ -90,21 +91,48 @@ export const ProjectCard = (props: IProjectCard) => {
 
   return (
     <DocumentCard style={{ width: 275 }}>
-      <Dialog dialogContentProps={{ styles: { title: { padding: "16px 16px 5px 24px" } } }} styles={{}} hidden={!showEditDialog} title={`Edit ${projectViewModel.appName}`} onDismiss={() => { setShowEditDialog(false) }}>
-        <EditProjectDetailsForm editing projectData={projectViewModel} onSuccess={(updatedProject) => {
+
+      <Dialog hidden={!showEditDialog} title={`Edit ${ViewModel.appName}`}
+        dialogContentProps={{
+          styles: { title: { padding: "16px 16px 5px 24px", margin: 0 } },
+          type: DialogType.largeHeader
+        }}
+        onDismiss={() => {
+          setShowEditDialog(false)
+        }}>
+        <EditProjectDetailsForm editing projectData={ViewModel} onSuccess={(updatedProject) => {
           setShowEditDialog(false);
           if (updatedProject) setProjectViewModel(updatedProject);
         }} />
       </Dialog>
-      <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={projectViewModel.heroImage} />
+      <Dialog hidden={!showDeleteProjectDialog}
+        dialogContentProps={{
+          styles: { title: { padding: "16px 16px 8px 24px", fontSize: 20 }, subText: { fontSize: 16 } },
+          type: DialogType.largeHeader,
+          title: `Are you sure?`,
+          subText: `This action can't be undone`
+        }}
+        onDismiss={() => { setShowDeleteProjectDialog(false) }}>
+        <Stack horizontal tokens={{ childrenGap: 7 }}>
+          <DefaultButton style={{ backgroundColor: "#cc0000", color: "#fff", borderColor: "#cc0000" }} text={`Yes, delete`}
+            onClick={async () => {
+              await DeleteProject({ appName: ViewModel.appName }); setShowDeleteProjectDialog(false);
+            }} />
+          <PrimaryButton onClick={() => { setShowDeleteProjectDialog(false); }} text="Cancel" />
+        </Stack>
+      </Dialog>
+
+      <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={ViewModel.heroImage} />
       <DocumentCardDetails>
-        <DocumentCardTitle styles={{ root: { padding: 5, height: "auto" } }} title={projectViewModel.appName} />
+        <DocumentCardTitle styles={{ root: { padding: 5, height: "auto" } }} title={ViewModel.appName} />
         <Stack tokens={{ padding: 10 }}>
-          <Text style={{ overflowY: "auto", height: 60 }}>{projectViewModel.description}</Text>
+          <Text style={{ overflowY: "auto", height: 60 }}>{ViewModel.description}</Text>
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
-          {props.editable !== undefined ?
+          {props.editable !== undefined ? (<>
             <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
+            <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
+          </>)
             : <></>}
 
           <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
