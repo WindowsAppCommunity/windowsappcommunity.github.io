@@ -38,7 +38,11 @@ export async function ModifyProject(projectData: IModifyProjectsRequestBody, que
         }
     }
 
-    return await fetchBackend(`projects?${await ObjectToPathQuery(queryData)}`, "PUT", projectData);
+    return await fetchBackend(`projects?${ObjectToPathQuery(queryData)}`, "PUT", projectData);
+}
+
+export async function DeleteProject(bodyData: IDeleteProjectRequestBody) {
+    return await fetchBackend(`projects`, "DELETE", bodyData);
 }
 
 export async function GetProjectsByDiscordId(discordId: string): Promise<IProject[]> {
@@ -114,6 +118,11 @@ export interface IModifyProjectsRequestBody {
 
 export interface IModifyProjectRequestQuery {
     /** @summary The app name that's being modified */
+    appName: string;
+}
+
+export interface IDeleteProjectRequestBody {
+    /** @summary The app name that's being deleted */
     appName: string;
 }
 
