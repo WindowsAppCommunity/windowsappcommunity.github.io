@@ -119,7 +119,6 @@ export const Dashboard = () => {
             </DashboardHeader>
 
             <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
-                {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
                 {
                     roles.includes("Developer") ?
                         <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
