@@ -7,6 +7,7 @@ import { CreateProjectForm } from "../components/forms/CreateProjectForm";
 import { IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetUserProjects } from "../common/services/users";
+import { ProjectApprovalPanel } from "../components/ProjectApprovalPanel";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -166,7 +167,12 @@ export const Dashboard = () => {
                     </Stack>
                 </Dialog>
             </Stack>
-
+            
+            {
+                roles.includes("Mod") || roles.includes("Admin") ?
+                    <ProjectApprovalPanel></ProjectApprovalPanel>
+                    : <></>
+            }
         </Stack >
     )
 };
