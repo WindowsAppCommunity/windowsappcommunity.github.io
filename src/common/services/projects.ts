@@ -45,10 +45,6 @@ export async function DeleteProject(bodyData: IDeleteProjectRequestBody) {
     return await fetchBackend(`projects`, "DELETE", bodyData);
 }
 
-export async function GetProjectsByDiscordId(discordId: string): Promise<IProject[]> {
-    return (await fetchBackend(`projects?discordId=${discordId}`, "GET")).json();
-}
-
 export async function GetAllProjects(): Promise<IProject[]> {
     return (await fetchBackend(`projects`, "GET")).json();
 }

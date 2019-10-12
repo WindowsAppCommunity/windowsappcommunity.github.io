@@ -4,8 +4,9 @@ import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint
 
 import styled from "styled-components";
 import { CreateProjectForm } from "../components/forms/CreateProjectForm";
-import { GetProjectsByDiscordId, IProject } from "../common/services/projects";
+import { IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
+import { GetUserProjects } from "../common/services/users";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -31,7 +32,7 @@ export const Dashboard = () => {
     }, []);
 
     async function getUserApps(user: IDiscordUser) {
-        const projects = await GetProjectsByDiscordId(user.id);
+        const projects = await GetUserProjects(user.id);
         setApps(projects);
     }
 

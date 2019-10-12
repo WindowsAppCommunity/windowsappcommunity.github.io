@@ -1,7 +1,7 @@
-import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, MaskedTextField, Pivot, PivotItem, IComboBox } from "office-ui-fabric-react";
+import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, Pivot, PivotItem, IComboBox } from "office-ui-fabric-react";
 import React, { FormEvent } from "react";
 import { IBackendReponseError } from "../../common/interfaces";
-import { CreateProject, ICreateProjectsRequestBody, IProject, ModifyProject, IModifyProjectsRequestBody, GetProjectsByDiscordId } from "../../common/services/projects";
+import { CreateProject, ICreateProjectsRequestBody, IProject, ModifyProject, IModifyProjectsRequestBody } from "../../common/services/projects";
 import { MicrosoftStoreAppCategories } from "../../common/const";
 
 export interface IEditProjectDetailsFormProps {
