@@ -1,5 +1,6 @@
 import { AuthData } from "./services/discord";
 import { getBackendHost } from "./const";
+import { useState } from "react";
 
 export const getStoreUrl = (id: string) => {
     return `https://www.microsoft.com/store/apps/${id}`;
@@ -75,6 +76,33 @@ export function ObjectToPathQuery(data: object) {
     if (queryString.charAt(queryString.length - 1) === "&") queryString = queryString.slice(0, -1);
     return queryString;
 }
+
+export interface INetworkState<T> {
+    results?: T[]
+    error?: Error
+    isLoading: boolean
+}
+
+export function useNetwork<T>(getFunc: (params?: any) => Promise<T[]>): [INetworkState<T>, (params?: any) => Promise<void>] {
+    const initialState: INetworkState<T> = { isLoading: false }
+
+    const [res, setRes] = useState<INetworkState<T>>(initialState)
+
+    const makeRequest = async (params?: any) => {
+        setRes(prevState => ({ ...prevState, isLoading: true }))
+
+        let results: T[]
+        try {
+            results = await getFunc(params)
+            setRes(prevState => ({ ...prevState, isLoading: false, results }))
+        } catch (error) {
+            setRes(prevState => ({ ...prevState, isLoading: false, error }))
+        }
+    }
+
+    return [res, makeRequest]
+}
+
 export default {
     getDiscordUrl, getGithubUrl, getStoreUrl
 }

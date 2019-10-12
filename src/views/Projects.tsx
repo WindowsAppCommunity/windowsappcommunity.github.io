@@ -14,7 +14,7 @@ export const Projects: React.StatelessComponent = () => {
     /* Todo: Add a header with brief explanation of the below */
     <>
       <Stack horizontalAlign="center" horizontal wrap tokens={{ childrenGap: 10 }}>
-        {!state.projects && state.isLoading &&
+        {!state.results && state.isLoading &&
           <Stack horizontalAlign="center" style={{ marginTop: "25vh" }}>
             <Spinner label="Loading Projects..." />
           </Stack>
@@ -25,8 +25,8 @@ export const Projects: React.StatelessComponent = () => {
             <Text variant="xLarge">An error occured getting projects</Text>
           </Stack>      
         )}
-        {state.projects && (
-          state.projects.length > 0 ? state.projects.map((project, i) => (
+        {state.results && (
+          state.results.length > 0 ? state.results.map((project, i) => (
             <ProjectCard key={i} project={project}></ProjectCard>
           )) : (
             <Stack horizontalAlign="center" style={{ marginTop: "25vh" }}>
@@ -37,7 +37,7 @@ export const Projects: React.StatelessComponent = () => {
         )}
       </Stack>
       
-      {state.projects && state.isLoading && (
+      {state.results && state.isLoading && (
         <ProgressIndicator />
       )}
     </>

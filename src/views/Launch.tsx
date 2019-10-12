@@ -11,11 +11,11 @@ import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
 
 export const Launch = () => {
-    const [state, getProjects] = useProjects(2020);
+    const [state, getProjects] = useProjects();
     const [user, setUser] = React.useState<IDiscordUser>();
 
     React.useEffect(()=>{
-        getProjects();
+        getProjects(2020);
         (async () => {
             setUser(await GetCurrentDiscordUser());
         })();
@@ -35,11 +35,11 @@ export const Launch = () => {
                 </Stack>
             </Stack>
 
-            {state.projects && state.projects.length ? <Text variant="xLarge">Launch 2020 Participants</Text> : <></>}
+            {state.results && state.results.length ? <Text variant="xLarge">Launch 2020 Participants</Text> : <></>}
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
                 {/* Todo: Add launch 2019 summary */}
-                {state.projects && state.projects.length && state.projects.map((project, i) => <ProjectCard key={i} project={project} />)}
-                {!state.projects && state.isLoading && <Spinner label="Checking for Launch 2020 Participants" />}
+                {state.results && state.results.length && state.results.map((project, i) => <ProjectCard key={i} project={project} />)}
+                {!state.results && state.isLoading && <Spinner label="Checking for Launch 2020 Participants" />}
                 {state.error && (
                     <Stack horizontalAlign="center">
                         <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
@@ -48,7 +48,7 @@ export const Launch = () => {
                 )}
             </Stack>
 
-            {state.projects && state.isLoading && (
+            {state.results && state.isLoading && (
                 <ProgressIndicator />
             )}
         </Stack>
