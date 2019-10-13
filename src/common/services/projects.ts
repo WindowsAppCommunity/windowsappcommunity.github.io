@@ -1,5 +1,5 @@
 import { IUser } from "./users";
-import { fetchBackend, ObjectToPathQuery, match, usePromise } from "../helpers";
+import { fetchBackend, ObjectToPathQuery, match } from "../helpers";
 
 export async function CreateProject(projectData: ICreateProjectsRequestBody): Promise<Response> {
     // Reformat microsoft store links to an international format
@@ -50,16 +50,6 @@ export async function GetAllProjects(): Promise<IProject[]> {
 
 export async function GetLaunchProjects(year: number): Promise<IProject[]> {
     return (await (await fetchBackend(`projects`, "GET")).json()).filter((project: IProject) => project.launchYear == year && project.awaitingLaunchApproval == false);
-}
-
-export function useProjects () {
-    return usePromise<IProject[]>(async (year?: number) => {
-        if (!year) {
-            return await GetAllProjects()
-        } else {
-            return await GetLaunchProjects(year)
-        }
-    })
 }
 
 export interface IModifyProjectsRequestBody {

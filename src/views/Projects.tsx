@@ -1,18 +1,16 @@
 import * as React from "react";
-import { Stack, Text, FontIcon, Spinner, ProgressIndicator } from "office-ui-fabric-react";
-import { useProjects } from "../common/services/projects";
+import { Stack, Text, FontIcon } from "office-ui-fabric-react";
+import { GetAllProjects } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
-import { PromiseWrapper } from "../components/PromiseWrapper";
+import { PromiseVisualizer, useStatePromise } from "../components/PromiseVisualizer";
 
 export const Projects: React.StatelessComponent = () => {
-  const [state, getProjects] = useProjects();
+  const [state, setState] = useStatePromise(GetAllProjects());
 
   return (
     /* Todo: Add a header with brief explanation of the below */
     <Stack horizontalAlign="center" horizontal wrap tokens={{ childrenGap: 10 }}>
-      <PromiseWrapper hook={[state, getProjects]}
-        loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} 
-        errorMessage='An error occured getting projects' errorStyle={{ marginTop: "25vh" }}>
+      <PromiseVisualizer hook={[state, setState]} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
         {state.results && (
           state.results.length > 0 ? state.results.map((project, i) => (
             <ProjectCard key={i} project={project}></ProjectCard>
@@ -23,7 +21,7 @@ export const Projects: React.StatelessComponent = () => {
               </Stack>
             )
         )}
-      </PromiseWrapper>
+      </PromiseVisualizer>
     </Stack>
   );
 };

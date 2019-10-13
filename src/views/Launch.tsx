@@ -1,18 +1,17 @@
-import React, { useState, CSSProperties } from "react";
-import { Text, Stack, FontIcon, Spinner, Image, ImageCoverStyle, ImageFit, ProgressIndicator } from "office-ui-fabric-react";
+import React, { CSSProperties } from "react";
+import { Text, Stack, Image, ImageCoverStyle, ImageFit, ProgressIndicator } from "office-ui-fabric-react";
 import styled from 'styled-components';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HoverBox from '../components/HoverBox';
 import { Images } from "../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
-import { useProjects, IProject } from "../common/services/projects";
+import { IProject, GetLaunchProjects } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
-import { PromiseWrapper } from "../components/PromiseWrapper";
+import { PromiseVisualizer, useStatePromise } from "../components/PromiseVisualizer";
 
 export const Launch = () => {
-    const [state, getProjects] = useProjects();
+    const [launchProjects, setLaunchProjects] = useStatePromise<IProject[]>(GetLaunchProjects(2020));
     const [user, setUser] = React.useState<IDiscordUser>();
 
     React.useEffect(()=>{
@@ -35,17 +34,15 @@ export const Launch = () => {
                 </Stack>
             </Stack>
 
-            {state.results && state.results.length ? <Text variant="xLarge">Launch 2020 Participants</Text> : <></>}
+            {launchProjects.results && launchProjects.results.length ? <Text variant="xLarge">Launch 2020 Participants</Text> : <></>}
 
-            <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
-                <PromiseWrapper hook={[state, () => getProjects(2020)]}
-                    loadingMessage="Checking for Launch 2020 Participants"
-                    errorMessage="An error occured getting launch participants">
-                    {state.results && state.results.length && state.results.map((project, i) =>
-                        <ProjectCard key={i} project={project} />
-                    )}
-                </PromiseWrapper>
-            </Stack>
+            <PromiseVisualizer hook={[launchProjects, setLaunchProjects]} loadingMessage="Checking for Launch 2020 Participants">
+                <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
+                        {launchProjects.results && launchProjects.results.length && launchProjects.results.map((project, i) => 
+                            <ProjectCard key={i} project={project} />
+                            )}
+                </Stack>
+            </PromiseVisualizer>
         </Stack>
     );
 };

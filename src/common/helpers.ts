@@ -77,32 +77,6 @@ export function ObjectToPathQuery(data: object) {
     return queryString;
 }
 
-export interface IPromiseState<T> {
-    results?: T
-    error?: Error
-    isLoading: boolean
-}
-
-export function usePromise<T>(getFunc: (params?: any) => Promise<T>): [IPromiseState<T>, (params?: any) => Promise<void>] {
-    const initialState: IPromiseState<T> = { isLoading: false }
-
-    const [result, setResult] = useState<IPromiseState<T>>(initialState)
-
-    const runPromise = async (params?: any) => {
-        setResult(prevState => ({ ...prevState, isLoading: true }))
-
-        let results: T
-        try {
-            results = await getFunc(params)
-            setResult(prevState => ({ ...prevState, isLoading: false, results }))
-        } catch (error) {
-            setResult(prevState => ({ ...prevState, isLoading: false, error }))
-        }
-    }
-
-    return [result, runPromise]
-}
-
 export default {
     getDiscordUrl, getGithubUrl, getStoreUrl
 }
