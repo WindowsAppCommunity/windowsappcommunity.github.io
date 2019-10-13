@@ -77,30 +77,30 @@ export function ObjectToPathQuery(data: object) {
     return queryString;
 }
 
-export interface INetworkState<T> {
-    results?: T[]
+export interface IPromiseState<T> {
+    results?: T
     error?: Error
     isLoading: boolean
 }
 
-export function useNetwork<T>(getFunc: (params?: any) => Promise<T[]>): [INetworkState<T>, (params?: any) => Promise<void>] {
-    const initialState: INetworkState<T> = { isLoading: false }
+export function usePromise<T>(getFunc: (params?: any) => Promise<T>): [IPromiseState<T>, (params?: any) => Promise<void>] {
+    const initialState: IPromiseState<T> = { isLoading: false }
 
-    const [res, setRes] = useState<INetworkState<T>>(initialState)
+    const [result, setResult] = useState<IPromiseState<T>>(initialState)
 
-    const makeRequest = async (params?: any) => {
-        setRes(prevState => ({ ...prevState, isLoading: true }))
+    const runPromise = async (params?: any) => {
+        setResult(prevState => ({ ...prevState, isLoading: true }))
 
-        let results: T[]
+        let results: T
         try {
             results = await getFunc(params)
-            setRes(prevState => ({ ...prevState, isLoading: false, results }))
+            setResult(prevState => ({ ...prevState, isLoading: false, results }))
         } catch (error) {
-            setRes(prevState => ({ ...prevState, isLoading: false, error }))
+            setResult(prevState => ({ ...prevState, isLoading: false, error }))
         }
     }
 
-    return [res, makeRequest]
+    return [result, runPromise]
 }
 
 export default {

@@ -9,14 +9,13 @@ import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import { useProjects, IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
-import { LoadingWrapper } from "../components/LoadingWrapper";
+import { PromiseWrapper } from "../components/PromiseWrapper";
 
 export const Launch = () => {
     const [state, getProjects] = useProjects();
     const [user, setUser] = React.useState<IDiscordUser>();
 
     React.useEffect(()=>{
-        getProjects(2020);
         (async () => {
             setUser(await GetCurrentDiscordUser());
         })();
@@ -39,15 +38,13 @@ export const Launch = () => {
             {state.results && state.results.length ? <Text variant="xLarge">Launch 2020 Participants</Text> : <></>}
 
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
-                <LoadingWrapper loadingMessage="Checking for Launch 2020 Participants" isReady={!state.isLoading} >
-                    {state.results && state.results.length && state.results.map((project, i) => <ProjectCard key={i} project={project} />)}
-                    {state.error && (
-                        <Stack horizontalAlign="center">
-                            <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
-                            <Text variant="xLarge">An error occured getting launch participants</Text>
-                        </Stack>
+                <PromiseWrapper hook={[state, () => getProjects(2020)]}
+                    loadingMessage="Checking for Launch 2020 Participants"
+                    errorMessage="An error occured getting launch participants">
+                    {state.results && state.results.length && state.results.map((project, i) =>
+                        <ProjectCard key={i} project={project} />
                     )}
-                </LoadingWrapper>
+                </PromiseWrapper>
             </Stack>
         </Stack>
     );

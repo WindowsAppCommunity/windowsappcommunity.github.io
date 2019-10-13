@@ -1,5 +1,5 @@
 import { IUser } from "./users";
-import { fetchBackend, ObjectToPathQuery, match, useNetwork } from "../helpers";
+import { fetchBackend, ObjectToPathQuery, match, usePromise } from "../helpers";
 
 export async function CreateProject(projectData: ICreateProjectsRequestBody): Promise<Response> {
     // Reformat microsoft store links to an international format
@@ -53,7 +53,7 @@ export async function GetLaunchProjects(year: number): Promise<IProject[]> {
 }
 
 export function useProjects () {
-    return useNetwork<IProject>(async (year?: number) => {
+    return usePromise<IProject[]>(async (year?: number) => {
         if (!year) {
             return await GetAllProjects()
         } else {
