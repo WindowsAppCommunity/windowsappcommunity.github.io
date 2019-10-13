@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Text, Stack, Image, ImageCoverStyle, ImageFit, ProgressIndicator } from "office-ui-fabric-react";
+import { Text, Stack, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
 import styled from 'styled-components';
 
 import HoverBox from '../components/HoverBox';
@@ -8,10 +8,10 @@ import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import { IProject, GetLaunchProjects } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
-import { PromiseVisualizer, useStatePromise } from "../components/PromiseVisualizer";
+import { PromiseVisualizer } from "../components/PromiseVisualizer";
 
 export const Launch = () => {
-    const [launchProjects, setLaunchProjects] = useStatePromise<IProject[]>(GetLaunchProjects(2020));
+    const [launchProjects, setLaunchProjects] = React.useState<IProject[]>();
     const [user, setUser] = React.useState<IDiscordUser>();
 
     React.useEffect(()=>{
@@ -34,14 +34,13 @@ export const Launch = () => {
                 </Stack>
             </Stack>
 
-            {launchProjects.results && launchProjects.results.length ? <Text variant="xLarge">Launch 2020 Participants</Text> : <></>}
-
-            <PromiseVisualizer hook={[launchProjects, setLaunchProjects]} loadingMessage="Checking for Launch 2020 Participants">
-                <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
-                        {launchProjects.results && launchProjects.results.length && launchProjects.results.map((project, i) => 
-                            <ProjectCard key={i} project={project} />
-                            )}
-                </Stack>
+            <PromiseVisualizer promise={GetLaunchProjects(2020)} hook={[launchProjects, setLaunchProjects]} loadingMessage="Checking for Launch 2020 Participants">
+            <Text variant="xLarge">Launch 2020 Participants</Text>
+            <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
+                {launchProjects && launchProjects.length && launchProjects.map((project, i) => 
+                    <ProjectCard key={i} project={project} />
+                )}
+            </Stack>
             </PromiseVisualizer>
         </Stack>
     );
