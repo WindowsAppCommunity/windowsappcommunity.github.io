@@ -34,7 +34,7 @@ export const Launch = () => {
                 </Stack>
             </Stack>
 
-            <PromiseVisualizer promise={GetLaunchProjects(2020)} hook={[launchProjects, setLaunchProjects]} loadingMessage="Checking for Launch 2020 Participants">
+            <PromiseVisualizer promise={GetLaunchProjects(2020)} stateSetter={setLaunchProjects} loadingMessage="Checking for Launch 2020 Participants">
             <Text variant="xLarge">Launch 2020 Participants</Text>
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
                 {launchProjects && launchProjects.length && launchProjects.map((project, i) => 

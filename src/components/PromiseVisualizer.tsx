@@ -5,7 +5,7 @@ interface IPromiseVisualizerProps<T> {
     loadingMessage?: string
     loadingStyle?: React.CSSProperties
     errorStyle?: React.CSSProperties
-    hook: [T, React.Dispatch<T>],
+    stateSetter: React.Dispatch<T>,
     promise: Promise<T>,
     children?: React.ReactNode
 }
@@ -19,14 +19,13 @@ export interface IStatePromiseState<T> {
 export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
     const initialState: IStatePromiseState<T> = { isLoading: false };
     const [visualState, setVisualState] = React.useState<IStatePromiseState<T>>(initialState);
-    const [hookData, setHookData] = props.hook;
 
     async function runPromise() {
         setVisualState(prevState => ({ ...prevState, isLoading: true }));
 
         try {
             let results = await props.promise;
-            setHookData(results);
+            props.stateSetter(results);
             setVisualState(prevState => ({ ...prevState, isLoading: false }));
         } catch (error) {
             setVisualState(prevState => ({ ...prevState, isLoading: false, error }));
