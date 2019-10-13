@@ -9,6 +9,7 @@ import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import { useProjects, IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
+import { LoadingWrapper } from "../components/LoadingWrapper";
 
 export const Launch = () => {
     const [state, getProjects] = useProjects();
@@ -36,21 +37,18 @@ export const Launch = () => {
             </Stack>
 
             {state.results && state.results.length ? <Text variant="xLarge">Launch 2020 Participants</Text> : <></>}
-            <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
-                {/* Todo: Add launch 2019 summary */}
-                {state.results && state.results.length && state.results.map((project, i) => <ProjectCard key={i} project={project} />)}
-                {!state.results && state.isLoading && <Spinner label="Checking for Launch 2020 Participants" />}
-                {state.error && (
-                    <Stack horizontalAlign="center">
-                        <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
-                        <Text variant="xLarge">An error occured getting launch participants</Text>
-                    </Stack>
-                )}
-            </Stack>
 
-            {state.results && state.isLoading && (
-                <ProgressIndicator />
-            )}
+            <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
+                <LoadingWrapper loadingMessage="Checking for Launch 2020 Participants" isReady={!state.isLoading} >
+                    {state.results && state.results.length && state.results.map((project, i) => <ProjectCard key={i} project={project} />)}
+                    {state.error && (
+                        <Stack horizontalAlign="center">
+                            <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
+                            <Text variant="xLarge">An error occured getting launch participants</Text>
+                        </Stack>
+                    )}
+                </LoadingWrapper>
+            </Stack>
         </Stack>
     );
 };
