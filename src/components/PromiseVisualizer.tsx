@@ -5,38 +5,35 @@ interface IPromiseVisualizerProps<T> {
     loadingMessage?: string
     loadingStyle?: React.CSSProperties
     errorStyle?: React.CSSProperties
-    stateSetter: React.Dispatch<T>,
+    stateSetter: any
     promise: Promise<T>,
     children?: React.ReactNode
 }
 
-export interface IStatePromiseState<T> {
+export interface IUsePromiseState<T> {
     results?: T
     error?: Error
     isLoading: boolean
 }
 
-export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
-    const initialState: IStatePromiseState<T> = { isLoading: false };
-    const [visualState, setVisualState] = React.useState<IStatePromiseState<T>>(initialState);
-
-    async function runPromise() {
-        setVisualState(prevState => ({ ...prevState, isLoading: true }));
-
-        try {
-            let results = await props.promise;
-            props.stateSetter(results);
-            setVisualState(prevState => ({ ...prevState, isLoading: false }));
-        } catch (error) {
-            setVisualState(prevState => ({ ...prevState, isLoading: false, error }));
-        }
-    }
+export function usePromise<T>(promise: (Promise<T>)): IUsePromiseState<T> {
+    const [visualState, setVisualState] = React.useState<IUsePromiseState<T>>({ isLoading: true });
 
     React.useEffect(() => {
-        runPromise();
-    }, [])
+        promise.then(results => {
+            setVisualState(prevState => ({ ...prevState, isLoading: false, results }));
+        }).catch(error => {
+            setVisualState(prevState => ({ ...prevState, isLoading: false, error }));
+        });
+    }, [visualState]);
 
-    if (visualState.isLoading) {
+    return visualState;
+};
+
+export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
+    const promiseState = usePromise(props.promise);
+
+    if (promiseState.isLoading) {
         return (
             <Stack horizontalAlign="center" style={props.loadingStyle}>
                 <Spinner label={props.loadingMessage} />
@@ -44,7 +41,7 @@ export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
         )
     }
 
-    if (visualState.error) {
+    if (promiseState.error) {
         return (
             <Stack horizontalAlign="center" style={props.errorStyle}>
                 <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
@@ -53,6 +50,9 @@ export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
         )
     }
 
-    /* If not loading and no error */
-    return <>{props.children}</>
+    if (promiseState.results) {
+        props.stateSetter(promiseState.results);
+        return <>{props.children}</>
+    }
+    return <></>
 }
