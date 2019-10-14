@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Stack, Spinner, FontIcon, Text } from "office-ui-fabric-react";
+import { usePromise } from "../common/helpers";
 
 interface IPromiseVisualizerProps<T> {
     loadingMessage?: string
@@ -9,26 +10,6 @@ interface IPromiseVisualizerProps<T> {
     promise: Promise<T>
     children?: React.ReactNode
 }
-
-export interface IUsePromiseState<T> {
-    results?: T
-    error?: Error
-    isLoading: boolean
-}
-
-export function usePromise<T>(promise: (Promise<T>)): IUsePromiseState<T> {
-    const [visualState, setVisualState] = React.useState<IUsePromiseState<T>>({ isLoading: true });
-
-    React.useEffect(() => {
-        promise.then(results => {
-            setVisualState(prevState => ({ ...prevState, isLoading: false, results }));
-        }).catch(error => {
-            setVisualState(prevState => ({ ...prevState, isLoading: false, error }));
-        });
-    }, [visualState]);
-
-    return visualState;
-};
 
 export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
     const promiseState = usePromise(props.promise);
