@@ -1,21 +1,20 @@
-import React, { useState, CSSProperties } from "react";
-import { Text, Stack, FontIcon, Spinner, Image, ImageCoverStyle, ImageFit, ProgressIndicator } from "office-ui-fabric-react";
+import React, { CSSProperties } from "react";
+import { Text, Stack, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
 import styled from 'styled-components';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HoverBox from '../components/HoverBox';
 import { Images } from "../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
-import { useProjects, IProject } from "../common/services/projects";
+import { IProject, GetLaunchProjects } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
+import { PromiseVisualizer } from "../components/PromiseVisualizer";
 
 export const Launch = () => {
-    const [state, getProjects] = useProjects(2020);
+    const [launchProjects, setLaunchProjects] = React.useState<IProject[]>();
     const [user, setUser] = React.useState<IDiscordUser>();
 
     React.useEffect(()=>{
-        getProjects();
         (async () => {
             setUser(await GetCurrentDiscordUser());
         })();
@@ -35,22 +34,14 @@ export const Launch = () => {
                 </Stack>
             </Stack>
 
-            {state.projects && state.projects.length ? <Text variant="xLarge">Launch 2020 Participants</Text> : <></>}
+            <PromiseVisualizer promise={GetLaunchProjects(2020)} onResolve={setLaunchProjects} loadingMessage="Checking for Launch 2020 Participants">
+            <Text variant="xLarge">Launch 2020 Participants</Text>
             <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
-                {/* Todo: Add launch 2019 summary */}
-                {state.projects && state.projects.length && state.projects.map((project, i) => <ProjectCard key={i} project={project} />)}
-                {!state.projects && state.isLoading && <Spinner label="Checking for Launch 2020 Participants" />}
-                {state.error && (
-                    <Stack horizontalAlign="center">
-                        <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
-                        <Text variant="xLarge">An error occured getting launch participants</Text>
-                    </Stack>
+                {launchProjects && launchProjects.length && launchProjects.map((project, i) => 
+                    <ProjectCard key={i} project={project} />
                 )}
             </Stack>
-
-            {state.projects && state.isLoading && (
-                <ProgressIndicator />
-            )}
+            </PromiseVisualizer>
         </Stack>
     );
 };

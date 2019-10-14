@@ -1,5 +1,6 @@
 import { AuthData } from "./services/discord";
 import { getBackendHost } from "./const";
+import { useState, useEffect } from "react";
 
 export const getStoreUrl = (id: string) => {
     return `https://www.microsoft.com/store/apps/${id}`;
@@ -56,6 +57,28 @@ export async function fetchBackend(route: string, method: ("GET" | "POST" | "PUT
         body: JSON.stringify(requestBody)
     });
 }
+
+
+export interface IUsePromiseState<T> {
+    results?: T
+    error?: Error
+    isLoading: boolean
+}
+
+export function usePromise<T>(promise: (Promise<T>)): IUsePromiseState<T> {
+    const [visualState, setVisualState] = useState<IUsePromiseState<T>>({ isLoading: true });
+
+    useEffect(() => {
+        promise.then(results => {
+            setVisualState(prevState => ({ ...prevState, isLoading: false, results }));
+        }).catch(error => {
+            setVisualState(prevState => ({ ...prevState, isLoading: false, error }));
+        });
+    }, [visualState]);
+
+    return visualState;
+};
+
 /**
  * @summary Get the first matching regex group, instead of an array with the full string and all matches
  * @param {string} toMatch  
@@ -75,6 +98,7 @@ export function ObjectToPathQuery(data: object) {
     if (queryString.charAt(queryString.length - 1) === "&") queryString = queryString.slice(0, -1);
     return queryString;
 }
+
 export default {
     getDiscordUrl, getGithubUrl, getStoreUrl
 }
