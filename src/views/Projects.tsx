@@ -10,7 +10,7 @@ export const Projects: React.StatelessComponent = () => {
   return (
     /* Todo: Add a header with brief explanation of the below */
     <Stack horizontalAlign="center" horizontal wrap tokens={{ childrenGap: 10 }}>
-      <PromiseVisualizer promise={GetAllProjects()} stateSetter={setState} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
+      <PromiseVisualizer promise={GetAllProjects()} onResolve={setState} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
         {state && (
           state.length > 0 ? state.map((project, i) => (
             <ProjectCard key={i} project={project}></ProjectCard>

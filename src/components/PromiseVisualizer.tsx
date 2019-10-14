@@ -5,8 +5,8 @@ interface IPromiseVisualizerProps<T> {
     loadingMessage?: string
     loadingStyle?: React.CSSProperties
     errorStyle?: React.CSSProperties
-    stateSetter: any
-    promise: Promise<T>,
+    onResolve: (result: T) => void
+    promise: Promise<T>
     children?: React.ReactNode
 }
 
@@ -51,7 +51,7 @@ export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
     }
 
     if (promiseState.results) {
-        props.stateSetter(promiseState.results);
+        props.onResolve(promiseState.results);
         return <>{props.children}</>
     }
     return <></>
