@@ -1,6 +1,5 @@
 import { IUser } from "./users";
-import { fetchBackend, ObjectToPathQuery, match, isReactSnap } from "../helpers";
-import { useState } from "react";
+import { fetchBackend, ObjectToPathQuery, match } from "../helpers";
 
 export async function CreateProject(projectData: ICreateProjectsRequestBody): Promise<Response> {
     // Reformat microsoft store links to an international format
@@ -51,49 +50,6 @@ export async function GetAllProjects(): Promise<IProject[]> {
 
 export async function GetLaunchProjects(year: number): Promise<IProject[]> {
     return (await (await fetchBackend(`projects`, "GET")).json()).filter((project: IProject) => project.launchYear == year && project.awaitingLaunchApproval == false);
-}
-
-export interface IProjectsState {
-    projects?: IProject[]
-    error?: Error
-    isLoading: boolean
-}
-
-export function useProjects(year?: number): [IProjectsState, () => Promise<void>] {
-    const cacheKey = 'loadedProjects' + (year || '')
-    const cache: IProject[] = (window as any)[cacheKey]
-    const initialState: IProjectsState = { isLoading: false }
-
-    if (!isReactSnap && cache && cache.length) {
-        initialState.projects = cache
-    }
-
-    const [res, setRes] = useState<IProjectsState>(initialState)
-
-    const getProjects = async () => {
-        setRes(prevState => ({ ...prevState, isLoading: true }))
-
-        let projects: IProject[]
-        try {
-            if (!year) {
-                projects = await GetAllProjects()
-            } else {
-                projects = await GetLaunchProjects(year)
-            }
-            setRes(prevState => ({ ...prevState, isLoading: false, projects }))
-
-            /* if (isReactSnap) {
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.innerHTML = `window['${cacheKey}'] = ${JSON.stringify(projects)}`;
-                document.getElementsByTagName('head')[0].appendChild(script);
-            } */
-        } catch (error) {
-            setRes(prevState => ({ ...prevState, isLoading: false, error }))
-        }
-    }
-
-    return [res, getProjects]
 }
 
 export interface IModifyProjectsRequestBody {
