@@ -4,7 +4,8 @@ export const Links = {
   thisSiteRepo: "https://github.com/UWPCommunity/uwpcommunity.github.io/",
   launch2019Medium: "https://medium.com/@Arlodottxt/launch-2019-7efd37cc0877",
   discordServerInvite: "https://discord.gg/eBHZSKG",
-  githubOrganization: "https://github.com/UWPCommunity/"
+  githubOrganization: "https://github.com/UWPCommunity/",
+  paypalMe: "https://paypal.me/arlogodfrey"
 };
 
 export const Images = {
@@ -13,6 +14,7 @@ export const Images = {
   launchHeroImage: "/assets/img/LaunchHero.png",
   launchHeroImageHD: "/assets/img/LaunchHeroHD.png",
   launchAppsHero: "/assets/img/LaunchAppsHero.png",
+  paypalHero: "/assets/img/paypalHero.png",
 
   uwpCommunityLogo: "/assets/img/uwpCommunityLogo.png",
   Badges: {

@@ -115,6 +115,30 @@ export const Home: React.StatelessComponent = () => {
             </LinkCard>
           </HoverBox>
 
+          <HoverBox>
+            <LinkCard>
+              <Stack>
+                <Img src={Images.paypalHero} />
+                <Stack horizontal verticalAlign="center" horizontalAlign="center" tokens={{ childrenGap: 7 }}>
+                  <Stack style={{ margin: "10px" }} tokens={{ childrenGap: 10 }}>
+                    <Text>Donations Text</Text>
+                    <Link href={Links.paypalMe} target="_blank">Paypal</Link>
+                  </Stack>
+                  <FontAwesomeIcon style={FaIconStyle} icon={["fab", "paypal"]} />
+                </Stack>
+              </Stack>
+            </LinkCard>
+          </HoverBox>
+{/* 
+          <HoverBox>
+            <LinkCard>
+              <Stack>
+               
+              </Stack>
+            </LinkCard>
+          </HoverBox> */}
+
+
         </Stack>
       </Stack>
     </Stack>
