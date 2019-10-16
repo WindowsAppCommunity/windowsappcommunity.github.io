@@ -94,6 +94,10 @@ export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undef
     }
 }
 
+export async function GetDiscordUser(discordId: string): Promise<IDiscordUser | undefined> {
+    return (await fetchBackend(`bot/user/${discordId}`, "GET")).json();
+}
+
 export async function AssignUserRole(roleName: string, user?: IDiscordUser) {
     return await fetchBackend("bot/user/roles", "PUT", { role: roleName });
 }
