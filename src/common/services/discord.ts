@@ -104,15 +104,32 @@ export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undef
     return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 }
 
+/**
+ * @summary Discord API user object
+ */
 export interface IDiscordUser {
-    "username": string;
-    "locale"?: string;
-    "premium_type"?: number;
-    "mfa_enabled": boolean;
-    "flags"?: number;
-    "avatar": string;
-    "discriminator": string;
-    "id": string;
+    /** @summary the user's id */
+    id: string;
+    /** @summary the user's username, not unique across the platform */
+    username: string;
+    /** @summary the user's 4-digit discord-tag */
+    discriminator: string;
+    /** @summary the user's avatar hash */
+    avatar: string;
+    /** @summary whether the user belongs to an OAuth2 application */
+    bot?: boolean;
+    /** @summary the user's id */
+    mfa_enabled?: boolean;
+    /** @summary whether the user has two factor enabled on their account */
+    locale?: string;
+    /** @summary the user's chosen language option */
+    verified?: string;
+    /** @summary whether the email on this account has been verified */
+    email?: string;
+    /** @summary the flags on a user's account */
+    flags?: number;
+    /** @summary the type of Nitro subscription on a user's account	 */
+    premium_type?: number;
 }
 
 export interface IDiscordRoleData {
