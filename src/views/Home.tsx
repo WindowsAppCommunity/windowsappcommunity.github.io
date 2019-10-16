@@ -129,15 +129,6 @@ export const Home: React.StatelessComponent = () => {
               </Stack>
             </LinkCard>
           </HoverBox>
-{/* 
-          <HoverBox>
-            <LinkCard>
-              <Stack>
-               
-              </Stack>
-            </LinkCard>
-          </HoverBox> */}
-
 
         </Stack>
       </Stack>
