@@ -60,16 +60,17 @@ export interface IModifyProjectsRequestBody {
     appName: string;
     description?: string;
     isPrivate: boolean;
-    category?: string;
 
     downloadLink?: string;
     githubLink?: string;
     externalLink?: string;
 
-    collaborators?: IUser[];
-
-    launchYear?: number;
+    heroImage: string;
     awaitingLaunchApproval: boolean;
+    needsManualReview: boolean;
+    lookingForRoles?: string[];
+    launchYear?: number;
+    category?: string;
 }
 
 export interface IModifyProjectRequestQuery {
