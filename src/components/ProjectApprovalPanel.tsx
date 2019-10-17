@@ -12,7 +12,11 @@ export const ProjectApprovalPanel = () => {
             <Text variant="xLarge">Pending review</Text>
             <PromiseVisualizer promise={GetAllProjects_Unfiltered()} onResolve={setViewModel} loadingMessage='Loading...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
                 <Stack wrap horizontal tokens={{ childrenGap: 15 }} horizontalAlign="space-evenly">
-                    {viewModel.map(project => { if (project.needsManualReview) return <ProjectCard project={project} /> })}
+                    {viewModel.map(project => {
+                        if (project.needsManualReview) return (
+                            <ProjectCard modOptions editable project={project} />
+                        )
+                    })}
                 </Stack>
             </PromiseVisualizer>
         </Stack>
