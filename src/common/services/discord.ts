@@ -82,10 +82,11 @@ export async function GetCurrentDiscordUser(): Promise<IDiscordUser | undefined>
     return CurrentUser;
 }
 
-export async function GetUserRoles(user: IDiscordUser): Promise<string[] | undefined> {
+export async function GetUserRoles(user?: IDiscordUser): Promise<string[] | undefined> {
     user = user || await GetCurrentDiscordUser();
+    if (!user) return;
 
-    const request = await fetchBackend("bot/user/roles", "GET");
+    const request = await fetchBackend(`bot/user/${user.id}/roles`, "GET");
 
     if (request && request.status === 200) {
         const result: IDiscordRoleData[] = await request.json();
@@ -98,8 +99,11 @@ export async function GetDiscordUser(discordId: string): Promise<IDiscordUser | 
     return (await fetchBackend(`bot/user/${discordId}`, "GET")).json();
 }
 
-export async function AssignUserRole(roleName: string, user?: IDiscordUser) {
-    return await fetchBackend("bot/user/roles", "PUT", { role: roleName });
+export async function AssignUserRole(roleName: string, discordId?: string) {
+    discordId = discordId || CurrentUser.id;
+    if (!discordId) return;
+
+    return await fetchBackend(`bot/user/${discordId}/roles`, "PUT", { role: roleName });
 }
 
 export async function GetUserAvatar(user?: IDiscordUser): Promise<string | undefined> {
