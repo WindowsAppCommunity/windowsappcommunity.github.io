@@ -1,8 +1,9 @@
-import { IProject, DeleteProject } from "../common/services/projects";
+import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody } from "../common/services/projects";
 import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, DialogFooter } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
+import { IDiscordUser, GetDiscordUser } from "../common/services/discord";
 
 enum ButtonType {
   Github, Download, External
@@ -21,13 +22,16 @@ const FaIconStyle: React.CSSProperties = {
 export interface IProjectCard {
   project: IProject;
   editable?: boolean;
+  modOptions?: boolean;
 }
 
 export const ProjectCard = (props: IProjectCard) => {
   const [projectCardActions, setProjectCardActions] = React.useState<IButtonProps[]>([]);
   const [showEditDialog, setShowEditDialog] = React.useState<boolean>(false);
   const [showDeleteProjectDialog, setShowDeleteProjectDialog] = React.useState(false);
+  const [showApproveProjectDialog, setShowApproveProjectDialog] = React.useState(false);
   const [ViewModel, setProjectViewModel] = React.useState<IProject>(props.project);
+  const [projectOwner, setProjectOwner] = React.useState<IDiscordUser>();
 
   React.useEffect(() => {
     const projectCardsData: IButtonProps[] = [];
@@ -89,6 +93,12 @@ export const ProjectCard = (props: IProjectCard) => {
     }
   }
 
+  async function ApproveProject() {
+    const data: IModifyProjectsRequestBody = { appName: ViewModel.appName, needsManualReview: false, isPrivate: ViewModel.isPrivate, heroImage: ViewModel.heroImage, awaitingLaunchApproval: ViewModel.awaitingLaunchApproval };
+    setProjectViewModel({ ...ViewModel, ...data });
+    await ModifyProject(data, { appName: ViewModel.appName });
+  }
+
   return (
     <DocumentCard style={{ width: 275 }}>
 
@@ -122,6 +132,24 @@ export const ProjectCard = (props: IProjectCard) => {
         </Stack>
       </Dialog>
 
+      <Dialog hidden={!showApproveProjectDialog}
+        dialogContentProps={{
+          styles: { title: { padding: "16px 16px 8px 24px", fontSize: 20 }, subText: { fontSize: 16 } },
+          type: DialogType.largeHeader,
+          title: `Approve this project?`,
+          subText: projectOwner ? `${ViewModel.appName} belongs to ${projectOwner.username}#${projectOwner.discriminator}` : "Project owner info not avilable"
+        }}
+        onDismiss={() => { setShowApproveProjectDialog(false) }}>
+        <Stack horizontal tokens={{ childrenGap: 7 }}>
+          <PrimaryButton text={`Confirm`}
+            onClick={async () => {
+              await ApproveProject();
+              setShowApproveProjectDialog(false);
+            }} />
+          <DefaultButton onClick={() => { setShowApproveProjectDialog(false); }} text="Cancel" />
+        </Stack>
+      </Dialog>
+
       <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={ViewModel.heroImage} />
       <DocumentCardDetails>
         <DocumentCardTitle styles={{ root: { padding: 5, height: "auto" } }} title={ViewModel.appName} />
@@ -129,12 +157,21 @@ export const ProjectCard = (props: IProjectCard) => {
           <Text style={{ overflowY: "auto", height: 60 }}>{ViewModel.description}</Text>
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
+
           {props.editable !== undefined ? (<>
             <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
             <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
-          </>)
-            : <></>}
+          </>) : <></>}
 
+          {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
+            <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={() => {
+              GetDiscordUser(ViewModel.collaborators.filter(collaborator => collaborator.isOwner)[0].discordId)
+                .then(owner => {
+                  setProjectOwner(owner);
+                  setShowApproveProjectDialog(true);
+                });
+            }} />
+          </>) : <></>}
           <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
         </Stack>
       </DocumentCardDetails>
