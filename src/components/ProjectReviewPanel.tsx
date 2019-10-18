@@ -39,7 +39,13 @@ export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
                 )) : (
                         <Stack horizontalAlign="center" verticalAlign="center" tokens={{ padding: 20 }}>
                             <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
-                            <Text variant="xLarge">No projects, yet</Text>
+                            <Text variant="xLarge">{(() => {
+                                switch (props.type) {
+                                    case ReviewType.Launch: return "No submissions";
+                                    case ReviewType.ManualReview: return "Nothing to review";
+                                    default: return "No projects, yet"
+                                }
+                            })()}</Text>
                         </Stack>
                     )
                 )}
