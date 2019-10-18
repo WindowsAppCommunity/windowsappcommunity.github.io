@@ -26,7 +26,7 @@ export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
             case ReviewType.ManualReview:
                 proj = proj.filter(proj => proj.needsManualReview); break;
             case ReviewType.Launch:
-                proj = proj.filter(proj => proj.awaitingLaunchApproval); break;
+                proj = proj.filter(proj => proj.awaitingLaunchApproval && !proj.needsManualReview); break;
         }
         if (!state.data) setState({ ...state, data: proj });
     }
@@ -35,7 +35,7 @@ export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
         <Stack wrap horizontal tokens={{ childrenGap: 10 }} horizontalAlign="center">
             <PromiseVisualizer promise={state.promise} onResolve={setProjectData} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
                 {state && (state.data && state.data.length > 0 ? state.data.map((project, i) => (
-                    <ProjectCard modOptions editable key={i} project={project}></ProjectCard>
+                    <ProjectCard modOptions editable key={i} project={project} />
                 )) : (
                         <Stack horizontalAlign="center" verticalAlign="center" tokens={{ padding: 20 }}>
                             <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
