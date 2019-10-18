@@ -1,4 +1,4 @@
-import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, DefaultButton, PrimaryButton, FontIcon } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, DefaultButton, PrimaryButton, FontIcon, PivotItem, Pivot } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
@@ -167,12 +167,21 @@ export const Dashboard = () => {
                     </Stack>
                 </Dialog>
             </Stack>
-            
+
             {
                 roles.includes("Mod") || roles.includes("Admin") ?
-                    <ProjectReviewPanel type={ReviewType.ManualReview} />
+                    <Stack horizontalAlign="center">
+                        <Pivot>
+                            <PivotItem headerText="Manual review">
+                                <ProjectReviewPanel type={ReviewType.ManualReview} />
+                            </PivotItem>
+                            <PivotItem headerText="Launch submissions">
+                                <ProjectReviewPanel type={ReviewType.Launch} />
+                            </PivotItem>
+                        </Pivot>
+                    </Stack>
                     : <></>
             }
-        </Stack >
+        </Stack>
     )
 };
