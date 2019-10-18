@@ -4,14 +4,14 @@ import { Stack, Text, FontIcon } from "office-ui-fabric-react";
 import { ProjectCard } from "./ProjectCard";
 import { PromiseVisualizer } from "./PromiseVisualizer";
 
-interface IProjectApprovalPanelState {
+interface IProjectReviewPanelState {
     promise: Promise<IProject[]>;
     data?: IProject[];
     onPromiseFullfilled?: () => {}
 }
 
-export const ProjectApprovalPanel = () => {
-    const [state, setState] = React.useState<IProjectApprovalPanelState>({ promise: GetAllProjects_Unfiltered() });
+export const ProjectReviewPanel = () => {
+    const [state, setState] = React.useState<IProjectReviewPanelState>({ promise: GetAllProjects_Unfiltered() });
 
     function setApproveableProjects(proj: IProject[]) {
         if(!state.data) setState({ ...state, data: proj.filter(proj => proj.needsManualReview) });

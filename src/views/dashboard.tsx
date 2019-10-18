@@ -1,4 +1,4 @@
-import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, Image, ImageFit, DefaultButton, PrimaryButton, FontIcon } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, DefaultButton, PrimaryButton, FontIcon } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
@@ -7,7 +7,7 @@ import { CreateProjectForm } from "../components/forms/CreateProjectForm";
 import { IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetUserProjects } from "../common/services/users";
-import { ProjectApprovalPanel } from "../components/ProjectApprovalPanel";
+import { ProjectReviewPanel } from "../components/ProjectReviewPanel";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -170,7 +170,7 @@ export const Dashboard = () => {
             
             {
                 roles.includes("Mod") || roles.includes("Admin") ?
-                    <ProjectApprovalPanel></ProjectApprovalPanel>
+                    <ProjectReviewPanel></ProjectReviewPanel>
                     : <></>
             }
         </Stack >
