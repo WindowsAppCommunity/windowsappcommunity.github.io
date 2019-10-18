@@ -7,7 +7,7 @@ import { CreateProjectForm } from "../components/forms/CreateProjectForm";
 import { IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetUserProjects } from "../common/services/users";
-import { ProjectReviewPanel } from "../components/ProjectReviewPanel";
+import { ProjectReviewPanel, ReviewType } from "../components/ProjectReviewPanel";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -170,7 +170,7 @@ export const Dashboard = () => {
             
             {
                 roles.includes("Mod") || roles.includes("Admin") ?
-                    <ProjectReviewPanel></ProjectReviewPanel>
+                    <ProjectReviewPanel type={ReviewType.ManualReview} />
                     : <></>
             }
         </Stack >

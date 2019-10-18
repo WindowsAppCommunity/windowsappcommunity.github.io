@@ -10,18 +10,40 @@ interface IProjectReviewPanelState {
     onPromiseFullfilled?: () => {}
 }
 
-export const ProjectReviewPanel = () => {
+interface IProjectReviewPanelProps {
+    type: ReviewType;
+}
+
+export enum ReviewType {
+    ManualReview, Launch
+}
+
+export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
     const [state, setState] = React.useState<IProjectReviewPanelState>({ promise: GetAllProjects_Unfiltered() });
 
-    function setApproveableProjects(proj: IProject[]) {
-        if(!state.data) setState({ ...state, data: proj.filter(proj => proj.needsManualReview) });
+    function setProjectData(proj: IProject[]) {
+        switch (props.type) {
+            case ReviewType.ManualReview:
+                proj = proj.filter(proj => proj.needsManualReview); break;
+            case ReviewType.Launch:
+                proj = proj.filter(proj => proj.awaitingLaunchApproval); break;
+        }
+        if (!state.data) setState({ ...state, data: proj });
     }
 
     return (
         <Stack horizontalAlign="center" tokens={{ childrenGap: 20 }}>
-            <Text variant="xLarge">Pending review</Text>
+            <Text variant="xLarge">{(() => {
+                switch (props.type) {
+                    case ReviewType.ManualReview:
+                        return "Pending review";
+                    case ReviewType.Launch:
+                        return "Launch submissions"
+                    default: return "Error";
+                }
+            })()}</Text>
             <Stack wrap horizontal tokens={{ childrenGap: 10 }}>
-                <PromiseVisualizer promise={state.promise} onResolve={setApproveableProjects} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
+                <PromiseVisualizer promise={state.promise} onResolve={setProjectData} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
                     {state && (state.data && state.data.length > 0 ? state.data.map((project, i) => (
                         <ProjectCard modOptions editable key={i} project={project}></ProjectCard>
                     )) : (
