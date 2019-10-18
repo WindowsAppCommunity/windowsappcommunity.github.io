@@ -1,5 +1,5 @@
 import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody } from "../common/services/projects";
-import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, DialogFooter } from "office-ui-fabric-react";
+import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, DialogFooter, TooltipHost, TooltipDelay } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
@@ -152,12 +152,18 @@ export const ProjectCard = (props: IProjectCard) => {
 
       <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={ViewModel.heroImage} />
       <DocumentCardDetails>
-        <DocumentCardTitle styles={{ root: { padding: 5, height: "auto" } }} title={ViewModel.appName} />
+        <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
+          {ViewModel.needsManualReview ?
+            <TooltipHost content="Waiting for approval" delay={TooltipDelay.zero}>
+              <FontIcon style={{ fontSize: 26 }} iconName="Manufacturing" />
+            </TooltipHost>
+            : <></>}
+          <DocumentCardTitle styles={{ root: { padding: "0px 5px", height: "auto" } }} title={ViewModel.appName} />
+        </Stack>
         <Stack tokens={{ padding: 10 }}>
           <Text style={{ overflowY: "auto", height: 60 }}>{ViewModel.description}</Text>
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
-
           {props.editable !== undefined ? (<>
             <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
             <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
@@ -172,6 +178,7 @@ export const ProjectCard = (props: IProjectCard) => {
                 });
             }} />
           </>) : <></>}
+
           <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
         </Stack>
       </DocumentCardDetails>
