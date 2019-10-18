@@ -33,7 +33,7 @@ export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
 
     return (
         <Stack wrap horizontal tokens={{ childrenGap: 10 }} horizontalAlign="center">
-            <PromiseVisualizer promise={state.promise} onResolve={setProjectData} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
+            <PromiseVisualizer promise={state.promise} onResolve={setProjectData} loadingMessage='Loading Projects...' loadingStyle={{ padding: 25 }} errorStyle={{ padding: 25 }}>
                 {state && (state.data && state.data.length > 0 ? state.data.map((project, i) => (
                     <ProjectCard modOptions editable key={i} project={project} />
                 )) : (
