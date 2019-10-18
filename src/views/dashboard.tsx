@@ -175,9 +175,12 @@ export const Dashboard = () => {
                             <PivotItem headerText="Needs manual review">
                                 <ProjectReviewPanel type={ReviewType.ManualReview} />
                             </PivotItem>
-                            <PivotItem headerText="Launch submissions">
-                                <ProjectReviewPanel type={ReviewType.Launch} />
-                            </PivotItem>
+                            {
+                                roles.includes("Launch Coordinator") ?
+                                    <PivotItem headerText="Launch submissions">
+                                        <ProjectReviewPanel type={ReviewType.Launch} />
+                                    </PivotItem> : <></>
+                            }
                         </Pivot>
                     </Stack>
                     : <></>
