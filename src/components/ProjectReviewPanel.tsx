@@ -32,29 +32,18 @@ export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
     }
 
     return (
-        <Stack horizontalAlign="center" tokens={{ childrenGap: 20 }}>
-            <Text variant="xLarge">{(() => {
-                switch (props.type) {
-                    case ReviewType.ManualReview:
-                        return "Pending review";
-                    case ReviewType.Launch:
-                        return "Launch submissions"
-                    default: return "Error";
-                }
-            })()}</Text>
-            <Stack wrap horizontal tokens={{ childrenGap: 10 }}>
-                <PromiseVisualizer promise={state.promise} onResolve={setProjectData} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
-                    {state && (state.data && state.data.length > 0 ? state.data.map((project, i) => (
-                        <ProjectCard modOptions editable key={i} project={project}></ProjectCard>
-                    )) : (
-                            <Stack horizontalAlign="center" >
-                                <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
-                                <Text variant="xLarge">No projects, yet</Text>
-                            </Stack>
-                        )
-                    )}
-                </PromiseVisualizer>
-            </Stack>
+        <Stack wrap horizontal tokens={{ childrenGap: 10 }} horizontalAlign="center">
+            <PromiseVisualizer promise={state.promise} onResolve={setProjectData} loadingMessage='Loading Projects...' loadingStyle={{ marginTop: "25vh" }} errorStyle={{ marginTop: "25vh" }}>
+                {state && (state.data && state.data.length > 0 ? state.data.map((project, i) => (
+                    <ProjectCard modOptions editable key={i} project={project}></ProjectCard>
+                )) : (
+                        <Stack horizontalAlign="center" verticalAlign="center" tokens={{ padding: 20 }}>
+                            <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
+                            <Text variant="xLarge">No projects, yet</Text>
+                        </Stack>
+                    )
+                )}
+            </PromiseVisualizer>
         </Stack>
     )
 };
