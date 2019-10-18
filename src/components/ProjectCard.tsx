@@ -29,8 +29,13 @@ export const ProjectCard = (props: IProjectCard) => {
   const [projectCardActions, setProjectCardActions] = React.useState<IButtonProps[]>([]);
   const [showEditDialog, setShowEditDialog] = React.useState<boolean>(false);
   const [showDeleteProjectDialog, setShowDeleteProjectDialog] = React.useState(false);
+
   const [showManualApproveProjectDialog, setShowManualApproveProjectDialog] = React.useState(false);
+  const [showManualApproveProjectDialogErrorMessage, setShowManualApproveProjectDialogErrorMessage] = React.useState<string>("");
+
   const [showLaunchApprovalDialog, setShowLaunchApprovalDialog] = React.useState(false);
+  const [showLaunchApproveProjectDialogErrorMessage, setShowLaunchApproveProjectDialogErrorMessage] = React.useState<string>("");
+
   const [ViewModel, setProjectViewModel] = React.useState<IProject>(props.project);
   const [projectOwner, setProjectOwner] = React.useState<IDiscordUser>();
 
@@ -95,15 +100,42 @@ export const ProjectCard = (props: IProjectCard) => {
   }
 
   async function ManuallyApproveProject() {
-    const data: IModifyProjectsRequestBody = { appName: ViewModel.appName, needsManualReview: false, isPrivate: ViewModel.isPrivate, heroImage: ViewModel.heroImage, awaitingLaunchApproval: ViewModel.awaitingLaunchApproval };
+    const data: IModifyProjectsRequestBody = {
+      needsManualReview: false,
+      appName: ViewModel.appName,
+      description: ViewModel.description,
+      heroImage: ViewModel.heroImage,
+      awaitingLaunchApproval: ViewModel.awaitingLaunchApproval,
+      isPrivate: ViewModel.isPrivate
+    };
     setProjectViewModel({ ...ViewModel, ...data });
-    await ModifyProject(data, { appName: ViewModel.appName });
+
+    const req = await ModifyProject(data, { appName: ViewModel.appName });
+    if (req.status !== 200) {
+      setShowManualApproveProjectDialogErrorMessage((await req.json()).reason);
+    } else {
+      setShowManualApproveProjectDialog(false);
+    }
   }
 
   async function ApproveLaunchSubmission(launchYear: number) {
-    const data: IModifyProjectsRequestBody = { appName: ViewModel.appName, needsManualReview: ViewModel.needsManualReview, isPrivate: ViewModel.isPrivate, heroImage: ViewModel.heroImage, awaitingLaunchApproval: false, launchYear };
+    const data: IModifyProjectsRequestBody = {
+      appName: ViewModel.appName,
+      description: ViewModel.description,
+      needsManualReview: ViewModel.needsManualReview,
+      isPrivate: ViewModel.isPrivate,
+      heroImage: ViewModel.heroImage,
+      awaitingLaunchApproval: false,
+      launchYear
+    };
     setProjectViewModel({ ...ViewModel, ...data });
-    await ModifyProject(data, { appName: ViewModel.appName });
+
+    const req = await ModifyProject(data, { appName: ViewModel.appName });
+    if (req.status !== 200) {
+      setShowLaunchApproveProjectDialogErrorMessage((await req.json()).reason);
+    } else {
+      setShowLaunchApprovalDialog(false);
+    }
   }
 
   return (
@@ -147,13 +179,15 @@ export const ProjectCard = (props: IProjectCard) => {
           subText: projectOwner ? `${ViewModel.appName} belongs to ${projectOwner.username}#${projectOwner.discriminator}` : "Project owner info not avilable"
         }}
         onDismiss={() => { setShowManualApproveProjectDialog(false) }}>
-        <Stack horizontal tokens={{ childrenGap: 7 }}>
-          <PrimaryButton text={`Confirm`}
-            onClick={async () => {
-              await ManuallyApproveProject();
-              setShowManualApproveProjectDialog(false);
-            }} />
-          <DefaultButton onClick={() => { setShowManualApproveProjectDialog(false); }} text="Cancel" />
+        <Stack>
+          <Text style={{ color: "red" }}>{showManualApproveProjectDialogErrorMessage}</Text>
+          <Stack horizontal tokens={{ childrenGap: 7 }}>
+            <PrimaryButton text={`Confirm`}
+              onClick={async () => {
+                await ManuallyApproveProject();
+              }} />
+            <DefaultButton onClick={() => { setShowManualApproveProjectDialog(false); }} text="Cancel" />
+          </Stack>
         </Stack>
       </Dialog>
 
@@ -166,13 +200,15 @@ export const ProjectCard = (props: IProjectCard) => {
             `${ViewModel.appName} belongs to ${projectOwner.username}#${projectOwner.discriminator}. Follow up with them to ensure the project is eligible for the Launch event` : "Project owner info not avilable"
         }}
         onDismiss={() => { setShowLaunchApprovalDialog(false) }}>
-        <Stack horizontal tokens={{ childrenGap: 7 }}>
-          <PrimaryButton text={`Confirm`}
-            onClick={async () => {
-              await ApproveLaunchSubmission(2020);
-              setShowLaunchApprovalDialog(false);
-            }} />
-          <DefaultButton onClick={() => { setShowLaunchApprovalDialog(false); }} text="Cancel" />
+        <Stack>
+          <Text style={{ color: "red" }}>{showLaunchApproveProjectDialogErrorMessage}</Text>
+          <Stack horizontal tokens={{ childrenGap: 7 }}>
+            <PrimaryButton text={`Confirm`}
+              onClick={async () => {
+                await ApproveLaunchSubmission(2020);
+              }} />
+            <DefaultButton onClick={() => { setShowLaunchApprovalDialog(false); }} text="Cancel" />
+          </Stack>
         </Stack>
       </Dialog>
 
