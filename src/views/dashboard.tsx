@@ -171,7 +171,7 @@ export const Dashboard = () => {
             {
                 roles.includes("Mod") || roles.includes("Admin") ?
                     <Stack horizontalAlign="center">
-                        <Pivot>
+                        <Pivot styles={{ root: { justifyContent: "center", display: "flex" }, itemContainer: { padding: 20 } }}>
                             <PivotItem headerText="Manual review">
                                 <ProjectReviewPanel type={ReviewType.ManualReview} />
                             </PivotItem>
