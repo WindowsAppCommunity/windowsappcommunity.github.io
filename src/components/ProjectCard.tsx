@@ -220,8 +220,8 @@ export const ProjectCard = (props: IProjectCard) => {
               <FontIcon style={{ fontSize: 26, padding: "0px 5px" }} iconName="Manufacturing" />
             </TooltipHost>
             : <></>}
-          {ViewModel.awaitingLaunchApproval ?
-            <TooltipHost content="Awaiting Launch approval" delay={TooltipDelay.zero}>
+          {(ViewModel.awaitingLaunchApproval && props.modOptions) || ViewModel.launchYear ?
+            <TooltipHost content={ViewModel.launchYear ? `Launch ${ViewModel.launchYear} participant` : "Awaiting Launch approval"} delay={TooltipDelay.zero}>
               <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
             </TooltipHost>
             : <></>}
