@@ -22,7 +22,7 @@ const FaIconStyle: React.CSSProperties = {
 export interface IProjectCard {
   project: IProject;
   editable?: boolean;
-  onProjectDelete?: () => void;
+  onProjectRemove?: (project: IProject) => void;
   modOptions?: boolean;
 }
 
@@ -168,7 +168,7 @@ export const ProjectCard = (props: IProjectCard) => {
             onClick={async () => {
               await DeleteProject({ appName: ViewModel.appName });
               setShowDeleteProjectDialog(false);
-              if (props.onProjectDelete) props.onProjectDelete();
+              if (props.onProjectRemove) props.onProjectRemove(ViewModel);
             }} />
           <PrimaryButton onClick={() => { setShowDeleteProjectDialog(false); }} text="Cancel" />
         </Stack>
