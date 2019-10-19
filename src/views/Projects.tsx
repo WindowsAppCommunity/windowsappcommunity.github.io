@@ -12,7 +12,7 @@ export const Projects: React.StatelessComponent = () => {
     <Stack horizontalAlign="center" horizontal wrap tokens={{ childrenGap: 10 }}>
       <PromiseVisualizer promise={GetAllProjects()} onResolve={setState} loadingMessage='Loading Projects...' loadingStyle={{ padding: 25 }} errorStyle={{ padding: 25 }}>
         {state && (
-          state.length > 0 ? state.map((project, i) => (
+          state.length > 0 ? state.sort((a, b) => a.appName.localeCompare(b.appName)).map((project, i) => (
             <ProjectCard key={i} project={project}></ProjectCard>
           )) : (
               <Stack horizontalAlign="center" >
