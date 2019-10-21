@@ -109,7 +109,7 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
     }
 
     const hideStoreIdTeachingBubbleTimeout = {
-        tick: setTimeout(() => { }),
+        tick: setTimeout(() => { }, 0),
         onTimeout: () => {
             setStoreIdTeachingBubbleTarget(undefined);
         },

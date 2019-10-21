@@ -48,6 +48,10 @@ export async function GetAllProjects(): Promise<IProject[]> {
     return (await fetchBackend(`projects`, "GET")).json();
 }
 
+export async function GetAllProjects_Unfiltered(): Promise<IProject[]> {
+    return (await fetchBackend(`projects?all=true`, "GET")).json();
+}
+
 export async function GetLaunchProjects(year: number): Promise<IProject[]> {
     return (await (await fetchBackend(`projects`, "GET")).json()).filter((project: IProject) => project.launchYear == year && project.awaitingLaunchApproval == false);
 }
@@ -56,16 +60,17 @@ export interface IModifyProjectsRequestBody {
     appName: string;
     description?: string;
     isPrivate: boolean;
-    category?: string;
 
     downloadLink?: string;
     githubLink?: string;
     externalLink?: string;
 
-    collaborators?: IUser[];
-
-    launchYear?: number;
+    heroImage: string;
     awaitingLaunchApproval: boolean;
+    needsManualReview: boolean;
+    lookingForRoles?: string[];
+    launchYear?: number;
+    category?: string;
 }
 
 export interface IModifyProjectRequestQuery {
@@ -80,6 +85,7 @@ export interface IDeleteProjectRequestBody {
 
 export interface IProjectCollaborator extends IUser {
     role: "Developer" | "Translator" | "Beta Tester" | "Other";
+    isOwner: boolean;
 }
 export interface IProject {
     id?: number;

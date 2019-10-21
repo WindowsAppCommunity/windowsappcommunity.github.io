@@ -1,8 +1,9 @@
-import { IProject, DeleteProject } from "../common/services/projects";
-import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, DialogFooter } from "office-ui-fabric-react";
+import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody } from "../common/services/projects";
+import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, DialogFooter, TooltipHost, TooltipDelay } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
+import { IDiscordUser, GetDiscordUser } from "../common/services/discord";
 
 enum ButtonType {
   Github, Download, External
@@ -21,13 +22,23 @@ const FaIconStyle: React.CSSProperties = {
 export interface IProjectCard {
   project: IProject;
   editable?: boolean;
+  onProjectRemove?: (project: IProject) => void;
+  modOptions?: boolean;
 }
 
 export const ProjectCard = (props: IProjectCard) => {
   const [projectCardActions, setProjectCardActions] = React.useState<IButtonProps[]>([]);
   const [showEditDialog, setShowEditDialog] = React.useState<boolean>(false);
   const [showDeleteProjectDialog, setShowDeleteProjectDialog] = React.useState(false);
+
+  const [showManualApproveProjectDialog, setShowManualApproveProjectDialog] = React.useState(false);
+  const [showManualApproveProjectDialogErrorMessage, setShowManualApproveProjectDialogErrorMessage] = React.useState<string>("");
+
+  const [showLaunchApprovalDialog, setShowLaunchApprovalDialog] = React.useState(false);
+  const [showLaunchApproveProjectDialogErrorMessage, setShowLaunchApproveProjectDialogErrorMessage] = React.useState<string>("");
+
   const [ViewModel, setProjectViewModel] = React.useState<IProject>(props.project);
+  const [projectOwner, setProjectOwner] = React.useState<IDiscordUser>();
 
   React.useEffect(() => {
     const projectCardsData: IButtonProps[] = [];
@@ -89,6 +100,45 @@ export const ProjectCard = (props: IProjectCard) => {
     }
   }
 
+  async function ManuallyApproveProject() {
+    const data: IModifyProjectsRequestBody = {
+      needsManualReview: false,
+      appName: ViewModel.appName,
+      description: ViewModel.description,
+      heroImage: ViewModel.heroImage,
+      awaitingLaunchApproval: ViewModel.awaitingLaunchApproval,
+      isPrivate: ViewModel.isPrivate
+    };
+    setProjectViewModel({ ...ViewModel, ...data });
+
+    const req = await ModifyProject(data, { appName: ViewModel.appName });
+    if (req.status !== 200) {
+      setShowManualApproveProjectDialogErrorMessage((await req.json()).reason);
+    } else {
+      setShowManualApproveProjectDialog(false);
+    }
+  }
+
+  async function ApproveLaunchSubmission(launchYear: number) {
+    const data: IModifyProjectsRequestBody = {
+      appName: ViewModel.appName,
+      description: ViewModel.description,
+      needsManualReview: ViewModel.needsManualReview,
+      isPrivate: ViewModel.isPrivate,
+      heroImage: ViewModel.heroImage,
+      awaitingLaunchApproval: false,
+      launchYear
+    };
+    setProjectViewModel({ ...ViewModel, ...data });
+
+    const req = await ModifyProject(data, { appName: ViewModel.appName });
+    if (req.status !== 200) {
+      setShowLaunchApproveProjectDialogErrorMessage((await req.json()).reason);
+    } else {
+      setShowLaunchApprovalDialog(false);
+    }
+  }
+
   return (
     <DocumentCard style={{ width: 275 }}>
 
@@ -116,15 +166,70 @@ export const ProjectCard = (props: IProjectCard) => {
         <Stack horizontal tokens={{ childrenGap: 7 }}>
           <DefaultButton style={{ backgroundColor: "#cc0000", color: "#fff", borderColor: "#cc0000" }} text={`Yes, delete`}
             onClick={async () => {
-              await DeleteProject({ appName: ViewModel.appName }); setShowDeleteProjectDialog(false);
+              await DeleteProject({ appName: ViewModel.appName });
+              setShowDeleteProjectDialog(false);
+              if (props.onProjectRemove) props.onProjectRemove(ViewModel);
             }} />
           <PrimaryButton onClick={() => { setShowDeleteProjectDialog(false); }} text="Cancel" />
         </Stack>
       </Dialog>
 
+      <Dialog hidden={!showManualApproveProjectDialog}
+        dialogContentProps={{
+          styles: { title: { padding: "16px 16px 8px 24px", fontSize: 20 }, subText: { fontSize: 16 } },
+          type: DialogType.largeHeader,
+          title: `Approve this project?`,
+          subText: projectOwner ? `${ViewModel.appName} belongs to ${projectOwner.username}#${projectOwner.discriminator}` : "Project owner info not avilable"
+        }}
+        onDismiss={() => { setShowManualApproveProjectDialog(false) }}>
+        <Stack>
+          <Text style={{ color: "red" }}>{showManualApproveProjectDialogErrorMessage}</Text>
+          <Stack horizontal tokens={{ childrenGap: 7 }}>
+            <PrimaryButton text={`Confirm`}
+              onClick={async () => {
+                await ManuallyApproveProject();
+              }} />
+            <DefaultButton onClick={() => { setShowManualApproveProjectDialog(false); }} text="Cancel" />
+          </Stack>
+        </Stack>
+      </Dialog>
+
+      <Dialog hidden={!showLaunchApprovalDialog}
+        dialogContentProps={{
+          styles: { title: { padding: "16px 16px 8px 24px", fontSize: 20 }, subText: { fontSize: 16 } },
+          type: DialogType.largeHeader,
+          title: `Approve launch submission?`,
+          subText: projectOwner ?
+            `${ViewModel.appName} belongs to ${projectOwner.username}#${projectOwner.discriminator}. Follow up with them to ensure the project is eligible for the Launch event` : "Project owner info not avilable"
+        }}
+        onDismiss={() => { setShowLaunchApprovalDialog(false) }}>
+        <Stack>
+          <Text style={{ color: "red" }}>{showLaunchApproveProjectDialogErrorMessage}</Text>
+          <Stack horizontal tokens={{ childrenGap: 7 }}>
+            <PrimaryButton text={`Confirm`}
+              onClick={async () => {
+                await ApproveLaunchSubmission(2020);
+              }} />
+            <DefaultButton onClick={() => { setShowLaunchApprovalDialog(false); }} text="Cancel" />
+          </Stack>
+        </Stack>
+      </Dialog>
+
       <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={ViewModel.heroImage} />
       <DocumentCardDetails>
-        <DocumentCardTitle styles={{ root: { padding: 5, height: "auto" } }} title={ViewModel.appName} />
+        <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
+          {ViewModel.needsManualReview ?
+            <TooltipHost content="Waiting for approval" delay={TooltipDelay.zero}>
+              <FontIcon style={{ fontSize: 26, padding: "0px 5px" }} iconName="Manufacturing" />
+            </TooltipHost>
+            : <></>}
+          {(ViewModel.awaitingLaunchApproval && props.modOptions) || ViewModel.launchYear ?
+            <TooltipHost content={ViewModel.launchYear ? `Launch ${ViewModel.launchYear} participant` : "Awaiting Launch approval"} delay={TooltipDelay.zero}>
+              <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
+            </TooltipHost>
+            : <></>}
+          <DocumentCardTitle styles={{ root: { padding: "0px 5px", height: "auto" } }} title={ViewModel.appName} />
+        </Stack>
         <Stack tokens={{ padding: 10 }}>
           <Text style={{ overflowY: "auto", height: 60 }}>{ViewModel.description}</Text>
         </Stack>
@@ -132,8 +237,27 @@ export const ProjectCard = (props: IProjectCard) => {
           {props.editable !== undefined ? (<>
             <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
             <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
-          </>)
-            : <></>}
+          </>) : <></>}
+
+          {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
+            <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={() => {
+              GetDiscordUser(ViewModel.collaborators.filter(collaborator => collaborator.isOwner)[0].discordId)
+                .then(owner => {
+                  setProjectOwner(owner);
+                  setShowManualApproveProjectDialog(true);
+                });
+            }} />
+          </>) : <></>}
+
+          {props.modOptions !== undefined && ViewModel.awaitingLaunchApproval && !ViewModel.needsManualReview ? (<>
+            <PrimaryButton iconProps={{ iconName: "Rocket", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={() => {
+              GetDiscordUser(ViewModel.collaborators.filter(collaborator => collaborator.isOwner)[0].discordId)
+                .then(owner => {
+                  setProjectOwner(owner);
+                  setShowLaunchApprovalDialog(true);
+                });
+            }} />
+          </>) : <></>}
 
           <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
         </Stack>

@@ -1,4 +1,4 @@
-import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, Image, ImageFit, DefaultButton, PrimaryButton, FontIcon } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, DefaultButton, PrimaryButton, FontIcon, PivotItem, Pivot } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
@@ -7,6 +7,7 @@ import { CreateProjectForm } from "../components/forms/CreateProjectForm";
 import { IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetUserProjects } from "../common/services/users";
+import { ProjectReviewPanel, ReviewType } from "../components/ProjectReviewPanel";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -120,7 +121,6 @@ export const Dashboard = () => {
             </DashboardHeader>
 
             <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
-                {/* Todo: Hide this area if the user doesn't have Dev role, or no apps are registered */}
                 {
                     roles.includes("Developer") ?
                         <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
@@ -132,7 +132,7 @@ export const Dashboard = () => {
                             <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                                 {
                                     (apps && apps.length > 0 ? apps.map(project =>
-                                        <ProjectCard editable={true} project={project}></ProjectCard>
+                                        <ProjectCard onProjectRemove={(project) => setApps(apps.filter(p => p.appName !== project.appName))} editable={true} project={project}></ProjectCard>
                                     ) : <Text variant="large">You don't have any registered apps</Text>)
                                 }
                             </Stack>
@@ -168,6 +168,23 @@ export const Dashboard = () => {
                 </Dialog>
             </Stack>
 
-        </Stack >
+            {
+                roles.includes("Mod") || roles.includes("Admin") ?
+                    <Stack horizontalAlign="center">
+                        <Pivot styles={{ root: { justifyContent: "center", display: "flex" }, itemContainer: { padding: 20 } }}>
+                            <PivotItem headerText="Needs manual review">
+                                <ProjectReviewPanel type={ReviewType.ManualReview} />
+                            </PivotItem>
+                            {
+                                roles.includes("Launch Coordinator") ?
+                                    <PivotItem headerText="Launch submissions">
+                                        <ProjectReviewPanel type={ReviewType.Launch} />
+                                    </PivotItem> : <></>
+                            }
+                        </Pivot>
+                    </Stack>
+                    : <></>
+            }
+        </Stack>
     )
 };

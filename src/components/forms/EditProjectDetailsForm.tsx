@@ -65,12 +65,12 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                 <Pivot>
                     <PivotItem headerText="Basic info">
                         <Stack tokens={{ childrenGap: 10 }}>
-                            <TextField label="Project name:" maxLength={50}
+                            <TextField label="Project name:" maxLength={75}
                                 styles={{ root: { width: "100%" } }}
                                 value={projectRequest.appName}
                                 required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, appName: value })} />
 
-                            <TextField label="Description" maxLength={140}
+                            <TextField label="Description" maxLength={240}
                                 styles={{ root: { width: "100%" } }}
                                 multiline required autoAdjustHeight
                                 value={projectRequest.description}

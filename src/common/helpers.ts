@@ -65,11 +65,11 @@ export interface IUsePromiseState<T> {
     isLoading: boolean
 }
 
-export function usePromise<T>(promise: (Promise<T>)): IUsePromiseState<T> {
+export function usePromise<T>(promise?: (Promise<T>)): IUsePromiseState<T> {
     const [visualState, setVisualState] = useState<IUsePromiseState<T>>({ isLoading: true });
 
     useEffect(() => {
-        promise.then(results => {
+        if (promise) promise.then(results => {
             setVisualState(prevState => ({ ...prevState, isLoading: false, results }));
         }).catch(error => {
             setVisualState(prevState => ({ ...prevState, isLoading: false, error }));
