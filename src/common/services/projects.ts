@@ -4,7 +4,7 @@ import { fetchBackend, ObjectToPathQuery, match } from "../helpers";
 export async function CreateProject(projectData: ICreateProjectsRequestBody): Promise<Response> {
     // Reformat microsoft store links to an international format
     if (projectData.downloadLink) {
-        const storeId = match(projectData.downloadLink, /http.*microsoft\..*([\w\d]{12})[\/|?]?/);
+        const storeId = match(projectData.downloadLink, /http.*microsoft\..*([\w\d]{12})[/|?]?/);
         if (storeId) {
             projectData.downloadLink = `https://www.microsoft.com/store/apps/${storeId}`;
         }
@@ -31,7 +31,7 @@ export interface ICreateProjectsRequestBody {
 export async function ModifyProject(projectData: IModifyProjectsRequestBody, queryData: IModifyProjectRequestQuery) {
     // Reformat microsoft store links to an international format
     if (projectData.downloadLink) {
-        const storeId = match(projectData.downloadLink, /http.*microsoft\..*([\w\d]{12})[\/|?]?/);
+        const storeId = match(projectData.downloadLink, /http.*microsoft\..*([\w\d]{12})[/|?]?/);
         if (storeId) {
             projectData.downloadLink = `https://www.microsoft.com/store/apps/${storeId}`;
         }
@@ -53,7 +53,7 @@ export async function GetAllProjects_Unfiltered(): Promise<IProject[]> {
 }
 
 export async function GetLaunchProjects(year: number): Promise<IProject[]> {
-    return (await (await fetchBackend(`projects`, "GET")).json()).filter((project: IProject) => project.launchYear == year && project.awaitingLaunchApproval == false);
+    return (await (await fetchBackend(`projects`, "GET")).json()).filter((project: IProject) => project.launchYear === year && project.awaitingLaunchApproval === false);
 }
 
 export interface IModifyProjectsRequestBody {

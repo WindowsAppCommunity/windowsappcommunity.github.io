@@ -1,8 +1,6 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import { Text, Stack, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
-import styled from 'styled-components';
 
-import HoverBox from '../components/HoverBox';
 import { Images } from "../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 import { IProject, GetLaunchProjects } from "../common/services/projects";
@@ -46,21 +44,11 @@ export const Launch = () => {
     );
 };
 
-interface ILaunchCardProps {
+/* interface ILaunchCardProps {
     header: string;
     description: string;
     path: string;
     buttonText?: string;
     buttonDisabled?: boolean;
     buttonStyle?: CSSProperties;
-};
-
-const LaunchCardStyle = styled(HoverBox)`
-    max-height: 500px;
-    max-width: 350px;
-    padding: 50px;
-    :hover {
-                pointer: cursor;
-        };
-    `;
-
+}; */

@@ -11,12 +11,12 @@ export interface IEditProjectDetailsFormProps {
     editing?: boolean;
 };
 
-const roleOptions: IComboBoxOption[] = [
+/* const roleOptions: IComboBoxOption[] = [
     { key: 1, text: 'Developer', selected: true },
     { key: 2, text: 'Beta tester' },
     { key: 3, text: 'Translator' },
     { key: 4, text: 'Other' }
-];
+]; */
 
 const categoryOptions: IComboBoxOption[] = MicrosoftStoreAppCategories.map((category, index) => {
     return { key: category, text: category }

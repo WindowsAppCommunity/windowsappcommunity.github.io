@@ -1,7 +1,7 @@
 import { EditProjectDetailsForm, IEditProjectDetailsFormProps } from './EditProjectDetailsForm';
 import React from "react";
 import { IProject } from '../../common/services/projects';
-import { Stack, Text, PrimaryButton, DefaultButton, TooltipHost, DirectionalHint, Link, TeachingBubble, TextField, FontIcon } from 'office-ui-fabric-react';
+import { Stack, Text, PrimaryButton, DefaultButton, DirectionalHint, Link, TeachingBubble, TextField, FontIcon } from 'office-ui-fabric-react';
 import { fetchBackend } from '../../common/helpers';
 
 export interface ICreateProjectFormProps extends IEditProjectDetailsFormProps {
@@ -130,18 +130,18 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
         setStoreIdTeachingBubbleTarget(event.nativeEvent);
     }
 
-    function hideStoreIdTeachingButton(event: React.MouseEvent<HTMLElement, MouseEvent>) {
+    function hideStoreIdTeachingButton() {
         hideStoreIdTeachingBubbleTimeout.init();
     }
 
     function onStoreIDTextFieldKeyPress(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        if (event.key == "Enter") {
+        if (event.key === "Enter") {
             BeginVerification();
         }
     }
 
     function onVerificationCodeTextFieldKeyPress(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        if (event.key == "Enter") {
+        if (event.key === "Enter") {
             checkVerification();
         }
     }

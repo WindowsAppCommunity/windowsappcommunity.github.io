@@ -74,7 +74,7 @@ export function usePromise<T>(promise?: (Promise<T>)): IUsePromiseState<T> {
         }).catch(error => {
             setVisualState(prevState => ({ ...prevState, isLoading: false, error }));
         });
-    }, [visualState]);
+    }, [visualState, promise]);
 
     return visualState;
 };

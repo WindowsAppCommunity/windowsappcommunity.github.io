@@ -30,7 +30,7 @@ export const Dashboard = () => {
 
     React.useEffect(() => {
         setupLoggedInUser();
-    }, []);
+    });
 
     async function getUserApps(user: IDiscordUser) {
         const projects = await GetUserProjects(user.id);
