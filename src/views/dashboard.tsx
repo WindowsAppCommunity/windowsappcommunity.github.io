@@ -34,7 +34,7 @@ export const Dashboard = () => {
 
     async function getUserApps(user: IDiscordUser) {
         const projects = await GetUserProjects(user.id);
-        setApps(projects);
+        if (!apps) setApps(projects);
     }
 
     async function setupLoggedInUser() {
@@ -44,11 +44,11 @@ export const Dashboard = () => {
             window.location.href = discordAuthEndpoint;
             return;
         }
-        setWelcomeMessage(user.username);
-        setUserIcon(await GetUserAvatar(user) || "");
+        if (welcomeMessage === "Signing in...") setWelcomeMessage(user.username);
+        if (!userIcon) setUserIcon(await GetUserAvatar(user) || "");
 
-        const roles = await GetUserRoles(user);
-        if (roles) setRoles(roles);
+        const userRoles = await GetUserRoles(user);
+        if (userRoles && roles.length === 0) setRoles(userRoles);
 
         getUserApps(user);
     }
