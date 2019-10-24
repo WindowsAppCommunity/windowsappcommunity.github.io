@@ -1,5 +1,5 @@
 import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody } from "../common/services/projects";
-import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, TooltipHost, TooltipDelay } from "office-ui-fabric-react";
+import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, TooltipHost, TooltipDelay, Modal, Image, Link } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
@@ -36,6 +36,8 @@ export const ProjectCard = (props: IProjectCard) => {
 
   const [showLaunchApprovalDialog, setShowLaunchApprovalDialog] = React.useState(false);
   const [showLaunchApproveProjectDialogErrorMessage, setShowLaunchApproveProjectDialogErrorMessage] = React.useState<string>("");
+
+  const [showProjectDetailsModal, setShowProjectDetailsModal] = React.useState(false);
 
   const [ViewModel, setProjectViewModel] = React.useState<IProject>(props.project);
   const [projectOwner, setProjectOwner] = React.useState<IDiscordUser>();
@@ -142,6 +144,22 @@ export const ProjectCard = (props: IProjectCard) => {
   return (
     <DocumentCard style={{ width: 275 }}>
 
+      <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectDetailsModal(false)} isOpen={showProjectDetailsModal}>
+        <Stack>
+          <Stack>
+            <Stack horizontal horizontalAlign="space-between" tokens={{ padding: "7px 15px" }}>
+              <Text variant="xLarge">{ViewModel.appName}</Text>
+              <Link onClick={() => setShowProjectDetailsModal(false)}>
+                <FontIcon style={{ fontSize: 16, color: "black" }} iconName="ChromeClose" />
+              </Link>
+            </Stack>
+          </Stack>
+          <div>
+            <Image width={1200} height={675} src={ViewModel.heroImage} imageFit={ImageFit.contain} />
+          </div>
+        </Stack>
+      </Modal>
+
       <Dialog hidden={!showEditDialog} title={`Edit ${ViewModel.appName}`}
         dialogContentProps={{
           styles: { title: { padding: "16px 16px 5px 24px", margin: 0 } },
@@ -155,6 +173,7 @@ export const ProjectCard = (props: IProjectCard) => {
           if (updatedProject) setProjectViewModel(updatedProject);
         }} />
       </Dialog>
+
       <Dialog hidden={!showDeleteProjectDialog}
         dialogContentProps={{
           styles: { title: { padding: "16px 16px 8px 24px", fontSize: 20 }, subText: { fontSize: 16 } },
@@ -215,7 +234,8 @@ export const ProjectCard = (props: IProjectCard) => {
         </Stack>
       </Dialog>
 
-      <DocumentCardImage height={150} imageFit={ImageFit.centerCover} imageSrc={ViewModel.heroImage} />
+      <Image onClick={() => setShowProjectDetailsModal(true)} height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} />
+
       <DocumentCardDetails>
         <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
           {ViewModel.needsManualReview ?
