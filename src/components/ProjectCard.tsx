@@ -1,9 +1,10 @@
 import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody } from "../common/services/projects";
-import { DocumentCard, DocumentCardImage, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, TooltipHost, TooltipDelay, Modal, Image, Link } from "office-ui-fabric-react";
+import { DocumentCard, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, TooltipHost, TooltipDelay, Modal, Image, Link } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
 import { IDiscordUser, GetDiscordUser } from "../common/services/discord";
+import styled from "styled-components";
 
 enum ButtonType {
   Github, Download, External
@@ -18,6 +19,12 @@ const FaIconStyle: React.CSSProperties = {
   height: "25px",
   width: "25px"
 };
+
+const PointerOnHover = styled.span`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export interface IProjectCard {
   project: IProject;
@@ -234,7 +241,9 @@ export const ProjectCard = (props: IProjectCard) => {
         </Stack>
       </Dialog>
 
-      <Image onClick={() => setShowProjectDetailsModal(true)} height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} />
+      <PointerOnHover>
+        <Image onClick={() => setShowProjectDetailsModal(true)} height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} />
+      </PointerOnHover>
 
       <DocumentCardDetails>
         <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
