@@ -1,9 +1,9 @@
-import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody } from "../common/services/projects";
+import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody, IProjectCollaborator } from "../common/services/projects";
 import { DocumentCard, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, TooltipHost, TooltipDelay, Modal, Image, Link } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
-import { IDiscordUser, GetDiscordUser } from "../common/services/discord";
+import { IDiscordUser, GetDiscordUser, AssignUserRole } from "../common/services/discord";
 import styled from "styled-components";
 
 enum ButtonType {
@@ -144,7 +144,15 @@ export const ProjectCard = (props: IProjectCard) => {
     if (req.status !== 200) {
       setShowLaunchApproveProjectDialogErrorMessage((await req.json()).reason);
     } else {
+      await AssignLaunchParticipantRole(ViewModel.collaborators.filter(p => p.isOwner)[0]);
       setShowLaunchApprovalDialog(false);
+    }
+  }
+
+  async function AssignLaunchParticipantRole(user: IProjectCollaborator) {
+    const roleAssignReq = await AssignUserRole("Launch Participant", user.discordId);
+    if (roleAssignReq && roleAssignReq.ok === false) {
+      setShowLaunchApproveProjectDialogErrorMessage(`Project was approved, but the user couldn't be assigned the Launch Participant role. (Error: ${(await roleAssignReq.json()).reason})`);
     }
   }
 
