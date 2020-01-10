@@ -48,7 +48,7 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
                         <Text variant="medium">Do you have a "Publisher support" email listed on your apps' MS Store page?</Text>
                     </Stack>
                     <Stack style={{ marginTop: 20 }} horizontal tokens={{ childrenGap: 15 }} horizontalAlign="space-evenly">
-                        <DefaultButton onClick={() => { setProjectData({ ...props.projectData, ...projectData }); setVerified(true) }}>No</DefaultButton>
+                        <PrimaryButton onClick={() => { setProjectData({ ...props.projectData, ...projectData }); setVerified(true) }}>No</DefaultButton>
                         <PrimaryButton onClick={() => { setProjectData({ ...props.projectData, ...projectData }); setCodeVerificationDisplayed(true) }}>Yes</PrimaryButton>
                     </Stack>
                 </Stack>
