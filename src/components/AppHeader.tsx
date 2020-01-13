@@ -181,7 +181,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
             <Text>Sign in</Text>
             <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
           </PrimaryButton>
-      </TooltipHost>
-    </Stack>
+        </TooltipHost>
+      </Stack>
   );
 };

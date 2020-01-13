@@ -78,6 +78,7 @@ export async function GetCurrentDiscordUser(): Promise<IDiscordUser | undefined>
         }
     });
     if (!Req || Req.status !== 200) return;
+    
     CurrentUser = await Req.json();
     return CurrentUser;
 }
