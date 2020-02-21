@@ -149,7 +149,7 @@ export const Dashboard = () => {
                         type: DialogType.normal,
                         title: 'Register an app',
                         styles: { title: { color: "rgb(0, 120, 212)", borderBottom: "2px solid rgb(0, 117, 209)", maxWidth: 240, margin: "0px 0px 15px 23px", paddingBottom: 11, paddingLeft: 10 } },
-                        onDismiss: ()=> setAppRegistrationShown(false)
+                        onDismiss: () => setAppRegistrationShown(false)
                     }}>
                     <CreateProjectForm projectData={{}} onSuccess={onAppRegisterFormSuccess} onCancel={() => setAppRegistrationShown(false)} />
                 </Dialog>
