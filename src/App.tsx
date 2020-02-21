@@ -39,7 +39,7 @@ export const App: React.StatelessComponent = () => {
           <Route exact path="/signin" component={Signin} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/privacy-policy" component={PrivacyPolicy} />
-          <Route component={NotFound} />}
+          <Route component={NotFound} />
         </Switch>
       </Stack>
     </BrowserRouter>
