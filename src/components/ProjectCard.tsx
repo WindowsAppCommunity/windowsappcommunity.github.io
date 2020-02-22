@@ -161,16 +161,28 @@ export const ProjectCard = (props: IProjectCard) => {
 
       <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectDetailsModal(false)} isOpen={showProjectDetailsModal}>
         <Stack>
-          <Stack>
-            <Stack horizontal horizontalAlign="space-between" tokens={{ padding: "7px 15px" }}>
-              <Text variant="xLarge">{ViewModel.appName}</Text>
-              <Link onClick={() => setShowProjectDetailsModal(false)}>
-                <FontIcon style={{ fontSize: 16, color: "black" }} iconName="ChromeClose" />
-              </Link>
+          <Stack tokens={{ padding: "7px 10px" }}>
+            <Stack horizontal horizontalAlign="space-between" style={{ padding: "0px 0px 2px 0px", marginBottom: "10px" }}>
+              <Text variant="xxLarge" style={{ fontWeight: 400 }}>{ViewModel.appName}</Text>
+
+              <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 5 }}>
+                {projectOwner ?
+                  (<>
+                    <Text variant="smallPlus">{ViewModel.collaborators.filter(i => i.isOwner)[0].name}</Text>
+                    <Text> | </Text>
+                    <Text variant="smallPlus">{projectOwner.username}#{projectOwner.discriminator}</Text>
+                  </>) : <>No owner data</>}
+                <Link style={{ margin: 10 }} onClick={() => setShowProjectDetailsModal(false)}>
+                  <FontIcon style={{ fontSize: 16, color: "black" }} iconName="ChromeClose" />
+                </Link>
+              </Stack>
             </Stack>
+
+            <Text style={{ maxWidth: 1190 }} variant="medium">{ViewModel.description}</Text>
+
           </Stack>
           <div>
-            <Image width={1200} height={675} src={ViewModel.heroImage} imageFit={ImageFit.contain} />
+            <Image style={{ borderTop: "2px solid midnightblue", width: "auto" }} width={1200} height={675} src={ViewModel.heroImage} imageFit={ImageFit.contain} />
           </div>
         </Stack>
       </Modal>
@@ -250,7 +262,14 @@ export const ProjectCard = (props: IProjectCard) => {
       </Dialog>
 
       <PointerOnHover>
-        <Image onClick={() => setShowProjectDetailsModal(true)} height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} />
+        <Image onClick={() => {
+          GetDiscordUser(ViewModel.collaborators.filter(collaborator => collaborator.isOwner)[0].discordId)
+            .then(owner => {
+              setProjectOwner(owner);
+              setShowProjectDetailsModal(true)
+            });
+        }}
+          height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} />
       </PointerOnHover>
 
       <DocumentCardDetails>
@@ -265,9 +284,9 @@ export const ProjectCard = (props: IProjectCard) => {
               <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
             </TooltipHost>
             : <></>}
-          <DocumentCardTitle styles={{ root: { padding: "0px 5px", height: "auto" } }} title={ViewModel.appName} />
+          <DocumentCardTitle styles={{ root: { padding: "5px 5px", height: "auto", fontWeight: 600 } }} title={ViewModel.appName} />
         </Stack>
-        <Stack tokens={{ padding: 10 }}>
+        <Stack tokens={{ padding: "0px 10px 10px 10px" }}>
           <Text style={{ overflowY: "auto", height: 60 }}>{ViewModel.description}</Text>
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
