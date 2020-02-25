@@ -5,7 +5,7 @@ export const uwpCommunityGuildId = 372137812037730304;
 export const developerRoleId = 372142246625017871;
 
 export const discordAuthEndpoint = (
-    isLocalhost ?
+    window.location.host.includes("localhost") ?
         `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
         :
         `https://discordapp.com/api/oauth2/authorize?client_id=611491369470525463&redirect_uri=http%3A%2F%2Fuwpcommunity-site-backend.herokuapp.com%2Fsignin%2Fredirect&response_type=code&scope=identify%20guilds`
@@ -78,7 +78,7 @@ export async function GetCurrentDiscordUser(): Promise<IDiscordUser | undefined>
         }
     });
     if (!Req || Req.status !== 200) return;
-    
+
     CurrentUser = await Req.json();
     return CurrentUser;
 }
