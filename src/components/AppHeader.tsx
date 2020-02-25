@@ -44,8 +44,6 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
   );
 };
 
-const PrivacyPolicyText: React.StatelessComponent = () => <p>Make sure you've read the <NavLink to="/privacy-policy">Privacy Policy</NavLink> first -- by logging in, you agree to accept this policy.</p>
-
 export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [discordUser, setDiscordUser] = React.useState<IDiscordUser>();
@@ -54,6 +52,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
   const [joinServerAlertHidden, setJoinServerAlertHidden] = React.useState(true);
   const [registerUserShown, setRegisterUserShown] = React.useState(false);
   const [editProfileShown, setEditProfileShown] = React.useState(false);
+  const [policyConfirmationShown, setPolicyConfirmationShown] = React.useState(false);
 
   React.useEffect(() => {
     setupLoggedInUser();
@@ -168,20 +167,24 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
         </Dialog>
       </Stack>
       :
-      <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
-        <TooltipHost
-          content={<PrivacyPolicyText />}
-          id={'privacyPolicyHost'}
-          calloutProps={{ gapSpace: 0 }}
-          closeDelay={500}
-          delay={0}
-          styles={{ root: { display: 'inline-block' } }}
-        >
-          <PrimaryButton href={discordAuthEndpoint} style={{ padding: "18px" }}>
+      <>
+        <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
+          <PrimaryButton onClick={() => setPolicyConfirmationShown(true)} style={{ padding: "18px" }}>
             <Text>Sign in</Text>
             <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
           </PrimaryButton>
-        </TooltipHost>
-      </Stack>
+        </Stack>
+        <Dialog dialogContentProps={{ type: DialogType.normal, title: "Please confirm", showCloseButton: true }} hidden={!policyConfirmationShown}>
+          By logging in, you confirm that you have read and agree to our <NavLink onClick={() => setPolicyConfirmationShown(false)} to="/privacy-policy">Privacy Policy</NavLink> and that you are at least 13 years of age.
+
+          <DialogFooter>
+            <PrimaryButton onClick={() => {
+              setPolicyConfirmationShown(false);
+              window.location.href = discordAuthEndpoint;
+            }} text="I agree" />
+            <DefaultButton onClick={() => setPolicyConfirmationShown(false)} text="I don't agree" />
+          </DialogFooter>
+        </Dialog>
+      </>
   );
 };
