@@ -160,10 +160,12 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
         </TooltipHost>
 
         <Dialog hidden={!editProfileShown && !registerUserShown} dialogContentProps={{ type: DialogType.largeHeader, title: registerUserShown ? "One more step" : "Edit profile" }}>
-          {registerUserShown ?
-            <Text variant="large">Complete your profile to get started</Text>
-            : <></>}
-          <RegisterUserForm userData={user} onSuccess={() => { setRegisterUserShown(false); setEditProfileShown(false) }} onCancel={!registerUserShown ? () => setEditProfileShown(false) : undefined} />
+          <div style={{ marginTop: -10 }}>
+            {registerUserShown ?
+              <Text variant="mediumPlus" style={{ marginTop: 10 }}>Complete your profile to get started</Text>
+              : <></>}
+            <RegisterUserForm userData={user} onSuccess={() => { setRegisterUserShown(false); setEditProfileShown(false) }} onCancel={!registerUserShown ? () => setEditProfileShown(false) : undefined} />
+          </div>
         </Dialog>
       </Stack>
       :

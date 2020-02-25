@@ -47,21 +47,26 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
         <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
             {/* Need to toggle both src and display so it trigger the animation, and space is taken up during the transition (while the svg loads) */}
             <img style={{ display: (showSuccessIndicator ? "block" : "none"), height: "200px" }} src={showSuccessIndicator ? "/assets/img/checkanimated.svg" : ""} alt="Check" />
-            <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ maxWidth: "100%", width: "300px", display: (!showSuccessIndicator ? "block" : "none") }}>
-                <TextField label="Name:"
-                    description="Friendly name for other users/devs to see"
-                    defaultValue={props.userData ? props.userData.name : ""}
-                    styles={{ root: { width: "100%" } }}
-                    required
-                    onChange={(e: any, value: any) => setUserRequest({ ...userRequest, name: value })} />
+            <Stack horizontalAlign="start" tokens={{ childrenGap: 7 }} style={{ maxWidth: "100%", width: "300px", display: (!showSuccessIndicator ? "block" : "none") }}>
+                <Stack>
+                    <TextField label="Name:"
+                        description="Friendly name for other users/devs to see"
+                        defaultValue={props.userData ? props.userData.name : ""}
+                        styles={{ root: { width: "100%" } }}
+                        required
+                        onChange={(e: any, value: any) => setUserRequest({ ...userRequest, name: value })} />
 
-                <TextField label="Contact email:"
-                    description="Optional"
-                    defaultValue={props.userData ? props.userData.email : ""}
-                    styles={{ root: { width: "100%" } }}
-                    onChange={(e: any, value: any) => setUserRequest({ ...userRequest, email: value })} />
+                    <TextField label="Contact email:"
+                        description="Optional"
+                        defaultValue={props.userData ? props.userData.email : ""}
+                        styles={{ root: { width: "100%" } }}
+                        onChange={(e: any, value: any) => setUserRequest({ ...userRequest, email: value })} />
 
-                <Text style={{ color: "red" }}>{submissionError}</Text>
+                    <Text variant="small" style={{ marginTop: 10 }}>When you leave the Discord server, any data or projects you register with us will be removed automatically.</Text>
+
+                    <Text style={{ color: "red" }}>{submissionError}</Text>
+                </Stack>
+                
                 <Stack horizontal tokens={{ childrenGap: 10 }}>
                     <PrimaryButton text="Register"
                         onClick={addUser} />
