@@ -19,7 +19,7 @@ export const Launch = () => {
     }, []);
 
     return (
-        <Stack tokens={{childrenGap: 25}}>
+        <Stack tokens={{childrenGap: 25}} horizontalAlign="center">
             <Stack horizontal wrap style={{ boxShadow: Depths.depth16 }} maxWidth="1200px">
                 <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
                 <Stack style={{margin: "20px"}}>
