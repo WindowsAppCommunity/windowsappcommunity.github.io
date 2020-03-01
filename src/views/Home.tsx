@@ -59,10 +59,10 @@ export const Home: React.StatelessComponent = () => {
           <Stack horizontal wrap maxWidth="1400px" horizontalAlign="space-evenly">
             <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchAppsHero} />
 
-            <Stack style={{ margin: "15px" }} verticalAlign="center">
-              <Text variant="xLargePlus">Project registration now open!</Text>
-              <Text variant="mediumPlus">Register your apps/projects to showcase on our website and participate in Launch 2020!</Text>
-              <PrimaryButton href="/dashboard" style={{ marginTop: "15px", width: 150 }} text="Get started" />
+            <Stack style={{ margin: 30 }} tokens={{ childrenGap: 5 }} verticalAlign="center">
+              <Text variant="xLarge">Launch 2020 participants have been decided</Text>
+              <Text variant="mediumPlus">Around 17 new apps will launch in June as part of the annual event</Text>
+              <PrimaryButton href="/launch" style={{ marginTop: "15px", width: 150, height: 40 }} text="Take a look" />
             </Stack>
           </Stack>
         </LargeCard>
