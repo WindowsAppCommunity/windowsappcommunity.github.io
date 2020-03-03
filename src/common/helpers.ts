@@ -16,6 +16,9 @@ export const getDiscordUrl = (id: string) => {
 
 export const getHeadTitle = (path: string) => {
     let title = "UWP Community"
+    if (path.endsWith("/")) {
+        path = path.slice(0, path.length - 1)
+    }
     switch (path) {
         case "/":
             title = title + " // Home"
