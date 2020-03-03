@@ -2,6 +2,7 @@ import * as React from "react";
 import { Stack, Spinner, FontIcon, Text } from "office-ui-fabric-react";
 import { usePromise } from "../common/helpers";
 
+
 interface IPromiseVisualizerProps<T> {
     loadingMessage?: string
     loadingStyle?: React.CSSProperties
@@ -13,7 +14,14 @@ interface IPromiseVisualizerProps<T> {
 
 export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
     const promiseState = usePromise(props.promise);
+    const { onResolve } = props
 
+    React.useEffect(() => {
+        if (promiseState.results) {
+            onResolve(promiseState.results)
+        }
+    }, [promiseState.results, onResolve])
+    
     if (promiseState.isLoading) {
         return (
             <Stack horizontalAlign="center" style={props.loadingStyle}>
@@ -32,7 +40,6 @@ export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
     }
 
     if (promiseState.results) {
-        props.onResolve(promiseState.results);
         return <>{props.children}</>
     }
     return <></>
