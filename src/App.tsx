@@ -34,11 +34,11 @@ export const App: React.StatelessComponent = () => {
         <AppHeaderWithRouter />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/projects" component={Projects} />
-          <Route exact path="/launch" component={Launch} />
-          <Route exact path="/signin" component={Signin} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/privacy-policy" component={PrivacyPolicy} />
+          <Route path="/projects/" component={Projects} />
+          <Route path="/launch/" component={Launch} />
+          <Route path="/signin/" component={Signin} />
+          <Route path="/dashboard/" component={Dashboard} />
+          <Route path="/privacy-policy/" component={PrivacyPolicy} />
           <Route component={NotFound} />
         </Switch>
       </Stack>
