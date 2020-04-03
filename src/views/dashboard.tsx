@@ -68,7 +68,7 @@ export const Dashboard = () => {
 
     const PersonaDark = styled(Persona)`
     * {
-        :hover {
+        &:hover {
             color: white;
         }
         color: #f7f7f7;
@@ -88,7 +88,7 @@ export const Dashboard = () => {
         <Stack tokens={{ childrenGap: 25 }}>
             <DashboardHeader>
                 <Stack horizontal wrap style={{ padding: "15px 0px", margin: 0 }} verticalAlign="center" horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
-                    <PersonaDark size={PersonaSize.extraLarge} text={welcomeMessage} imageUrl={userIcon} />
+                    <PersonaDark size={PersonaSize.large} styles={{ primaryText: { color: "white" } }} text={welcomeMessage} imageUrl={userIcon} />
 
                     <Stack horizontal wrap verticalAlign="end" tokens={{ childrenGap: 10 }} style={{ marginLeft: 10 }}>
 
