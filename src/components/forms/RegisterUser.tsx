@@ -6,12 +6,13 @@ import { CurrentUser } from "../../common/services/discord";
 
 export interface IRegisterDevProps {
     onCancel?: Function;
-    onSuccess: Function;
-    userData?: Partial<IUser>;
+    onSuccess: (user: IUser) => void;
+    userData?: IUser;
+    modifying?: boolean;
 };
 
 export const RegisterUserForm = (props: IRegisterDevProps) => {
-    let [userRequest, setUserRequest] = React.useState<IUser>({
+    let [userRequest, setUserRequest] = React.useState<IUser>(props.userData ? props.userData : {
         discordId: CurrentUser.id,
         name: ""
     });
@@ -19,16 +20,13 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
     let [submissionError, setSubmissionError] = React.useState<string>("");
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
-    /* Todo: Attempt to find an existing user in the DB and set this according, then prepopulate the fields below */
-    let [modifying] = React.useState(false);
-
     async function addUser() {
         if (!userRequest) return;
 
-        let request = modifying ? await ModifyUser(userRequest)
+        let request = props.modifying ? await ModifyUser(userRequest)
             : await CreateUser(userRequest);
 
-        let success = await request.status === 200;
+        let success = request.status === 200;
 
         if (!success) {
             let error: IBackendReponseError = await request.json();
@@ -38,7 +36,7 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
         } else {
             setShowSuccessIndicator(true);
             setTimeout(() => {
-                props.onSuccess();
+                props.onSuccess(userRequest);
             }, 2500);
         }
     }
@@ -66,9 +64,9 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
 
                     <Text style={{ color: "red" }}>{submissionError}</Text>
                 </Stack>
-                
+
                 <Stack horizontal tokens={{ childrenGap: 10 }}>
-                    <PrimaryButton text="Register"
+                    <PrimaryButton text={props.modifying ? "Update" : "Register"}
                         onClick={addUser} />
                     {
                         props.onCancel ?

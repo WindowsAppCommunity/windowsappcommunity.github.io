@@ -164,7 +164,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
             {registerUserShown ?
               <Text variant="mediumPlus" style={{ marginTop: 10 }}>Complete your profile to get started</Text>
               : <></>}
-            <RegisterUserForm userData={user} onSuccess={() => { setRegisterUserShown(false); setEditProfileShown(false) }} onCancel={!registerUserShown ? () => setEditProfileShown(false) : undefined} />
+            <RegisterUserForm modifying={editProfileShown} userData={user} onSuccess={user => { setRegisterUserShown(false); setEditProfileShown(false); setUser(user); }} onCancel={!registerUserShown ? () => setEditProfileShown(false) : undefined} />
           </div>
         </Dialog>
       </Stack>
