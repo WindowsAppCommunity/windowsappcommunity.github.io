@@ -12,7 +12,8 @@ import { Stack } from "office-ui-fabric-react";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab, faDiscord, faMedium, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { fas, faGlobe, faArrowCircleDown } from '@fortawesome/free-solid-svg-icons';
+import { fas, faGlobe, faArrowCircleDown, faPlusSquare, faCode, faRobot, 
+  faList, faHammer, faFrown, faBoxOpen, faRocket, faTimes, faCheckCircle, faInbox, faUserClock } from '@fortawesome/free-solid-svg-icons';
 
 import { withRouter } from 'react-router-dom';
 import { NotFound } from "./views/NotFound";
@@ -21,7 +22,8 @@ import { createMarkdownPage } from './components/markdown-loader'
 import { prerenderedLoader } from './components/prerender-loader'
 
 library.add(fab, faDiscord, faMedium, faGithub);
-library.add(fab, fas, faGlobe, faArrowCircleDown, faDiscord, faMedium, faGithub);
+library.add(fas, faGlobe, faArrowCircleDown, faPlusSquare, faCode, faRobot, faList, faHammer, 
+  faFrown, faBoxOpen, faRocket, faTimes, faCheckCircle, faInbox, faUserClock);
 
 const AppHeaderWithRouter = withRouter(props => <AppHeader {...props} />);
 const PrivacyPolicy = prerenderedLoader(() => createMarkdownPage('/privacy-policy.md'));

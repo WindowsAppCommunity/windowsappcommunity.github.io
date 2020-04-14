@@ -1,4 +1,5 @@
 import { isLocalhost } from "./helpers";
+import { CSSProperties } from "react";
 
 export const Links = {
   thisSiteRepo: "https://github.com/UWPCommunity/uwpcommunity.github.io/",
@@ -52,3 +53,39 @@ export const MicrosoftStoreAppCategories = [
 export function getBackendHost(): string {
   return isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
 }
+
+export const FaIcon16Style: CSSProperties = {
+  color: "black",
+  height: "16px",
+  width: "16px"
+};
+
+export const FaIcon25Style: CSSProperties = {
+  color: "black",
+  height: "25px",
+  width: "25px"
+};
+
+export const FaIcon35Style: CSSProperties = {
+  color: "black",
+  height: "35px",
+  width: "35px"
+};
+
+export const FaIcon38Style: CSSProperties = {
+  color: "black",
+  height: "38px",
+  width: "38px"
+};
+
+export const FaIcon55Style: CSSProperties = {
+  color: "black",
+  height: "55px",
+  width: "55px"
+};
+
+export const FaIcon65Style: CSSProperties = {
+  color: "black",
+  height: "65px",
+  width: "65px"
+};

@@ -1,10 +1,12 @@
 import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody, IProjectCollaborator } from "../common/services/projects";
-import { DocumentCard, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, TooltipHost, TooltipDelay, Modal, Image, Link } from "office-ui-fabric-react";
+import { DocumentCard, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, DefaultButton, DialogType, TooltipHost, TooltipDelay, Modal, Image, Link } from "office-ui-fabric-react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
 import { IDiscordUser, GetDiscordUser, AssignUserRole } from "../common/services/discord";
 import styled from "styled-components";
+import { FaIcon16Style, FaIcon25Style } from "../common/const";
+import { CSSProperties } from "react";
 
 enum ButtonType {
   Github, Download, External
@@ -14,17 +16,19 @@ interface ICustomButtonRenderProps {
   type: ButtonType;
   link: string;
 }
-const FaIconStyle: React.CSSProperties = {
-  color: "black",
-  height: "25px",
-  width: "25px"
-};
 
 const PointerOnHover = styled.span`
   &:hover {
     cursor: pointer;
   }
 `;
+
+const FaIconStyle: CSSProperties = {
+  color: "black",
+  height: "26px",
+  width: "26px",
+  padding: "0px 5px"
+};
 
 export interface IProjectCard {
   project: IProject;
@@ -97,14 +101,14 @@ export const ProjectCard = (props: IProjectCard) => {
     switch (buttonData.type.valueOf()) {
       case ButtonType.Download:
         if (buttonData.link && buttonData.link.includes("microsoft.com")) {
-          return <FontAwesomeIcon style={FaIconStyle} icon={["fab", "microsoft"]} />
+          return <FontAwesomeIcon style={FaIcon25Style} icon={["fab", "microsoft"]} />
         } else {
-          return <FontAwesomeIcon style={FaIconStyle} icon="arrow-circle-down" />
+          return <FontAwesomeIcon style={FaIcon25Style} icon="arrow-circle-down" />
         }
       case ButtonType.External:
-        return <FontAwesomeIcon style={FaIconStyle} icon={["fas", "globe"]} />
+        return <FontAwesomeIcon style={FaIcon25Style} icon={["fas", "globe"]} />
       case ButtonType.Github:
-        return <FontAwesomeIcon style={FaIconStyle} icon={["fab", "github"]} />
+        return <FontAwesomeIcon style={FaIcon25Style} icon={["fab", "github"]} />
       default: return null;
     }
   }
@@ -172,8 +176,8 @@ export const ProjectCard = (props: IProjectCard) => {
                     <Text> | </Text>
                     <Text variant="smallPlus">{projectOwner.username}#{projectOwner.discriminator}</Text>
                   </>) : <>No owner data</>}
-                <Link style={{ margin: 10 }} onClick={() => setShowProjectDetailsModal(false)}>
-                  <FontIcon style={{ fontSize: 16, color: "black" }} iconName="ChromeClose" />
+                <Link style={{ margin: 10 }} onClick={() => setShowProjectDetailsModal(false)}>                           
+                  <FontAwesomeIcon style={FaIcon16Style} icon={["fas", "times"]} />   
                 </Link>
               </Stack>
             </Stack>
@@ -275,13 +279,13 @@ export const ProjectCard = (props: IProjectCard) => {
       <DocumentCardDetails>
         <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
           {ViewModel.needsManualReview ?
-            <TooltipHost content="Waiting for approval" delay={TooltipDelay.zero}>
-              <FontIcon style={{ fontSize: 26, padding: "0px 5px" }} iconName="Manufacturing" />
+            <TooltipHost content="Waiting for approval" delay={TooltipDelay.zero}>              
+              <FontAwesomeIcon style={FaIconStyle} icon={["fas", "hammer"]} />
             </TooltipHost>
             : <></>}
           {(ViewModel.awaitingLaunchApproval && props.modOptions) || ViewModel.launchYear ?
-            <TooltipHost content={ViewModel.launchYear ? `Launch ${ViewModel.launchYear} participant` : "Awaiting Launch approval"} delay={TooltipDelay.zero}>
-              <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
+            <TooltipHost content={ViewModel.launchYear ? `Launch ${ViewModel.launchYear} participant` : "Awaiting Launch approval"} delay={TooltipDelay.zero}>   
+              <FontAwesomeIcon style={FaIconStyle} icon={["fas", "rocket"]} />
             </TooltipHost>
             : <></>}
           <DocumentCardTitle styles={{ root: { padding: "5px 5px", height: "auto", fontWeight: 600 } }} title={ViewModel.appName} />

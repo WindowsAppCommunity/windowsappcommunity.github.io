@@ -1,6 +1,8 @@
 import * as React from "react";
-import { Stack, Spinner, FontIcon, Text } from "office-ui-fabric-react";
+import { Stack, Spinner, Text } from "office-ui-fabric-react";
 import { usePromise } from "../common/helpers";
+import { FaIcon55Style } from "../common/const";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IPromiseVisualizerProps<T> {
     loadingMessage?: string
@@ -24,8 +26,8 @@ export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
 
     if (promiseState.error) {
         return (
-            <Stack horizontalAlign="center" style={props.errorStyle}>
-                <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
+            <Stack horizontalAlign="center" style={props.errorStyle}>                
+                <FontAwesomeIcon style={FaIcon55Style} icon={["fas", "frown"]} />
                 <Text variant="xLarge">Something went wrong</Text>
             </Stack>
         )
