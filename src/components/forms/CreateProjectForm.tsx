@@ -1,10 +1,8 @@
 import { EditProjectDetailsForm, IEditProjectDetailsFormProps } from './EditProjectDetailsForm';
 import React from "react";
 import { IProject } from '../../common/services/projects';
-import { Stack, Text, PrimaryButton, DefaultButton, DirectionalHint, Link, TeachingBubble, TextField } from 'office-ui-fabric-react';
+import { Stack, Text, PrimaryButton, DefaultButton, DirectionalHint, Link, TeachingBubble, TextField, FontIcon } from 'office-ui-fabric-react';
 import { fetchBackend } from '../../common/helpers';
-import { FaIcon25Style, FaIcon38Style } from '../../common/const';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export interface ICreateProjectFormProps extends IEditProjectDetailsFormProps {
 
@@ -42,11 +40,11 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
                 <Stack tokens={{ childrenGap: 10, padding: 5 }}>
                     <Text variant="large">Before we begin...</Text>
                     <Stack horizontal tokens={{ childrenGap: 5 }}>
-                        <FontAwesomeIcon style={FaIcon25Style} icon={["fas", "check-circle"]} />
+                        <FontIcon iconName="ReceiptCheck" style={{ fontSize: 25 }} />
                         <Text variant="medium">Is your app public and already in the store?</Text>
                     </Stack>
                     <Stack horizontal tokens={{ childrenGap: 5 }}>
-                        <FontAwesomeIcon style={FaIcon25Style} icon={["fas", "check-circle"]} />
+                        <FontIcon iconName="ReceiptCheck" style={{ fontSize: 25 }} />
                         <Text variant="medium">Do you have a "Publisher support" email listed on your apps' MS Store page?</Text>
                     </Stack>
                     <Stack style={{ marginTop: 20 }} horizontal tokens={{ childrenGap: 15 }} horizontalAlign="space-evenly">
@@ -179,7 +177,7 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
                         case VerficationState.WaitingForCode:
                             return <Stack tokens={{ childrenGap: 10 }}>
                                 <Stack grow horizontal tokens={{ childrenGap: 5 }} verticalAlign="end">
-                                    <FontAwesomeIcon style={FaIcon25Style} icon={["fas", "inbox"]} />
+                                    <FontIcon iconName="InboxCheck" style={{ fontSize: 24 }} />
                                     <Text variant="xLarge">Check your inbox / junk mail</Text>
                                 </Stack>
                                 <Text variant="mediumPlus">Enter the code we sent you</Text>
@@ -190,7 +188,7 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
                             </Stack>;
                         case VerficationState.Verified:
                             return <Stack horizontalAlign="center" tokens={{ childrenGap: 15, padding: 10 }}>
-                                <FontAwesomeIcon style={FaIcon38Style} icon={["fas", "user-clock"]} />
+                                <FontIcon style={{ fontSize: 38 }} iconName="ReminderPerson" />
                                 <Text variant="xxLarge">Identity verified!</Text>
                                 <div style={{ display: "none" }}>
                                     {setTimeout(() => props.onSuccess({

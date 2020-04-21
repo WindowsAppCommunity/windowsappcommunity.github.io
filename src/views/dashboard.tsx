@@ -1,4 +1,4 @@
-import { Text, Stack, Persona, PersonaSize, Link, Dialog, DialogType, DefaultButton, PrimaryButton, PivotItem, Pivot } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, DefaultButton, PrimaryButton, FontIcon, PivotItem, Pivot } from "office-ui-fabric-react";
 import React from "react";
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
@@ -8,8 +8,6 @@ import { IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetUserProjects } from "../common/services/users";
 import { ProjectReviewPanel, ReviewType } from "../components/ProjectReviewPanel";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaIcon35Style, FaIcon55Style } from "../common/const";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -78,6 +76,8 @@ export const Dashboard = () => {
     }
     `;
 
+    const SectionTitleIconFontSize = 34;
+
     const DashboardColumnFiller = styled.div`
     @media only screen and (max-width: 807px) {
         display: none;
@@ -95,21 +95,21 @@ export const Dashboard = () => {
                         {roles.includes("Developer") ?
                             <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setAppRegistrationShown(true)}>
                                 <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                    <FontAwesomeIcon style={FaIcon35Style} icon={["fas", "plus-square"]} />
+                                    <Icon style={{ fontSize: 35, userSelect: "none" }} iconName="AppIconDefaultAdd"></Icon>
                                     <Text variant="mediumPlus">Register an app</Text>
                                 </Stack>
                             </Link>
                             :
                             <Link style={{ color: "white", width: "150px", textDecoration: "none" }} onClick={() => setDevRegistrationShown(true)}>
                                 <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                    <FontAwesomeIcon style={FaIcon35Style} icon={["fas", "code"]} />
+                                    <Icon style={{ fontSize: 35, userSelect: "none" }} iconName="code"></Icon>
                                     <Text variant="mediumPlus">Become a Developer</Text>
                                 </Stack>
                             </Link>
                         }
                         <Link style={{ color: "gray", width: "150px", textDecoration: "none" }} to="/dashboard/registerapp">
                             <Stack verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: 5 }}>
-                                <FontAwesomeIcon style={FaIcon35Style} icon={["fas", "robot"]} />
+                                <Icon style={{ fontSize: 35, color: "gray", userSelect: "none" }} iconName="Robot"></Icon>
                                 <Text style={{ color: "gray" }} variant="mediumPlus">Manage your roles</Text>
                             </Stack>
                         </Link>
@@ -125,7 +125,7 @@ export const Dashboard = () => {
                     roles.includes("Developer") ?
                         <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
                             <Stack horizontal tokens={{ childrenGap: 15 }}>
-                                <FontAwesomeIcon style={FaIcon35Style} icon={["fas", "list"]} />
+                                <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
                                 <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
                             </Stack>
 
@@ -139,7 +139,7 @@ export const Dashboard = () => {
                         </Stack>
                         :
                         <Stack horizontalAlign="center">
-                            <FontAwesomeIcon style={FaIcon55Style} icon={["fas", "hammer"]} />
+                            <Icon iconName="BuildDefinition" style={{ fontSize: 55 }} />
                             <Text variant="xLarge" style={{ fontWeight: 600 }}>Under construction</Text>
                             <Text variant="large">For now, this area is primarily for developers. Check back later for more</Text>
                         </Stack>}
@@ -158,7 +158,7 @@ export const Dashboard = () => {
                     type: DialogType.largeHeader, title: "Become a developer"
                 }}>
                     <Stack tokens={{ childrenGap: 10 }} horizontalAlign="center">
-                        <FontAwesomeIcon style={FaIcon55Style} icon={["fas", "box-open"]} />
+                        <FontIcon iconName="GiftboxOpen" style={{ fontSize: 56 }} />
                         <Text variant="xLarge">Let's build something, together</Text>
                         <Text variant="medium">Everyone, from seasoned veterans to enthusiastic novices can become a developer with just a click</Text>
                         <Text variant="medium">You'll be given the Developer role in the UWP Community Discord server, and become eligible for app services exclusive to devs</Text>

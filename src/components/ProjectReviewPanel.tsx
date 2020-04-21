@@ -1,10 +1,8 @@
 import * as React from "react";
 import { IProject, GetAllProjects_Unfiltered } from "../common/services/projects";
-import { Stack, Text } from "office-ui-fabric-react";
+import { Stack, Text, FontIcon } from "office-ui-fabric-react";
 import { ProjectCard } from "./ProjectCard";
 import { PromiseVisualizer } from "./PromiseVisualizer";
-import { FaIcon55Style } from "../common/const";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IProjectReviewPanelState {
     promise: Promise<IProject[]>;
@@ -40,7 +38,7 @@ export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
                     <ProjectCard modOptions editable key={i} project={project} onProjectRemove={(project) => setState({ ...state, data: state.data && state.data.filter(p => p.appName !== project.appName) })} />
                 )) : (
                         <Stack horizontalAlign="center" verticalAlign="center" tokens={{ padding: 20 }}>
-                            <FontAwesomeIcon style={FaIcon55Style} icon={["fas", "frown"]} />
+                            <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>
                             <Text variant="xLarge">{(() => {
                                 switch (props.type) {
                                     case ReviewType.Launch: return "No submissions";

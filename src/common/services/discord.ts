@@ -1,5 +1,5 @@
 import { getBackendHost } from "../const";
-import { fetchBackend } from "../helpers";
+import { isLocalhost, fetchBackend } from "../helpers";
 
 export const uwpCommunityGuildId = 372137812037730304;
 export const developerRoleId = 372142246625017871;
