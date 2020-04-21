@@ -21,7 +21,7 @@ const PaddedProjectHolder = styled.div`
 
 export const Launch = () => {
     const [launchProjects, setLaunchProjects] = React.useState<IProject[]>();
-    const [user, setUser] = React.useState<IDiscordUser>();
+    const [, setUser] = React.useState<IDiscordUser>();
 
     React.useEffect(()=>{
         (async () => {
@@ -31,7 +31,7 @@ export const Launch = () => {
 
     return (
         <Stack tokens={{childrenGap: 25}} horizontalAlign="center">
-            <Stack horizontal wrap style={{ boxShadow: Depths.depth16 }} maxWidth="1200px">
+            <Stack horizontal wrap style={{ boxShadow: Depths.depth16 }} tokens={{maxWidth: 1200}}>
                 <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
                 <Stack style={{margin: "20px 50px 20px 50px"}}>
 
@@ -48,7 +48,7 @@ export const Launch = () => {
                     <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
 
                         <Text variant="xLarge">Launch 2020 Participants</Text>
-                        <Stack horizontal wrap horizontalAlign="center" maxWidth={1800} tokens={{ childrenGap: 25 }}>
+                        <Stack horizontal wrap horizontalAlign="center" tokens={{ childrenGap: 25, maxWidth: 1800 }}>
                             {launchProjects && launchProjects.length && launchProjects.map((project, i) => 
                                 <ProjectCard key={i} project={project} />
                                 )}

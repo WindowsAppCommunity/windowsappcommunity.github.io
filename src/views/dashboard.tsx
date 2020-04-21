@@ -76,7 +76,7 @@ export const Dashboard = () => {
     }
     `;
 
-    const SectionTitleIconFontSize = 34;
+    const SectionTitleIconFontSize = 24;
 
     const DashboardColumnFiller = styled.div`
     @media only screen and (max-width: 807px) {
@@ -132,14 +132,14 @@ export const Dashboard = () => {
                             <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                                 {
                                     (apps && apps.length > 0 ? apps.map(project =>
-                                        <ProjectCard onProjectRemove={(project) => setApps(apps.filter(p => p.appName !== project.appName))} editable={true} project={project}></ProjectCard>
+                                        <ProjectCard key={project.appName} onProjectRemove={(project) => setApps(apps.filter(p => p.appName !== project.appName))} editable={true} project={project}></ProjectCard>
                                     ) : <Text variant="large">You don't have any registered apps</Text>)
                                 }
                             </Stack>
                         </Stack>
                         :
                         <Stack horizontalAlign="center">
-                            <Icon iconName="BuildDefinition" style={{ fontSize: 55 }} />
+                            <Icon iconName="BuildDefinition" style={{ fontSize: SectionTitleIconFontSize }} />
                             <Text variant="xLarge" style={{ fontWeight: 600 }}>Under construction</Text>
                             <Text variant="large">For now, this area is primarily for developers. Check back later for more</Text>
                         </Stack>}

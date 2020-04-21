@@ -56,7 +56,7 @@ export const Home: React.StatelessComponent = () => {
       <Stack wrap horizontal horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
 
         <LargeCard>
-          <Stack horizontal wrap maxWidth="1400px" horizontalAlign="space-evenly">
+          <Stack horizontal wrap tokens={{ maxWidth: 1400 }} horizontalAlign="space-evenly">
             <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchAppsHero} />
 
             <Stack style={{ margin: 30 }} tokens={{ childrenGap: 5 }} verticalAlign="center">

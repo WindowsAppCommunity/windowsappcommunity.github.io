@@ -276,12 +276,12 @@ export const ProjectCard = (props: IProjectCard) => {
         <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
           {ViewModel.needsManualReview ?
             <TooltipHost content="Waiting for approval" delay={TooltipDelay.zero}>
-              <FontIcon style={{ fontSize: 26, padding: "0px 5px" }} iconName="Manufacturing" />
+              <FontIcon style={{ fontSize: 20, padding: "0px 5px" }} iconName="Manufacturing" />
             </TooltipHost>
             : <></>}
           {(ViewModel.awaitingLaunchApproval && props.modOptions) || ViewModel.launchYear ?
             <TooltipHost content={ViewModel.launchYear ? `Launch ${ViewModel.launchYear} participant` : "Awaiting Launch approval"} delay={TooltipDelay.zero}>
-              <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
+              <FontIcon style={{ fontSize: 20, padding: "0px 5px" }} iconName="Rocket" />
             </TooltipHost>
             : <></>}
           <DocumentCardTitle styles={{ root: { padding: "5px 5px", height: "auto", fontWeight: 600 } }} title={ViewModel.appName} />
@@ -291,8 +291,8 @@ export const ProjectCard = (props: IProjectCard) => {
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
           {props.editable !== undefined ? (<>
-            <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
-            <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
+            <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 14 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
+            <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 14 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
           </>) : <></>}
 
           {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
