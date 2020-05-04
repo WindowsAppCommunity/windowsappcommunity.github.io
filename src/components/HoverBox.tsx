@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
 
 export default styled.div`
-    box-shadow: ${Depths.depth4};
+    box-shadow: ${Depths.depth8};
     :hover {
       box-shadow: ${Depths.depth16};
     };

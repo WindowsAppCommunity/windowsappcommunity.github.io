@@ -1,99 +1,70 @@
-import React, { useState, CSSProperties } from "react";
-import { Text, Stack, Button, IconButton, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
-import { Route } from "react-router";
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { Text, Stack, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import HoverBox from '../components/HoverBox';
 import { Images } from "../common/const";
-import { Participants } from "../views/launch/participants";
-import { Signin } from "../views/launch/signin";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
+import { IProject, GetLaunchProjects } from "../common/services/projects";
+import { ProjectCard } from "../components/ProjectCard";
+import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
+import { PromiseVisualizer } from "../components/PromiseVisualizer";
+import styled from "styled-components";
 
-const FaIconStyle: CSSProperties = {
-    color: "white",
-    height: "20px",
-    width: "20px",
-    paddingLeft: "10px"
-};
-export const Launch: React.StatelessComponent<any> = ({ match }: any) => {
+const PaddedProjectHolder = styled.div`
+    padding: 20px 0px 20px 0px;
+
+
+    @media screen and (min-width: 1200px) {
+            padding: 20px 100px 20px 100px;
+    }
+
+`;
+
+export const Launch = () => {
+    const [launchProjects, setLaunchProjects] = React.useState<IProject[]>();
+    const [user, setUser] = React.useState<IDiscordUser>();
+
+    React.useEffect(()=>{
+        (async () => {
+            setUser(await GetCurrentDiscordUser());
+        })();
+    }, []);
+
     return (
-        <Stack>
-            <Route path={`${match.path}/participants`} component={Participants} />
-            <Route path={`${match.path}/signin`} component={Signin} />
-            <Route exact path={match.path} component={LaunchViewSelection} />
-        </Stack>
-    );
-};
+        <Stack tokens={{childrenGap: 25}} horizontalAlign="center">
+            <Stack horizontal wrap style={{ boxShadow: Depths.depth16 }} maxWidth="1200px">
+                <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
+                <Stack style={{margin: "20px 50px 20px 50px"}}>
 
+                    <Text style={{fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter"}}>// Launch</Text>
 
-const LaunchViewSelection = () => {
-    const [launchButtonDisabled, setLaunchButtonDisabled] = useState<boolean>(true);
-
-    document.addEventListener("keydown", (ev:any)=>{
-        if(ev.keyCode == 27) setLaunchButtonDisabled(false);
-    });
-    
-    return (
-        <Stack tokens={{childrenGap: 25}}>
-                <Stack horizontal wrap style={{ boxShadow: Depths.depth16 }}>
-                    <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
-                    <Stack style={{margin: "20px"}}>
-
-                        <Text style={{fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter"}}>// Launch</Text>
-
-                        <Text  style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">An annual event where a community of Windows App developers release their UWP-related projects</Text>
-                        <Text style={{marginTop: "10px"}} variant="mediumPlus">Our Discord server provides direct, 2 way user feedback from users, and a place for newbies to ask questions and learn from those with more experience, creating the perfect environment for apps to grow into something more</Text>
-                    </Stack>
+                    <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">Learn, develop, and Launch together</Text>
+                    <Text style={{ marginTop: "10px" }} variant="mediumPlus">Once a year, our community of Windows App developers join together to release their UWP-related projects.</Text>
+                    <Text style={{ marginTop: "10px" }} variant="mediumPlus">This year, we have 14 public and 3 secret projects in total that will be launching together on June 7th!</Text>
                 </Stack>
-
-            <Stack horizontal wrap horizontalAlign="center" tokens={{childrenGap: 25}}>
-                <LaunchCard header="Participating apps" description="See which apps are participating in Launch 2020" path="/launch/participants" />
-
-                <LaunchCard header="Submit your app" description="Want to Launch your app with the community?" path="/launch/signin" buttonStyle={{paddingTop: "25px", paddingBottom: "25px", marginLeft: "10px"}}  buttonDisabled={launchButtonDisabled}>
-                    <Text>Sign in </Text>
-                    <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
-                </LaunchCard>       
             </Stack>
+
+            <PromiseVisualizer promise={GetLaunchProjects(2020)} onResolve={setLaunchProjects} loadingMessage="Checking for Launch 2020 Participants">
+                <PaddedProjectHolder>
+                    <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
+
+                        <Text variant="xLarge">Launch 2020 Participants</Text>
+                        <Stack horizontal wrap horizontalAlign="center" maxWidth={1800} tokens={{ childrenGap: 25 }}>
+                            {launchProjects && launchProjects.length && launchProjects.map((project, i) => 
+                                <ProjectCard key={i} project={project} />
+                                )}
+                        </Stack>
+                    </Stack>
+                </PaddedProjectHolder>
+            </PromiseVisualizer>
         </Stack>
     );
 };
 
-interface ILaunchCardProps {
+/* interface ILaunchCardProps {
     header: string;
     description: string;
     path: string;
     buttonText?: string;
     buttonDisabled?: boolean;
     buttonStyle?: CSSProperties;
-};
-const LaunchCardStyle = styled(HoverBox)`
-    max-height: 500px;
-    max-width: 350px;
-    padding: 50px;
-    :hover {
-                pointer: cursor;
-        };
-    `;
-
-const LaunchCard: React.FunctionComponent<ILaunchCardProps> = (props: React.PropsWithChildren<ILaunchCardProps>) => {
-    return (
-        <LaunchCardStyle>
-            <Stack tokens={{childrenGap: 5}}>
-                <Stack horizontal tokens={{ childrenGap: 5 }} verticalAlign="center">
-                    <Text variant="xLarge">{props.header}</Text>
-                    <NavLink to={(props.buttonDisabled? window.location.pathname : props.path)}>
-                        {
-                            props.buttonText || props.children ?
-                                <Button primary disabled={props.buttonDisabled} style={props.buttonStyle} text={props.buttonText}>{props.children}</Button>
-                                :
-                                <IconButton disabled={props.buttonDisabled} primary iconProps={{ iconName: 'Go' }} />
-                        }
-                    </NavLink>
-                </Stack>
-                <Text variant="medium">{props.description}</Text>
-            </Stack>
-        </LaunchCardStyle>
-    )
-};
+}; */

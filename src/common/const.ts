@@ -1,3 +1,5 @@
+import { isLocalhost } from "./helpers";
+
 export const Links = {
   thisSiteRepo: "https://github.com/UWPCommunity/uwpcommunity.github.io/",
   launch2019Medium: "https://medium.com/@Arlodottxt/launch-2019-7efd37cc0877",
@@ -9,6 +11,7 @@ export const Images = {
   discordChatExample: "/assets/img/discordchatexample.png",
   githubOrgScreenshot: "/assets/img/githuborgscreenshot.png",
   launchHeroImage: "/assets/img/LaunchHero.png",
+  launchHeroImageHD: "/assets/img/LaunchHeroHD.png",
   launchAppsHero: "/assets/img/LaunchAppsHero.png",
 
   uwpCommunityLogo: "/assets/img/uwpCommunityLogo.png",
@@ -18,3 +21,34 @@ export const Images = {
     discord: "/assets/img/discordBadge.svg"
   }
 };
+
+export const MicrosoftStoreAppCategories = [
+  "Books & reference",
+  "Business",
+  "Developer tools",
+  "Education",
+  "Entertainment",
+  "Food & dining",
+  "Government & politics",
+  "Kids & family",
+  "Lifestyle",
+  "Medical",
+  "Multimedia design",
+  "Music",
+  "Navigation & maps",
+  "News & weather",
+  "Personal finance",
+  "Personalization",
+  "Photo & video",
+  "Productivity",
+  "Security",
+  "Shopping",
+  "Social",
+  "Sports",
+  "Travel",
+  "Utilities & tools"
+];
+
+export function getBackendHost(): string {
+  return isLocalhost ? "localhost:5000" : "uwpcommunity-site-backend.herokuapp.com"
+}
