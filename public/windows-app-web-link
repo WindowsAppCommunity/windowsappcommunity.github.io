@@ -1,0 +1,12 @@
+[
+    {
+        "packageFamilyName": "52374YoshiAskharoun.UWPCommunity_bcem08bwhrc72",
+        "paths": [
+            "*"
+        ],
+        "excludePaths": [
+            "/news/*",
+            "/blog/*"
+        ]
+    }
+]
