@@ -8,11 +8,11 @@ export const Links = {
 };
 
 export const Images = {
-  discordChatExample: "/assets/img/discordchatexample.png",
-  githubOrgScreenshot: "/assets/img/githuborgscreenshot.png",
-  launchHeroImage: "/assets/img/LaunchHero.png",
-  launchHeroImageHD: "/assets/img/LaunchHeroHD.png",
-  launchAppsHero: "/assets/img/LaunchAppsHero.png",
+  discordChatExample: "/assets/img/discordchatexample.jpg",
+  githubOrgScreenshot: "/assets/img/githuborgscreenshot.jpg",
+  launchHeroImage: "/assets/img/LaunchHero.jpg",
+  launchHeroImageHD: "/assets/img/LaunchHeroHD.jpg",
+  launchAppsHero: "/assets/img/LaunchAppsHero.jpg",
 
   uwpCommunityLogo: "/assets/img/uwpCommunityLogo.png",
   Badges: {
