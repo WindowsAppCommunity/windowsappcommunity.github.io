@@ -20,6 +20,7 @@
     "@uifabric/fluent-theme": "^7.1.4",
     "@uifabric/icons": "7.2.1",
     "gh-pages": "^2.1.1",
+    "http-server": "^0.12.1",
     "office-ui-fabric-react": "^7.61.1",
     "promise-memoize": "^1.2.1",
     "react": "^16.12.0",
@@ -46,7 +47,9 @@
     "deployLive": "npm run cleanup && gh-pages -d build -b master",
     "cleanup": "node tasks/cleanup.js",
     "ghp-help": "gh-pages --help",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "preprodtest": "npm run build",
+    "prodtest": "http-server build"
   },
   "browserslist": [
     ">0.2%",
