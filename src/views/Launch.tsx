@@ -8,6 +8,7 @@ import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
 import { PromiseVisualizer } from "../components/PromiseVisualizer";
 import styled from "styled-components";
+import LaunchViewData from '../assets/views/launch.json';
 
 const PaddedProjectHolder = styled.div`
     padding: 20px 0px 20px 0px;
@@ -35,11 +36,11 @@ export const Launch = () => {
                 <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
                 <Stack style={{margin: "20px 50px 20px 50px"}}>
 
-                    <Text style={{fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter"}}>// Launch</Text>
+                    <Text style={{fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter"}}>{LaunchViewData.main.title}</Text>
 
-                    <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">Learn, develop, and Launch together</Text>
-                    <Text style={{ marginTop: "10px" }} variant="mediumPlus">Once a year, our community of Windows App developers join together to release their UWP-related projects.</Text>
-                    <Text style={{ marginTop: "10px" }} variant="mediumPlus">This year, we have 14 public and 3 secret projects in total that will be launching together on June 7th!</Text>
+                    <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">{LaunchViewData.main.subtitle}</Text>
+                    <Text style={{ marginTop: "10px" }} variant="mediumPlus">{LaunchViewData.main.details[0]}</Text>
+                    <Text style={{ marginTop: "10px" }} variant="mediumPlus">{LaunchViewData.main.details[1]}</Text>
                 </Stack>
             </Stack>
 

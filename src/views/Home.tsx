@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import HoverBox from '../components/HoverBox';
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
+import HomeViewData from '../assets/views/home.json';
 
 const FaIconStyle: CSSProperties = {
   color: "black",
@@ -60,8 +61,8 @@ export const Home: React.StatelessComponent = () => {
             <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchAppsHero} />
 
             <Stack style={{ margin: 30 }} tokens={{ childrenGap: 5 }} verticalAlign="center">
-              <Text variant="xLarge">Launch 2020 participants have been decided</Text>
-              <Text variant="mediumPlus">Around 17 new apps will launch in June as part of the annual event</Text>
+              <Text variant="xLarge">{HomeViewData.main.subtitle}</Text>
+              <Text variant="mediumPlus">{HomeViewData.main.details}</Text>
               <PrimaryButton href="/launch" style={{ marginTop: "15px", width: 150, height: 40 }} text="Take a look" />
             </Stack>
           </Stack>
