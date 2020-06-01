@@ -39,13 +39,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "react-snap",
+    "postbuild": "npm run postBuildTasks",
+
     "test": "react-scripts test --env=jsdom",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "deployClean": "npm run preBuildTasks && gh-pages -d build && npm run postBuildTasks",
+    "deployClean": "npm run preBuildTasks && gh-pages -d build",
     "predeployLive": "npm run build",
-    "deployLive": "npm run preBuildTasks && gh-pages -d build -b master && npm run postBuildTasks",
+    "deployLive": "npm run preBuildTasks && gh-pages -d build -b master",
     "preBuildTasks": "npm run cleanup",
     "postBuildTasks": "npm run copyAssets",
     "cleanup": "node tasks/cleanup.js",
