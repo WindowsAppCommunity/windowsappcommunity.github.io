@@ -59,6 +59,7 @@ export const ProjectCard = (props: IProjectCard) => {
           link: ViewModel.downloadLink
         },
         href: ViewModel.downloadLink,
+        target: "_blank",
         onRenderIcon: onRenderIcon
       });
     }
@@ -70,6 +71,7 @@ export const ProjectCard = (props: IProjectCard) => {
           link: ViewModel.githubLink
         },
         href: ViewModel.githubLink,
+        target: "_blank",
         onRenderIcon: onRenderIcon
       });
     }
@@ -81,6 +83,7 @@ export const ProjectCard = (props: IProjectCard) => {
           link: ViewModel.externalLink
         },
         href: ViewModel.externalLink,
+        target: "_blank",
         onRenderIcon: onRenderIcon
       });
     }
