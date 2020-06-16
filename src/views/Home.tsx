@@ -36,14 +36,15 @@ let Img = styled.img`
 const LargeCard = styled.div`
 box-shadow: ${Depths.depth16};
 .heroImage, .heroImage img {
-  width: 720px;
-  height: 350px;
+  display: flex;
+  justify-content: center;
+  width: 600px;
 }
 
 @media screen and (max-width: 1479px) {
   width: min-content;
   .heroImage, .heroImage img {
-      width: 850px;
+      width: 700px;
       height: 350px;
   }
 }
@@ -52,18 +53,18 @@ box-shadow: ${Depths.depth16};
 export const Home: React.StatelessComponent = () => {
   return (
     <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
-      <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: 0 }}>The homepage for the unofficial Discord server </p>
+      <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: 5 }}>The homepage for the unofficial Discord server </p>
 
       <Stack wrap horizontal horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
 
         <LargeCard>
-          <Stack horizontal wrap maxWidth="1400px" horizontalAlign="space-evenly">
-            <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} src={Images.launchAppsHero} />
+          <Stack horizontal wrap horizontalAlign="space-evenly">
+            <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} src={Images.launchAppsHero} />
 
-            <Stack style={{ margin: 30 }} tokens={{ childrenGap: 5 }} verticalAlign="center">
+            <Stack style={{ margin: 30, width: 350 }} tokens={{ childrenGap: 5 }} verticalAlign="center">
               <Text variant="xLarge">{HomeViewData.main.subtitle}</Text>
               <Text variant="mediumPlus">{HomeViewData.main.details}</Text>
-              <PrimaryButton href="/launch" style={{ marginTop: "15px", width: 150, height: 40 }} text="Take a look" />
+              <PrimaryButton href="https://medium.com/@Arlodottxt/uwp-community-launch-2020-1772efb1e382" style={{ marginTop: "15px", width: 150, height: 40 }} text="Take a look" />
             </Stack>
           </Stack>
         </LargeCard>
@@ -108,7 +109,7 @@ export const Home: React.StatelessComponent = () => {
                 <Stack horizontal verticalAlign="center" horizontalAlign="center" tokens={{ childrenGap: 7 }}>
                   <Stack style={{ margin: "10px" }} tokens={{ childrenGap: 10 }}>
                     <Text>As a community of talented developers, each year we Launch our projects together in an annual event known as <code>Launch</code></Text>
-                    <Link href={Links.launch2019Medium} target="_blank">Read about Launch 2019</Link>
+                    <Link href={Links.launch2019Medium} target="_blank">Read about Launch 2020</Link>
                   </Stack>
                   <FontAwesomeIcon style={FaIconStyle} icon={["fab", "medium"]} />
                 </Stack>

@@ -3,6 +3,7 @@ import { isLocalhost } from "./helpers";
 export const Links = {
   thisSiteRepo: "https://github.com/UWPCommunity/uwpcommunity.github.io/",
   launch2019Medium: "https://medium.com/@Arlodottxt/launch-2019-7efd37cc0877",
+  launch2020Medium: "https://medium.com/@Arlodottxt/uwp-community-launch-2020-1772efb1e382",
   discordServerInvite: "https://discord.gg/eBHZSKG",
   githubOrganization: "https://github.com/UWPCommunity/"
 };
@@ -12,7 +13,7 @@ export const Images = {
   githubOrgScreenshot: "/assets/img/githuborgscreenshot.jpg",
   launchHeroImage: "/assets/img/LaunchHero.jpg",
   launchHeroImageHD: "/assets/img/LaunchHeroHD.jpg",
-  launchAppsHero: "/assets/img/LaunchAppsHero.jpg",
+  launchAppsHero: "/assets/img/LaunchAppsHero.png",
 
   uwpCommunityLogo: "/assets/img/uwpCommunityLogo.png",
   Badges: {

@@ -13,10 +13,21 @@ import LaunchViewData from '../assets/views/launch.json';
 const PaddedProjectHolder = styled.div`
     padding: 20px 0px 20px 0px;
 
-
     @media screen and (min-width: 1200px) {
-            padding: 20px 100px 20px 100px;
+        padding: 20px 100px 20px 100px;
     }
+
+`;
+
+const LargeCard = styled.div`
+box-shadow: ${Depths.depth16};
+.heroImage, .heroImage img {
+  display: flex;
+  justify-content: center;
+  width: 750px;
+}
+
+width: min-content;
 
 `;
 
@@ -24,25 +35,28 @@ export const Launch = () => {
     const [launchProjects, setLaunchProjects] = React.useState<IProject[]>();
     const [user, setUser] = React.useState<IDiscordUser>();
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         (async () => {
             setUser(await GetCurrentDiscordUser());
         })();
     }, []);
 
     return (
-        <Stack tokens={{childrenGap: 25}} horizontalAlign="center">
-            <Stack horizontal wrap style={{ boxShadow: Depths.depth16 }} maxWidth="1200px">
-                <Image width="100%" height="400px" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} imageFit={ImageFit.cover} />
-                <Stack style={{margin: "20px 50px 20px 50px"}}>
+        <Stack tokens={{ childrenGap: 25 }} horizontalAlign="center">
 
-                    <Text style={{fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter"}}>{LaunchViewData.main.title}</Text>
+            <LargeCard>
+                <Stack horizontal wrap>
+                    <Image className="heroImage" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} />
+                    <Stack style={{ margin: "20px 50px 20px 50px" }}>
 
-                    <Text style={{marginTop: "10px", fontWeight: 500}} variant="xLarge">{LaunchViewData.main.subtitle}</Text>
-                    <Text style={{ marginTop: "10px" }} variant="mediumPlus">{LaunchViewData.main.details[0]}</Text>
-                    <Text style={{ marginTop: "10px" }} variant="mediumPlus">{LaunchViewData.main.details[1]}</Text>
+                        <Text style={{ fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter" }}>{LaunchViewData.main.title}</Text>
+
+                        <Text style={{ marginTop: "10px", fontWeight: 500 }} variant="xLarge">{LaunchViewData.main.subtitle}</Text>
+                        <Text style={{ marginTop: "10px" }} variant="mediumPlus">{LaunchViewData.main.details[0]}</Text>
+                        <Text style={{ marginTop: "10px" }} variant="mediumPlus">{LaunchViewData.main.details[1]}</Text>
+                    </Stack>
                 </Stack>
-            </Stack>
+            </LargeCard>
 
             <PromiseVisualizer promise={GetLaunchProjects(2020)} onResolve={setLaunchProjects} loadingMessage="Checking for Launch 2020 Participants">
                 <PaddedProjectHolder>
@@ -50,9 +64,9 @@ export const Launch = () => {
 
                         <Text variant="xLarge">Launch 2020 Participants</Text>
                         <Stack horizontal wrap horizontalAlign="center" maxWidth={1800} tokens={{ childrenGap: 25 }}>
-                            {launchProjects && launchProjects.length && launchProjects.map((project, i) => 
+                            {launchProjects && launchProjects.length && launchProjects.map((project, i) =>
                                 <ProjectCard key={i} project={project} />
-                                )}
+                            )}
                         </Stack>
                     </Stack>
                 </PaddedProjectHolder>

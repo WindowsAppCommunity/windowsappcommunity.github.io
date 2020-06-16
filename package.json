@@ -39,8 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "npm run postBuildTasks",
-
+    "postbuild": "npm run postBuildTasks && react-snap",
     "test": "react-scripts test --env=jsdom",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
