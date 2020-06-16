@@ -20,7 +20,7 @@ export const getHeadTitle = (path: string) => {
         path = path.slice(0, path.length - 1)
     }
     switch (path) {
-        case "/":
+        case "":
             title = title + " // Home"
             break;
         case "/projects":
