@@ -84,6 +84,13 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                 value={projectRequest.heroImage}
                                 placeholder="External link to an image of your app"
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, heroImage: value })} />
+
+                            <TextField label="Project icon"
+                                type="url"
+                                styles={{ root: { width: "100%" } }}
+                                value={projectRequest.appIcon}
+                                placeholder="Your project's icon, if applicable"
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, appIcon: value })} />
                         </Stack>
                     </PivotItem>
                     <PivotItem headerText="Project links">

@@ -35,10 +35,12 @@ let Img = styled.img`
 
 const LargeCard = styled.div`
 box-shadow: ${Depths.depth16};
+height: min-content;
 .heroImage, .heroImage img {
+  border: none;
   display: flex;
   justify-content: center;
-  width: 600px;
+  height: 350px;
 }
 
 @media screen and (max-width: 1479px) {
@@ -55,11 +57,11 @@ export const Home: React.StatelessComponent = () => {
     <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
       <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: 5 }}>The homepage for the unofficial Discord server </p>
 
-      <Stack wrap horizontal horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
+      <Stack horizontal wrap horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
 
         <LargeCard>
           <Stack horizontal wrap horizontalAlign="space-evenly">
-            <Image className="heroImage" coverStyle={ImageCoverStyle.landscape} src={Images.launchAppsHero} />
+            <Image className="heroImage" height="350" coverStyle={ImageCoverStyle.landscape} src={Images.launchAppsHero} />
 
             <Stack style={{ margin: 30, width: 350 }} tokens={{ childrenGap: 5 }} verticalAlign="center">
               <Text variant="xLarge">{HomeViewData.main.subtitle}</Text>
