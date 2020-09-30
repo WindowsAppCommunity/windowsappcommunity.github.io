@@ -1,7 +1,7 @@
 {
   "name": "new",
   "version": "1.0.0",
-  "homepage": "https://uwpcommunity.github.io",
+  "homepage": "./",
   "description": "",
   "keywords": [],
   "main": "src/index.tsx",

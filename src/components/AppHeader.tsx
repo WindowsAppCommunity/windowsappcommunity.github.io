@@ -96,7 +96,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
     }, {
       /* Todo: Only show this button if the user HAS a profile to edit */
       key: "editProfile",
-      text: "Edit Profile",
+      text: "Edit Public Profile",
       iconProps: { iconName: "EditContact" }
     }, {
       key: "logOut",
@@ -159,7 +159,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
           </DefaultButton>
         </TooltipHost>
 
-        <Dialog hidden={!editProfileShown && !registerUserShown} dialogContentProps={{ type: DialogType.largeHeader, title: registerUserShown ? "One more step" : "Edit profile" }}>
+        <Dialog hidden={!editProfileShown && !registerUserShown} dialogContentProps={{ type: DialogType.largeHeader, title: registerUserShown ? "One more step" : "Edit Public Profile" }}>
           <div style={{ marginTop: -10 }}>
             {registerUserShown ?
               <Text variant="mediumPlus" style={{ marginTop: 10 }}>Complete your profile to get started</Text>
