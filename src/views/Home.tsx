@@ -61,12 +61,15 @@ export const Home: React.StatelessComponent = () => {
 
         <LargeCard>
           <Stack horizontal wrap horizontalAlign="space-evenly">
-            <Image className="heroImage" height="350" coverStyle={ImageCoverStyle.landscape} src={Images.launchAppsHero} />
+            <Image className="heroImage" height="350" coverStyle={ImageCoverStyle.landscape} src={Images.launchHeroImage} />
 
             <Stack style={{ margin: 30, width: 350 }} tokens={{ childrenGap: 5 }} verticalAlign="center">
               <Text variant="xLarge">{HomeViewData.main.subtitle}</Text>
-              <Text variant="mediumPlus">{HomeViewData.main.details}</Text>
-              <PrimaryButton href="https://medium.com/@Arlodottxt/uwp-community-launch-2020-1772efb1e382" style={{ marginTop: "15px", width: 150, height: 40 }} text="Take a look" />
+              <Text variant="mediumPlus">{HomeViewData.main.details.map(x => <Text style={{ display: 'block', marginBottom: 10 }}>{x}</Text>)}</Text>
+              <Stack horizontal tokens={{ childrenGap: 45}}>
+                <PrimaryButton href="https://discord.gg/eBHZSKG" style={{ marginTop: "15px", width: 150, height: 40 }} text="Join us" />
+                <PrimaryButton href="/dashboard" style={{ marginTop: "15px", width: 150, height: 40 }} text="Register" />
+              </Stack>
             </Stack>
           </Stack>
         </LargeCard>
@@ -107,11 +110,11 @@ export const Home: React.StatelessComponent = () => {
           <HoverBox>
             <LinkCard>
               <Stack>
-                <Img src={Images.launchHeroImage} />
+                <Img src={Images.launchAppsHero} />
                 <Stack horizontal verticalAlign="center" horizontalAlign="center" tokens={{ childrenGap: 7 }}>
                   <Stack style={{ margin: "10px" }} tokens={{ childrenGap: 10 }}>
                     <Text>As a community of talented developers, each year we Launch our projects together in an annual event known as <code>Launch</code></Text>
-                    <Link href={Links.launch2019Medium} target="_blank">Read about Launch 2020</Link>
+                    <Link href={Links.launch2020Medium} target="_blank">Read about Launch 2020</Link>
                   </Stack>
                   <FontAwesomeIcon style={FaIconStyle} icon={["fab", "medium"]} />
                 </Stack>

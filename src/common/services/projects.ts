@@ -20,7 +20,6 @@ export interface ICreateProjectsRequestBody {
     downloadLink?: string;
     githubLink?: string;
     externalLink?: string;
-    launchYear: number;
     awaitingLaunchApproval: boolean;
     needsManualReview: boolean;
     heroImage: string;
@@ -54,7 +53,10 @@ export async function GetAllProjects_Unfiltered(): Promise<IProject[]> {
 }
 
 export async function GetLaunchProjects(year: number): Promise<IProject[]> {
-    return (await (await fetchBackend(`projects`, "GET")).json()).filter((project: IProject) => project.launchYear === year && project.awaitingLaunchApproval === false);
+    var request = await fetchBackend(`projects/launch/${year}`, "GET");
+    var result = await request.json();
+
+    return result.projects;
 }
 
 export interface IModifyProjectsRequestBody {
@@ -71,7 +73,6 @@ export interface IModifyProjectsRequestBody {
     awaitingLaunchApproval: boolean;
     needsManualReview: boolean;
     lookingForRoles?: string[];
-    launchYear?: number;
     category?: string;
 }
 
@@ -106,7 +107,13 @@ export interface IProject {
     lookingForRoles?: string[];
 
     collaborators: IProjectCollaborator[];
-
-    launchYear?: number;
+    tags: ITag[];
     category?: string;
 };
+
+export interface ITag {
+    id: number;
+    projects?: IProject[];
+    name: string;
+    icon?: string;
+}

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
 import { IDiscordUser, GetDiscordUser, AssignUserRole } from "../common/services/discord";
 import styled from "styled-components";
+import { fetchBackend, ObjectToPathQuery } from "../common/helpers";
 
 enum ButtonType {
   Github, Download, External
@@ -132,24 +133,31 @@ export const ProjectCard = (props: IProjectCard) => {
   }
 
   async function ApproveLaunchSubmission(launchYear: number) {
-    const data: IModifyProjectsRequestBody = {
+    const projectData: IModifyProjectsRequestBody = {
       appName: ViewModel.appName,
       description: ViewModel.description,
       needsManualReview: ViewModel.needsManualReview,
       isPrivate: ViewModel.isPrivate,
       heroImage: ViewModel.heroImage,
-      awaitingLaunchApproval: false,
-      launchYear
+      awaitingLaunchApproval: false
     };
-    setProjectViewModel({ ...ViewModel, ...data });
 
-    const req = await ModifyProject(data, { appName: ViewModel.appName });
-    if (req.status !== 200) {
-      setShowLaunchApproveProjectDialogErrorMessage((await req.json()).reason);
-    } else {
-      await AssignLaunchParticipantRole(ViewModel.collaborators.filter(p => p.isOwner)[0]);
-      setShowLaunchApprovalDialog(false);
+    setProjectViewModel({ ...ViewModel, ...projectData });
+
+    const tagUpdateReq = await fetchBackend(`projects/tags?appName=${ViewModel.appName}`, "POST", { tagName: `Launch ${launchYear}` });
+    if (tagUpdateReq.status !== 200) {
+      setShowLaunchApproveProjectDialogErrorMessage((await tagUpdateReq.json()).reason);
+      return;
     }
+
+    const projectUpdateReq = await ModifyProject(projectData, { appName: ViewModel.appName });
+    if (projectUpdateReq.status !== 200) {
+      setShowLaunchApproveProjectDialogErrorMessage((await projectUpdateReq.json()).reason);
+      return;
+    }
+
+    await AssignLaunchParticipantRole(ViewModel.collaborators.filter(p => p.isOwner)[0]);
+    setShowLaunchApprovalDialog(false);
   }
 
   async function AssignLaunchParticipantRole(user: IProjectCollaborator) {
@@ -257,7 +265,7 @@ export const ProjectCard = (props: IProjectCard) => {
           <Stack horizontal tokens={{ childrenGap: 7 }}>
             <PrimaryButton text={`Confirm`}
               onClick={async () => {
-                await ApproveLaunchSubmission(2020);
+                await ApproveLaunchSubmission(2021);
               }} />
             <DefaultButton onClick={() => { setShowLaunchApprovalDialog(false); }} text="Cancel" />
           </Stack>
@@ -282,11 +290,20 @@ export const ProjectCard = (props: IProjectCard) => {
               <FontIcon style={{ fontSize: 26, padding: "0px 5px" }} iconName="Manufacturing" />
             </TooltipHost>
             : <></>}
-          {(ViewModel.awaitingLaunchApproval && props.modOptions) || ViewModel.launchYear ?
-            <TooltipHost content={ViewModel.launchYear ? `Launch ${ViewModel.launchYear} participant` : "Awaiting Launch approval"} delay={TooltipDelay.zero}>
+
+          {(ViewModel.awaitingLaunchApproval && props.modOptions) ?
+            <TooltipHost content="Awaiting Launch approval" delay={TooltipDelay.zero}>
               <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
             </TooltipHost>
             : <></>}
+
+          {ViewModel.tags.map(tag => (
+            tag.name.includes("Launch ") ? 
+            <TooltipHost content={`${tag.name} participant`} delay={TooltipDelay.zero} key={tag.id}>
+              <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
+            </TooltipHost>
+            : <></>
+          ))}
           <DocumentCardTitle styles={{ root: { padding: "5px 5px", height: "auto", fontWeight: 600 } }} title={ViewModel.appName} />
         </Stack>
         <Stack tokens={{ padding: "0px 10px 10px 10px" }}>

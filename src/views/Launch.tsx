@@ -32,7 +32,8 @@ width: min-content;
 `;
 
 export const Launch = () => {
-    const [launchProjects, setLaunchProjects] = React.useState<IProject[]>();
+    const [launch2020Projects, setLaunch2020Projects] = React.useState<IProject[]>();
+    const [launch2019Projects, setLaunch2019Projects] = React.useState<IProject[]>();
     const [user, setUser] = React.useState<IDiscordUser>();
 
     React.useEffect(() => {
@@ -52,19 +53,36 @@ export const Launch = () => {
                         <Text style={{ fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter" }}>{LaunchViewData.main.title}</Text>
 
                         <Text style={{ marginTop: "10px", fontWeight: 500 }} variant="xLarge">{LaunchViewData.main.subtitle}</Text>
-                        <Text style={{ marginTop: "10px" }} variant="mediumPlus">{LaunchViewData.main.details[0]}</Text>
-                        <Text style={{ marginTop: "10px" }} variant="mediumPlus">{LaunchViewData.main.details[1]}</Text>
+                        {
+                            LaunchViewData.main.details.map(x => {
+                                return (
+                                    <Text style={{ marginTop: "10px" }} variant="mediumPlus" key={x}>{x}</Text>
+                                )
+                            })
+                        }
                     </Stack>
                 </Stack>
             </LargeCard>
 
-            <PromiseVisualizer promise={GetLaunchProjects(2020)} onResolve={setLaunchProjects} loadingMessage="Checking for Launch 2020 Participants">
+            <PromiseVisualizer promise={GetLaunchProjects(2020)} onResolve={setLaunch2020Projects} loadingMessage="Checking for Launch 2020 Participants">
                 <PaddedProjectHolder>
                     <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
-
                         <Text variant="xLarge">Launch 2020 Participants</Text>
                         <Stack horizontal wrap horizontalAlign="center" maxWidth={1800} tokens={{ childrenGap: 25 }}>
-                            {launchProjects && launchProjects.length && launchProjects.map((project, i) =>
+                            {launch2020Projects && launch2020Projects.length && launch2020Projects.map((project, i) =>
+                                <ProjectCard key={i} project={project} />
+                            )}
+                        </Stack>
+                    </Stack>
+                </PaddedProjectHolder>
+            </PromiseVisualizer>
+
+            <PromiseVisualizer promise={GetLaunchProjects(2019)} onResolve={setLaunch2019Projects} loadingMessage="Checking for Launch 2019 Participants">
+                <PaddedProjectHolder>
+                    <Stack horizontalAlign="center" tokens={{ childrenGap: 15 }}>
+                        <Text variant="xLarge">Launch 2019 Participants</Text>
+                        <Stack horizontal wrap horizontalAlign="center" maxWidth={1800} tokens={{ childrenGap: 25 }}>
+                            {launch2019Projects && launch2019Projects.length && launch2019Projects.map((project, i) =>
                                 <ProjectCard key={i} project={project} />
                             )}
                         </Stack>
