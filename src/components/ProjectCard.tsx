@@ -139,7 +139,7 @@ export const ProjectCard = (props: IProjectCard) => {
       needsManualReview: ViewModel.needsManualReview,
       isPrivate: ViewModel.isPrivate,
       heroImage: ViewModel.heroImage,
-      awaitingLaunchApproval: false
+      awaitingLaunchApproval: false,
     };
 
     setProjectViewModel({ ...ViewModel, ...projectData });
@@ -310,7 +310,7 @@ export const ProjectCard = (props: IProjectCard) => {
           <Text style={{ overflowY: "auto", height: 60 }}>{ViewModel.description}</Text>
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
-          {props.editable !== undefined ? (<>
+          {props.editable === true ? (<>
             <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
             <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
           </>) : <></>}

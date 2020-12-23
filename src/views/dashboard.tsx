@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { CreateProjectForm } from "../components/forms/CreateProjectForm";
 import { IProject } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
-import { GetUserProjects } from "../common/services/users";
+import { GetUserProjects, IUser } from "../common/services/users";
 import { ProjectReviewPanel, ReviewType } from "../components/ProjectReviewPanel";
 
 const DashboardHeader = styled.header`
@@ -20,6 +20,7 @@ padding: 15px 0px;
 export const Dashboard = () => {
     const [welcomeMessage, setWelcomeMessage] = React.useState("Signing in...");
     const [userIcon, setUserIcon] = React.useState("");
+    const [user, setUser] = React.useState<IDiscordUser>();
 
     const [roles, setRoles] = React.useState<string[]>([]);
 
@@ -44,6 +45,9 @@ export const Dashboard = () => {
             window.location.href = discordAuthEndpoint;
             return;
         }
+
+        setUser(user);
+
         if (welcomeMessage === "Signing in...") setWelcomeMessage(user.username);
         if (!userIcon) setUserIcon(await GetUserAvatar(user) || "");
 
@@ -132,7 +136,9 @@ export const Dashboard = () => {
                             <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                                 {
                                     (apps && apps.length > 0 ? apps.map(project =>
-                                        <ProjectCard onProjectRemove={(project) => setApps(apps.filter(p => p.appName !== project.appName))} editable={true} project={project}></ProjectCard>
+                                        <ProjectCard onProjectRemove={(project) => setApps(apps.filter(p => p.appName !== project.appName))}
+                                                     editable={project.collaborators.filter(x => x.isOwner && x.discordId === user?.id).length > 0} project={project} />
+
                                     ) : <Text variant="large">You don't have any registered apps</Text>)
                                 }
                             </Stack>

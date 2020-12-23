@@ -90,6 +90,7 @@ export interface IProjectCollaborator extends IUser {
     role: "Developer" | "Translator" | "Beta Tester" | "Other";
     isOwner: boolean;
 }
+
 export interface IProject {
     id?: number;
 
