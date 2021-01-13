@@ -36,6 +36,11 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
             if (!props.projectData.appName) {
                 throw new Error("Unable to modify project details. Missing app name prop");
             }
+
+            console.log(props.projectData.appName);
+            props.projectData.appName = encodeURIComponent(props.projectData.appName);
+            console.log(props.projectData.appName);
+
             request = await ModifyProject(projectRequest as IModifyProjectsRequestBody, { appName: props.projectData.appName });
         } else {
             request = await CreateProject(projectRequest as ICreateProjectsRequestBody);
