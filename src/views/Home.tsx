@@ -57,7 +57,7 @@ export const Home: React.StatelessComponent = () => {
     <Stack horizontalAlign="center" tokens={{ childrenGap: 10 }}>
       <p style={{ fontFamily: "Segoe UI, Sans-Serif", fontWeight: "lighter", fontSize: "24px", margin: 5 }}>The homepage for the unofficial Discord server </p>
 
-      <Stack horizontal wrap horizontalAlign="space-around" tokens={{ childrenGap: 25 }}>
+      <Stack horizontal wrap horizontalAlign="space-around" tokens={{ childrenGap: 16 }}>
 
         <LargeCard>
           <Stack horizontal wrap horizontalAlign="space-evenly">
