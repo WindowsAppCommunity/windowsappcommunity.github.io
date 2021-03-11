@@ -10,10 +10,14 @@ export const Links = {
 
 export const Images = {
   discordChatExample: "/assets/img/discordchatexample.jpg",
+  discordChatExampleAltText: "Screenshot of Discord chat",
   githubOrgScreenshot: "/assets/img/githuborgscreenshot.jpg",
+  githubOrgScreenshotAltText: "Screenshot of GitHub showing the UWP Community organization",
   launchHeroImage: "/assets/img/LaunchHero.jpg",
+  launchHeroImageAltText: "Hero image of Launch 2021",
   launchHeroImageHD: "/assets/img/LaunchHeroHD.jpg",
   launchAppsHero: "/assets/img/LaunchAppsHero.png",
+  launchAppsHeroAltText: "Image showing logos of Launch 2020 apps",
 
   uwpCommunityLogo: "/assets/img/uwpCommunityLogo.png",
   Badges: {
