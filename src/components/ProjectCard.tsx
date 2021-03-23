@@ -54,36 +54,42 @@ export const ProjectCard = (props: IProjectCard) => {
     const projectCardsData: IButtonProps[] = [];
 
     if (ViewModel.downloadLink) {
+      const microsoftStoreLinkLabel = "View " + ViewModel.appName + " on the Microsoft Store";
       projectCardsData.push({
         data: {
           type: ButtonType.Download,
           link: ViewModel.downloadLink
         },
         href: ViewModel.downloadLink,
+        "aria-label": microsoftStoreLinkLabel,
         target: "_blank",
         onRenderIcon: onRenderIcon
       });
     }
 
     if (ViewModel.githubLink) {
+      const gitHubLinkLabel = "View " + ViewModel.appName + " on GitHub";
       projectCardsData.push({
         data: {
           type: ButtonType.Github,
           link: ViewModel.githubLink
         },
         href: ViewModel.githubLink,
+        "aria-label":gitHubLinkLabel,
         target: "_blank",
         onRenderIcon: onRenderIcon
       });
     }
 
     if (ViewModel.externalLink) {
+      const externalLinkLabel = "View " + ViewModel.appName + " on the web";
       projectCardsData.push({
         data: {
           type: ButtonType.External,
           link: ViewModel.externalLink
         },
         href: ViewModel.externalLink,
+        "aria-label": externalLinkLabel,
         target: "_blank",
         onRenderIcon: onRenderIcon
       });
@@ -167,8 +173,15 @@ export const ProjectCard = (props: IProjectCard) => {
     }
   }
 
+  function onCardKeyDown(ev: React.KeyboardEvent<HTMLDivElement>)
+  {
+    if(ev.keyCode === 13){
+      setShowProjectDetailsModal(true)
+    }
+  }
+
   return (
-    <DocumentCard style={{ width: 275 }}>
+    <DocumentCard style={{ width: 275 }} tabIndex={0} onKeyDown={(e) => onCardKeyDown(e)}>
 
       <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectDetailsModal(false)} isOpen={showProjectDetailsModal}>
         <Stack>
@@ -280,7 +293,7 @@ export const ProjectCard = (props: IProjectCard) => {
               setShowProjectDetailsModal(true)
             });
         }}
-          height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} />
+          height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} alt={"Preview image for " + ViewModel.appName}/>
       </PointerOnHover>
 
       <DocumentCardDetails>
