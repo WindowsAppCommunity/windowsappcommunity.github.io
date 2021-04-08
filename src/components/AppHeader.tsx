@@ -171,7 +171,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       :
       <>
         <Stack verticalAlign="start" style={{ marginBottom: "22px" }}>
-          <PrimaryButton onClick={() => setPolicyConfirmationShown(true)} style={{ padding: "18px" }}>
+          <PrimaryButton onClick={() => setPolicyConfirmationShown(true)} style={{ padding: "18px" }} aria-label="Sign in using Discord">
             <Text>Sign in</Text>
             <FontAwesomeIcon style={FaIconStyle} icon={["fab", "discord"]} />
           </PrimaryButton>
