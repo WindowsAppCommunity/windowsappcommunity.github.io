@@ -34,22 +34,22 @@ let Img = styled.img`
 `;
 
 const LargeCard = styled.div`
-box-shadow: ${Depths.depth16};
-height: min-content;
-.heroImage, .heroImage img {
-  border: none;
-  display: flex;
-  justify-content: center;
-  height: 350px;
-}
-
-@media screen and (max-width: 1479px) {
-  width: min-content;
+  box-shadow: ${Depths.depth16};
+  height: min-content;
   .heroImage, .heroImage img {
-      width: 700px;
-      height: 350px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    height: 350px;
   }
-}
+
+  @media screen and (max-width: 1479px) {
+    width: min-content;
+    .heroImage, .heroImage img {
+        width: 700px;
+        height: 350px;
+    }
+  }
 `;
 
 export const Home: React.StatelessComponent = () => {
@@ -66,10 +66,6 @@ export const Home: React.StatelessComponent = () => {
             <Stack style={{ margin: 30, width: 350 }} tokens={{ childrenGap: 5 }} verticalAlign="center">
               <Text variant="xLarge">{HomeViewData.main.subtitle}</Text>
               <Text variant="mediumPlus">{HomeViewData.main.details.map(x => <Text style={{ display: 'block', marginBottom: 10 }}>{x}</Text>)}</Text>
-              <Stack horizontal tokens={{ childrenGap: 45}}>
-                <PrimaryButton href="https://discord.gg/eBHZSKG" style={{ marginTop: "15px", width: 150, height: 40 }} text="Join us" />
-                <PrimaryButton href="/dashboard" style={{ marginTop: "15px", width: 150, height: 40 }} text="Register" />
-              </Stack>
             </Stack>
           </Stack>
         </LargeCard>
