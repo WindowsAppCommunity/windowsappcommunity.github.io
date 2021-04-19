@@ -22,7 +22,7 @@ As a user / enthusiast, you can directly influence the creation of these new pro
 As a developer, many of the projects are open source or may be seeking collaborators. Ask around!
 
 ### Timeline: 
-The timeline for Launch 2021 has been extended to accomodate the new cross-platform offering and prizes.
+The timeline for Launch 2021 has been extended to accommodate the new cross-platform offering and prizes.
 - Accepting new participants until May 24th
 - Work on Projects:  April 19th – August 23rd
 - Judging: August 23rd – August 30th
