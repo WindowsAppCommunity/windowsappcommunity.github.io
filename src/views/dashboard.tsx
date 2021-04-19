@@ -124,20 +124,23 @@ export const Dashboard = () => {
                 </Stack>
             </DashboardHeader>
 
+
             <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
                 {
                     roles.includes("Developer") ?
                         <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
                             <Stack horizontal tokens={{ childrenGap: 15 }}>
                                 <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
-                                <Text variant="xLarge" style={{ fontWeight: 600 }}>My apps</Text>
+                                <Text variant="xLarge" style={{ fontWeight: 600 }}>Apps</Text>
                             </Stack>
+
+                            <Text variant="xSmall">All apps you've registered or have a collaborative role on.</Text>
 
                             <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                                 {
                                     (apps && apps.length > 0 ? apps.map(project =>
                                         <ProjectCard onProjectRemove={(project) => setApps(apps.filter(p => p.appName !== project.appName))}
-                                                     editable={project.collaborators.filter(x => x.isOwner && x.discordId === user?.id).length > 0} project={project} />
+                                            editable={project.collaborators.filter(x => x.isOwner && x.discordId === user?.id).length > 0} project={project} />
 
                                     ) : <Text variant="large">You don't have any registered apps</Text>)
                                 }
