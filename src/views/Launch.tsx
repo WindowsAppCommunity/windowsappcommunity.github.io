@@ -71,7 +71,7 @@ export const Launch = () => {
 
             <LargeCard>
                 <Stack horizontal wrap>
-                    <Image className="heroImage" src={Images.launchAppsHero} coverStyle={ImageCoverStyle.landscape} />
+                    <Image className="heroImage" src={Images.launchHeroImage} coverStyle={ImageCoverStyle.landscape} />
                     <Stack style={{ margin: "20px 50px 20px 50px" }}>
 
                         <Text style={{ fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter" }}>{LaunchViewData.main.title}</Text>
