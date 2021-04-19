@@ -3,7 +3,7 @@ The event is also a chance to use our Discord server to encourage collaboration 
 ---
 
 ### What you need to know:
-- Developers from around the world plan to launch their modern WinUI apps together in July as part of the Launch 2021 event.
+- Developers from around the world plan to launch their modern WinUI apps together in September as part of the Launch 2021 event.
 - Projects built on WinUI are eligible to join if the release is a new app or major update.
 - Apps that launched since the last event, but were built with feedback from testers, translators, and other devs in the Discord server are also eligible for Launch.
 - Each project will be scored in various categories. The best scores for each category get a special place in the showcase.	
