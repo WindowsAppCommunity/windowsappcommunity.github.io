@@ -59,7 +59,7 @@ The top 3 projects in each category will be shown off front and center in our sh
 ### Why this year is different
 Traditionally, Launch is a showcase for modern UWP apps created by the community. We keep in touch with devs, plan very carefully, release our apps at the same time, and write a news article briefing those who are interested.
 
-The format was harshly stressed in 2020 when we launched 12 project at the same time. To fix this, the event is evolving into what you see above. 
+The format was harshly stressed in 2020 when we launched 12 projects at the same time. To fix this, the event is evolving into what you see above. 
 
 ---
 
