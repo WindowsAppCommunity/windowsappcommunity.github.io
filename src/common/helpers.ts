@@ -72,6 +72,9 @@ export function usePromise<T>(promise?: (Promise<T>)): IUsePromiseState<T> {
     const [visualState, setVisualState] = useState<IUsePromiseState<T>>({ isLoading: true });
 
     useEffect(() => {
+    if (isReactSnap)
+        return setVisualState({ isLoading: false, error: new Error() });
+
         if (promise && !visualState.results) promise.then(results => {
             setVisualState(prevState => ({ ...prevState, isLoading: false, results }));
         }).catch(error => {

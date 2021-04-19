@@ -66,6 +66,8 @@ export const Home: React.StatelessComponent = () => {
             <Stack style={{ margin: 30, width: 350 }} tokens={{ childrenGap: 5 }} verticalAlign="center">
               <Text variant="xLarge">{HomeViewData.main.subtitle}</Text>
               <Text variant="mediumPlus">{HomeViewData.main.details.map(x => <Text style={{ display: 'block', marginBottom: 10 }}>{x}</Text>)}</Text>
+            
+              <PrimaryButton text="See details" href="/launch" />
             </Stack>
           </Stack>
         </LargeCard>

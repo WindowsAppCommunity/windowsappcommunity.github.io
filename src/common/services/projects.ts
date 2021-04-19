@@ -1,5 +1,5 @@
 import { IUser } from "./users";
-import { fetchBackend, ObjectToPathQuery, match } from "../helpers";
+import { fetchBackend, ObjectToPathQuery, match, isReactSnap } from "../helpers";
 
 export async function CreateProject(projectData: ICreateProjectsRequestBody): Promise<Response> {
     // Reformat microsoft store links to an international format
@@ -45,6 +45,9 @@ export async function DeleteProject(bodyData: IDeleteProjectRequestBody) {
 }
 
 export async function GetAllProjects(): Promise<IProject[]> {
+    if (isReactSnap)
+        return [];
+
     return (await fetchBackend(`projects`, "GET")).json();
 }
 
@@ -53,6 +56,9 @@ export async function GetAllProjects_Unfiltered(): Promise<IProject[]> {
 }
 
 export async function GetLaunchProjects(year: number): Promise<IProject[]> {
+    if (isReactSnap)
+        return [];
+
     var request = await fetchBackend(`projects/launch/${year}`, "GET");
     var result = await request.json();
 

@@ -133,11 +133,11 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                 checked={projectRequest.isPrivate}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
 
-                            <Checkbox label="Partipation in Launch 2021" disabled={true}
+                            <Checkbox label="Partipation in Launch 2021"
                                 checked={projectRequest.awaitingLaunchApproval}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
 
-                            <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>A moderator will contact you over Discord to help with the manual review process for Launch 2021</Text>
+                            <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>A moderator will contact you over Discord for the review process.</Text>
                         </Stack>
                     </PivotItem>
                 </Pivot>

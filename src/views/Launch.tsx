@@ -7,8 +7,10 @@ import { IProject, GetLaunchProjects } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
 import { PromiseVisualizer } from "../components/PromiseVisualizer";
+import ReactMarkdown from 'react-markdown'
 import styled from "styled-components";
 import LaunchViewData from '../assets/views/launch.json';
+import { isReactSnap } from "../common/helpers";
 
 const PaddedProjectHolder = styled.div`
     padding: 20px 0px 20px 0px;
@@ -19,12 +21,18 @@ const PaddedProjectHolder = styled.div`
 
 `;
 
+const MarkdownRenderer = styled(ReactMarkdown)`
+    * {
+        font-family: "Segoe UI"
+    }
+`;
+
 const LargeCard = styled.div`
 box-shadow: ${Depths.depth16};
 .heroImage, .heroImage img {
   display: flex;
   justify-content: center;
-  width: 750px;
+  width: 850px;
 }
 
 width: min-content;
@@ -34,6 +42,7 @@ width: min-content;
 export const Launch = () => {
     const [launch2020Projects, setLaunch2020Projects] = React.useState<IProject[]>();
     const [launch2019Projects, setLaunch2019Projects] = React.useState<IProject[]>();
+    const [launchMarkdown, setLaunchMarkdown] = React.useState<string>();
     const [user, setUser] = React.useState<IDiscordUser>();
 
     React.useEffect(() => {
@@ -41,6 +50,21 @@ export const Launch = () => {
             setUser(await GetCurrentDiscordUser());
         })();
     }, []);
+
+    async function getLaunchDetailsMarkdown(): Promise<string> {
+        if(isReactSnap)
+            return "";
+
+        var res = await fetch("../assets/views/launch2021.md");
+        if (!res)
+            return Promise.reject();
+
+        if (res.status !== 200)
+            return Promise.reject(res.statusText);
+
+        var body = await res.text();
+        return body;
+    }
 
     return (
         <Stack tokens={{ childrenGap: 25 }} horizontalAlign="center">
@@ -52,14 +76,20 @@ export const Launch = () => {
 
                         <Text style={{ fontFamily: "Segoe UI", fontSize: "30px", fontWeight: "lighter" }}>{LaunchViewData.main.title}</Text>
 
-                        <Text style={{ marginTop: "10px", fontWeight: 500 }} variant="xLarge">{LaunchViewData.main.subtitle}</Text>
+                        <Text style={{ margin: "10px", fontWeight: 500 }} variant="xLarge">{LaunchViewData.main.subtitle}</Text>
                         {
                             LaunchViewData.main.details.map(x => {
                                 return (
-                                    <Text style={{ marginTop: "10px" }} variant="mediumPlus" key={x}>{x}</Text>
+                                    <Text style={{ margin: "10px" }} variant="mediumPlus" key={x}>{x}</Text>
                                 )
                             })
                         }
+
+                        <PromiseVisualizer promise={getLaunchDetailsMarkdown()} onResolve={setLaunchMarkdown} loadingMessage="Loading launch details...">
+                            <MarkdownRenderer>
+                                {launchMarkdown}
+                            </MarkdownRenderer>
+                        </PromiseVisualizer>
                     </Stack>
                 </Stack>
             </LargeCard>
