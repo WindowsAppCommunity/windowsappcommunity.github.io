@@ -100,13 +100,13 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                     </PivotItem>
                     <PivotItem headerText="Project links">
                         <Stack tokens={{ childrenGap: 10 }}>
-                            <TextField label="Download Link:"
+                            <TextField label="Download link"
                                 value={projectRequest.downloadLink}
                                 disabled={!props.editing && props.projectData.downloadLink !== undefined}
                                 styles={{ root: { width: "100%" } }}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, downloadLink: value })} />
 
-                            <TextField label="Github Link:"
+                            <TextField label="GitHub link"
                                 value={projectRequest.githubLink}
                                 styles={{ root: { width: "100%" } }}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, githubLink: value })} />
