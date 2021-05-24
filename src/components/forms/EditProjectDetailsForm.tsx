@@ -133,7 +133,7 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                 checked={projectRequest.isPrivate}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
 
-                            <Checkbox label="Partipation in Launch 2021"
+                            <Checkbox label="Participation in Launch 2021"
                                 checked={projectRequest.awaitingLaunchApproval}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
 
