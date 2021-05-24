@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Stack, Spinner, FontIcon, Text } from "office-ui-fabric-react";
-import { usePromise } from "../common/helpers";
+import { isReactSnap, usePromise } from "../common/helpers";
 
 interface IPromiseVisualizerProps<T> {
     loadingMessage?: string
@@ -11,6 +11,8 @@ interface IPromiseVisualizerProps<T> {
     children?: React.ReactNode
 }
 
+// This component, while it works, is the source of much pain. Poor performance, failing puppeteer crawls, etc.
+// TODO: Nuke and try again.
 export function PromiseVisualizer<T>(props: IPromiseVisualizerProps<T>) {
     const promiseState = usePromise(props.promise);
 
