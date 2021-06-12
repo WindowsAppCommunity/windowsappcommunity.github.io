@@ -7,7 +7,7 @@ interface IPromiseVisualizerProps<T> {
     loadingStyle?: React.CSSProperties
     errorStyle?: React.CSSProperties
     onResolve: (result: T) => void
-    promise: Promise<T>
+    promise?: Promise<T>
     children?: React.ReactNode
 }
 

@@ -75,7 +75,7 @@ export const ProjectCard = (props: IProjectCard) => {
           link: ViewModel.githubLink
         },
         href: ViewModel.githubLink,
-        "aria-label":gitHubLinkLabel,
+        "aria-label": gitHubLinkLabel,
         target: "_blank",
         onRenderIcon: onRenderIcon
       });
@@ -135,6 +135,7 @@ export const ProjectCard = (props: IProjectCard) => {
       setShowManualApproveProjectDialogErrorMessage((await req.json()).reason);
     } else {
       setShowManualApproveProjectDialog(false);
+      props.onProjectRemove?.call(undefined, ViewModel);
     }
   }
 
@@ -164,6 +165,7 @@ export const ProjectCard = (props: IProjectCard) => {
 
     await AssignLaunchParticipantRole(ViewModel.collaborators.filter(p => p.isOwner)[0]);
     setShowLaunchApprovalDialog(false);
+    props.onProjectRemove?.call(undefined, ViewModel);
   }
 
   async function AssignLaunchParticipantRole(user: IProjectCollaborator) {
@@ -173,9 +175,49 @@ export const ProjectCard = (props: IProjectCard) => {
     }
   }
 
-  function onCardKeyDown(ev: React.KeyboardEvent<HTMLDivElement>)
-  {
-    if(ev.keyCode === 13){
+  async function GetOwner() {
+    const projectCollaboratorsReq = await fetchBackend(`projects/collaborators?projectId=${ViewModel.id}`, "GET");
+    if (projectCollaboratorsReq.status !== 200) {
+      setShowLaunchApproveProjectDialogErrorMessage((await projectCollaboratorsReq.json()).reason);
+      return;
+    }
+
+    var json = await projectCollaboratorsReq.json();
+    const collaborators = json as IProjectCollaborator[];
+    ViewModel.collaborators = collaborators;
+
+    return collaborators.filter(x => x.isOwner)[0];
+  }
+
+  async function OnLaunchApproval() {
+    const owner = await GetOwner();
+    if (!owner) {
+      console.error("Owner not found");
+      return;
+    }
+
+    GetDiscordUser(owner.discordId).then(owner => {
+      setProjectOwner(owner);
+      setShowLaunchApprovalDialog(true);
+    });
+  }
+
+  async function OnManualApproval() {
+    const owner = await GetOwner();
+    if (!owner) {
+      console.error("Owner not found");
+      return;
+    }
+
+    GetDiscordUser(owner.discordId)
+      .then(owner => {
+        setProjectOwner(owner);
+        setShowManualApproveProjectDialog(true);
+      });
+  }
+
+  function onCardKeyDown(ev: React.KeyboardEvent<HTMLDivElement>) {
+    if (ev.keyCode === 13) {
       setShowProjectDetailsModal(true)
     }
   }
@@ -286,14 +328,20 @@ export const ProjectCard = (props: IProjectCard) => {
       </Dialog>
 
       <PointerOnHover>
-        <Image onClick={() => {
-          GetDiscordUser(ViewModel.collaborators.filter(collaborator => collaborator.isOwner)[0].discordId)
+        <Image onClick={async () => {
+          const owner = await GetOwner();
+          if (!owner) {
+            console.error("Owner not found");
+            return;
+          }
+
+          GetDiscordUser(owner.discordId)
             .then(owner => {
-              setProjectOwner(owner);
+          setProjectOwner(owner);
               setShowProjectDetailsModal(true)
             });
         }}
-          height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} alt={"Preview image for " + ViewModel.appName}/>
+          height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} alt={"Preview image for " + ViewModel.appName} />
       </PointerOnHover>
 
       <DocumentCardDetails>
@@ -311,11 +359,11 @@ export const ProjectCard = (props: IProjectCard) => {
             : <></>}
 
           {ViewModel.tags.map(tag => (
-            tag.name.includes("Launch ") ? 
-            <TooltipHost content={`${tag.name} participant`} delay={TooltipDelay.zero} key={tag.id}>
-              <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
-            </TooltipHost>
-            : <></>
+            tag.name.includes("Launch ") ?
+              <TooltipHost content={`${tag.name} participant`} delay={TooltipDelay.zero} key={tag.id}>
+                <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
+              </TooltipHost>
+              : <></>
           ))}
           <DocumentCardTitle styles={{ root: { padding: "5px 5px", height: "auto", fontWeight: 600 } }} title={ViewModel.appName} />
         </Stack>
@@ -329,23 +377,12 @@ export const ProjectCard = (props: IProjectCard) => {
           </>) : <></>}
 
           {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
-            <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={() => {
-              GetDiscordUser(ViewModel.collaborators.filter(collaborator => collaborator.isOwner)[0].discordId)
-                .then(owner => {
-                  setProjectOwner(owner);
-                  setShowManualApproveProjectDialog(true);
-                });
-            }} />
+            <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnManualApproval}
+            />
           </>) : <></>}
 
           {props.modOptions !== undefined && ViewModel.awaitingLaunchApproval && !ViewModel.needsManualReview ? (<>
-            <PrimaryButton iconProps={{ iconName: "Rocket", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={() => {
-              GetDiscordUser(ViewModel.collaborators.filter(collaborator => collaborator.isOwner)[0].discordId)
-                .then(owner => {
-                  setProjectOwner(owner);
-                  setShowLaunchApprovalDialog(true);
-                });
-            }} />
+            <PrimaryButton iconProps={{ iconName: "Rocket", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnLaunchApproval} />
           </>) : <></>}
 
           <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
