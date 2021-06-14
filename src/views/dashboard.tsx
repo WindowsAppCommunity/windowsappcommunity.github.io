@@ -28,7 +28,8 @@ export const Dashboard = () => {
     const [appRegistrationShown, setAppRegistrationShown] = React.useState(false);
     const [devRegistrationShown, setDevRegistrationShown] = React.useState(false);
 
-    const [apps, setApps] = React.useState<IProject[]>();
+    const [ownedApps, setOwnedApps] = React.useState<IProject[]>();
+    const [collabApps, setCollabApps] = React.useState<IProject[]>();
 
     React.useEffect(() => {
         setupLoggedInUser();
@@ -49,7 +50,14 @@ export const Dashboard = () => {
             proj.collaborators = collaborators;
         }
 
-        if (!apps) setApps(projects);
+        if (!collabApps) {
+            console.log(user.id);
+            setCollabApps(projects.filter(x => x.collaborators.filter(x => !x.isOwner && x.discordId == user.id).length > 0));
+        }
+
+        if (!ownedApps) {
+            setOwnedApps(projects.filter(x => x.collaborators.filter(x => x.isOwner && x.discordId == user.id).length > 0));
+        }
     }
 
     async function setupLoggedInUser() {
@@ -94,7 +102,7 @@ export const Dashboard = () => {
     }
     `;
 
-    const SectionTitleIconFontSize = 34;
+    const SectionTitleIconFontSize = 22;
 
     const DashboardColumnFiller = styled.div`
     @media only screen and (max-width: 807px) {
@@ -142,19 +150,35 @@ export const Dashboard = () => {
             <Stack horizontalAlign="center" wrap horizontal tokens={{ childrenGap: 20 }}>
                 {
                     roles.includes("Developer") ?
-                        <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 10 }}>
+                        <Stack style={{ margin: 50 }} horizontalAlign="center" tokens={{ childrenGap: 20 }}>
                             <Stack horizontal tokens={{ childrenGap: 15 }}>
                                 <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
-                                <Text variant="xLarge" style={{ fontWeight: 600 }}>Apps</Text>
+                                <Text variant="xLarge" style={{ fontWeight: 600 }}>Your Projects</Text>
                             </Stack>
-
-                            <Text variant="xSmall">All apps you've registered or have a collaborative role on.</Text>
 
                             <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
                                 {
-                                    (apps && apps.length > 0 ? apps.map(project =>
-                                        <ProjectCard onProjectRemove={(project) => setApps(apps.filter(p => p.appName !== project.appName))}
+                                    (ownedApps && ownedApps.length > 0 ? ownedApps.map(project =>
+                                        <ProjectCard onProjectRemove={(project) => setOwnedApps(ownedApps.filter(p => p.appName !== project.appName))}
                                             editable={project.collaborators.filter(x => x.isOwner && x.discordId === user?.id).length > 0} project={project} />
+
+                                    ) : <Text variant="large">You don't have any registered apps</Text>)
+                                }
+                            </Stack>
+
+                            <Stack>
+                                <Stack horizontal tokens={{ childrenGap: 15 }} style={{ marginTop: 50 }} horizontalAlign="center">
+                                    <Icon iconName="AppIconDefaultList" style={{ fontSize: SectionTitleIconFontSize }} />
+                                    <Text variant="xLarge" style={{ fontWeight: 600 }}>Collaborative Projects</Text>
+                                </Stack>
+
+                                <Text variant="xSmall" style={{ textAlign: "center" }}>All projects you have a collaborative role on (tester, translator, etc).</Text>
+                            </Stack>
+
+                            <Stack horizontal wrap tokens={{ childrenGap: 15 }}>
+                                {
+                                    (collabApps && collabApps.length > 0 ? collabApps.map(project =>
+                                        <ProjectCard project={project} />
 
                                     ) : <Text variant="large">You don't have any registered apps</Text>)
                                 }
