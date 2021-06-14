@@ -4,10 +4,11 @@ import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint
 
 import styled from "styled-components";
 import { CreateProjectForm } from "../components/forms/CreateProjectForm";
-import { IProject } from "../common/services/projects";
+import { IProject, IProjectCollaborator } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetUserProjects, IUser } from "../common/services/users";
 import { ProjectReviewPanel, ReviewType } from "../components/ProjectReviewPanel";
+import { fetchBackend } from "../common/helpers";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -35,6 +36,19 @@ export const Dashboard = () => {
 
     async function getUserApps(user: IDiscordUser) {
         const projects = await GetUserProjects(user.id);
+
+        for (const proj of projects) {
+            const projectCollaboratorsReq = await fetchBackend(`projects/collaborators?projectId=${proj.id}`, "GET");
+            if (projectCollaboratorsReq.status !== 200) {
+                console.error(`Unable to retrieve project collaborators for ${proj.appName} (id ${proj.id})`);
+                return;
+            }
+
+            var json = await projectCollaboratorsReq.json();
+            const collaborators = json as IProjectCollaborator[];
+            proj.collaborators = collaborators;
+        }
+
         if (!apps) setApps(projects);
     }
 
