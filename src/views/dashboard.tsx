@@ -218,12 +218,15 @@ export const Dashboard = () => {
             </Stack>
 
             {
-                roles.includes("Mod") || roles.includes("Admin") ?
+                roles.includes("Mod") || roles.includes("Admin") || roles.includes("Launch Coordinator") ?
                     <Stack horizontalAlign="center">
                         <Pivot styles={{ root: { justifyContent: "center", display: "flex" }, itemContainer: { padding: 20 } }}>
-                            <PivotItem headerText="Needs manual review">
-                                <ProjectReviewPanel type={ReviewType.ManualReview} />
-                            </PivotItem>
+                            {
+                                roles.includes("Mod") || roles.includes("Admin") ?
+                                    <PivotItem headerText="Needs manual review">
+                                        <ProjectReviewPanel type={ReviewType.ManualReview} />
+                                    </PivotItem> : <></>
+                            }
                             {
                                 roles.includes("Launch Coordinator") ?
                                     <PivotItem headerText="Launch submissions">
