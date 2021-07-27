@@ -4,6 +4,7 @@ The event is also a chance to use our Discord server to encourage collaboration 
 
 ### What you need to know:
 - Developers from around the world plan to launch their modern WinUI apps together in September as part of the Launch 2021 event.
+- All participating projects will either be free or have a free trial on launch day.
 - Projects built on WinUI are eligible to join if the release is a new app or major update.
 - Apps that launched since the last event, but were built with feedback from testers, translators, and other devs in the Discord server are also eligible for Launch.
 - Each project will be scored in various categories. The best scores for each category get a special place in the showcase.	
@@ -24,14 +25,14 @@ As a developer, many of the projects are open source or may be seeking collabora
 ### Timeline: 
 The timeline for Launch 2021 has been extended to accomodate the new cross-platform offering and prizes.
 - Accepting new participants until May 24th
-- Work on Projects:  April 19th – August 23rd
+- Ongoing project work:  April 19th – August 23rd
 - Judging: August 23rd – August 30th
-- Announcements of winners: September 1st
+- Launch day + winner announcements: September 1st
 
 ### Prizes
 
 Prizes are awarded based on overall quality. The score for each category is added up, and the projects with the most points are crowned as winners.
-
+~
 Windows 10 apps (via UWP or WinUI)
 - 1st place – DJI Drone 
 - 2nd place – Bose Noise Cancelling Headphones
