@@ -1,8 +1,9 @@
-import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, Pivot, PivotItem, IComboBox } from "office-ui-fabric-react";
+import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, Pivot, PivotItem, IComboBox, Button, IconButton } from "office-ui-fabric-react";
 import React, { FormEvent } from "react";
 import { IBackendReponseError } from "../../common/interfaces";
 import { CreateProject, ICreateProjectsRequestBody, IProject, ModifyProject, IModifyProjectsRequestBody } from "../../common/services/projects";
 import { MicrosoftStoreAppCategories } from "../../common/const";
+import { fetchBackend } from "../../common/helpers";
 
 export interface IEditProjectDetailsFormProps {
     onCancel?: Function;
@@ -30,6 +31,22 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
     let [submissionError, setSubmissionError] = React.useState<string>("");
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
+    React.useEffect(() => {
+        getProjectImages();
+    }, [props.projectData, props.projectData.images]);
+
+    async function getProjectImages() {
+        const request = await fetchBackend(`projects/images?projectId=${props.projectData.id}`, "GET");
+        const response = await request.json();
+
+        if (!response)
+            return;
+
+        projectRequest.images = response;
+
+        setProjectRequest({ ...projectRequest });
+    }
+
     async function submitParticipantRequest() {
         let request;
         if (props.editing) {
@@ -37,9 +54,7 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                 throw new Error("Unable to modify project details. Missing app name prop");
             }
 
-            console.log(props.projectData.appName);
             props.projectData.appName = encodeURIComponent(props.projectData.appName);
-            console.log(props.projectData.appName);
 
             request = await ModifyProject(projectRequest as IModifyProjectsRequestBody, { appName: props.projectData.appName });
         } else {
@@ -68,7 +83,7 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
             <img style={{ display: (showSuccessIndicator ? "block" : "none"), height: "200px" }} src={showSuccessIndicator ? "/assets/img/checkanimated.svg" : ""} alt="Check" />
             <Stack horizontalAlign="start" tokens={{ childrenGap: 10 }} style={{ maxWidth: "100%", width: "300px", display: (!showSuccessIndicator ? "block" : "none") }}>
                 <Pivot>
-                    <PivotItem headerText="Basic info">
+                    <PivotItem headerText="Project">
                         <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Project name:" maxLength={75}
                                 styles={{ root: { width: "100%" } }}
@@ -82,23 +97,55 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                 placeholder="Enter a brief description"
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, description: value })} />
 
-                            <TextField label="Hero image"
-                                type="url"
-                                styles={{ root: { width: "100%" } }}
-                                required
-                                value={projectRequest.heroImage}
-                                placeholder="External link to an image of your app"
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, heroImage: value })} />
-
+                            <ComboBox
+                                label="Category"
+                                options={categoryOptions}
+                                defaultSelectedKey={projectRequest.category || categoryOptions[0].key}
+                                onChange={(e: FormEvent<IComboBox>, option: IComboBoxOption | undefined) => {
+                                    if (!option) return;
+                                    setProjectRequest({ ...projectRequest, category: option.text });
+                                }} />
+                        </Stack>
+                    </PivotItem>
+                    <PivotItem headerText="Images">
+                        <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Project icon"
                                 type="url"
                                 styles={{ root: { width: "100%" } }}
                                 value={projectRequest.appIcon}
                                 placeholder="Your project's icon, if applicable"
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, appIcon: value })} />
+
+                            <TextField label="Hero image"
+                                type="url"
+                                styles={{ root: { width: "100%" } }}
+                                required
+                                value={projectRequest.heroImage}
+                                placeholder="Link to an image of your project"
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, heroImage: value })} />
+
+                            <DefaultButton style={{ marginTop: 25, display: ((projectRequest.images?.length ?? 0) >= 5) ? "none" : "block" }} text="Add more images" onClick={() => {
+                                setProjectRequest({ ...projectRequest, images: [...(projectRequest.images ?? []), ""] })
+                            }} />
+
+                            {(projectRequest.images ?? []).map((url, i) =>
+                                <Stack horizontal tokens={{ childrenGap: 5 }} key={i}>
+                                    <TextField
+                                        type="url"
+                                        styles={{ root: { width: "100%" } }}
+                                        value={url}
+                                        placeholder="Link to an image of your project"
+                                        onChange={(e: any, value: any) => {
+                                            (projectRequest.images ?? [])[i] = value;
+                                            setProjectRequest({ ...projectRequest });
+                                        }} />
+
+                                    <IconButton iconProps={{ iconName: "Cancel" }} onClick={() => setProjectRequest({ ...projectRequest, images: [...((projectRequest.images ?? []).filter((x, index) => i != index))] })} />
+                                </Stack>
+                            )}
                         </Stack>
                     </PivotItem>
-                    <PivotItem headerText="Project links">
+                    <PivotItem headerText="Links">
                         <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Download link"
                                 value={projectRequest.downloadLink}
@@ -118,17 +165,8 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
 
                         </Stack>
                     </PivotItem>
-                    <PivotItem headerText="More info">
+                    <PivotItem headerText="Other">
                         <Stack tokens={{ childrenGap: 10 }}>
-                            <ComboBox
-                                label="Category"
-                                options={categoryOptions}
-                                defaultSelectedKey={projectRequest.category || categoryOptions[0].key}
-                                onChange={(e: FormEvent<IComboBox>, option: IComboBoxOption | undefined) => {
-                                    if (!option) return;
-                                    setProjectRequest({ ...projectRequest, category: option.text });
-                                }} />
-
                             <Checkbox label="Project is private/secret"
                                 checked={projectRequest.isPrivate}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />

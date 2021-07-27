@@ -125,6 +125,7 @@ export const ProjectCard = (props: IProjectCard) => {
       appName: ViewModel.appName,
       description: ViewModel.description,
       heroImage: ViewModel.heroImage,
+      images: ViewModel.images,
       awaitingLaunchApproval: ViewModel.awaitingLaunchApproval,
       isPrivate: ViewModel.isPrivate
     };
@@ -146,6 +147,7 @@ export const ProjectCard = (props: IProjectCard) => {
       needsManualReview: ViewModel.needsManualReview,
       isPrivate: ViewModel.isPrivate,
       heroImage: ViewModel.heroImage,
+      images: ViewModel.images,
       awaitingLaunchApproval: false,
     };
 

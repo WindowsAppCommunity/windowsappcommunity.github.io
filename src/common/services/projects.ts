@@ -24,6 +24,7 @@ export interface ICreateProjectsRequestBody {
     needsManualReview: boolean;
     heroImage: string;
     appIcon?: string;
+    images: string[];
     lookingForRoles: string[];
 }
 
@@ -75,6 +76,7 @@ export interface IModifyProjectsRequestBody {
     externalLink?: string;
 
     heroImage: string;
+    images: string[];
     appIcon?: string;
     awaitingLaunchApproval: boolean;
     needsManualReview: boolean;
@@ -108,6 +110,7 @@ export interface IProject {
     externalLink?: string;
 
     heroImage: string;
+    images: string[];
 
     awaitingLaunchApproval: boolean;
     needsManualReview: boolean;
