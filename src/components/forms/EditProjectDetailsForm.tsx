@@ -33,7 +33,8 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
 
     React.useEffect(() => {
         getProjectImages();
-    }, [props.projectData, props.projectData.images]);
+        getProjectFeatures();
+    }, [props.projectData, props.projectData.images, props.projectData.features]);
 
     async function getProjectImages() {
         const request = await fetchBackend(`projects/images?projectId=${props.projectData.id}`, "GET");
@@ -43,6 +44,18 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
             return;
 
         projectRequest.images = response;
+
+        setProjectRequest({ ...projectRequest });
+    }
+
+    async function getProjectFeatures() {
+        const request = await fetchBackend(`projects/features?projectId=${props.projectData.id}`, "GET");
+        const response = await request.json();
+
+        if (!response)
+            return;
+
+        projectRequest.features = response;
 
         setProjectRequest({ ...projectRequest });
     }
@@ -105,6 +118,34 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                     if (!option) return;
                                     setProjectRequest({ ...projectRequest, category: option.text });
                                 }} />
+
+                            <Stack tokens={{ childrenGap: 10 }}>
+                                <Text variant="medium" style={{fontWeight: 600}}>Features</Text>
+
+                                {(projectRequest.features ?? []).map((feature, i) =>
+                                    <Stack horizontal tokens={{ childrenGap: 5 }} key={i}>
+                                        <TextField
+                                            type="text"
+                                            styles={{ root: { width: "100%" } }}
+                                            value={feature}
+                                            placeholder="Short feature description"
+                                            onChange={(e: any, value: any) => {
+                                                (projectRequest.features ?? [])[i] = value;
+                                                setProjectRequest({ ...projectRequest });
+                                            }} />
+
+                                        <IconButton iconProps={{ iconName: "Cancel" }} onClick={() => setProjectRequest({ ...projectRequest, features: [...((projectRequest.features ?? []).filter((x, index) => i != index))] })} />
+                                    </Stack>
+                                )}
+
+                                <DefaultButton style={{ marginTop: 5, display: ((projectRequest.features?.length ?? 0) >= 7) ? "none" : "block" }} text="+ Add Feature" onClick={() => {
+                                    setProjectRequest({ ...projectRequest, features: [...(projectRequest.features ?? []), ""] })
+                                }} />
+                            </Stack>
+
+                            <Checkbox label="Don't display this project publicly"
+                                checked={projectRequest.isPrivate}
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
                         </Stack>
                     </PivotItem>
                     <PivotItem headerText="Images">
@@ -165,17 +206,19 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
 
                         </Stack>
                     </PivotItem>
-                    <PivotItem headerText="Other">
-                        <Stack tokens={{ childrenGap: 10 }}>
-                            <Checkbox label="Project is private/secret"
-                                checked={projectRequest.isPrivate}
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
 
-                            <Checkbox label="Participation in Launch 2021" disabled
+                    <PivotItem headerText="More">
+                        <Stack style={{ marginTop: 7 }} tokens={{ childrenGap: 10 }}>
+                            {/*                             <Checkbox label="Participation in Launch 2021" disabled
                                 checked={projectRequest.awaitingLaunchApproval}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
 
-                            <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>A moderator will contact you over Discord for the review process.</Text>
+                            <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>A moderator will contact you over Discord for the review process.</Text> */}
+
+                            {
+
+
+                            }
                         </Stack>
                     </PivotItem>
                 </Pivot>

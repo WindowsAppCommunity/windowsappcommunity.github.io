@@ -25,6 +25,7 @@ export interface ICreateProjectsRequestBody {
     heroImage: string;
     appIcon?: string;
     images: string[];
+    features: string[];
     lookingForRoles: string[];
 }
 
@@ -111,6 +112,7 @@ export interface IProject {
 
     heroImage: string;
     images: string[];
+    features: string[];
 
     awaitingLaunchApproval: boolean;
     needsManualReview: boolean;
