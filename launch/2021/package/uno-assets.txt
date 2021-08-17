@@ -1,0 +1,2 @@
+Assets/SplashScreen.png
+Assets/Banner.png
