@@ -34,7 +34,8 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
     React.useEffect(() => {
         getProjectImages();
         getProjectFeatures();
-    }, [props.projectData, props.projectData.images, props.projectData.features]);
+        getProjectTags();
+    }, [props.projectData, props.projectData.images, props.projectData.features, props.projectData.tags]);
 
     async function getProjectImages() {
         const request = await fetchBackend(`projects/images?projectId=${props.projectData.id}`, "GET");
@@ -56,6 +57,32 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
             return;
 
         projectRequest.features = response;
+
+        setProjectRequest({ ...projectRequest });
+    }
+
+    async function getProjectTags() {
+        const request = await fetchBackend(`projects/tags?projectId=${props.projectData.id}`, "GET");
+        const response = await request.json();
+
+        if (!response)
+            return;
+
+        projectRequest.tags = response;
+
+        setProjectRequest({ ...projectRequest });
+    }
+
+    function toggleTagById(id: number) {
+        projectRequest.tags = projectRequest.tags ?? [];
+
+        if (projectRequest.tags.filter(x => x.id == id).length == 0) {
+            // doesn't exist, add it
+            projectRequest.tags.push({ id: id, name: "" }); // name is ignored server side.
+        } else {
+            // exists, remove it
+            projectRequest.tags = projectRequest.tags.filter(x => x.id != id);
+        }
 
         setProjectRequest({ ...projectRequest });
     }
@@ -120,7 +147,7 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                 }} />
 
                             <Stack tokens={{ childrenGap: 10 }}>
-                                <Text variant="medium" style={{fontWeight: 600}}>Features</Text>
+                                <Text variant="medium" style={{ fontWeight: 600 }}>Features</Text>
 
                                 {(projectRequest.features ?? []).map((feature, i) =>
                                     <Stack horizontal tokens={{ childrenGap: 5 }} key={i}>
@@ -215,10 +242,15 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
 
                             <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>A moderator will contact you over Discord for the review process.</Text> */}
 
-                            {
+                            <Text>This project is powered by:</Text>
 
+                            <Checkbox label="Uno Platform"
+                                checked={(projectRequest.tags ?? []).filter(x => x.id == 6).length > 0}
+                                onChange={(e: any, value: any) => toggleTagById(6)} />
 
-                            }
+                            <Checkbox label="Windows Community Toolkit"
+                                checked={(projectRequest.tags ?? []).filter(x => x.id == 5).length > 0}
+                                onChange={(e: any, value: any) => toggleTagById(5)} />
                         </Stack>
                     </PivotItem>
                 </Pivot>

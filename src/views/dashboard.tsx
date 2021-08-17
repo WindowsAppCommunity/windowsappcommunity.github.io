@@ -51,7 +51,6 @@ export const Dashboard = () => {
         }
 
         if (!collabApps) {
-            console.log(user.id);
             setCollabApps(projects.filter(x => x.collaborators.filter(x => !x.isOwner && x.discordId == user.id).length > 0));
         }
 

@@ -26,6 +26,7 @@ export interface ICreateProjectsRequestBody {
     appIcon?: string;
     images: string[];
     features: string[];
+    tags: ITag[];
     lookingForRoles: string[];
 }
 
