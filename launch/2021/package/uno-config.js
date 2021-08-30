@@ -16,4 +16,4 @@ config.environmentVariables["UNO_BOOTSTRAP_MONO_PROFILED_AOT"] = "False";
 config.environmentVariables["UNO_BOOTSTRAP_LINKER_ENABLED"] = "True";
 config.environmentVariables["UNO_BOOTSTRAP_DEBUGGER_ENABLED"] = "False";
 config.environmentVariables["UNO_BOOTSTRAP_MONO_RUNTIME_CONFIGURATION"] = "release";
-config.environmentVariables["UNO_BOOTSTRAP_APP_BASE"] = "package_3b0ad1aa021d08ccfe19b26e38a0cf576aed380b";
+config.environmentVariables["UNO_BOOTSTRAP_APP_BASE"] = "package";
