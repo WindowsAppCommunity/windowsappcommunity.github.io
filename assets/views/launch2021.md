@@ -1,4 +1,3 @@
-The event is also a chance to use our Discord server to encourage collaboration and empower each other while making our ideas a reality.
 
 ---
 
