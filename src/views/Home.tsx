@@ -67,7 +67,7 @@ export const Home: React.StatelessComponent = () => {
               <Text variant="xLarge">{HomeViewData.main.subtitle}</Text>
               <Text variant="mediumPlus">{HomeViewData.main.details.map(x => <Text style={{ display: 'block', marginBottom: 10 }}>{x}</Text>)}</Text>
             
-              <PrimaryButton text="See details" href="/launch" />
+              <PrimaryButton text="See the showcase" href="https://uwpcommunity.com/launch/2021" />
             </Stack>
           </Stack>
         </LargeCard>

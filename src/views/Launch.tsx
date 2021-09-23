@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Stack, Image, ImageCoverStyle, ImageFit } from "office-ui-fabric-react";
+import { Text, Stack, Image, ImageCoverStyle, ImageFit, Link, DefaultButton, PrimaryButton } from "office-ui-fabric-react";
 
 import { Images } from "../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
@@ -52,7 +52,7 @@ export const Launch = () => {
     }, []);
 
     async function getLaunchDetailsMarkdown(): Promise<string> {
-        if(isReactSnap)
+        if (isReactSnap)
             return "";
 
         var res = await fetch("../assets/views/launch2021.md");
@@ -84,6 +84,8 @@ export const Launch = () => {
                                 )
                             })
                         }
+
+                        <PrimaryButton href="https://uwpcommunity.com/launch/2021" style={{ textAlign: "center" }} disabled={false}>View Showcase</PrimaryButton>
 
                         <PromiseVisualizer promise={getLaunchDetailsMarkdown()} onResolve={setLaunchMarkdown} loadingMessage="Loading launch details...">
                             <MarkdownRenderer>
