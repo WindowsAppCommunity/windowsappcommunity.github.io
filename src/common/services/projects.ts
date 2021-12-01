@@ -112,6 +112,7 @@ export interface IProject {
     externalLink?: string;
 
     heroImage: string;
+    appIcon?: string;
     images: string[];
     features: string[];
 

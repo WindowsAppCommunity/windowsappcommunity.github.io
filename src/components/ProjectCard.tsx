@@ -35,6 +35,8 @@ export interface IProjectCard {
 }
 
 export const ProjectCard = (props: IProjectCard) => {
+  const [width, setWindowWidth] = React.useState<number>(0)
+
   const [projectCardActions, setProjectCardActions] = React.useState<IButtonProps[]>([]);
   const [showEditDialog, setShowEditDialog] = React.useState<boolean>(false);
   const [showDeleteProjectDialog, setShowDeleteProjectDialog] = React.useState(false);
@@ -51,6 +53,9 @@ export const ProjectCard = (props: IProjectCard) => {
   const [projectOwner, setProjectOwner] = React.useState<IDiscordUser>();
 
   React.useEffect(() => {
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+
     const projectCardsData: IButtonProps[] = [];
 
     if (ViewModel.downloadLink) {
@@ -97,7 +102,14 @@ export const ProjectCard = (props: IProjectCard) => {
 
     setProjectCardActions(projectCardsData);
 
+    return () =>
+      window.removeEventListener("resize", updateDimensions);
   }, [ViewModel.githubLink, ViewModel.externalLink, ViewModel.downloadLink]);
+
+  const updateDimensions = () => {
+    const width = window.innerWidth
+    setWindowWidth(width)
+  }
 
   function onRenderIcon(buttonProps: IButtonProps | undefined) {
     if (!buttonProps) return null;
@@ -191,6 +203,28 @@ export const ProjectCard = (props: IProjectCard) => {
     return collaborators.filter(x => x.isOwner)[0];
   }
 
+  async function GetImages() {
+    const req = await fetchBackend(`projects/images?projectId=${ViewModel.id}`, "GET");
+    if (req.status !== 200) {
+      return;
+    }
+
+    var json = await req.json();
+    const images = json as string[];
+    ViewModel.images = images;
+  }
+
+  async function GetFeatures() {
+    const req = await fetchBackend(`projects/features?projectId=${ViewModel.id}`, "GET");
+    if (req.status !== 200) {
+      return;
+    }
+
+    var json = await req.json();
+    const features = json as string[];
+    ViewModel.features = features;
+  }
+
   async function OnLaunchApproval() {
     const owner = await GetOwner();
     if (!owner) {
@@ -226,34 +260,6 @@ export const ProjectCard = (props: IProjectCard) => {
 
   return (
     <DocumentCard style={{ width: 275 }} tabIndex={0} onKeyDown={(e) => onCardKeyDown(e)}>
-
-      <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectDetailsModal(false)} isOpen={showProjectDetailsModal}>
-        <Stack>
-          <Stack tokens={{ padding: "7px 10px" }}>
-            <Stack horizontal horizontalAlign="space-between" style={{ padding: "0px 0px 2px 0px", marginBottom: "10px" }}>
-              <Text variant="xxLarge" style={{ fontWeight: 400 }}>{ViewModel.appName}</Text>
-
-              <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 5 }}>
-                {projectOwner ?
-                  (<>
-                    <Text variant="smallPlus">{ViewModel.collaborators.filter(i => i.isOwner)[0].name}</Text>
-                    <Text> | </Text>
-                    <Text variant="smallPlus">{projectOwner.username}#{projectOwner.discriminator}</Text>
-                  </>) : <>No owner data</>}
-                <Link style={{ margin: 10 }} onClick={() => setShowProjectDetailsModal(false)}>
-                  <FontIcon style={{ fontSize: 16, color: "black" }} iconName="ChromeClose" />
-                </Link>
-              </Stack>
-            </Stack>
-
-            <Text style={{ maxWidth: 1190 }} variant="medium">{ViewModel.description}</Text>
-
-          </Stack>
-          <div>
-            <Image style={{ borderTop: "2px solid midnightblue", width: "auto" }} width={1200} height={675} src={ViewModel.heroImage} imageFit={ImageFit.contain} />
-          </div>
-        </Stack>
-      </Modal>
 
       <Dialog hidden={!showEditDialog} title={`Edit ${ViewModel.appName}`}
         dialogContentProps={{
@@ -329,6 +335,129 @@ export const ProjectCard = (props: IProjectCard) => {
         </Stack>
       </Dialog>
 
+      <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectDetailsModal(false)} isOpen={showProjectDetailsModal}>
+        <Stack>
+          <Stack tokens={{ padding: "7px 10px" }}>
+            <Stack horizontal horizontalAlign="space-between" style={{ padding: "0px 0px 2px 0px", marginBottom: "10px" }}>
+              <Stack horizontal tokens={{ childrenGap: 10, padding: 5 }}>
+                {ViewModel.appIcon ?
+                  <Image style={{ height: 40, width: 40 }} src={ViewModel.appIcon} />
+                  : <></>}
+
+                <Text variant="xxLarge" style={{ fontWeight: 400 }}>{ViewModel.appName}</Text>
+
+                <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} style={{ display: (width > 700 ? 'flex' : 'none') }} verticalAlign="center">
+                  {props.editable === true ? (<>
+                    <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
+                    <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
+                  </>) : <></>}
+
+                  {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
+                    <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 18 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnManualApproval}
+                    />
+                  </>) : <></>}
+
+                  {props.modOptions !== undefined && ViewModel.awaitingLaunchApproval && !ViewModel.needsManualReview ? (<>
+                    <PrimaryButton iconProps={{ iconName: "Rocket", style: { fontSize: 18 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnLaunchApproval} />
+                  </>) : <></>}
+
+                  <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
+                </Stack>
+              </Stack>
+
+              <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 5 }}>
+                {projectOwner ?
+                  (<>
+                    <Text variant="smallPlus">{ViewModel.collaborators.filter(i => i.isOwner)[0].name}</Text>
+                    <Text> | </Text>
+                    <Text variant="smallPlus">{projectOwner.username}#{projectOwner.discriminator}</Text>
+                  </>) : <>No owner data</>}
+                <Link style={{ margin: 10 }} onClick={() => setShowProjectDetailsModal(false)}>
+                  <FontIcon style={{ fontSize: 16, color: "black" }} iconName="ChromeClose" />
+                </Link>
+              </Stack>
+            </Stack>
+
+            <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} style={{ display: (width < 700 ? 'flex' : 'none') }} verticalAlign="center">
+              {props.editable === true ? (<>
+                <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
+                <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
+              </>) : <></>}
+
+              {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
+                <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 18 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnManualApproval}
+                />
+              </>) : <></>}
+
+              {props.modOptions !== undefined && ViewModel.awaitingLaunchApproval && !ViewModel.needsManualReview ? (<>
+                <PrimaryButton iconProps={{ iconName: "Rocket", style: { fontSize: 18 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnLaunchApproval} />
+              </>) : <></>}
+
+              <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
+            </Stack>
+
+            <Text style={{ maxWidth: 1190 }} variant="medium">{ViewModel.description}</Text>
+
+          </Stack>
+
+          <div style={{ display: ((ViewModel.features.length > 0) ? 'none' : 'flex') }}>
+            <Image style={{ borderTop: "2px solid midnightblue", width: "auto" }} width={1200} height={675} src={ViewModel.heroImage} imageFit={ImageFit.contain} />
+          </div>
+
+          <Stack style={{ display: ((ViewModel.features.length > 0) ? 'flex' : 'none'), maxWidth: 1200 }} horizontal={(width > 800)}>
+            <Image src={ViewModel.heroImage} style={{ maxWidth: 700 }} />
+
+            <Stack style={{ margin: 15, width: '40%' }} verticalAlign="space-between">
+              <Stack>
+                <Text variant="large">Features</Text>
+                <Stack>
+                  {(ViewModel.features.map((feature, i) =>
+                    <Text key={i} variant="mediumPlus">• {feature}</Text>
+                  ))}
+                </Stack>
+              </Stack>
+
+              <Stack style={{ marginTop: 15 }}>
+                <Text variant="large">Developers</Text>
+                <Stack horizontal wrap style={{ marginTop: 10 }} tokens={{ childrenGap: 10 }}>
+
+                  {(ViewModel.collaborators.filter(x => x.role == "Developer").map((user, i) =>
+                    <Stack>
+                      <Text key={i}>{user.name}</Text>
+                    </Stack>
+                  ))}
+                </Stack>
+              </Stack>
+
+              <Stack style={{ marginTop: 15 }}>
+                <Text variant="large">Beta Testers</Text>
+                <Stack horizontal wrap style={{ marginTop: 10 }} tokens={{ childrenGap: 10 }}>
+
+                  {(ViewModel.collaborators.filter(x => x.role == "Beta Tester").map((user, i) =>
+                    <Stack>
+                      <Text key={i}>{user.name}</Text>
+                    </Stack>
+                  ))}
+                </Stack>
+              </Stack>
+            </Stack>
+          </Stack>
+
+          <Stack style={{ maxWidth: 1200 }}>
+
+            <Stack horizontal wrap style={{ marginTop: 15 }} horizontalAlign="center">
+              {(ViewModel.images.map((img, i) =>
+
+                <Image src={img} key={i} style={{ height: (width > 600 ? 600 : 'unset'), width: (width > 600 ? '600' : '100%') }} />
+
+              ))}
+            </Stack>
+
+          </Stack>
+
+        </Stack>
+      </Modal>
+
       <PointerOnHover>
         <Image onClick={async () => {
           const owner = await GetOwner();
@@ -339,9 +468,12 @@ export const ProjectCard = (props: IProjectCard) => {
 
           GetDiscordUser(owner.discordId)
             .then(owner => {
-          setProjectOwner(owner);
+              setProjectOwner(owner);
               setShowProjectDetailsModal(true)
             });
+
+          GetImages();
+          GetFeatures();
         }}
           height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} alt={"Preview image for " + ViewModel.appName} />
       </PointerOnHover>
