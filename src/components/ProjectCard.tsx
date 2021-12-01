@@ -429,7 +429,7 @@ export const ProjectCard = (props: IProjectCard) => {
                 </Stack>
               </Stack>
 
-              <Stack style={{ marginTop: 15 }}>
+              <Stack style={{ marginTop: 15, display: (ViewModel.collaborators.filter(x=>x.role == "Beta Tester").length > 0 ? 'flex' : 'none') }}>
                 <Text variant="large">Beta Testers</Text>
                 <Stack horizontal wrap style={{ marginTop: 10 }} tokens={{ childrenGap: 10 }}>
 
