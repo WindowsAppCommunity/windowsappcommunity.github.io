@@ -190,6 +190,11 @@ export const ProjectCard = (props: IProjectCard) => {
   }
 
   async function GetOwner() {
+    var collaborators = await GetCollaborators();
+    return collaborators?.filter(x => x.isOwner)[0];
+  }
+
+  async function GetCollaborators() {
     const projectCollaboratorsReq = await fetchBackend(`projects/collaborators?projectId=${ViewModel.id}`, "GET");
     if (projectCollaboratorsReq.status !== 200) {
       setShowLaunchApproveProjectDialogErrorMessage((await projectCollaboratorsReq.json()).reason);
@@ -198,9 +203,8 @@ export const ProjectCard = (props: IProjectCard) => {
 
     var json = await projectCollaboratorsReq.json();
     const collaborators = json as IProjectCollaborator[];
-    ViewModel.collaborators = collaborators;
 
-    return collaborators.filter(x => x.isOwner)[0];
+    return collaborators;
   }
 
   async function GetImages() {
@@ -210,8 +214,7 @@ export const ProjectCard = (props: IProjectCard) => {
     }
 
     var json = await req.json();
-    const images = json as string[];
-    ViewModel.images = images;
+    return json as string[];
   }
 
   async function GetFeatures() {
@@ -222,7 +225,7 @@ export const ProjectCard = (props: IProjectCard) => {
 
     var json = await req.json();
     const features = json as string[];
-    ViewModel.features = features;
+    return features;
   }
 
   async function OnLaunchApproval() {
@@ -368,8 +371,6 @@ export const ProjectCard = (props: IProjectCard) => {
               <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 5 }}>
                 {projectOwner ?
                   (<>
-                    <Text variant="smallPlus">{ViewModel.collaborators.filter(i => i.isOwner)[0].name}</Text>
-                    <Text> | </Text>
                     <Text variant="smallPlus">{projectOwner.username}#{projectOwner.discriminator}</Text>
                   </>) : <>No owner data</>}
                 <Link style={{ margin: 10 }} onClick={() => setShowProjectDetailsModal(false)}>
@@ -429,7 +430,7 @@ export const ProjectCard = (props: IProjectCard) => {
                 </Stack>
               </Stack>
 
-              <Stack style={{ marginTop: 15, display: (ViewModel.collaborators.filter(x=>x.role == "Beta Tester").length > 0 ? 'flex' : 'none') }}>
+              <Stack style={{ marginTop: 15, display: (ViewModel.collaborators.filter(x => x.role == "Beta Tester").length > 0 ? 'flex' : 'none') }}>
                 <Text variant="large">Beta Testers</Text>
                 <Stack horizontal wrap style={{ marginTop: 10 }} tokens={{ childrenGap: 10 }}>
 
@@ -472,8 +473,11 @@ export const ProjectCard = (props: IProjectCard) => {
               setShowProjectDetailsModal(true)
             });
 
-          GetImages();
-          GetFeatures();
+          var images = await GetImages();
+          var features = await GetFeatures();
+          var collaborators = await GetCollaborators();
+
+          setProjectViewModel({ ...ViewModel, features: features ?? [], collaborators: collaborators ?? [], images: images ?? [] });
         }}
           height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} alt={"Preview image for " + ViewModel.appName} />
       </PointerOnHover>
