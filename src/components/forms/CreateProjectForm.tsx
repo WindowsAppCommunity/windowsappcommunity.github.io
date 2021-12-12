@@ -26,7 +26,7 @@ export const CreateProjectForm = (props: ICreateProjectFormProps) => {
             verified ?
                 (manualReviewMessageShown ?
                     <Stack tokens={{ childrenGap: 10 }}>
-                        <Text>Manual review is required after submitting your project. This could take anywhere from several hours to several days</Text>
+                        <Text>After submitting your project, we'll manually verify ownership. This can take anywhere from 3 days to 2 weeks.</Text>
                         <Stack horizontal tokens={{ childrenGap: 10 }} horizontalAlign="space-evenly" style={{ marginTop: 20 }}>
                             <DefaultButton onClick={() => {
                                 setManualReviewMessageShown(false);

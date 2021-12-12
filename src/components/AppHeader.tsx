@@ -67,7 +67,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
     setDiscordUser(discordUser);
 
     let userIsInServer = await IsUserInServer();
-    if (!userIsInServer) {
+    if (false && !userIsInServer) {
       setJoinServerAlertHidden(false);
       return;
     }

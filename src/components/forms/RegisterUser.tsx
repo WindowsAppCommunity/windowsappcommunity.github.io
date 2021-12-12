@@ -55,12 +55,12 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
                         onChange={(e: any, value: any) => setUserRequest({ ...userRequest, name: value })} />
 
                     <TextField label="Contact email:"
-                        description="Optional"
+                        description="Optional. An email where users or devs can reach you."
                         defaultValue={props.userData ? props.userData.email : ""}
                         styles={{ root: { width: "100%" } }}
                         onChange={(e: any, value: any) => setUserRequest({ ...userRequest, email: value })} />
 
-                    <Text variant="small" style={{ marginTop: 10 }}>When you leave the Discord server, any data or projects you register with us will be removed automatically.</Text>
+                    <Text variant="small" style={{ marginTop: 10, marginBottom: 10 }}>When you leave the Discord server, any data or projects you register with us will be removed automatically.</Text>
 
                     <Text style={{ color: "red" }}>{submissionError}</Text>
                 </Stack>

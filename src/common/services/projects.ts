@@ -102,7 +102,7 @@ export interface IProjectCollaborator extends IUser {
 }
 
 export interface IProject {
-    id?: number;
+    id: number;
 
     appName: string;
     description: string;

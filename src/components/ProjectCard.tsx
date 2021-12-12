@@ -423,7 +423,7 @@ export const ProjectCard = (props: IProjectCard) => {
                 <Stack horizontal wrap style={{ marginTop: 10 }} tokens={{ childrenGap: 10 }}>
 
                   {(ViewModel.collaborators.filter(x => x.role == "Developer").map((user, i) =>
-                    <Stack>
+                    <Stack key={i}>
                       <Text key={i}>{user.name}</Text>
                     </Stack>
                   ))}
@@ -435,7 +435,7 @@ export const ProjectCard = (props: IProjectCard) => {
                 <Stack horizontal wrap style={{ marginTop: 10 }} tokens={{ childrenGap: 10 }}>
 
                   {(ViewModel.collaborators.filter(x => x.role == "Beta Tester").map((user, i) =>
-                    <Stack>
+                    <Stack key={i}>
                       <Text key={i}>{user.name}</Text>
                     </Stack>
                   ))}
@@ -484,6 +484,10 @@ export const ProjectCard = (props: IProjectCard) => {
 
       <DocumentCardDetails>
         <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
+        {ViewModel.appIcon ?
+                  <Image style={{ height: 30, width: 30, marginRight: 5 }} src={ViewModel.appIcon} />
+                  : <></>}
+
           {ViewModel.needsManualReview ?
             <TooltipHost content="Waiting for approval" delay={TooltipDelay.zero}>
               <FontIcon style={{ fontSize: 26, padding: "0px 5px" }} iconName="Manufacturing" />
@@ -496,13 +500,13 @@ export const ProjectCard = (props: IProjectCard) => {
             </TooltipHost>
             : <></>}
 
-          {ViewModel.tags.map(tag => (
+{/*           {ViewModel.tags.map((tag, i) => (
             tag.name.includes("Launch ") ?
               <TooltipHost content={`${tag.name} participant`} delay={TooltipDelay.zero} key={tag.id}>
                 <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
               </TooltipHost>
-              : <></>
-          ))}
+              : <div key={tag.id}/>
+          ))} */}
           <DocumentCardTitle styles={{ root: { padding: "5px 5px", height: "auto", fontWeight: 600 } }} title={ViewModel.appName} />
         </Stack>
         <Stack tokens={{ padding: "0px 10px 10px 10px" }}>

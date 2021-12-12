@@ -2,6 +2,7 @@ import { getBackendHost } from "../const";
 import { isLocalhost, fetchBackend } from "../helpers";
 
 export const uwpCommunityGuildId = 372137812037730304;
+export const uwpCommunityTestGuildId = 667491687639023636;
 export const developerRoleId = 372142246625017871;
 
 export const discordAuthEndpoint = (
@@ -62,7 +63,7 @@ export async function IsUserInServer(): Promise<boolean> {
 
     const Response: IDiscordGuild[] = await Req.json();
 
-    return Response.filter(server => server.id === "372137812037730304").length > 0;
+    return Response.filter(server => server.id === (!isLocalhost ? uwpCommunityGuildId.toString() : uwpCommunityTestGuildId.toString())).length > 0;
 }
 
 export let CurrentUser: IDiscordUser;
