@@ -30,6 +30,10 @@ export interface ICreateProjectsRequestBody {
     lookingForRoles: string[];
 }
 
+export async function GetProjectCollaborators(projectId: number): Promise<IProjectCollaborator[]> {
+    return (await fetchBackend(`projects/collaborators?projectId=${projectId}`, "GET")).json();
+}
+
 
 export async function ModifyProject(projectData: IModifyProjectsRequestBody, queryData: IModifyProjectRequestQuery) {
     // Reformat microsoft store links to an international format
