@@ -153,7 +153,7 @@ export const RoleManager = (props: IRoleManagerProps) => {
 
                                                         <BaseButton style={{ width: 25, padding: 0, backgroundColor: "transparent", outline: "none", borderColor: "transparent" }} disabled={collaborativeProject.collaborator.isOwner}
                                                             onClick={() => {
-                                                                if (window.confirm(`You may lose access to channels or services for to this project, and will need to be re-added by a project manager to regain access.\n\nRole will be removed. Are you sure?`)) {
+                                                                if (window.confirm(`You may lose access to channels or services for this project, and will need to be re-added by a project manager to regain access.\n\nRole will be removed. Are you sure?`)) {
                                                                     removeCollaborator(collaborativeProject.project.id, key);
                                                                 }
                                                             }}>

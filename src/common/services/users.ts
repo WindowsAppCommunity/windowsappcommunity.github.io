@@ -16,6 +16,7 @@ export async function GetUser(discordId: string) {
 export async function GetUserProjects(discordId: string): Promise<IProject[]> {
     return (await fetchBackend(`user/${discordId}/projects`, "GET")).json();
 }
+
 export interface IUser {
     id?: number;
     name: string;

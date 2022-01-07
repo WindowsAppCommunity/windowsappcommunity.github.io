@@ -6,6 +6,7 @@ import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
 import { IDiscordUser, GetDiscordUser, AssignUserRole } from "../common/services/discord";
 import styled from "styled-components";
 import { fetchBackend, ObjectToPathQuery } from "../common/helpers";
+import { UserManager } from "./UserManager";
 
 enum ButtonType {
   Github, Download, External
@@ -48,6 +49,8 @@ export const ProjectCard = (props: IProjectCard) => {
   const [showLaunchApproveProjectDialogErrorMessage, setShowLaunchApproveProjectDialogErrorMessage] = React.useState<string>("");
 
   const [showProjectDetailsModal, setShowProjectDetailsModal] = React.useState(false);
+
+  const [showProjectUserManagerDialog, setShowProjectUserManagerDialog] = React.useState(false);
 
   const [ViewModel, setProjectViewModel] = React.useState<IProject>(props.project);
   const [projectOwner, setProjectOwner] = React.useState<IDiscordUser>();
@@ -338,6 +341,18 @@ export const ProjectCard = (props: IProjectCard) => {
         </Stack>
       </Dialog>
 
+      <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectUserManagerDialog(false)} isOpen={showProjectUserManagerDialog}>
+        <Stack style={{ margin: 15 }}>
+          <Stack style={{ marginBottom: -20, zIndex: 1 }} horizontalAlign="end">
+            <Link onClick={() => setShowProjectUserManagerDialog(false)}>
+              <FontIcon style={{ fontSize: 16, color: "black" }} iconName="ChromeClose" />
+            </Link>
+          </Stack>
+
+          <UserManager project={props.project} />
+        </Stack>
+      </Modal>
+
       <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectDetailsModal(false)} isOpen={showProjectDetailsModal}>
         <Stack>
           <Stack tokens={{ padding: "7px 10px" }}>
@@ -351,6 +366,7 @@ export const ProjectCard = (props: IProjectCard) => {
 
                 <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} style={{ display: (width > 700 ? 'flex' : 'none') }} verticalAlign="center">
                   {props.editable === true ? (<>
+                    <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
                     <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
                     <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
                   </>) : <></>}
@@ -381,6 +397,7 @@ export const ProjectCard = (props: IProjectCard) => {
 
             <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} style={{ display: (width < 700 ? 'flex' : 'none') }} verticalAlign="center">
               {props.editable === true ? (<>
+                <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
                 <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
                 <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
               </>) : <></>}
@@ -484,9 +501,9 @@ export const ProjectCard = (props: IProjectCard) => {
 
       <DocumentCardDetails>
         <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
-        {ViewModel.appIcon ?
-                  <Image style={{ height: 30, width: 30, marginRight: 5 }} src={ViewModel.appIcon} />
-                  : <></>}
+          {ViewModel.appIcon ?
+            <Image style={{ height: 30, width: 30, marginRight: 5 }} src={ViewModel.appIcon} />
+            : <></>}
 
           {ViewModel.needsManualReview ?
             <TooltipHost content="Waiting for approval" delay={TooltipDelay.zero}>
@@ -500,7 +517,7 @@ export const ProjectCard = (props: IProjectCard) => {
             </TooltipHost>
             : <></>}
 
-{/*           {ViewModel.tags.map((tag, i) => (
+          {/*           {ViewModel.tags.map((tag, i) => (
             tag.name.includes("Launch ") ?
               <TooltipHost content={`${tag.name} participant`} delay={TooltipDelay.zero} key={tag.id}>
                 <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
@@ -514,6 +531,7 @@ export const ProjectCard = (props: IProjectCard) => {
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
           {props.editable === true ? (<>
+            <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
             <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
             <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
           </>) : <></>}
