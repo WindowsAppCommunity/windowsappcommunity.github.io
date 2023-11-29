@@ -1,8 +1,8 @@
 import { EditProjectDetailsForm, IEditProjectDetailsFormProps } from './EditProjectDetailsForm';
 import React from "react";
-import { IProject } from '../../common/services/projects';
-import { Stack, Text, PrimaryButton, DefaultButton, DirectionalHint, Link, TeachingBubble, TextField, FontIcon } from 'office-ui-fabric-react';
+import { Stack, Text, PrimaryButton, DefaultButton, DirectionalHint, Link, TeachingBubble, TextField, FontIcon } from '@fluentui/react';
 import { fetchBackend } from '../../common/helpers';
+import { IProject } from '../../interface/IProject';
 
 export interface ICreateProjectFormProps extends IEditProjectDetailsFormProps {
 
@@ -193,8 +193,7 @@ export const ProjectCodeVerifier = (props: IProjectCodeVerifierProps) => {
                                 <div style={{ display: "none" }}>
                                     {setTimeout(() => props.onSuccess({
                                         ...props.projectData,
-                                        needsManualReview: false,
-                                        downloadLink: `http://microsoft.com/store/apps/${storeId}`
+                                        needsManualReview: false
                                     }), 1500)}
                                 </div>
                             </Stack>

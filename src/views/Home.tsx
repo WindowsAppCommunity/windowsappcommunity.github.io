@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Stack, Text, PrimaryButton, Image, ImageFit, ImageCoverStyle } from "office-ui-fabric-react";
+import { Stack, Text, PrimaryButton, Image, ImageFit, ImageCoverStyle } from "@fluentui/react";
 import { Links, Images } from "../common/const";
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

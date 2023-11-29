@@ -1,8 +1,9 @@
-import { Text, Stack, PrimaryButton, TextField, DefaultButton } from "office-ui-fabric-react";
+import { Text, Stack, PrimaryButton, TextField, DefaultButton } from "@fluentui/react";
 import React from "react";
 import { IBackendReponseError } from "../../common/interfaces";
-import { CreateUser, IUser, ModifyUser } from "../../common/services/users";
+import { CreateUser, ModifyUser } from "../../common/services/users";
 import { CurrentUser } from "../../common/services/discord";
+import { IUser } from "../../interface/IUser";
 
 export interface IRegisterDevProps {
     onCancel?: Function;

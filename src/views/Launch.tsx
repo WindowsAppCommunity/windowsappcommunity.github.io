@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, Stack, Image, ImageCoverStyle, ImageFit, Link, DefaultButton, PrimaryButton } from "office-ui-fabric-react";
+import { Text, Stack, Image, ImageCoverStyle, ImageFit, Link, DefaultButton, PrimaryButton } from "@fluentui/react";
 
 import { Images } from "../common/const";
 import { Depths } from "@uifabric/fluent-theme/lib/fluent/FluentDepths";
-import { IProject, GetLaunchProjects } from "../common/services/projects";
+import { GetLaunchProjects } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { GetCurrentDiscordUser, IDiscordUser } from "../common/services/discord";
 import { PromiseVisualizer } from "../components/PromiseVisualizer";
@@ -11,6 +11,7 @@ import ReactMarkdown from 'react-markdown'
 import styled from "styled-components";
 import LaunchViewData from '../assets/views/launch.json';
 import { isReactSnap } from "../common/helpers";
+import { IProject } from "../interface/IProject";
 
 const PaddedProjectHolder = styled.div`
     padding: 20px 0px 20px 0px;

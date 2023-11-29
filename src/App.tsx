@@ -8,7 +8,7 @@ import { Launch } from "./views/Launch";
 import { Signin } from "./views/signin";
 import { Dashboard } from "./views/dashboard";
 
-import { Stack } from "office-ui-fabric-react";
+import { Stack } from "@fluentui/react";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab, faDiscord, faMedium, faGithub } from '@fortawesome/free-brands-svg-icons';

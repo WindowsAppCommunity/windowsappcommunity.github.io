@@ -1,8 +1,9 @@
 import * as React from "react";
-import { IProject, GetAllProjects_Unfiltered } from "../common/services/projects";
-import { Stack, Text, FontIcon } from "office-ui-fabric-react";
+import { GetAllProjects_Unfiltered } from "../common/services/projects";
+import { Stack, Text, FontIcon } from "@fluentui/react";
 import { ProjectCard } from "./ProjectCard";
 import { PromiseVisualizer } from "./PromiseVisualizer";
+import { IProject } from "../interface/IProject";
 
 interface IProjectReviewPanelState {
     promise: Promise<IProject[]>;
@@ -25,8 +26,6 @@ export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
         switch (props.type) {
             case ReviewType.ManualReview:
                 proj = proj.filter(proj => proj.needsManualReview); break;
-            case ReviewType.Launch:
-                proj = proj.filter(proj => proj.awaitingLaunchApproval && !proj.needsManualReview); break;
         }
         if (!state.data) setState({ ...state, data: proj });
     }
@@ -35,7 +34,7 @@ export const ProjectReviewPanel = (props: IProjectReviewPanelProps) => {
         // Disabled. Some bug (in React possibly?) is causing it to only remove the last item in the list, rather than updating with the new list we give it here. 
         return;
         setState({
-            ...state, data: state.data?.filter(p => p.id != project.id)
+            ...state, data: state.data?.filter(p => p.name != project.name)
         });
 
         setState(state);

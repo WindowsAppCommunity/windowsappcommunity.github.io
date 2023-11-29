@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Text, Stack } from "office-ui-fabric-react";
+import { Text, Stack } from "@fluentui/react";
 
 const navLinkActiveStyle: CSSProperties = {
   borderBottom: "3px solid #5e5eff",

@@ -1,4 +1,4 @@
-import { Text, Stack, Label, Spinner } from "office-ui-fabric-react";
+import { Text, Stack, Label, Spinner } from "@fluentui/react";
 import React, { useState, useEffect } from "react";
 import { AuthData } from "../common/services/discord";
 

@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Stack, Text, FontIcon } from "office-ui-fabric-react";
-import { GetAllProjects, IProject } from "../common/services/projects";
+import { Stack, Text, FontIcon } from "@fluentui/react";
+import { GetAllProjects } from "../common/services/projects";
 import { ProjectCard } from "../components/ProjectCard";
 import { PromiseVisualizer } from "../components/PromiseVisualizer";
 import { GetCurrentDiscordUser, GetUserRoles } from "../common/services/discord";
+import { IProject } from "../interface/IProject";
 
 export const Projects = () => {
   const [state, setState] = React.useState<IProject[]>();
@@ -30,8 +31,8 @@ export const Projects = () => {
     <Stack horizontalAlign="center" horizontal wrap tokens={{ childrenGap: 10 }}>
       <PromiseVisualizer promise={GetAllProjects()} onResolve={setState} loadingMessage='Loading Projects...' loadingStyle={{ padding: 25 }} errorStyle={{ padding: 25 }}>
         {state && (
-          state.length > 0 ? state.sort((a, b) => a.appName.localeCompare(b.appName)).map((project, i) => (
-            <ProjectCard key={i} onProjectRemove={project => setState(state.filter(p => p.appName !== project.appName))} project={project} editable={isAdmin}></ProjectCard>
+          state.length > 0 ? state.sort((a, b) => a.name.localeCompare(b.name)).map((project, i) => (
+            <ProjectCard key={i} onProjectRemove={project => setState(state.filter(p => p.name !== project.name))} project={project} editable={isAdmin}></ProjectCard>
           )) : (
             <Stack horizontalAlign="center" >
               <FontIcon iconName="sad" style={{ fontSize: 55 }}></FontIcon>

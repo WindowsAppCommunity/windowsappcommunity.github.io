@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import { Stack, Text, Link } from 'office-ui-fabric-react';
+import { Stack, Text, Link } from '@fluentui/react';
 import memoize from 'promise-memoize'
 
 const renderers = {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, Stack } from "office-ui-fabric-react";
+import { Text, Stack } from "@fluentui/react";
 
 export const NotFound: React.StatelessComponent = () => {
   return (

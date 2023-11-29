@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, TooltipDelay, DefaultButton, IContextualMenuProps, IContextualMenuItem, PersonaSize, Dialog, DialogFooter, DialogType } from "office-ui-fabric-react";
+import { Stack, Link, Text, PrimaryButton, Persona, TooltipHost, TooltipDelay, DefaultButton, IContextualMenuProps, IContextualMenuItem, PersonaSize, Dialog, DialogFooter, DialogType } from "@fluentui/react";
 import { Images, Links } from "../common/const";
 import { NavMenu } from "./NavMenu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +12,7 @@ import { Helmet } from "react-helmet";
 import { getHeadTitle } from "../common/helpers";
 import { History } from "history";
 import { RegisterUserForm } from "./forms/RegisterUser";
-import { GetUser, IUser } from "../common/services/users";
+import { GetUserByDiscordId } from "../common/services/users";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -72,7 +72,7 @@ export const SignInButton: React.FC<{ history: History }> = ({ history }) => {
       return;
     }
 
-    const userRequest = await GetUser(discordUser.id);
+    const userRequest = await GetUserByDiscordId(discordUser.id);
     if (userRequest.status === 404) {
       // User isn't registered
       setRegisterUserShown(true);

@@ -1,46 +1,24 @@
-import { IUser } from "./users";
 import { fetchBackend, ObjectToPathQuery, match, isReactSnap } from "../helpers";
+import { IProject } from "../../interface/IProject";
 
-export async function CreateProject(projectData: ICreateProjectsRequestBody): Promise<Response> {
+export async function CreateProject(projectData: IProject): Promise<Response> {
     // Reformat microsoft store links to an international format
-    if (projectData.downloadLink) {
-        const storeId = match(projectData.downloadLink, /http.*microsoft\..*([\w\d]{12})[/|?]?/);
+    for (let link of projectData.links) {
+        const storeId = match(link.url, /http.*microsoft\..*([\w\d]{12})[/|?]?/);
         if (storeId) {
-            projectData.downloadLink = `https://www.microsoft.com/store/apps/${storeId}`;
+            link.url = `https://www.microsoft.com/store/apps/${storeId}`;
         }
     }
+
     return await fetchBackend("projects", "POST", projectData);
 }
-export interface ICreateProjectsRequestBody {
-    role: "Developer" | "Other"; // Only a developer or "Other" (manager, etc) can create a new project
-    appName: string;
-    category: string;
-    description: string;
-    isPrivate: boolean;
-    downloadLink?: string;
-    githubLink?: string;
-    externalLink?: string;
-    awaitingLaunchApproval: boolean;
-    needsManualReview: boolean;
-    heroImage: string;
-    appIcon?: string;
-    images: string[];
-    features: string[];
-    tags: ITag[];
-    lookingForRoles: string[];
-}
 
-export async function GetProjectCollaborators(projectId: number): Promise<IProjectCollaborator[]> {
-    return (await fetchBackend(`projects/collaborators?projectId=${projectId}`, "GET")).json();
-}
-
-
-export async function ModifyProject(projectData: IModifyProjectsRequestBody, queryData: IModifyProjectRequestQuery) {
+export async function ModifyProject(projectData: IProject, queryData: IModifyProjectRequestQuery) {
     // Reformat microsoft store links to an international format
-    if (projectData.downloadLink) {
-        const storeId = match(projectData.downloadLink, /http.*microsoft\..*([\w\d]{12})[/|?]?/);
+    for (let link of projectData.links) {
+        const storeId = match(link.url, /http.*microsoft\..*([\w\d]{12})[/|?]?/);
         if (storeId) {
-            projectData.downloadLink = `https://www.microsoft.com/store/apps/${storeId}`;
+            link.url = `https://www.microsoft.com/store/apps/${storeId}`;
         }
     }
 
@@ -72,66 +50,12 @@ export async function GetLaunchProjects(year: number): Promise<IProject[]> {
     return result.projects;
 }
 
-export interface IModifyProjectsRequestBody {
-    appName: string;
-    description?: string;
-    isPrivate: boolean;
-
-    downloadLink?: string;
-    githubLink?: string;
-    externalLink?: string;
-
-    heroImage: string;
-    images: string[];
-    appIcon?: string;
-    awaitingLaunchApproval: boolean;
-    needsManualReview: boolean;
-    lookingForRoles?: string[];
-    category?: string;
-}
-
 export interface IModifyProjectRequestQuery {
     /** @summary The app name that's being modified */
-    appName: string;
+    name: string;
 }
 
 export interface IDeleteProjectRequestBody {
     /** @summary The app name that's being deleted */
-    appName: string;
-}
-
-export interface IProjectCollaborator extends IUser {
-    role: "Developer" | "Translator" | "Beta Tester" | "Other";
-    isOwner: boolean;
-}
-
-export interface IProject {
-    id: number;
-
-    appName: string;
-    description: string;
-    isPrivate: boolean;
-    downloadLink?: string;
-    githubLink?: string;
-    externalLink?: string;
-
-    heroImage: string;
-    appIcon?: string;
-    images: string[];
-    features: string[];
-
-    awaitingLaunchApproval: boolean;
-    needsManualReview: boolean;
-    lookingForRoles?: string[];
-
-    collaborators: IProjectCollaborator[];
-    tags: ITag[];
-    category?: string;
-};
-
-export interface ITag {
-    id: number;
-    projects?: IProject[];
     name: string;
-    icon?: string;
 }

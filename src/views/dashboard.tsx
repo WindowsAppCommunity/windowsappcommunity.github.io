@@ -1,15 +1,10 @@
-import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, DefaultButton, PrimaryButton, FontIcon, PivotItem, Pivot, Modal } from "office-ui-fabric-react";
+import { Text, Stack, Persona, PersonaSize, Icon, Link, Dialog, DialogType, DefaultButton, PrimaryButton, FontIcon, PivotItem, Pivot } from "@fluentui/react";
 import React from "react";
 import { GetUserAvatar, GetCurrentDiscordUser, IDiscordUser, discordAuthEndpoint, GetUserRoles, AssignUserRole } from "../common/services/discord";
 
 import styled from "styled-components";
 import { CreateProjectForm } from "../components/forms/CreateProjectForm";
-import { IProject, IProjectCollaborator } from "../common/services/projects";
-import { ProjectCard } from "../components/ProjectCard";
-import { RoleManager } from "../components/RoleManager";
-import { GetUserProjects, IUser } from "../common/services/users";
 import { ProjectReviewPanel, ReviewType } from "../components/ProjectReviewPanel";
-import { fetchBackend } from "../common/helpers";
 
 const DashboardHeader = styled.header`
 background: linear-gradient(to bottom,#005799 0,#0076d1);
@@ -123,7 +118,7 @@ export const Dashboard = () => {
 
                     {(
                         user?.id !== undefined ?
-                            <RoleManager discordId={user.id} />
+                            <Text>TODO: List projects for user</Text>
                             : <></>
                     )}
                 </Stack>

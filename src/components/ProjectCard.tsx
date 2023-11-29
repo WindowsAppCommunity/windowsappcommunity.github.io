@@ -1,12 +1,14 @@
-import { IProject, DeleteProject, ModifyProject, IModifyProjectsRequestBody, IProjectCollaborator } from "../common/services/projects";
-import { DocumentCard, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, TooltipHost, TooltipDelay, Modal, Image, Link } from "office-ui-fabric-react";
+import { DeleteProject, ModifyProject } from "../common/services/projects";
+import { DocumentCard, ImageFit, DocumentCardDetails, DocumentCardTitle, Text, Stack, DocumentCardActions, IButtonProps, PrimaryButton, Dialog, FontIcon, DefaultButton, DialogType, TooltipHost, TooltipDelay, Modal, Image, Link } from "@fluentui/react";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EditProjectDetailsForm } from "./forms/EditProjectDetailsForm";
-import { IDiscordUser, GetDiscordUser, AssignUserRole } from "../common/services/discord";
+import { IDiscordUser, GetDiscordUser } from "../common/services/discord";
 import styled from "styled-components";
-import { fetchBackend, ObjectToPathQuery } from "../common/helpers";
-import { UserManager } from "./UserManager";
+import { IProject } from "../interface/IProject";
+import { IpfsImage } from "./IpfsImage";
+import { IDiscordConnection } from "../interface/IUserConnection";
+import { GetUser } from "../common/services/users";
 
 enum ButtonType {
   Github, Download, External
@@ -45,9 +47,6 @@ export const ProjectCard = (props: IProjectCard) => {
   const [showManualApproveProjectDialog, setShowManualApproveProjectDialog] = React.useState(false);
   const [showManualApproveProjectDialogErrorMessage, setShowManualApproveProjectDialogErrorMessage] = React.useState<string>("");
 
-  const [showLaunchApprovalDialog, setShowLaunchApprovalDialog] = React.useState(false);
-  const [showLaunchApproveProjectDialogErrorMessage, setShowLaunchApproveProjectDialogErrorMessage] = React.useState<string>("");
-
   const [showProjectDetailsModal, setShowProjectDetailsModal] = React.useState(false);
 
   const [showProjectUserManagerDialog, setShowProjectUserManagerDialog] = React.useState(false);
@@ -61,43 +60,25 @@ export const ProjectCard = (props: IProjectCard) => {
 
     const projectCardsData: IButtonProps[] = [];
 
-    if (ViewModel.downloadLink) {
-      const microsoftStoreLinkLabel = "View " + ViewModel.appName + " on the Microsoft Store";
-      projectCardsData.push({
-        data: {
-          type: ButtonType.Download,
-          link: ViewModel.downloadLink
-        },
-        href: ViewModel.downloadLink,
-        "aria-label": microsoftStoreLinkLabel,
-        target: "_blank",
-        onRenderIcon: onRenderIcon
-      });
-    }
+    for (var link of ViewModel.links) {
 
-    if (ViewModel.githubLink) {
-      const gitHubLinkLabel = "View " + ViewModel.appName + " on GitHub";
-      projectCardsData.push({
-        data: {
-          type: ButtonType.Github,
-          link: ViewModel.githubLink
-        },
-        href: ViewModel.githubLink,
-        "aria-label": gitHubLinkLabel,
-        target: "_blank",
-        onRenderIcon: onRenderIcon
-      });
-    }
+      var buttonType = ButtonType.External;
 
-    if (ViewModel.externalLink) {
-      const externalLinkLabel = "View " + ViewModel.appName + " on the web";
+      if (link.url.includes("github.com")) {
+        buttonType = ButtonType.Github;
+      }
+
+      if (link.url.includes("microsoft.com")) {
+        buttonType = ButtonType.Download;
+      }
+
       projectCardsData.push({
         data: {
-          type: ButtonType.External,
-          link: ViewModel.externalLink
+          type: buttonType,
+          link: link
         },
-        href: ViewModel.externalLink,
-        "aria-label": externalLinkLabel,
+        href: link.url,
+        "aria-label": link.description,
         target: "_blank",
         onRenderIcon: onRenderIcon
       });
@@ -107,7 +88,7 @@ export const ProjectCard = (props: IProjectCard) => {
 
     return () =>
       window.removeEventListener("resize", updateDimensions);
-  }, [ViewModel.githubLink, ViewModel.externalLink, ViewModel.downloadLink]);
+  }, [ViewModel.links]);
 
   const updateDimensions = () => {
     const width = window.innerWidth
@@ -135,18 +116,9 @@ export const ProjectCard = (props: IProjectCard) => {
   }
 
   async function ManuallyApproveProject() {
-    const data: IModifyProjectsRequestBody = {
-      needsManualReview: false,
-      appName: ViewModel.appName,
-      description: ViewModel.description,
-      heroImage: ViewModel.heroImage,
-      images: ViewModel.images,
-      awaitingLaunchApproval: ViewModel.awaitingLaunchApproval,
-      isPrivate: ViewModel.isPrivate
-    };
-    setProjectViewModel({ ...ViewModel, ...data });
+    setProjectViewModel({ ...ViewModel, needsManualReview: false });
 
-    const req = await ModifyProject(data, { appName: ViewModel.appName });
+    const req = await ModifyProject(ViewModel, { name: ViewModel.name });
     if (req.status !== 200) {
       setShowManualApproveProjectDialogErrorMessage((await req.json()).reason);
     } else {
@@ -155,103 +127,24 @@ export const ProjectCard = (props: IProjectCard) => {
     }
   }
 
-  async function ApproveLaunchSubmission(launchYear: number) {
-    const projectData: IModifyProjectsRequestBody = {
-      appName: ViewModel.appName,
-      description: ViewModel.description,
-      needsManualReview: ViewModel.needsManualReview,
-      isPrivate: ViewModel.isPrivate,
-      heroImage: ViewModel.heroImage,
-      images: ViewModel.images,
-      awaitingLaunchApproval: false,
-    };
-
-    setProjectViewModel({ ...ViewModel, ...projectData });
-
-    const tagUpdateReq = await fetchBackend(`projects/tags?appName=${ViewModel.appName}`, "POST", { tagName: `Launch ${launchYear}` });
-    if (tagUpdateReq.status !== 200) {
-      setShowLaunchApproveProjectDialogErrorMessage((await tagUpdateReq.json()).reason);
-      return;
-    }
-
-    const projectUpdateReq = await ModifyProject(projectData, { appName: ViewModel.appName });
-    if (projectUpdateReq.status !== 200) {
-      setShowLaunchApproveProjectDialogErrorMessage((await projectUpdateReq.json()).reason);
-      return;
-    }
-
-    await AssignLaunchParticipantRole(ViewModel.collaborators.filter(p => p.isOwner)[0]);
-    setShowLaunchApprovalDialog(false);
-    props.onProjectRemove?.call(undefined, ViewModel);
-  }
-
-  async function AssignLaunchParticipantRole(user: IProjectCollaborator) {
-    const roleAssignReq = await AssignUserRole("Launch Participant", user.discordId);
-    if (roleAssignReq && roleAssignReq.ok === false) {
-      setShowLaunchApproveProjectDialogErrorMessage(`Project was approved, but the user couldn't be assigned the Launch Participant role. (Error: ${(await roleAssignReq.json()).reason})`);
-    }
-  }
-
-  async function GetOwner() {
-    var collaborators = await GetCollaborators();
-    return collaborators?.filter(x => x.isOwner)[0];
-  }
-
-  async function GetCollaborators() {
-    const projectCollaboratorsReq = await fetchBackend(`projects/collaborators?projectId=${ViewModel.id}`, "GET");
-    if (projectCollaboratorsReq.status !== 200) {
-      setShowLaunchApproveProjectDialogErrorMessage((await projectCollaboratorsReq.json()).reason);
-      return;
-    }
-
-    var json = await projectCollaboratorsReq.json();
-    const collaborators = json as IProjectCollaborator[];
-
-    return collaborators;
-  }
-
-  async function GetImages() {
-    const req = await fetchBackend(`projects/images?projectId=${ViewModel.id}`, "GET");
-    if (req.status !== 200) {
-      return;
-    }
-
-    var json = await req.json();
-    return json as string[];
-  }
-
-  async function GetFeatures() {
-    const req = await fetchBackend(`projects/features?projectId=${ViewModel.id}`, "GET");
-    if (req.status !== 200) {
-      return;
-    }
-
-    var json = await req.json();
-    const features = json as string[];
-    return features;
-  }
-
-  async function OnLaunchApproval() {
-    const owner = await GetOwner();
-    if (!owner) {
-      console.error("Owner not found");
-      return;
-    }
-
-    GetDiscordUser(owner.discordId).then(owner => {
-      setProjectOwner(owner);
-      setShowLaunchApprovalDialog(true);
-    });
+  function GetOwner() {
+    return ViewModel.collaborators.filter(x => x.role.name.toLowerCase() == "owner")[0];
   }
 
   async function OnManualApproval() {
-    const owner = await GetOwner();
+    var owner = GetOwner();
     if (!owner) {
       console.error("Owner not found");
       return;
     }
 
-    GetDiscordUser(owner.discordId)
+    var user = await GetUser(owner.user);
+    var discordConnection = user?.connections.filter(x => x.connectionName.toLowerCase() == "discord")[0] as IDiscordConnection;
+    if (!discordConnection) {
+      console.error("Discord connection not found. Count not approve project.");
+    }
+
+    GetDiscordUser(discordConnection.discordId)
       .then(owner => {
         setProjectOwner(owner);
         setShowManualApproveProjectDialog(true);
@@ -267,7 +160,7 @@ export const ProjectCard = (props: IProjectCard) => {
   return (
     <DocumentCard style={{ width: 275 }} tabIndex={0} onKeyDown={(e) => onCardKeyDown(e)}>
 
-      <Dialog hidden={!showEditDialog} title={`Edit ${ViewModel.appName}`}
+      <Dialog hidden={!showEditDialog} title={`Edit ${ViewModel.name}`}
         dialogContentProps={{
           styles: { title: { padding: "16px 16px 5px 24px", margin: 0 } },
           type: DialogType.largeHeader
@@ -292,7 +185,7 @@ export const ProjectCard = (props: IProjectCard) => {
         <Stack horizontal tokens={{ childrenGap: 7 }}>
           <DefaultButton style={{ backgroundColor: "#cc0000", color: "#fff", borderColor: "#cc0000" }} text={`Yes, delete`}
             onClick={async () => {
-              await DeleteProject({ appName: ViewModel.appName });
+              await DeleteProject({ name: ViewModel.name });
               setShowDeleteProjectDialog(false);
               if (props.onProjectRemove) props.onProjectRemove(ViewModel);
             }} />
@@ -305,7 +198,7 @@ export const ProjectCard = (props: IProjectCard) => {
           styles: { title: { padding: "16px 16px 8px 24px", fontSize: 20 }, subText: { fontSize: 16 } },
           type: DialogType.largeHeader,
           title: `Approve this project?`,
-          subText: projectOwner ? `${ViewModel.appName} belongs to ${projectOwner.username}#${projectOwner.discriminator}` : "Project owner info not avilable"
+          subText: projectOwner ? `${ViewModel.name} belongs to ${projectOwner.username}#${projectOwner.discriminator}` : "Project owner info not available"
         }}
         onDismiss={() => { setShowManualApproveProjectDialog(false) }}>
         <Stack>
@@ -320,28 +213,7 @@ export const ProjectCard = (props: IProjectCard) => {
         </Stack>
       </Dialog>
 
-      <Dialog hidden={!showLaunchApprovalDialog}
-        dialogContentProps={{
-          styles: { title: { padding: "16px 16px 8px 24px", fontSize: 20 }, subText: { fontSize: 16 } },
-          type: DialogType.largeHeader,
-          title: `Approve launch submission?`,
-          subText: projectOwner ?
-            `${ViewModel.appName} belongs to ${projectOwner.username}#${projectOwner.discriminator}. Follow up with them to ensure the project is eligible for the Launch event` : "Project owner info not avilable"
-        }}
-        onDismiss={() => { setShowLaunchApprovalDialog(false) }}>
-        <Stack>
-          <Text style={{ color: "red" }}>{showLaunchApproveProjectDialogErrorMessage}</Text>
-          <Stack horizontal tokens={{ childrenGap: 7 }}>
-            <PrimaryButton text={`Confirm`}
-              onClick={async () => {
-                await ApproveLaunchSubmission(2021);
-              }} />
-            <DefaultButton onClick={() => { setShowLaunchApprovalDialog(false); }} text="Cancel" />
-          </Stack>
-        </Stack>
-      </Dialog>
-
-      <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectUserManagerDialog(false)} isOpen={showProjectUserManagerDialog}>
+    {/*   <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectUserManagerDialog(false)} isOpen={showProjectUserManagerDialog}>
         <Stack style={{ margin: 15 }}>
           <Stack style={{ marginBottom: -20, zIndex: 1 }} horizontalAlign="end">
             <Link onClick={() => setShowProjectUserManagerDialog(false)}>
@@ -351,33 +223,29 @@ export const ProjectCard = (props: IProjectCard) => {
 
           <UserManager project={props.project} />
         </Stack>
-      </Modal>
+      </Modal> */}
 
       <Modal styles={{ root: { maxWidth: "100vw" } }} onDismiss={() => setShowProjectDetailsModal(false)} isOpen={showProjectDetailsModal}>
         <Stack>
           <Stack tokens={{ padding: "7px 10px" }}>
             <Stack horizontal horizontalAlign="space-between" style={{ padding: "0px 0px 2px 0px", marginBottom: "10px" }}>
               <Stack horizontal tokens={{ childrenGap: 10, padding: 5 }}>
-                {ViewModel.appIcon ?
-                  <Image style={{ height: 40, width: 40 }} src={ViewModel.appIcon} />
+                {ViewModel.icon ?
+                  <IpfsImage style={{ height: 40, width: 40 }} cid={ViewModel.icon} />
                   : <></>}
 
-                <Text variant="xxLarge" style={{ fontWeight: 400 }}>{ViewModel.appName}</Text>
+                <Text variant="xxLarge" style={{ fontWeight: 400 }}>{ViewModel.name}</Text>
 
                 <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} style={{ display: (width > 700 ? 'flex' : 'none') }} verticalAlign="center">
                   {props.editable === true ? (<>
-                    <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
-                    <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
+{/*                     <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
+ */}                    <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
                     <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
                   </>) : <></>}
 
                   {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
                     <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 18 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnManualApproval}
                     />
-                  </>) : <></>}
-
-                  {props.modOptions !== undefined && ViewModel.awaitingLaunchApproval && !ViewModel.needsManualReview ? (<>
-                    <PrimaryButton iconProps={{ iconName: "Rocket", style: { fontSize: 18 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnLaunchApproval} />
                   </>) : <></>}
 
                   <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
@@ -397,18 +265,14 @@ export const ProjectCard = (props: IProjectCard) => {
 
             <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} style={{ display: (width < 700 ? 'flex' : 'none') }} verticalAlign="center">
               {props.editable === true ? (<>
-                <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
-                <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
+{/*                 <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
+ */}                <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
                 <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 16 } }} style={{ minWidth: 40, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
               </>) : <></>}
 
               {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
                 <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 18 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnManualApproval}
                 />
-              </>) : <></>}
-
-              {props.modOptions !== undefined && ViewModel.awaitingLaunchApproval && !ViewModel.needsManualReview ? (<>
-                <PrimaryButton iconProps={{ iconName: "Rocket", style: { fontSize: 18 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnLaunchApproval} />
               </>) : <></>}
 
               <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />
@@ -419,11 +283,11 @@ export const ProjectCard = (props: IProjectCard) => {
           </Stack>
 
           <div style={{ display: ((ViewModel.features.length > 0) ? 'none' : 'flex') }}>
-            <Image style={{ borderTop: "2px solid midnightblue", width: "auto" }} width={1200} height={675} src={ViewModel.heroImage} imageFit={ImageFit.contain} />
+            <IpfsImage style={{ borderTop: "2px solid midnightblue", width: "auto" }} width={1200} height={675} cid={ViewModel.heroImage} imageFit={ImageFit.contain} />
           </div>
 
           <Stack style={{ display: ((ViewModel.features.length > 0) ? 'flex' : 'none'), maxWidth: 1200 }} horizontal={(width > 800)}>
-            <Image src={ViewModel.heroImage} style={{ maxWidth: 700 }} />
+            <IpfsImage cid={ViewModel.heroImage} style={{ maxWidth: 700 }} />
 
             <Stack style={{ margin: 15, width: '40%' }} verticalAlign="space-between">
               <Stack>
@@ -439,21 +303,21 @@ export const ProjectCard = (props: IProjectCard) => {
                 <Text variant="large">Developers</Text>
                 <Stack horizontal wrap style={{ marginTop: 10 }} tokens={{ childrenGap: 10 }}>
 
-                  {(ViewModel.collaborators.filter(x => x.role == "Developer").map((user, i) =>
+                  {(ViewModel.collaborators.filter(x => x.role.name.toLowerCase() == "developer").map((user, i) =>
                     <Stack key={i}>
-                      <Text key={i}>{user.name}</Text>
+                      <Text key={i}>{user}</Text>
                     </Stack>
                   ))}
                 </Stack>
               </Stack>
 
-              <Stack style={{ marginTop: 15, display: (ViewModel.collaborators.filter(x => x.role == "Beta Tester").length > 0 ? 'flex' : 'none') }}>
+              <Stack style={{ marginTop: 15, display: (ViewModel.collaborators.filter(x => x.role.name.toLowerCase() == "beta tester").length > 0 ? 'flex' : 'none') }}>
                 <Text variant="large">Beta Testers</Text>
                 <Stack horizontal wrap style={{ marginTop: 10 }} tokens={{ childrenGap: 10 }}>
 
-                  {(ViewModel.collaborators.filter(x => x.role == "Beta Tester").map((user, i) =>
+                  {(ViewModel.collaborators.filter(x => x.role.name.toLowerCase() == "beta tester").map((user, i) =>
                     <Stack key={i}>
-                      <Text key={i}>{user.name}</Text>
+                      <Text key={i}>{user.user}</Text>
                     </Stack>
                   ))}
                 </Stack>
@@ -465,9 +329,7 @@ export const ProjectCard = (props: IProjectCard) => {
 
             <Stack horizontal wrap style={{ marginTop: 15 }} horizontalAlign="center">
               {(ViewModel.images.map((img, i) =>
-
-                <Image src={img} key={i} style={{ height: (width > 600 ? 600 : 'unset'), width: (width > 600 ? '600' : '100%') }} />
-
+                <IpfsImage cid={img} key={i} style={{ height: (width > 600 ? 600 : 'unset'), width: (width > 600 ? '600' : '100%') }} />
               ))}
             </Stack>
 
@@ -477,32 +339,32 @@ export const ProjectCard = (props: IProjectCard) => {
       </Modal>
 
       <PointerOnHover>
-        <Image onClick={async () => {
+        <IpfsImage onClick={async () => {
           const owner = await GetOwner();
           if (!owner) {
             console.error("Owner not found");
             return;
           }
 
-          GetDiscordUser(owner.discordId)
+          var user = await GetUser(owner.user);
+          var discordConnection = user?.connections.filter(x => x.connectionName.toLowerCase() == "discord")[0] as IDiscordConnection;
+          if (!discordConnection) {
+            console.error("Discord connection not found. Unable to display user information.");
+          }
+
+          GetDiscordUser(discordConnection.discordId)
             .then(owner => {
               setProjectOwner(owner);
               setShowProjectDetailsModal(true)
             });
-
-          var images = await GetImages();
-          var features = await GetFeatures();
-          var collaborators = await GetCollaborators();
-
-          setProjectViewModel({ ...ViewModel, features: features ?? [], collaborators: collaborators ?? [], images: images ?? [] });
         }}
-          height={150} imageFit={ImageFit.centerCover} src={ViewModel.heroImage} alt={"Preview image for " + ViewModel.appName} />
+          height={150} imageFit={ImageFit.centerCover} cid={ViewModel.heroImage} alt={"Preview image for " + ViewModel.name} />
       </PointerOnHover>
 
       <DocumentCardDetails>
         <Stack horizontal tokens={{ padding: 5 }} verticalAlign="center">
-          {ViewModel.appIcon ?
-            <Image style={{ height: 30, width: 30, marginRight: 5 }} src={ViewModel.appIcon} />
+          {ViewModel.icon ?
+            <IpfsImage style={{ height: 30, width: 30, marginRight: 5 }} cid={ViewModel.icon} />
             : <></>}
 
           {ViewModel.needsManualReview ?
@@ -511,38 +373,21 @@ export const ProjectCard = (props: IProjectCard) => {
             </TooltipHost>
             : <></>}
 
-          {(ViewModel.awaitingLaunchApproval && props.modOptions) ?
-            <TooltipHost content="Awaiting Launch approval" delay={TooltipDelay.zero}>
-              <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
-            </TooltipHost>
-            : <></>}
-
-          {/*           {ViewModel.tags.map((tag, i) => (
-            tag.name.includes("Launch ") ?
-              <TooltipHost content={`${tag.name} participant`} delay={TooltipDelay.zero} key={tag.id}>
-                <FontIcon style={{ fontSize: 24, padding: "0px 5px" }} iconName="Rocket" />
-              </TooltipHost>
-              : <div key={tag.id}/>
-          ))} */}
-          <DocumentCardTitle styles={{ root: { padding: "5px 5px", height: "auto", fontWeight: 600 } }} title={ViewModel.appName} />
+          <DocumentCardTitle styles={{ root: { padding: "5px 5px", height: "auto", fontWeight: 600 } }} title={ViewModel.name} />
         </Stack>
         <Stack tokens={{ padding: "0px 10px 10px 10px" }}>
           <Text style={{ overflowY: "auto", height: 60 }}>{ViewModel.description}</Text>
         </Stack>
         <Stack horizontal tokens={{ childrenGap: 5, padding: 5 }} verticalAlign="center">
           {props.editable === true ? (<>
-            <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
-            <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
+{/*             <PrimaryButton iconProps={{ iconName: "group", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowProjectUserManagerDialog(true) }} />
+ */}            <PrimaryButton iconProps={{ iconName: "edit", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowEditDialog(true) }} />
             <PrimaryButton iconProps={{ iconName: "delete", style: { fontSize: 18 } }} style={{ minWidth: 45, padding: 0 }} onClick={() => { setShowDeleteProjectDialog(true) }} />
           </>) : <></>}
 
           {props.modOptions !== undefined && ViewModel.needsManualReview ? (<>
             <PrimaryButton iconProps={{ iconName: "Ferry", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnManualApproval}
             />
-          </>) : <></>}
-
-          {props.modOptions !== undefined && ViewModel.awaitingLaunchApproval && !ViewModel.needsManualReview ? (<>
-            <PrimaryButton iconProps={{ iconName: "Rocket", style: { fontSize: 20 } }} style={{ minWidth: 35, padding: 0 }} onClick={OnLaunchApproval} />
           </>) : <></>}
 
           <DocumentCardActions styles={{ root: { padding: 0 } }} actions={projectCardActions} />

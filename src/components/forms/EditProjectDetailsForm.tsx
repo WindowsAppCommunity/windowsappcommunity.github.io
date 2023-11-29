@@ -1,9 +1,10 @@
-import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, Pivot, PivotItem, IComboBox, Button, IconButton } from "office-ui-fabric-react";
+import { Text, Stack, PrimaryButton, Checkbox, TextField, DefaultButton, IComboBoxOption, ComboBox, Pivot, PivotItem, IComboBox, Button, IconButton } from "@fluentui/react";
 import React, { FormEvent } from "react";
 import { IBackendReponseError } from "../../common/interfaces";
-import { CreateProject, ICreateProjectsRequestBody, IProject, ModifyProject, IModifyProjectsRequestBody } from "../../common/services/projects";
+import { CreateProject, ModifyProject } from "../../common/services/projects";
 import { MicrosoftStoreAppCategories } from "../../common/const";
 import { fetchBackend } from "../../common/helpers";
+import { IProject } from "../../interface/IProject";
 
 export interface IEditProjectDetailsFormProps {
     onCancel?: Function;
@@ -24,8 +25,8 @@ const categoryOptions: IComboBoxOption[] = MicrosoftStoreAppCategories.map((cate
 });
 
 export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
-    let [projectRequest, setProjectRequest] = React.useState<Partial<ICreateProjectsRequestBody>>({
-        isPrivate: false, awaitingLaunchApproval: false, role: "Developer", ...props.projectData
+    let [projectRequest, setProjectRequest] = React.useState<Partial<IProject>>({
+        isPrivate: false, ...props.projectData
     });
 
     let [submissionError, setSubmissionError] = React.useState<string>("");
@@ -33,9 +34,7 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
 
     React.useEffect(() => {
         getProjectImages();
-        getProjectFeatures();
-        getProjectTags();
-    }, [props.projectData, props.projectData.images, props.projectData.features, props.projectData.tags]);
+    }, [props.projectData, props.projectData.images, props.projectData.features]);
 
     async function getProjectImages() {
         const request = await fetchBackend(`projects/images?projectId=${props.projectData.id}`, "GET");
@@ -127,8 +126,8 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                         <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Project name:" maxLength={75}
                                 styles={{ root: { width: "100%" } }}
-                                value={projectRequest.appName}
-                                required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, appName: value })} />
+                                value={projectRequest.name}
+                                required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, name: value })} />
 
                             <TextField label="Description" maxLength={240}
                                 styles={{ root: { width: "100%" } }}
@@ -180,20 +179,20 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                             <TextField label="Project icon"
                                 type="url"
                                 styles={{ root: { width: "100%" } }}
-                                value={projectRequest.appIcon}
+                                value={projectRequest.icon?.toString() ?? ""}
                                 placeholder="Your project's icon, if applicable"
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, appIcon: value })} />
+                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, icon: value })} />
 
                             <TextField label="Hero image"
                                 type="url"
                                 styles={{ root: { width: "100%" } }}
                                 required
-                                value={projectRequest.heroImage}
+                                value={projectRequest.heroImage?.toString() ?? ""}
                                 placeholder="Link to an image of your project"
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, heroImage: value })} />
 
                             <DefaultButton style={{ marginTop: 25, display: ((projectRequest.images?.length ?? 0) >= 5) ? "none" : "block" }} text="Add more images" onClick={() => {
-                                setProjectRequest({ ...projectRequest, images: [...(projectRequest.images ?? []), ""] })
+                                setProjectRequest({ ...projectRequest, images: [...(projectRequest.images ?? []), "" as any] })
                             }} />
 
                             {(projectRequest.images ?? []).map((url, i) =>
@@ -201,7 +200,7 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                     <TextField
                                         type="url"
                                         styles={{ root: { width: "100%" } }}
-                                        value={url}
+                                        value={url?.toString() ?? ""}
                                         placeholder="Link to an image of your project"
                                         onChange={(e: any, value: any) => {
                                             (projectRequest.images ?? [])[i] = value;
@@ -231,26 +230,6 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                 styles={{ root: { width: "100%" } }}
                                 onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, externalLink: value })} />
 
-                        </Stack>
-                    </PivotItem>
-
-                    <PivotItem headerText="More">
-                        <Stack style={{ marginTop: 7 }} tokens={{ childrenGap: 10 }}>
-                            {/*                             <Checkbox label="Participation in Launch 2021" disabled
-                                checked={projectRequest.awaitingLaunchApproval}
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, awaitingLaunchApproval: value })} />
-
-                            <Text style={{ display: projectRequest.awaitingLaunchApproval ? "block" : "none" }}>A moderator will contact you over Discord for the review process.</Text> */}
-
-                            <Text>This project is powered by:</Text>
-
-                            <Checkbox label="Uno Platform"
-                                checked={(projectRequest.tags ?? []).filter(x => x.id == 6).length > 0}
-                                onChange={(e: any, value: any) => toggleTagById(6)} />
-
-                            <Checkbox label="Windows Community Toolkit"
-                                checked={(projectRequest.tags ?? []).filter(x => x.id == 5).length > 0}
-                                onChange={(e: any, value: any) => toggleTagById(5)} />
                         </Stack>
                     </PivotItem>
                 </Pivot>
