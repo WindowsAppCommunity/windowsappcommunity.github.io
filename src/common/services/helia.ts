@@ -28,7 +28,7 @@ export async function InitAsync() {
 
     console.log(`Helia is ready with peer id ${Helia.libp2p.peerId}`);
 
-    Ipns ??= await ipns(Helia);
+    Ipns ??= await ipns(Helia);  
     console.log("Ipns is ready")
 
     Dag ??= dagJson(Helia);

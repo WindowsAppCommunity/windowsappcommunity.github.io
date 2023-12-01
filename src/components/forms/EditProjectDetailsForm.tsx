@@ -5,6 +5,8 @@ import { CreateProject, ModifyProject } from "../../common/services/projects";
 import { MicrosoftStoreAppCategories } from "../../common/const";
 import { fetchBackend } from "../../common/helpers";
 import { IProject } from "../../interface/IProject";
+import { Helia } from "../../common/services/helia";
+import { ILink } from "../../interface/ILink";
 
 export interface IEditProjectDetailsFormProps {
     onCancel?: Function;
@@ -25,79 +27,25 @@ const categoryOptions: IComboBoxOption[] = MicrosoftStoreAppCategories.map((cate
 });
 
 export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
-    let [projectRequest, setProjectRequest] = React.useState<Partial<IProject>>({
+    let [projectState, setProjectState] = React.useState<Partial<IProject>>({
         isPrivate: false, ...props.projectData
     });
 
     let [submissionError, setSubmissionError] = React.useState<string>("");
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
-    React.useEffect(() => {
-        getProjectImages();
-    }, [props.projectData, props.projectData.images, props.projectData.features]);
-
-    async function getProjectImages() {
-        const request = await fetchBackend(`projects/images?projectId=${props.projectData.id}`, "GET");
-        const response = await request.json();
-
-        if (!response)
-            return;
-
-        projectRequest.images = response;
-
-        setProjectRequest({ ...projectRequest });
-    }
-
-    async function getProjectFeatures() {
-        const request = await fetchBackend(`projects/features?projectId=${props.projectData.id}`, "GET");
-        const response = await request.json();
-
-        if (!response)
-            return;
-
-        projectRequest.features = response;
-
-        setProjectRequest({ ...projectRequest });
-    }
-
-    async function getProjectTags() {
-        const request = await fetchBackend(`projects/tags?projectId=${props.projectData.id}`, "GET");
-        const response = await request.json();
-
-        if (!response)
-            return;
-
-        projectRequest.tags = response;
-
-        setProjectRequest({ ...projectRequest });
-    }
-
-    function toggleTagById(id: number) {
-        projectRequest.tags = projectRequest.tags ?? [];
-
-        if (projectRequest.tags.filter(x => x.id == id).length == 0) {
-            // doesn't exist, add it
-            projectRequest.tags.push({ id: id, name: "" }); // name is ignored server side.
-        } else {
-            // exists, remove it
-            projectRequest.tags = projectRequest.tags.filter(x => x.id != id);
-        }
-
-        setProjectRequest({ ...projectRequest });
-    }
-
     async function submitParticipantRequest() {
         let request;
         if (props.editing) {
-            if (!props.projectData.appName) {
+            if (!props.projectData.name) {
                 throw new Error("Unable to modify project details. Missing app name prop");
             }
 
-            props.projectData.appName = encodeURIComponent(props.projectData.appName);
+            props.projectData.name = encodeURIComponent(props.projectData.name);
 
-            request = await ModifyProject(projectRequest as IModifyProjectsRequestBody, { appName: props.projectData.appName });
+            request = await ModifyProject(projectState as IProject, { name: props.projectData.name });
         } else {
-            request = await CreateProject(projectRequest as ICreateProjectsRequestBody);
+            request = await CreateProject(projectState as IProject);
         }
 
         let success = request.status === 200;
@@ -111,8 +59,19 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
             setShowSuccessIndicator(true);
             setTimeout(() => {
                 // TODO. Make a new request to get new project details, the below only is only a temporary solution
-                props.onSuccess(projectRequest as IProject);
+                props.onSuccess(projectState as IProject);
             }, 2500);
+        }
+    }
+
+    function setLink(name: string, newUrl: string) {
+        var target = projectState.links?.find(x => x.name = "download");
+        if (!target) {
+            target = { name: "download", url: newUrl, description: "" } as ILink;
+            projectState.links?.push(target)
+        }
+        else {
+            target.url = newUrl;
         }
     }
 
@@ -126,29 +85,29 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                         <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Project name:" maxLength={75}
                                 styles={{ root: { width: "100%" } }}
-                                value={projectRequest.name}
-                                required onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, name: value })} />
+                                value={projectState.name}
+                                required onChange={(e: any, value: any) => setProjectState({ ...projectState, name: value })} />
 
                             <TextField label="Description" maxLength={240}
                                 styles={{ root: { width: "100%" } }}
                                 multiline required autoAdjustHeight
-                                value={projectRequest.description}
+                                value={projectState.description}
                                 placeholder="Enter a brief description"
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, description: value })} />
+                                onChange={(e: any, value: any) => setProjectState({ ...projectState, description: value })} />
 
                             <ComboBox
                                 label="Category"
                                 options={categoryOptions}
-                                defaultSelectedKey={projectRequest.category || categoryOptions[0].key}
+                                defaultSelectedKey={projectState.category || categoryOptions[0].key}
                                 onChange={(e: FormEvent<IComboBox>, option: IComboBoxOption | undefined) => {
                                     if (!option) return;
-                                    setProjectRequest({ ...projectRequest, category: option.text });
+                                    setProjectState({ ...projectState, category: option.text });
                                 }} />
 
                             <Stack tokens={{ childrenGap: 10 }}>
                                 <Text variant="medium" style={{ fontWeight: 600 }}>Features</Text>
 
-                                {(projectRequest.features ?? []).map((feature, i) =>
+                                {(projectState.features ?? []).map((feature, i) =>
                                     <Stack horizontal tokens={{ childrenGap: 5 }} key={i}>
                                         <TextField
                                             type="text"
@@ -156,46 +115,82 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                             value={feature}
                                             placeholder="Short feature description"
                                             onChange={(e: any, value: any) => {
-                                                (projectRequest.features ?? [])[i] = value;
-                                                setProjectRequest({ ...projectRequest });
+                                                (projectState.features ?? [])[i] = value;
+                                                setProjectState({ ...projectState });
                                             }} />
 
-                                        <IconButton iconProps={{ iconName: "Cancel" }} onClick={() => setProjectRequest({ ...projectRequest, features: [...((projectRequest.features ?? []).filter((x, index) => i != index))] })} />
+                                        <IconButton iconProps={{ iconName: "Cancel" }} onClick={() => setProjectState({ ...projectState, features: [...((projectState.features ?? []).filter((x, index) => i != index))] })} />
                                     </Stack>
                                 )}
 
-                                <DefaultButton style={{ marginTop: 5, display: ((projectRequest.features?.length ?? 0) >= 7) ? "none" : "block" }} text="+ Add Feature" onClick={() => {
-                                    setProjectRequest({ ...projectRequest, features: [...(projectRequest.features ?? []), ""] })
+                                <DefaultButton style={{ marginTop: 5, display: ((projectState.features?.length ?? 0) >= 7) ? "none" : "block" }} text="+ Add Feature" onClick={() => {
+                                    setProjectState({ ...projectState, features: [...(projectState.features ?? []), ""] })
                                 }} />
                             </Stack>
 
                             <Checkbox label="Don't display this project publicly"
-                                checked={projectRequest.isPrivate}
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, isPrivate: value })} />
+                                checked={projectState.isPrivate}
+                                onChange={(e: any, value: any) => setProjectState({ ...projectState, isPrivate: value })} />
                         </Stack>
                     </PivotItem>
+
                     <PivotItem headerText="Images">
                         <Stack tokens={{ childrenGap: 10 }}>
+                            <DefaultButton onClick={() => {
+                                const inputElement = document.createElement('input');
+                                inputElement.type = 'file';
+                                inputElement.style.display = 'none';
+                                inputElement.accept = "image/*";
+                                inputElement.click();
+                                inputElement.addEventListener('change', function (e: any) {
+                                    // Check if a file is selected
+                                    const file = e?.target?.files[0];
+                                    if (file) {
+                                        // Create a FileReader to read the selected file
+                                        const reader = new FileReader();
+
+                                        // Set up the FileReader callback function
+                                        reader.onload = function (e) {
+                                            console.log(e.target?.result);
+                                        };
+
+                                        // Read the selected file as a data URL
+                                        reader.readAsDataURL(file);
+                                    }
+                                })
+
+
+                                // Open dialog to select image file
+                                // Add image file to ipfs
+                                // Add image CID to project
+                                // --- ^^ ---
+                                // Submit IProject to server
+                                // Server will pull image from client node via CID
+                                // Submit project request completes when server has full image
+                                // 
+
+                            }} />
+
                             <TextField label="Project icon"
                                 type="url"
                                 styles={{ root: { width: "100%" } }}
-                                value={projectRequest.icon?.toString() ?? ""}
+                                value={projectState.icon?.toString() ?? ""}
                                 placeholder="Your project's icon, if applicable"
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, icon: value })} />
+                                onChange={(e: any, value: any) => setProjectState({ ...projectState, icon: value })} />
 
                             <TextField label="Hero image"
                                 type="url"
                                 styles={{ root: { width: "100%" } }}
                                 required
-                                value={projectRequest.heroImage?.toString() ?? ""}
+                                value={projectState.heroImage?.toString() ?? ""}
                                 placeholder="Link to an image of your project"
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, heroImage: value })} />
+                                onChange={(e: any, value: any) => setProjectState({ ...projectState, heroImage: value })} />
 
-                            <DefaultButton style={{ marginTop: 25, display: ((projectRequest.images?.length ?? 0) >= 5) ? "none" : "block" }} text="Add more images" onClick={() => {
-                                setProjectRequest({ ...projectRequest, images: [...(projectRequest.images ?? []), "" as any] })
+                            <DefaultButton style={{ marginTop: 25, display: ((projectState.images?.length ?? 0) >= 5) ? "none" : "block" }} text="Add more images" onClick={() => {
+                                setProjectState({ ...projectState, images: [...(projectState.images ?? []), "" as any] })
                             }} />
 
-                            {(projectRequest.images ?? []).map((url, i) =>
+                            {(projectState.images ?? []).map((url, i) =>
                                 <Stack horizontal tokens={{ childrenGap: 5 }} key={i}>
                                     <TextField
                                         type="url"
@@ -203,11 +198,11 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                                         value={url?.toString() ?? ""}
                                         placeholder="Link to an image of your project"
                                         onChange={(e: any, value: any) => {
-                                            (projectRequest.images ?? [])[i] = value;
-                                            setProjectRequest({ ...projectRequest });
+                                            (projectState.images ?? [])[i] = value;
+                                            setProjectState({ ...projectState });
                                         }} />
 
-                                    <IconButton iconProps={{ iconName: "Cancel" }} onClick={() => setProjectRequest({ ...projectRequest, images: [...((projectRequest.images ?? []).filter((x, index) => i != index))] })} />
+                                    <IconButton iconProps={{ iconName: "Cancel" }} onClick={() => setProjectState({ ...projectState, images: [...((projectState.images ?? []).filter((x, index) => i != index))] })} />
                                 </Stack>
                             )}
                         </Stack>
@@ -215,20 +210,19 @@ export const EditProjectDetailsForm = (props: IEditProjectDetailsFormProps) => {
                     <PivotItem headerText="Links">
                         <Stack tokens={{ childrenGap: 10 }}>
                             <TextField label="Download link"
-                                value={projectRequest.downloadLink}
-                                disabled={!props.editing && props.projectData.downloadLink !== undefined}
+                                value={projectState.links?.find(x => x.name = "download")?.url}
                                 styles={{ root: { width: "100%" } }}
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, downloadLink: value })} />
+                                onChange={(e: any, value: any) => setLink("download", value as string)} />
 
                             <TextField label="GitHub link"
-                                value={projectRequest.githubLink}
+                                value={projectState.links?.find(x => x.name = "github")?.url}
                                 styles={{ root: { width: "100%" } }}
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, githubLink: value })} />
+                                onChange={(e: any, value: any) => setLink("github", value as string)} />
 
                             <TextField label="External link"
-                                value={projectRequest.externalLink}
+                                value={projectState.links?.find(x => x.name = "external")?.url}
                                 styles={{ root: { width: "100%" } }}
-                                onChange={(e: any, value: any) => setProjectRequest({ ...projectRequest, externalLink: value })} />
+                                onChange={(e: any, value: any) => setLink("external", value as string)} />
 
                         </Stack>
                     </PivotItem>

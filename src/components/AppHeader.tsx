@@ -13,6 +13,7 @@ import { getHeadTitle } from "../common/helpers";
 import { History } from "history";
 import { RegisterUserForm } from "./forms/RegisterUser";
 import { GetUserByDiscordId } from "../common/services/users";
+import { IUser } from "../interface/IUser";
 
 const FaIconStyle: CSSProperties = {
   color: "white",
@@ -36,7 +37,7 @@ export const AppHeader: React.StatelessComponent = (props: any) => {
 
           <NavMenu />
 
-          <SignInButton history={history} />
+         {/*  <SignInButton history={history} /> */}
         </Stack>
 
       </header>

@@ -4,6 +4,7 @@ import { IBackendReponseError } from "../../common/interfaces";
 import { CreateUser, ModifyUser } from "../../common/services/users";
 import { CurrentUser } from "../../common/services/discord";
 import { IUser } from "../../interface/IUser";
+import { IDiscordConnection, IEmailConnection, IUserConnection } from "../../interface/IUserConnection";
 
 export interface IRegisterDevProps {
     onCancel?: Function;
@@ -13,19 +14,25 @@ export interface IRegisterDevProps {
 };
 
 export const RegisterUserForm = (props: IRegisterDevProps) => {
-    let [userRequest, setUserRequest] = React.useState<IUser>(props.userData ? props.userData : {
-        discordId: CurrentUser.id,
-        name: ""
+    let [userState, setState] = React.useState<IUser>(props.userData ? props.userData : {
+        name: "",
+        markdownAboutMe: "",
+        connections: [
+            { connectionName: "discord", discordId: CurrentUser.id } as IDiscordConnection,
+        ],
+        links: [],
+        projects: [],
+        publishers: [],
     });
 
     let [submissionError, setSubmissionError] = React.useState<string>("");
     let [showSuccessIndicator, setShowSuccessIndicator] = React.useState(false);
 
     async function addUser() {
-        if (!userRequest) return;
+        if (!userState) return;
 
-        let request = props.modifying ? await ModifyUser(userRequest)
-            : await CreateUser(userRequest);
+        let request = props.modifying ? await ModifyUser(userState)
+            : await CreateUser(userState);
 
         let success = request.status === 200;
 
@@ -37,7 +44,7 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
         } else {
             setShowSuccessIndicator(true);
             setTimeout(() => {
-                props.onSuccess(userRequest);
+                props.onSuccess(userState);
             }, 2500);
         }
     }
@@ -53,13 +60,24 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
                         defaultValue={props.userData ? props.userData.name : ""}
                         styles={{ root: { width: "100%" } }}
                         required
-                        onChange={(e: any, value: any) => setUserRequest({ ...userRequest, name: value })} />
+                        onChange={(e: any, value: any) => setState({ ...userState, name: value })} />
 
                     <TextField label="Contact email:"
                         description="Optional. An email where users or devs can reach you."
-                        defaultValue={props.userData ? props.userData.email : ""}
+                        defaultValue={props.userData ? (props.userData.connections.find(x => (x as IEmailConnection)) as IEmailConnection)?.email : ""}
                         styles={{ root: { width: "100%" } }}
-                        onChange={(e: any, value: any) => setUserRequest({ ...userRequest, email: value })} />
+                        onChange={(e: any, value: any) => {
+                            var target = userState.connections?.find(x => x.connectionName = "email") as IEmailConnection;
+                            if (!target) {
+                                target = { email: value as string, connectionName: "email" } as IEmailConnection;
+                                userState.connections?.push(target)
+                            }
+                            else {
+                                target.email = value as string;
+                            }
+
+                            setState({ ...userState });
+                        }} />
 
                     <Text variant="small" style={{ marginTop: 10, marginBottom: 10 }}>When you leave the Discord server, any data or projects you register with us will be removed automatically.</Text>
 
@@ -79,3 +97,5 @@ export const RegisterUserForm = (props: IRegisterDevProps) => {
         </Stack>
     )
 };
+
+
