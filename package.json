@@ -20,7 +20,7 @@
     "@uifabric/fluent-theme": "^7.1.4",
     "@uifabric/icons": "7.2.1",
     "fs-extra": "^9.0.0",
-    "gh-pages": "^2.1.1",
+    "gh-pages": "^5.0.0",
     "http-server": "^0.12.3",
     "office-ui-fabric-react": "^7.61.1",
     "promise-memoize": "^1.2.1",
